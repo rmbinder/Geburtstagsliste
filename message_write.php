@@ -104,13 +104,10 @@ else
 }
 
 // create html page object
-$page = new HtmlPage();
+$page = new HtmlPage($headline);
 
 // add current url to navigation stack
 $gNavigation->addUrl(CURRENT_URL, $headline);
-
-// show headline of module
-$page->addHeadline($headline);
 
 // create module menu with back link
 $messagesWriteMenu = new HtmlNavbar('menu_messages_write', $headline, $page);

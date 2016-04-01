@@ -155,13 +155,10 @@ case 2:
 	$headline = $gL10n->get('PGL_DEINSTALLATION');
 	 
 	    // create html page object
-    $page = new HtmlPage();
+    $page = new HtmlPage($headline);
     
     // add current url to navigation stack
     $gNavigation->addUrl(CURRENT_URL, $headline);
-    
-    // add headline and title of module
-    $page->addHeadline($headline);
     
     // create module menu with back link
     $organizationNewMenu = new HtmlNavbar('menu_deinstallation', $headline, $page);

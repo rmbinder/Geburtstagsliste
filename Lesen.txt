@@ -1,4 +1,4 @@
-Geburtstagsliste 2.0.0
+Geburtstagsliste 2.0.1
 
 Dieses Plugin erzeugt für einen bestimmten Zeitraum eine Geburtstags- und Jubiläumsliste der Mitglieder.
  
@@ -18,7 +18,7 @@ Zur Installation sind folgende Schritte durchzuführen:
 
 1.1 Im Ordner adm_plugins einen neuen Ordner mit dem Namen geburtstagsliste erstellen
 
-1.2 Alle Dateien (und Ordner) des Ordners geburtstagsliste aus der entpackten Datei geburtstagsliste_2.0.0.zip in diesen Ordner kopieren.
+1.2 Alle Dateien (und Ordner) des Ordners geburtstagsliste aus der entpackten Datei geburtstagsliste....zip in diesen Ordner kopieren.
 
 1.3 In der Datei my_body_bottom.php folgende Zeilen einfügen:
 
@@ -56,34 +56,18 @@ Zur Installation sind folgende Schritte durchzuführen:
 2.2 wie unter Punkt 1.2 beschrieben
 
 2.3 wie unter Punkt 1.3 beschrieben
-
-2.4 * * * ACHTUNG   * * *
-    Mit dieser Version werden einige Konfigurationsdaten in einem geänderten Datenformat in der Datenbank gespeichert. 
-    Dazu wird beim erstmaligen Einbinden des Plugins eine Konvertierungsroutine durchlaufen. Wird dieser Konvertierungsvorgang
-    nicht erfolgreich abgeschlossen, so zeigt sich dies durch verschiedene Fehlermeldungen wie z.B. "undefined index" usw.
-    In diesem Fall müssen nachträglich alle Konfigurationsdaten des Plugins in der Admidio-Datenbank gelöscht werden.
-
-    Dazu gibt es mehrere Möglichkeiten:
-
-    2.4.1 Entweder nach dem Start des Plugins
-          - über Einstellungen-Optionen die Deinstallationsroutine aufrufen
-
-    2.4.2 oder vor dem Start des Plugins
-          - folgendes PHP-Programm über die Adresszeile des Browsers ausführen: 
-            <Pfad der Admidio-Installation>/adm_plugins/<Name des Pluginordners von Geburtstagsliste>/preferences_function.php?mode=2
-          z.B. www.admidio.meinewebseite.de/adm_plugins/geburtstagsliste/preferences_function.php?mode=2
-
-    2.4.3 oder vor dem Start des Plugins
-           - Über phpMyAdmin in der Admidio-Datenbank die Tabelle adm_plugin_preferences suchen.
-            In dieser Tabelle alle Einträge, die mit PGL_ beginnen, löschen
      
-2.5 Admidio starten und das Plugin Geburtstagsliste ausführen
+2.4 Admidio starten und das Plugin Geburtstagsliste ausführen
 
 ******************************************************************************
 
 3. Versionshistorie
 ===================
 
+ * Version	: 2.0.1
+ * Datum        : 02.11.2015
+ * Änderung     : - Fehler (verursacht durch die Methode addHeadline) behoben
+ * 
  * Version	: 2.0.0
  * Datum        : 26.05.2015
  * Änderung     : - Anpassung an Admidio 3.0
@@ -202,4 +186,4 @@ Zur Installation sind folgende Schritte durchzuführen:
 4. Systemanforderungen
 ======================
  
- - Admidio Version 3.0.0 oder höher
+ - Admidio Version 3.0

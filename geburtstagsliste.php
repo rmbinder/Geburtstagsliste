@@ -2,7 +2,7 @@
 /******************************************************************************
  * Geburtstagsliste
  *
- * Version 2.0.0
+ * Version 2.0.1
  *
  * Dieses Plugin erzeugt für einen bestimmten Zeitraum eine Geburtstags- und Jubiläumsliste der Mitglieder.
  * 
@@ -14,11 +14,19 @@
  * License      : GNU Public License 2 http://www.gnu.org/licenses/gpl-2.0.html
  * Autor		    : rmb 
  * 
+ * Version		  : 2.0.1
+ * Datum        : 02.11.2015
+ * Änderung     : - Fehler (verursacht durch die Methode addHeadline) behoben 
+ * 
+ * Version		: 2.0.1
+ * Datum        : 31.10.2015
+ * Änderung     : - Anpassung an den mit Admidio 3.0.2 geänderten Funktionsaufruf (addHeadline -> setHeadline)
+ * 
  * Version		: 2.0.0
  * Datum        : 26.05.2015
  * Änderung     : - Anpassung an Admidio 3.0
- * 				        - Deinstallationsroutine erstellt
- * 				        - Verfahren zum Einbinden des Plugins (include) geändert 
+ * 				  - Deinstallationsroutine erstellt
+ * 				  - Verfahren zum Einbinden des Plugins (include) geändert 
  *                - Berechnungsalgorithmus umgestellt (dadurch unbegrenzte Vorschau von Tagen möglich)
  *                - Menübezeichnungen angepasst (gleichlautend mit anderen Plugins) 
  * 				        - Nur Intern: Verwaltung der Konfigurationsdaten geändert
@@ -60,14 +68,14 @@
  * Version 		: 1.3.0 
  * Datum        : 01.04.2013
  * Änderung     : - Anpassung an Admidio 2.4
- * 				        - Konfigurationsdaten werden nicht mehr in einer config.ini gespeichert,
- * 				          sondern in der Admidio Datenbank abgelegt
- * 				        - Das Menü Einstellungen kann separat über Berechtigungen angezeigt werden
- * 				        - Aufgrund eines Wunsches im Forum kann der Beginn der Anzeige auf den 1. Januar
- * 					        gesetzt werden (Kalenderjahr)
- * 				        - E-Mail-Adressen werden mit einem Link versehen (DieterB) 
- * 				        - Englische Sprachdatei erstellt 
- * 				        - Die Default-Einstellung der Pluginfreigabe wurde erweitert um die Rolle Mitglied 
+ * 				  - Konfigurationsdaten werden nicht mehr in einer config.ini gespeichert,
+ * 				    sondern in der Admidio Datenbank abgelegt
+ * 				  - Das Menü Einstellungen kann separat über Berechtigungen angezeigt werden
+ * 				  - Aufgrund eines Wunsches im Forum kann der Beginn der Anzeige auf den 1. Januar
+ * 					gesetzt werden (Kalenderjahr)
+ * 				  - E-Mail-Adressen werden mit einem Link versehen (DieterB) 
+ * 				  - Englische Sprachdatei erstellt 
+ * 				  - Die Default-Einstellung der Pluginfreigabe wurde erweitert um die Rolle Mitglied 
  *  
  * Version 		: 1.2.3 
  * Datum        : 26.12.2012
