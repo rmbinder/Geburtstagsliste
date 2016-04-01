@@ -1,21 +1,26 @@
 <?php
+/**
+ ***********************************************************************************************
+ * Class manages the data for the birthday list
+ *
+ * @copyright 2004-2016 The Admidio Team
+ * @see http://www.admidio.org/
+ * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
+ ***********************************************************************************************
+ */
+
 /******************************************************************************
  * Klasse verwaltet die Daten für die Anzeige der Geburtstagsliste
- *
- * Copyright    : (c) 2004 - 2015 The Admidio Team
- * Homepage     : http://www.admidio.org
- * License      : GNU Public License 2 http://www.gnu.org/licenses/gpl-2.0.html
- *
  *
  * Folgende Methoden stehen zur Verfügung:
  *
  * generate_listData()		- erzeugt die Arrays listData und headerData für den Report
  * generate_dateMinMax		- erzeugt die Min- und Max-Datumsangaben zur Filterung
- * 
- *****************************************************************************/ 
+ *
+ *****************************************************************************/
 
 class GenList
-{    
+{
     public	$headerData = array();               ///< Array mit allen Spaltenüberschriften
     public	$listData  	= array();               ///< Array mit den Daten für die Liste
 
@@ -25,8 +30,9 @@ class GenList
     public 	$date_min = 0;
     public 	$date_max = 0;
 
-	/** Constructor creates the object 
-	 */
+    /**
+     * GenList constructor
+     */
     public function __construct($config, $previewDays, $month)
     {		
 		$this->conf=trim($config,'X');
@@ -36,7 +42,10 @@ class GenList
 		$this->generate_dateMinMax();
     }
 
-    // erzeugt die Arrays listData und headerData 
+    /**
+     * Erzeugt die Arrays listData und headerData für die Anzeige
+     * @return void
+     */
 	public function generate_listData()
 	{
 		global $gDb, $gProfileFields, $gCurrentOrganization, $pPreferences;
@@ -64,9 +73,9 @@ class GenList
              	AND (  cat_org_id = '.$gCurrentOrganization->getValue('org_id').'
                	OR cat.cat_org_id IS NULL )
              	AND mem.mem_end = \'9999-12-31\' ';
-		$result = $gDb->query($sql);
-	
-		while($row = $gDb->fetch_array($result))
+		$statement = $gDb->query($sql);
+
+		while ($row = $statement->fetch())
 		{
 			$workarray[$row['mem_usr_id']] = $row['mem_usr_id'];
 		}
@@ -191,7 +200,10 @@ class GenList
 		}		
 	}	
 	
-	//generiert die Datumsgrenzen Min und Max für die Filterung
+    /**
+     * Generiert die Datumsgrenzen Min und Max für die Filterung
+     * @return void
+     */
 	private function generate_dateMinMax()
 	{
 		global  $pPreferences;
@@ -230,5 +242,3 @@ class GenList
 		}
 	}
 }
-
-?>

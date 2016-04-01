@@ -1,18 +1,19 @@
 <?php
-/******************************************************************************
+/**
+ ***********************************************************************************************
  * Check message information and save it
  *
- * Copyright    : (c) 2004 - 2015 The Admidio Team
- * Homepage     : http://www.admidio.org
- * License      : GNU Public License 2 http://www.gnu.org/licenses/gpl-2.0.html
+ * @copyright 2004-2016 The Admidio Team
+ * @see http://www.admidio.org/
+ * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
  *
- * message_send.php ist eine modifizierte messages_send.php
- *  
+ * Hinweis:  message_send.php ist eine modifizierte messages_send.php
+ *
  * Parameters:
  *
- * usr_id  - Send email to this user
- * 
- *****************************************************************************/
+ * usr_id  : Send email to this user
+ ***********************************************************************************************
+ */
 
 require_once(substr(__FILE__, 0,strpos(__FILE__, 'adm_plugins')-1).'/adm_program/system/common.php');
 require_once(substr(__FILE__, 0,strpos(__FILE__, 'adm_plugins')-1).'/adm_program/system/template.php');
@@ -202,8 +203,9 @@ if ($sendResult === TRUE)
 	$sql = "SELECT MAX(msg_con_id) as max_id
           	FROM ". TBL_MESSAGES;
 
-    $result = $gDb->query($sql);
-    $row = $gDb->fetch_array($result);
+    $statement = $gDb->query($sql);
+    $row = $statement->fetch();
+
     $getMsgId = $row['max_id'] + 1;
 
     $sql = "INSERT INTO ". TBL_MESSAGES. " (msg_type, msg_con_id, msg_part_id, msg_subject, msg_usr_id_sender, msg_usr_id_receiver, msg_message, msg_timestamp, msg_read) 
@@ -231,5 +233,3 @@ else
 {
     $gMessage->show($sendResult.'<br />'.$gL10n->get('SYS_EMAIL_NOT_SEND', $sendResult));
 }
-
-?>

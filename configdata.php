@@ -1,15 +1,14 @@
 <?php
-/******************************************************************************
- * 
- * configdata.php
- *   
+/**
+ ***********************************************************************************************
  * Konfigurationsdaten fuer das Admidio-Plugin Geburtstagsliste
- * 
- * Copyright    : (c) 2004 - 2015 The Admidio Team
- * Homepage     : http://www.admidio.org
- * License      : GNU Public License 2 http://www.gnu.org/licenses/gpl-2.0.html
- * 
- ****************************************************************************/
+ *
+ * @copyright 2004-2016 The Admidio Team
+ * @see http://www.admidio.org/
+ * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
+ *
+ ***********************************************************************************************
+ */
 
 global $gL10n, $gProfileFields;
 
@@ -19,7 +18,7 @@ $config_default['Pluginfreigabe']['freigabe'] 			= array(getRole_IDPGL($gL10n->g
 $config_default['Pluginfreigabe']['freigabe_config'] 	= array(getRole_IDPGL($gL10n->get('SYS_WEBMASTER')),
 															getRole_IDPGL($gL10n->get('SYS_MEMBER')) );        		
 
-$config_default['Konfigurationen'] = array('col_desc' 	=> array($gL10n->get('PGL_PATTERN')),
+$config_default['Konfigurationen'] = array('col_desc' 	=> array($gL10n->get('PLG_GEBURTSTAGSLISTE_PATTERN')),
 										'col_sel' 		=> array('p'.$gProfileFields->getProperty('BIRTHDAY', 'usf_id')),
 										'col_values' 	=> array('50,60,70,80'),
 										'col_suffix' 	=> array('. Geburtstag am #Day#.#Month#.#Year#'),
@@ -50,5 +49,3 @@ $config_default['Plugininformationen']['stand'] = '';
  *  Bereits gespeicherte Werte in der Datenbank können nach einer Änderung nicht mehr eingelesen werden!
  */
 $dbtoken  = '#_#';  
-
-?>

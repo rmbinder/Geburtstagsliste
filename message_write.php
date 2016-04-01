@@ -1,20 +1,21 @@
 <?php
-/******************************************************************************
+/**
+ ***********************************************************************************************
  * E-Mails versenden aus dem Plugin Geburtstagsliste
  *
- * Copyright    : (c) 2004 - 2015 The Admidio Team
- * Homepage     : http://www.admidio.org
- * License      : GNU Public License 2 http://www.gnu.org/licenses/gpl-2.0.html
+ * @copyright 2004-2016 The Admidio Team
+ * @see http://www.admidio.org/
+ * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
  *
- * message_write.php ist eine modifizierte messages_write.php
- *   
- * Parameters:    
+ * Hinweis:  message_write.php ist eine modifizierte messages_write.php
  *
- * usr_id    - E-Mail an den entsprechenden Benutzer schreiben
- * configtext - Text in der letzten Spalte (Konfigurationsspalte)
- * config	 - die gewählte Konfiguration
+  * Parameters:
  *
- *****************************************************************************/
+ * usr_id       : E-Mail an den entsprechenden Benutzer schreiben
+ * configtext   : Text in der letzten Spalte (Konfigurationsspalte)
+ * config       : die gewählte Konfiguration
+ ***********************************************************************************************
+ */
 
 // Pfad des Plugins ermitteln
 $plugin_folder_pos = strpos(__FILE__, 'adm_plugins') + 11;
@@ -29,7 +30,7 @@ require_once($plugin_path. '/'.$plugin_folder.'/classes/configtable.php');
  
 $getUserId      = admFuncVariableIsValid($_GET, 'usr_id', 'numeric', array('defaultValue' => 0));
 $getConfigText  = admFuncVariableIsValid($_GET, 'configtext', 'string');
-$getConfig    	= admFuncVariableIsValid($_GET, 'config', 'numeric', array('defaultValue' => 0));
+$getConfig      = admFuncVariableIsValid($_GET, 'config', 'numeric', array('defaultValue' => 0));
 
 $getSubject = '';
 
@@ -159,7 +160,6 @@ if (strlen($getSubject) > 0)
 }
     
 // show form
-//$form = new HtmlForm('mail_send_form', $g_root_path.'/adm_plugins/'.$plugin_folder.'/message_send.php?'.$formParam, $page, 'default', true);
 $form = new HtmlForm('mail_send_form', $g_root_path.'/adm_plugins/'.$plugin_folder.'/message_send.php?'.$formParam, $page);
 $form->openGroupBox('gb_mail_contact_details', $gL10n->get('SYS_CONTACT_DETAILS'));
     
@@ -207,5 +207,3 @@ $page->addHtml($form->show(false));
 
 // show page
 $page->show();
-
-?>

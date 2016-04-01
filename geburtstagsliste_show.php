@@ -1,29 +1,27 @@
 <?php
- /******************************************************************************
- * geburtstagsliste_show
+/**
+ ***********************************************************************************************
+ * Zeigt die Geburtstagsliste auf dem Bildschirm an
  *
- * Hauptprogramm für das Admidio-Plugin Geburtstagsliste
+ * @copyright 2004-2016 The Admidio Team
+ * @see http://www.admidio.org/
+ * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
  *
- * Copyright    : (c) 2004 - 2015 The Admidio Team
- * Homepage     : http://www.admidio.org
- * License      : GNU Public License 2 http://www.gnu.org/licenses/gpl-2.0.html  
- *   
- * Hinweis:
- * 
- * geburtstagsliste_show ist eine modifizierte lists_show
- * 
+ * Hinweis:   geburtstagsliste_show ist eine modifierte lists_show
+ *
  * Parameters:
  *
- * mode   		  : Output (html, print, csv-ms, csv-oo, pdf, pdfl)
+ * mode   		: Output (html, print, csv-ms, csv-oo, pdf, pdfl)
  * full_screen  : 0 - (Default) show sidebar, head and page bottom of html page
  *                1 - Only show the list without any other html unnecessary elements
- * config		    : Die gewählte Konfiguration (Alte Bezeichnung Fokus; die Standardeinstellung wurde über Einstellungen-Optionen festgelegt)
- * month		    : Der gewählte Monat
+ * config		: Die gewählte Konfiguration (Alte Bezeichnung Fokus; die Standardeinstellung wurde über Einstellungen-Optionen festgelegt)
+ * month		: Der gewählte Monat
  * previewdays	: Die vorauszuschauenden Tage (Default wurde in Optionen festgelegt)
  * previewmode	: days   - (Default) Die Anzeige einer bestimmten Anzahl von Tagen wurde gewählt
- * 				        months - Die Anzeige für einen Monat wurde gewählt
- *****************************************************************************/
- 
+ * 				  months - Die Anzeige für einen Monat wurde gewählt
+ ***********************************************************************************************
+ */
+
 // Pfad des Plugins ermitteln
 $plugin_folder_pos = strpos(__FILE__, 'adm_plugins') + 11;
 $plugin_file_pos   = strpos(__FILE__, basename(__FILE__));
@@ -39,19 +37,19 @@ require_once($plugin_path. '/'.$plugin_folder.'/classes/genlist.php');
 $pPreferences = new ConfigTablePGL();
 $pPreferences->read();
 
-$monate = array('00' => $gL10n->get('PGL_ALL_MONTHS'),
-				'01' => $gL10n->get('PGL_JANUARY'),
-        		'02' => $gL10n->get('PGL_FEBRUARY'),
-        		'03' => $gL10n->get('PGL_MARCH'),
-                '04' => $gL10n->get('PGL_APRIL'),
-                '05' => $gL10n->get('PGL_MAY'),
-                '06' => $gL10n->get('PGL_JUNE'),
-                '07' => $gL10n->get('PGL_JULY'),
-                '08' => $gL10n->get('PGL_AUGUST'),
-                '09' => $gL10n->get('PGL_SEPTEMBER'),
-                '10' => $gL10n->get('PGL_OCTOBER'),
-                '11' => $gL10n->get('PGL_NOVEMBER'),
-                '12' => $gL10n->get('PGL_DECEMBER')   );
+$monate = array('00' => $gL10n->get('PLG_GEBURTSTAGSLISTE_ALL_MONTHS'),
+				'01' => $gL10n->get('PLG_GEBURTSTAGSLISTE_JANUARY'),
+        		'02' => $gL10n->get('PLG_GEBURTSTAGSLISTE_FEBRUARY'),
+        		'03' => $gL10n->get('PLG_GEBURTSTAGSLISTE_MARCH'),
+                '04' => $gL10n->get('PLG_GEBURTSTAGSLISTE_APRIL'),
+                '05' => $gL10n->get('PLG_GEBURTSTAGSLISTE_MAY'),
+                '06' => $gL10n->get('PLG_GEBURTSTAGSLISTE_JUNE'),
+                '07' => $gL10n->get('PLG_GEBURTSTAGSLISTE_JULY'),
+                '08' => $gL10n->get('PLG_GEBURTSTAGSLISTE_AUGUST'),
+                '09' => $gL10n->get('PLG_GEBURTSTAGSLISTE_SEPTEMBER'),
+                '10' => $gL10n->get('PLG_GEBURTSTAGSLISTE_OCTOBER'),
+                '11' => $gL10n->get('PLG_GEBURTSTAGSLISTE_NOVEMBER'),
+                '12' => $gL10n->get('PLG_GEBURTSTAGSLISTE_DECEMBER')   );
 
 // Initialize and check the parameters
 $validValues = array();
@@ -59,26 +57,26 @@ foreach ($pPreferences->config['Konfigurationen']['col_desc'] as $key => $dummy)
 {
 	$validValues[] = 'X'.$key.'X';
 }
-$getConfig 		= admFuncVariableIsValid($_GET, 'config', 'string', array('defaultValue' => 'X'.$pPreferences->config['Optionen']['config_default'].'X', 'validValues' => $validValues) );
+$getConfig  = admFuncVariableIsValid($_GET, 'config', 'string', array('defaultValue' => 'X'.$pPreferences->config['Optionen']['config_default'].'X', 'validValues' => $validValues) );
 
 $validValues = array(0=>'X'.$pPreferences->config['Optionen']['vorschau_tage_default'].'X');
 foreach ($pPreferences->config['Optionen']['vorschau_liste'] as $item)
 {
 	$validValues[] =  'X'.$item.'X';
 }
-$getPreviewDays	= admFuncVariableIsValid($_GET, 'previewdays', 'string', array('defaultValue' => 'X'.$pPreferences->config['Optionen']['vorschau_tage_default'].'X',  'validValues' => $validValues));
+$getPreviewDays = admFuncVariableIsValid($_GET, 'previewdays', 'string', array('defaultValue' => 'X'.$pPreferences->config['Optionen']['vorschau_tage_default'].'X',  'validValues' => $validValues));
 unset($validValues);
 
 $getMode        = admFuncVariableIsValid($_GET, 'mode', 'string', array('requireValue' => true, 'validValues' => array('csv-ms', 'csv-oo', 'html', 'print', 'pdf', 'pdfl' )));
 $getFullScreen  = admFuncVariableIsValid($_GET, 'full_screen', 'numeric');
-$getMonth 		= admFuncVariableIsValid($_GET, 'month', 'string', array('validValues' => array('00','01', '02', '03', '04', '05', '06','07','08','09','10','11','12' )));
+$getMonth       = admFuncVariableIsValid($_GET, 'month', 'string', array('validValues' => array('00','01', '02', '03', '04', '05', '06','07','08','09','10','11','12' )));
 
 $liste = new GenList($getConfig, $getPreviewDays, $getMonth);
 $liste->generate_listData();
 
-$subheadline= $gL10n->get('PGL_FOR_THE_PERIOD',date("d.m.Y",strtotime('1 day',$liste->date_min)),date("d.m.Y",$liste->date_max),(trim($getPreviewDays,'X')<0 ? trim($getPreviewDays,'X') : '+'.trim($getPreviewDays,'X')) );
+$subheadline= $gL10n->get('PLG_GEBURTSTAGSLISTE_FOR_THE_PERIOD',date("d.m.Y",strtotime('1 day',$liste->date_min)),date("d.m.Y",$liste->date_max),(trim($getPreviewDays,'X')<0 ? trim($getPreviewDays,'X') : '+'.trim($getPreviewDays,'X')) );
 $subheadline .= ($getMonth>0 ? ' - '.$monate[$getMonth] : '');
-$subheadline .= ' - '.$gL10n->get('PGL_CONFIGURATION').': '.$pPreferences->config['Konfigurationen']['col_desc'][trim($getConfig,'X')];     
+$subheadline .= ' - '.$gL10n->get('PLG_GEBURTSTAGSLISTE_CONFIGURATION').': '.$pPreferences->config['Konfigurationen']['col_desc'][trim($getConfig,'X')];     
         
 // initialize some special mode parameters
 $separator   = '';
@@ -86,7 +84,7 @@ $valueQuotes = '';
 $charset     = '';
 $classTable  = '';
 $orientation = '';
-$filename = $g_organization.'-'.$gL10n->get('PGL_BIRTHDAY_LIST');
+$filename = $g_organization.'-'.$gL10n->get('PLG_GEBURTSTAGSLISTE_BIRTHDAY_LIST');
 
 switch ($getMode)
 {
@@ -130,8 +128,8 @@ $numMembers = count($liste->listData);
 $columnCount = count($liste->headerData);
     
 // define title (html) and headline
-$title = $gL10n->get('PGL_BIRTHDAY_LIST');
-$headline = $gL10n->get('PGL_BIRTHDAY_LIST');
+$title = $gL10n->get('PLG_GEBURTSTAGSLISTE_BIRTHDAY_LIST');
+$headline = $gL10n->get('PLG_GEBURTSTAGSLISTE_BIRTHDAY_LIST');
 
 // if html mode and last url was not a list view then save this url to navigation stack
 if($getMode == 'html' && strpos($gNavigation->getUrl(), 'geburtstagsliste_show.php') === false)
@@ -269,7 +267,7 @@ if($getMode != 'csv')
 		{
     		// show link to pluginpreferences 
     		$listsMenu->addItem('admMenuItemPreferencesLists', $g_root_path. '/adm_plugins/'.$plugin_folder.'/preferences.php', 
-                        $gL10n->get('PGL_SETTINGS'), 'options.png');        
+                        $gL10n->get('PLG_GEBURTSTAGSLISTE_SETTINGS'), 'options.png');        
 		}
          
         $form = new HtmlForm('navbar_export_to_form', '', $page, array('type' => 'navbar', 'setFocus' => false));
@@ -278,7 +276,7 @@ if($getMode != 'csv')
                                   'pdfl' => $gL10n->get('SYS_PDF').' ('.$gL10n->get('SYS_LANDSCAPE').')', 'csv-oo' => $gL10n->get('SYS_CSV').' ('.$gL10n->get('SYS_UTF8').')');
 		$form->addSelectBox('export_list_to', null, $selectBoxEntries, array('showContextDependentFirstEntry' => false));
         
-		$selectBoxEntries = array('' => $gL10n->get('PGL_SELECT_NUMBER_OF_DAYS').' ...');
+		$selectBoxEntries = array('' => $gL10n->get('PLG_GEBURTSTAGSLISTE_SELECT_NUMBER_OF_DAYS').' ...');
     	foreach ($pPreferences->config['Optionen']['vorschau_liste'] as $item)
     	{
     		// eine 0 in der Vorschauliste wird nicht korrekt dargestellt, deshalb alle Werte maskieren
@@ -286,14 +284,14 @@ if($getMode != 'csv')
 		}
         $form->addSelectBox('previewList', null, $selectBoxEntries, array('showContextDependentFirstEntry' => false));
         
-        $selectBoxEntries = array('' => $gL10n->get('PGL_SELECT_MONTH').' ...');
+        $selectBoxEntries = array('' => $gL10n->get('PLG_GEBURTSTAGSLISTE_SELECT_MONTH').' ...');
     	foreach ($monate as $key => $item)
     	{
 			$selectBoxEntries[$key] =  $item;
 		}
         $form->addSelectBox('monthList', null, $selectBoxEntries, array('showContextDependentFirstEntry' => false));
         
-        $selectBoxEntries = array(' ' => $gL10n->get('PGL_SELECT_CONFIGURATION').' ...');
+        $selectBoxEntries = array(' ' => $gL10n->get('PLG_GEBURTSTAGSLISTE_SELECT_CONFIGURATION').' ...');
     	foreach ($pPreferences->config['Konfigurationen']['col_desc'] as $key => $item)
     	{
 			$selectBoxEntries['X'.$key.'X'] =  $item;
@@ -533,4 +531,3 @@ elseif($getMode == 'html' || $getMode == 'print')
     // show complete html page
     $page->show();
 }
-?>

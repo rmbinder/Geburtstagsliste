@@ -1,107 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<language id="de_sie">
-<version id="2.0.2" translator="Rainer M. Binder">
-    <text id="PGL_YEARS_OFFSET" development="new" translation="todo">Jahresversatz</text>
-    <text id="PGL_YEARS_OFFSET_DESC" development="new" translation="todo">Hiermit kann die Anzeige um x Jahre vor- oder zurückversetzt werden (0 entspricht keinem Versatz).</text>
-</version>
-<version id="2.0.0" translator="Rainer M. Binder">
-    <text id="PGL_ALL_MONTHS" development="new" translation="todo">- alle Monate -</text>
-    <text id="PGL_JANUARY" development="new" translation="todo">Januar</text>
-    <text id="PGL_FEBRUARY" development="new" translation="todo">Februar</text>
-    <text id="PGL_MARCH" development="new" translation="todo">März</text>
-    <text id="PGL_APRIL" development="new" translation="todo">April</text>
-    <text id="PGL_MAY" development="new" translation="todo">Mai</text>
-    <text id="PGL_JUNE" development="new" translation="todo">Juni</text>
-    <text id="PGL_JULY" development="new" translation="todo">Juli</text>
-    <text id="PGL_AUGUST" development="new" translation="todo">August</text>
-    <text id="PGL_SEPTEMBER" development="new" translation="todo">September</text>
-    <text id="PGL_OCTOBER" development="new" translation="todo">Oktober</text>
-    <text id="PGL_NOVEMBER" development="new" translation="todo">November</text>
-    <text id="PGL_DECEMBER" development="new" translation="todo">Dezember</text>
-	<text id="PGL_ADD_ANOTHER_CONFIG" development="new" translation="todo">Weitere Konfiguration hinzufügen</text>
-    <text id="PGL_CAT_SELECTION" development="changed" translation="todo">Kategoriewahl</text>
-	<text id="PGL_CAT_SELECTION_CONF_DESC" development="new" translation="todo">Über Kategoriewahl kann eine Konfiguration auf die Angehörigen von Rollen der gewählten Kategorien eingeschränkt werden.\n\n Soll keine Einschränkung erfolgen, so sind beide Felder (Rollenwahl und Kategoriewahl) leer zu lassen.</text>
-	<text id="PGL_COL_DESC" development="changed" translation="todo">Bezeichnung</text>
-	<text id="PGL_COL_DESC_DESC" development="new" translation="todo">Die hier eingetragende Bezeichnung erscheint in der Bildschirmanzeige im Auswahlmenü "Konfiguration wählen...".\n\nEine Konfiguration kann gelöscht werden, indem der Inhalt des Feldes Bezeichnung gelöscht wird.</text>
-	<text id="PGL_COL_SEL" development="changed" translation="todo">Prüfdatum</text>
-	<text id="PGL_COL_SEL_DESC" development="new" translation="todo">Prüfdatum ist das für die Berechnungen verwendete Datumsfeld (Entweder ein Profilfeld vom Typ "Datum" oder bei Wahl einer Rolle, der Beginn der Rollenmitgliedschaft)</text>
-	<text id="PGL_COL_SUFFIX" development="changed" translation="todo">Ergänzungstext</text>
-	<text id="PGL_COL_SUFFIX_DESC" development="new" translation="todo">Der angegebene Text wird an das Lebensjahr oder Jubiläum angehängt.\n\n "ster Geburtstag am #Day#.#Month#" könnte z.B. angezeigt werden als "30ster Geburtstag am 10.02.".\n\nPlatzhalter:\n#Day# = Tag\n#Month# = Monat\n#Year# = Jahr</text>
-	<text id="PGL_COL_VALUES_DESC" development="new" translation="todo">Über Werte kann die Anzeige auf bestimmte Werte gefiltert werden. 30,40,50 bedeutet z.B., dass nur 30., 40. oder 50. Geburtstage oder Jubiläen angezeigt werden. Soll nicht gefiltert werden, so ist das Feld leer zu lassen.</text>
-	<text id="PGL_COLUMN" development="new" translation="todo">Spalte</text>
-	<text id="PGL_CONFIGURATION" development="new" translation="todo">Konfiguration</text>
-	<text id="PGL_CONFIGURATION_DEFAULT_DESC" development="new" translation="todo">Standardeinstellung der Konfigurationen</text>
-  	<text id="PGL_CONFIGURATIONS" development="new" translation="todo">Konfigurationen</text>
-	<text id="PGL_CONFIGURATIONS_DESC" development="new" translation="todo">Beispiel:\nBezeichnung: Runder Geburtstag\nPrüfdatum: Geburtstag\nWerte: 30,40,50,60,70,80 (Wird keine Filterung gewünscht, so ist das Feld leer zu lassen)\nErgänzungstext: . Geburtstag am #Day#.#Month#.</text>
-	<text id="PGL_CONFIGURATIONS_HEADER" development="new" translation="todo">Hier können beliebig viele Konfigurationen für die Geburtstags- und Jubiläumsliste erstellt werden. In der Bildschirmanzeige wird jeweils eine dieser Konfigurationen über "Konfiguration wählen..." als Grundlage für Berechnungen und für die Anzeige verwendet.</text>
-	<text id="PGL_COLUMN_SELECTION_DESC" development="changed" translation="todo">Wählen Sie die Spalten aus, die in der Liste angezeigt werden sollen.</text>
-	<text id="PGL_DEINST_ACTORGONLY" development="new" translation="todo">Nur Daten der aktuellen Organisation löschen.</text>
-	<text id="PGL_DEINST_ALLORG" development="new" translation="todo">Daten in allen Organisationen löschen.</text>
-	<text id="PGL_DEINST_DATA_DELETE_ERROR" development="new" translation="todo">- Beim Löschen der Daten ist ein Fehler aufgetreten.\n</text>
-	<text id="PGL_DEINST_DATA_DELETE_SUCCESS" development="new" translation="todo">- Die vom Plugin angelegten Daten wurden gelöscht.\n</text>
-	<text id="PGL_DEINST_ENDMESSAGE" development="new" translation="todo">\nUm das Plugin vollständig zu entfernen, muss jetzt der Browser geschlossen und die Programmdateien und der Link im Menü entfernt werden. Der Button "Weiter" initialisert das Plugin neu mit Standardwerten.</text>
-	<text id="PGL_DEINST_STARTMESSAGE" development="new" translation="todo">Folgende Löschvorgänge wurden durchgeführt:\n\n</text>
-	<text id="PGL_DEINST_TABLE_DELETE_ERROR" development="new" translation="todo">- Die Tabelle "adm_plugin_preferences" konnte nicht gelöscht werden, da sich darin noch Daten eines anderen Plugins befinden.\n</text>
-	<text id="PGL_DEINST_TABLE_DELETE_SUCCESS" development="new" translation="todo">- Die vom Plugin angelegte Tabelle "adm_plugin_preferences" wurde gelöscht.\n</text>
-	<text id="PGL_DEINST_TEXTS_DELETE_ERROR" development="new" translation="todo">- Beim Löschen der E-Mail-Texte ist ein Fehler aufgetreten.\n</text>
-	<text id="PGL_DEINST_TEXTS_DELETE_SUCCESS" development="new" translation="todo">- Die vom Plugin angelegten E-Mail-Texte wurden gelöscht.\n</text>
-	<text id="PGL_DEINSTALLATION" development="new" translation="todo">Deinstallation</text>
-	<text id="PGL_DEINSTALLATION_DESC" development="new" translation="todo">Über die Deinstallation können vom Plugin erzeugte Einträge in der Datenbank gelöscht werden.</text>
-	<text id="PGL_DEINSTALLATION_FORM_DESC" development="new" translation="todo">Wählen Sie den Installationsumfang aus:\n\n***ACHTUNG: Diese Routine löscht nur Einträge in der Admidio-Datenbank. Programmdateien und der Link im Menü werden nicht gelöscht! ***</text>
-	<text id="PGL_DOCUMENTATION" development="new" translation="todo">Dokumentation</text>
-	<text id="PGL_DOCUMENTATION_OPEN" development="new" translation="todo">Dokumentation öffnen</text>
-	<text id="PGL_DOCUMENTATION_OPEN_DESC" development="new" translation="todo">Hiermit kann die Dokumentation zum Plugin geöffnet werden (Eine bestehende Internetverbindung wird vorausgesetzt, da sich die Daten auf admidio.org befinden).</text>
-	<text id="PGL_ERROR_MIN_CONFIG" development="new" translation="todo">FEHLER: Mindestens eine Konfiguration muss vorhanden sein!</text>
-	<text id="PGL_LINK_TO_DEINSTALLATION" development="new" translation="todo">Zur Deinstallation wechseln</text>
-    <text id="PGL_NOTIFICATION_MAIL_TEXT" development="changed" translation="todo">E-Mail-Vorlage</text>
-    <text id="PGL_NOTIFICATION_MAIL_TEXT_DESC" development="changed" translation="todo">Hier kann der Text für eine E-Mail angepasst und ergänzt werden. Der Text ist in 2 Bereiche (Betreff &amp; Inhalt) unterteilt und wird durch die Zeichenfolge #subject# und #content# identifiziert. Danach folgt dann der Inhalt für den Bereich. In jeder Mail können Platzhalter benutzt werden, welche dann zur Laufzeit durch die entsprechenden Inhalte ersetzt werden.\n\nWICHTIG: Zum Versenden von Mails muss das Profilfeld E-Mail in einer Spalte angezeigt werden.\n\nPlatzhalter:\n%user_first_name% = Vorname des Mitglieds\n%user_last_name% = Nachname des Mitglieds\n%organization_long_name% = Name der Organisation\n%config% = Text der letzten Spalte Konfigurationsspalte)</text>
-	<text id="PGL_ORG_CHOICE" development="new" translation="todo">Organisationswahl</text>
-	<text id="PGL_PATTERN" development="changed" translation="todo">Runde Geburtstage</text>
-	<text id="PGL_PGLMAIL_NOTIFICATION" development="changed" translation="todo">#subject# Gratulation\n#content# Sehr geehrtes Mitglied,\n\nzu Ihrem %config% übermitteln wir Ihnen die besten Glückwünsche.\n\nMit freundlichen Grüßen\n%organization_long_name%</text>
-  	<text id="PGL_PREVIEW_DAYS_DESC" development="changed" translation="todo">Standardeinstellung der Vorschautage</text>
-	<text id="PGL_PREVIEW_LIST_DESC" development="changed" translation="todo">Die Werte für die Vorschauliste (Mehrere Einträge sind durch Kommata zu trennen; z.B.: -10,-1,0,1,2,10,20,30,365,1000)</text>
-    <text id="PGL_ROLE_SELECTION" development="changed" translation="todo">Rollenwahl</text>
-	<text id="PGL_ROLE_SELECTION_CONF_DESC" development="new" translation="todo">Über Rollenwahl kann eine Konfiguration auf die Angehörigen der gewählten Rollen eingeschränkt werden.\n\n Soll keine Einschränkung erfolgen, so sind beide Felder (Rollenwahl und Kategoriewahl) leer zu lassen.</text>
-	<text id="PGL_ROLE_SELECTION_DESC" development="changed" translation="todo">Wählen Sie die Rollen aus, deren Mitglieder das Plugin aufrufen dürfen.</text>
-	<text id="PGL_ROLE_SELECTION_DESC2" development="changed" translation="todo">Wählen Sie die Rollen aus, deren Mitglieder die Einstellungen des Plugins aufrufen dürfen.</text>
-    <text id="PGL_SELECT_CONFIGURATION" development="new" translation="todo">Konfiguration wählen</text>
-    <text id="PGL_SELECT_NUMBER_OF_DAYS" development="changed" translation="todo">Vorschautage wählen</text>
-</version>
-<version id="1.3.0" translator="Rainer M. Binder">
-	<text id="PGL_SHOW_CALENDAR_YEAR" development="new" translation="todo">Kalenderjahr</text>
-	<text id="PGL_SHOW_CALENDAR_YEAR_DESC" development="new" translation="todo">Standardmäßig wird ab dem aktuellen Datum angezeigt. Soll die Anzeige ab dem 1. Januar des aktuellen Jahres beginnen, so ist der Haken zu setzen.</text>
-</version>
-<version id="1.2.3" translator="Rainer M. Binder">
-	<!-- System-Phrases for use in every module -->
-	<text id="PGL_BIRTHDAY_LIST" development="new" translation="todo">Geburtstagsliste</text>
-	<text id="PGL_SETTINGS" development="new" translation="todo">Einstellungen</text>
-	
-	<!-- Phrases for column control -->
-	<text id="PGL_COLUMNS" development="new" translation="todo">Spalten</text>
-	<text id="PGL_COLUMN_SELECTION" development="new" translation="todo">Spaltenauswahl</text>
-	
-	<!-- Phrases for column configuration -->
-	<text id="PGL_COL" development="new" translation="todo">Spalte</text>
-	<text id="PGL_COL_VALUES" development="new" translation="todo">Werte</text>
-		
-	<!-- Phrases for options -->
-	<text id="PGL_OPTIONS" development="new" translation="todo">Optionen</text>
-	<text id="PGL_PREVIEW_DAYS" development="new" translation="todo">Vorschautage</text>
-	<text id="PGL_PREVIEW_LIST" development="new" translation="todo">Vorschauliste</text>
-   
-    <!-- Phrases for plugin control -->
-    <text id="PGL_PLUGIN_CONTROL" development="new" translation="todo">Pluginfreigabe</text>
-  
-    <!-- Phrases for plugin information -->
-    <text id="PGL_PLUGIN_DATE" development="new" translation="todo">Stand</text>
-    <text id="PGL_PLUGIN_INFORMATION" development="new" translation="todo">Plugininformationen</text>
-    <text id="PGL_PLUGIN_NAME" development="new" translation="todo">Name des Plugins</text>
-    <text id="PGL_PLUGIN_VERSION" development="new" translation="todo">Version</text>
-    
-    <!-- Phrases for modul geburtstagsliste_show -->
-  
-    <text id="PGL_FOR_THE_PERIOD" development="new" translation="todo">Für den Zeitraum %VAR1% bis %VAR2% (%VAR3% Tage)</text>
-    <text id="PGL_SELECT_MONTH" development="new" translation="todo">Monat wählen</text>    
-
-</version>
-</language>
+<resources>
+    <string name="PLG_GEBURTSTAGSLISTE_ADD_ANOTHER_COLUMN">Weitere Spalte hinzufügen</string>
+    <string name="PLG_GEBURTSTAGSLISTE_ADD_ANOTHER_CONFIG">Weitere Konfiguration hinzufügen</string>
+    <string name="PLG_GEBURTSTAGSLISTE_ALL_MONTHS">- alle Monate -</string>
+    <string name="PLG_GEBURTSTAGSLISTE_APRIL">April</string>
+    <string name="PLG_GEBURTSTAGSLISTE_AUGUST">August</string>
+    <string name="PLG_GEBURTSTAGSLISTE_BIRTHDAY_LIST">Geburtstagsliste</string>
+    <string name="PLG_GEBURTSTAGSLISTE_CAT_SELECTION">Kategoriewahl</string>
+    <string name="PLG_GEBURTSTAGSLISTE_CAT_SELECTION_CONF_DESC">Über Kategoriewahl kann eine Konfiguration auf die Angehörigen von Rollen der gewählten Kategorien eingeschränkt werden.\n\n Soll keine Einschränkung erfolgen, so sind beide Felder (Rollenwahl und Kategoriewahl) leer zu lassen.</string>
+    <string name="PLG_GEBURTSTAGSLISTE_COL">Spalte</string>
+    <string name="PLG_GEBURTSTAGSLISTE_COLUMN">Spalte</string>
+    <string name="PLG_GEBURTSTAGSLISTE_COLUMNS">Spalten</string>
+    <string name="PLG_GEBURTSTAGSLISTE_COLUMN_SELECTION">Spaltenauswahl</string>
+    <string name="PLG_GEBURTSTAGSLISTE_COLUMN_SELECTION_DESC">Hier werden die Spalten ausgewählt, die in der Liste angezeigt werden sollen.</string>
+    <string name="PLG_GEBURTSTAGSLISTE_COL_DESC">Bezeichnung</string>
+    <string name="PLG_GEBURTSTAGSLISTE_COL_DESC_DESC">Die hier eingetragende Bezeichnung erscheint in der Bildschirmanzeige im Auswahlmenü "Konfiguration wählen...".\n\nEine Konfiguration kann gelöscht werden, indem der Inhalt des Feldes Bezeichnung gelöscht wird.</string>
+    <string name="PLG_GEBURTSTAGSLISTE_COL_SEL">Prüfdatum</string>
+    <string name="PLG_GEBURTSTAGSLISTE_COL_SEL_DESC">Prüfdatum ist das für die Berechnungen verwendete Datumsfeld (Entweder ein Profilfeld vom Typ "Datum" oder bei Wahl einer Rolle, der Beginn der Rollenmitgliedschaft)</string>
+    <string name="PLG_GEBURTSTAGSLISTE_COL_SUFFIX">Ergänzungstext</string>
+    <string name="PLG_GEBURTSTAGSLISTE_COL_SUFFIX_DESC">Der angegebene Text wird an das Lebensjahr oder Jubiläum angehängt.\n\n "ster Geburtstag am #Day#.#Month#" könnte z.B. angezeigt werden als "30ster Geburtstag am 10.02.".\n\nPlatzhalter:\n#Day# = Tag\n#Month# = Monat\n#Year# = Jahr</string>
+    <string name="PLG_GEBURTSTAGSLISTE_COL_VALUES">Werte</string>
+    <string name="PLG_GEBURTSTAGSLISTE_COL_VALUES_DESC">Über Werte kann die Anzeige auf bestimmte Werte gefiltert werden. 30,40,50 bedeutet z.B., dass nur 30., 40. oder 50. Geburtstage oder Jubiläen angezeigt werden. Soll nicht gefiltert werden, so ist das Feld leer zu lassen.</string>
+    <string name="PLG_GEBURTSTAGSLISTE_CONFIGURATION">Konfiguration</string>
+    <string name="PLG_GEBURTSTAGSLISTE_CONFIGURATIONS">Konfigurationen</string>
+    <string name="PLG_GEBURTSTAGSLISTE_CONFIGURATIONS_DESC">Beispiel:\nBezeichnung: Runder Geburtstag\nPrüfdatum: Geburtstag\nWerte: 30,40,50,60,70,80 (Wird keine Filterung gewünscht, so ist das Feld leer zu lassen)\nErgänzungstext: . Geburtstag am #Day#.#Month#.</string>
+    <string name="PLG_GEBURTSTAGSLISTE_CONFIGURATIONS_HEADER">Hier können beliebig viele Konfigurationen für die Geburtstags- und Jubiläumsliste erstellt werden. In der Bildschirmanzeige wird jeweils eine dieser Konfigurationen über "Konfiguration wählen..." als Grundlage für Berechnungen und für die Anzeige verwendet.</string>
+    <string name="PLG_GEBURTSTAGSLISTE_CONFIGURATION_DEFAULT_DESC">Standardeinstellung der Konfigurationen</string>
+    <string name="PLG_GEBURTSTAGSLISTE_DECEMBER">Dezember</string>
+    <string name="PLG_GEBURTSTAGSLISTE_DEINSTALLATION">Deinstallation</string>
+    <string name="PLG_GEBURTSTAGSLISTE_DEINSTALLATION_DESC">Über die Deinstallation können vom Plugin erzeugte Einträge in der Datenbank gelöscht werden.</string>
+    <string name="PLG_GEBURTSTAGSLISTE_DEINSTALLATION_FORM_DESC">Wählen Sie den Installationsumfang aus:\n\n***ACHTUNG: Diese Routine löscht nur Einträge in der Admidio-Datenbank. Programmdateien und der Link im Menü werden nicht gelöscht! ***</string>
+    <string name="PLG_GEBURTSTAGSLISTE_DEINST_ACTORGONLY">Nur Daten der aktuellen Organisation löschen.</string>
+    <string name="PLG_GEBURTSTAGSLISTE_DEINST_ALLORG">Daten in allen Organisationen löschen.</string>
+    <string name="PLG_GEBURTSTAGSLISTE_DEINST_DATA_DELETE_ERROR">- Beim Löschen der Daten ist ein Fehler aufgetreten.\n</string>
+    <string name="PLG_GEBURTSTAGSLISTE_DEINST_DATA_DELETE_SUCCESS">- Die vom Plugin angelegten Daten wurden gelöscht.\n</string>
+    <string name="PLG_GEBURTSTAGSLISTE_DEINST_ENDMESSAGE">\nUm das Plugin vollständig zu entfernen, muss jetzt der Browser geschlossen und die Programmdateien und der Link im Menü entfernt werden. Der Button "Weiter" initialisert das Plugin neu mit Standardwerten.</string>
+    <string name="PLG_GEBURTSTAGSLISTE_DEINST_STARTMESSAGE">Folgende Löschvorgänge wurden durchgeführt:\n\n</string>
+    <string name="PLG_GEBURTSTAGSLISTE_DEINST_TABLE_DELETE_ERROR">- Die Tabelle "adm_plugin_preferences" konnte nicht gelöscht werden, da sich darin noch Daten eines anderen Plugins befinden.\n</string>
+    <string name="PLG_GEBURTSTAGSLISTE_DEINST_TABLE_DELETE_SUCCESS">- Die vom Plugin angelegte Tabelle "adm_plugin_preferences" wurde gelöscht.\n</string>
+    <string name="PLG_GEBURTSTAGSLISTE_DEINST_TEXTS_DELETE_ERROR">- Beim Löschen der E-Mail-Texte ist ein Fehler aufgetreten.\n</string>
+    <string name="PLG_GEBURTSTAGSLISTE_DEINST_TEXTS_DELETE_SUCCESS">- Die vom Plugin angelegten E-Mail-Texte wurden gelöscht.\n</string>
+    <string name="PLG_GEBURTSTAGSLISTE_DOCUMENTATION">Dokumentation</string>
+    <string name="PLG_GEBURTSTAGSLISTE_DOCUMENTATION_OPEN">Dokumentation öffnen</string>
+    <string name="PLG_GEBURTSTAGSLISTE_DOCUMENTATION_OPEN_DESC">Hiermit kann die Dokumentation zum Plugin geöffnet werden (Eine bestehende Internetverbindung wird vorausgesetzt, da sich die Daten auf admidio.org befinden).</string>
+    <string name="PLG_GEBURTSTAGSLISTE_ERROR_MIN_CONFIG">FEHLER: Mindestens eine Konfiguration muss vorhanden sein!</string>
+    <string name="PLG_GEBURTSTAGSLISTE_FEBRUARY">Februar</string>
+    <string name="PLG_GEBURTSTAGSLISTE_FOR_THE_PERIOD">Für den Zeitraum #VAR1# bis #VAR2# (#VAR3# Tage)</string>
+    <string name="PLG_GEBURTSTAGSLISTE_JANUARY">Januar</string>
+    <string name="PLG_GEBURTSTAGSLISTE_JULY">Juli</string>
+    <string name="PLG_GEBURTSTAGSLISTE_JUNE">Juni</string>
+    <string name="PLG_GEBURTSTAGSLISTE_LINK_TO_DEINSTALLATION">Zur Deinstallation wechseln</string>
+    <string name="PLG_GEBURTSTAGSLISTE_MARCH">März</string>
+    <string name="PLG_GEBURTSTAGSLISTE_MAY">Mai</string>
+    <string name="PLG_GEBURTSTAGSLISTE_NOTIFICATION_MAIL_TEXT">E-Mail-Vorlage</string>
+    <string name="PLG_GEBURTSTAGSLISTE_NOTIFICATION_MAIL_TEXT_DESC">Hier kann der Text für eine E-Mail angepasst und ergänzt werden. Der Text ist in 2 Bereiche (Betreff &amp; Inhalt) unterteilt und wird durch die Zeichenfolge #subject# und #content# identifiziert. Danach folgt dann der Inhalt für den Bereich. In jeder Mail können Platzhalter benutzt werden, welche dann zur Laufzeit durch die entsprechenden Inhalte ersetzt werden.\n\nWICHTIG: Zum Versenden von Mails muss das Profilfeld E-Mail in einer Spalte angezeigt werden.\n\nPlatzhalter:\n#user_first_name# = Vorname des Mitglieds\n#user_last_name# = Nachname des Mitglieds\n#organization_long_name# = Name der Organisation\n#config# = Text der letzten Spalte Konfigurationsspalte)</string>
+    <string name="PLG_GEBURTSTAGSLISTE_NOVEMBER">November</string>
+    <string name="PLG_GEBURTSTAGSLISTE_OCTOBER">Oktober</string>
+    <string name="PLG_GEBURTSTAGSLISTE_OPTIONS">Optionen</string>
+    <string name="PLG_GEBURTSTAGSLISTE_ORG_CHOICE">Organisationswahl</string>
+    <string name="PLG_GEBURTSTAGSLISTE_PATTERN">Runde Geburtstage</string>
+    <string name="PLG_GEBURTSTAGSLISTE_PGLMAIL_NOTIFICATION">#subject# Gratulation\n#content# Sehr geehrtes Mitglied,\n\nzu Ihrem #config# übermitteln wir Ihnen die besten Glückwünsche.\n\nMit freundlichen Grüßen\n#organization_long_name#</string>
+    <string name="PLG_GEBURTSTAGSLISTE_PLUGIN_CONTROL">Pluginfreigabe</string>
+    <string name="PLG_GEBURTSTAGSLISTE_PLUGIN_DATE">Stand</string>
+    <string name="PLG_GEBURTSTAGSLISTE_PLUGIN_INFORMATION">Plugininformationen</string>
+    <string name="PLG_GEBURTSTAGSLISTE_PLUGIN_NAME">Name des Plugins</string>
+    <string name="PLG_GEBURTSTAGSLISTE_PLUGIN_VERSION">Version</string>
+    <string name="PLG_GEBURTSTAGSLISTE_PREVIEW_DAYS">Vorschautage</string>
+    <string name="PLG_GEBURTSTAGSLISTE_PREVIEW_DAYS_DESC">Standardeinstellung der Vorschautage</string>
+    <string name="PLG_GEBURTSTAGSLISTE_PREVIEW_LIST">Vorschauliste</string>
+    <string name="PLG_GEBURTSTAGSLISTE_PREVIEW_LIST_DESC">Die Werte für die Vorschauliste (Mehrere Einträge sind durch Kommata zu trennen; z.B.: -10,-1,0,1,2,10,20,30,365,1000)</string>
+    <string name="PLG_GEBURTSTAGSLISTE_ROLE_SELECTION">Rollenwahl</string>
+    <string name="PLG_GEBURTSTAGSLISTE_ROLE_SELECTION_CONF_DESC">Über Rollenwahl kann eine Konfiguration auf die Angehörigen der gewählten Rollen eingeschränkt werden.\n\n Soll keine Einschränkung erfolgen, so sind beide Felder (Rollenwahl und Kategoriewahl) leer zu lassen.</string>
+    <string name="PLG_GEBURTSTAGSLISTE_ROLE_SELECTION_DESC">Wählen Sie die Rollen aus, deren Mitglieder das Plugin aufrufen dürfen.</string>
+    <string name="PLG_GEBURTSTAGSLISTE_ROLE_SELECTION_DESC2">Wählen Sie die Rollen aus, deren Mitglieder die Einstellungen des Plugins aufrufen dürfen.</string>
+    <string name="PLG_GEBURTSTAGSLISTE_SELECT_CONFIGURATION">Konfiguration wählen</string>
+    <string name="PLG_GEBURTSTAGSLISTE_SELECT_MONTH">Monat wählen</string>
+    <string name="PLG_GEBURTSTAGSLISTE_SELECT_NUMBER_OF_DAYS">Vorschautage wählen</string>
+    <string name="PLG_GEBURTSTAGSLISTE_SEPTEMBER">September</string>
+    <string name="PLG_GEBURTSTAGSLISTE_SETTINGS">Einstellungen</string>
+    <string name="PLG_GEBURTSTAGSLISTE_SHOW_CALENDAR_YEAR">Kalenderjahr</string>
+    <string name="PLG_GEBURTSTAGSLISTE_SHOW_CALENDAR_YEAR_DESC">Standardmäßig wird ab dem aktuellen Datum angezeigt. Soll die Anzeige ab dem 1. Januar des aktuellen Jahres beginnen, so ist der Haken zu setzen.</string>
+    <string name="PLG_GEBURTSTAGSLISTE_YEARS_OFFSET">Jahresversatz</string>
+    <string name="PLG_GEBURTSTAGSLISTE_YEARS_OFFSET_DESC">Hiermit kann die Anzeige um x Jahre vor- oder zurückversetzt werden (0 entspricht keinem Versatz).</string>
+</resources>

@@ -1,15 +1,13 @@
 <?php
-/******************************************************************************
- * 
- * common_function.php
- *   
+/**
+ ***********************************************************************************************
  * Gemeinsame Funktionen fuer das Admidio-Plugin Geburtstagsliste
- * 
- * Copyright    : (c) 2004 - 2015 The Admidio Team
- * Homepage     : http://www.admidio.org
- * License      : GNU Public License 2 http://www.gnu.org/licenses/gpl-2.0.html
- * 
- ****************************************************************************/
+ *
+ * @copyright 2004-2016 The Admidio Team
+ * @see http://www.admidio.org/
+ * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
+ ***********************************************************************************************
+ */
 
 // Pfad des Plugins ermitteln
 $plugin_folder_pos = strpos(__FILE__, 'adm_plugins') + 11;
@@ -19,8 +17,11 @@ $plugin_folder     = substr(__FILE__, $plugin_folder_pos+1, $plugin_file_pos-$pl
 
 require_once($plugin_path. '/../adm_program/system/common.php');
 
-// Funktion liest die Role-ID einer Rolle aus
-// Parameter: $role_name - Name der zu pruefenden Rolle
+/**
+ * Funktion liest die Role-ID einer Rolle aus
+ * @param   string  $role_name Name der zu pruefenden Rolle
+ * @return  int     rol_id
+ */
 function getRole_IDPGL($role_name)
 {
     global $gDb, $gCurrentOrganization;
@@ -33,16 +34,19 @@ function getRole_IDPGL($role_name)
                  AND (  cat_org_id = '.$gCurrentOrganization->getValue('org_id').'
                  OR cat_org_id IS NULL ) ';
                       
-    $result = $gDb->query($sql);
-    $row = $gDb->fetch_object($result);
+    $statement = $gDb->query($sql);
+    $row = $statement->fetchObject();
 
    // für den seltenen Fall, dass während des Betriebes die Sprache umgeschaltet wird:  $row->rol_id prüfen
     return (isset($row->rol_id) ?  $row->rol_id : 0);
 }
 
-// Funktion prueft, ob der Nutzer, aufgrund seiner Rollenzugehörigkeit, berechtigt ist das Plugin aufzurufen
-// Parameter: Array mit Rollen-IDs: entweder $pPreferences->config['Pluginfreigabe']['freigabe']
-//      oder $pPreferences->config['Pluginfreigabe']['freigabe_config']
+/**
+ * Funktion prueft, ob der Nutzer, aufgrund seiner Rollenzugehörigkeit, berechtigt ist das Plugin aufzurufen
+ * @param   array  $array   Array mit Rollen-IDs:   entweder $pPreferences->config['Pluginfreigabe']['freigabe']
+ *                                                  oder $pPreferences->config['Pluginfreigabe']['freigabe_config']
+ * @return  bool   $showPlugin
+ */
 function check_showpluginPGL($array)
 {
 	global $gCurrentUser;
@@ -59,10 +63,15 @@ function check_showpluginPGL($array)
     return $showPlugin;
 }
 
-// Funktion überprüft den übergebenen Namen, ob er gemaess den Namenskonventionen für
-// Profilfelder und Kategorien zum Uebersetzen durch eine Sprachdatei geeignet ist
-// Bsp: SYS_COMMON --> Rueckgabe true
-// Bsp: Mitgliedsbeitrag --> Rueckgabe false
+/**
+ * Funktion überprüft den übergebenen Namen, ob er gemaess den Namenskonventionen für
+ * Profilfelder und Kategorien zum Uebersetzen durch eine Sprachdatei geeignet ist
+ * Bsp: SYS_COMMON --> Rueckgabe true
+ * Bsp: Mitgliedsbeitrag --> Rueckgabe false
+ *
+ * @param   string  $field_name
+ * @return  bool
+ */
 function check_languagePGL($field_name)
 {
     $ret = false;
@@ -80,8 +89,12 @@ function check_languagePGL($field_name)
     return $ret;
 }
 
-// Compare function used when sorting arrays
-// aus dem Web
+/**
+ * Vergleichsfunktion für g_arr_dimsort (aus dem Web)
+ * @param   mixed  $a
+ * @param   mixed  $b
+ * @return  bool
+ */
 function arr_dimsort_cmp($a,$b)
 {
 	global $G_ARR_STYPE, $G_ARR_SDIM;
@@ -105,8 +118,14 @@ function arr_dimsort_cmp($a,$b)
   	return arr_dimsort_cmp($a,$b);
 }
 
-// Sort an array by a given dimension
-// aus dem Web
+/**
+ * Funktion sortiert ein Array nach einer gegebenen Dimension (aus dem Web)
+ * @param   array   $arr     das zu sortierende Array
+ * @param   string  $dim     die Dimension, nach der sortiert werden soll
+ * @param   string  $type    NUMBER oder STRING
+ * @param   bool    $keepkey Schlüssel beibehalten
+ * @return  void
+ */
 function g_arr_dimsort(&$arr,$dim,$type = '',$keepkey = false)
 {
   	global $G_ARR_SDIM, $G_ARR_STYPE;
@@ -118,9 +137,13 @@ function g_arr_dimsort(&$arr,$dim,$type = '',$keepkey = false)
       	usort($arr,'arr_dimsort_cmp');
 }
 
- // Funktion prueft, ob ein User die uebergebene Rolle besitzt
-// $role_id   - ID der zu pruefenden Rolle
-// $user_id   - ID des Users, fuer den die Mitgliedschaft geprueft werden soll
+/**
+ * Funktion prueft, ob ein User Angehöriger einer bestimmten Rolle ist
+ *
+ * @param   int  $role_id   ID der zu pruefenden Rolle
+ * @param   int  $user_id   ID des Users, fuer den die Mitgliedschaft geprueft werden soll
+ * @return  bool
+ */
 function hasRole_IDPGL($role_id, $user_id = 0)
 {
     global $gCurrentUser, $gDb, $gCurrentOrganization;
@@ -146,9 +169,9 @@ function hasRole_IDPGL($role_id, $user_id = 0)
                 AND (  cat_org_id = '.$gCurrentOrganization->getValue('org_id').'
                 OR cat_org_id IS NULL ) ';
                 
-    $result = $gDb->query($sql);
+    $statement = $gDb->query($sql);
 
-    $user_found = $gDb->num_rows($result);
+    $user_found = $statement->rowCount();
 
     if($user_found == 1)
     {
@@ -159,9 +182,14 @@ function hasRole_IDPGL($role_id, $user_id = 0)
         return 0;
     }
 }
-// Funktion prueft, ob ein User Angehoeriger einer Kategorie ist
-// $cat_id    - ID der zu pruefenden Kategorie
-// $user_id   - ID des Users, fuer den die Mitgliedschaft geprueft werden soll
+
+/**
+ * Funktion prueft, ob ein User Angehöriger einer bestimmten Kategorie ist
+ *
+ * @param   int  $cat_id    ID der zu pruefenden Kategorie
+ * @param   int  $user_id   ID des Users, fuer den die Mitgliedschaft geprueft werden soll
+ * @return  bool
+ */
 function hasCategorie_IDPGL($cat_id, $user_id = 0)
 {
     global $gCurrentUser, $gDb, $gCurrentOrganization;
@@ -187,9 +215,9 @@ function hasCategorie_IDPGL($cat_id, $user_id = 0)
                 AND (  cat_org_id = '.$gCurrentOrganization->getValue('org_id').'
                 OR cat_org_id IS NULL ) ';
                 
-    $result = $gDb->query($sql);
+    $statement = $gDb->query($sql);
 
-    $user_found = $gDb->num_rows($result);
+    $user_found = $statement->rowCount();
 
     if($user_found == 1)
     {
@@ -201,7 +229,10 @@ function hasCategorie_IDPGL($cat_id, $user_id = 0)
     }   
 }
 
-// erzeugt die Auswahlliste für die Spaltenauswahl
+/**
+ * Erzeugt die Auswahlliste für die Spaltenauswahl
+ * @return  array   $configSelection
+ */
 function generate_configSelection()
 {
 	global $gDb,  $gL10n, $gProfileFields, $gCurrentOrganization, $gCurrentUser;
@@ -229,10 +260,10 @@ function generate_configSelection()
              AND (  cat.cat_org_id = '.$gCurrentOrganization->getValue('org_id').'
              OR cat.cat_org_id IS NULL )';
 	
-	$result = $gDb->query($sql);
+	$statement = $gDb->query($sql);
 
 	$k = 0;
-	while ($row = $gDb->fetch_array($result))
+	while ($row = $statement->fetch())
 	{
 		// ueberprüfen, ob der Kategoriename mittels der Sprachdatei übersetzt werden kann
         if(check_languagePGL($row['cat_name']))
@@ -251,9 +282,9 @@ function generate_configSelection()
                 FROM '.TBL_CATEGORIES.' as cat, '.TBL_ROLES.' as rol
                 WHERE cat.cat_id = \''.$data['cat_id'].'\'
                 AND cat.cat_id = rol.rol_cat_id';
-    	$result = $gDb->query($sql);
+    	$statement = $gDb->query($sql);
     		
-        while($row = $gDb->fetch_array($result))
+        while ($row = $statement->fetch())
         {
         	$configSelection[$i][0]  = 'r'.$row['rol_id'];
 			$configSelection[$i][1]	= $gL10n->get('SYS_ROLE').': '.$row['rol_name'];
@@ -264,7 +295,13 @@ function generate_configSelection()
     return $configSelection;		
 }
 
-// ermittelt die Differenz zwichen $beginn und $ende (ab PHP 5.3)
+/**
+ * Ermittelt die Differenz zwischen $beginn und $ende (ab PHP 5.3)
+ *
+ * @param   string  $beginn
+ * @param   string  $ende
+ * @return  string  Differenz als zweistellige Jahrszahl
+ */
 function jahre( $beginn, $ende )
 {
   $date1 = new DateTime($beginn);
@@ -273,4 +310,3 @@ function jahre( $beginn, $ende )
  
   return $differenz->format('%y');
 }
-?>
