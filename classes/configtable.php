@@ -11,11 +11,11 @@
  * Folgende Methoden stehen zur Verfügung:
  *
  * init()						-	prüft, ob die Konfigurationstabelle existiert, 
- * 									  sie ggf. an und befüllt sie mit Standardwerten
- * save() 					- schreibt die Konfiguration in die Datenbank
+ * 									sie ggf. an und befüllt sie mit Standardwerten
+ * save() 						- 	schreibt die Konfiguration in die Datenbank
  * read()						-	liest die Konfigurationsdaten aus der Datenbank
- * checkforupdate()	-	vergleicht die Angaben in der Datei version.php 
- * 									  mit den Daten in der DB
+ * checkforupdate()				-	vergleicht die Angaben in der Datei version.php 
+ * 									mit den Daten in der DB
  * delete($deinst_org_select)	-	löscht die Konfigurationsdaten in der Datenbank
  * 
  *****************************************************************************/ 
@@ -92,7 +92,7 @@ class ConfigTablePGL
     
 		$this->read();
 	
-		// Update/Konvertierungsroutine
+		// Update/Konvertierungsroutine 1.3.5 -> 2.0.0
 		if (isset($this->config['Spaltenkonfiguration']['col_desc']))
     	{
     		$this->config['Konfigurationen']['col_desc'] = $this->config['Spaltenkonfiguration']['col_desc'];
@@ -163,7 +163,20 @@ class ConfigTablePGL
     			$this->config['Konfigurationen']['col_fields'][] = $this->config_default['Konfigurationen']['col_fields'][0];
     		}
    		} 
-		// Ende Update/Konvertierungsroutine
+		// Ende Update/Konvertierungsroutine 1.3.5 -> 2.0.0
+		
+   		// Update/Konvertierungsroutine 2.0.0/2.0.1 -> 2.0.2
+   		if (isset($this->config['Konfigurationen']['col_desc']))
+    	{
+			foreach ($this->config['Konfigurationen']['col_desc'] as $key => $dummy)
+			{
+				if (!isset($this->config['Konfigurationen']['years_offset'][$key]))
+    			{
+					$this->config['Konfigurationen']['years_offset'][$key] = '0';
+    			}
+			}
+		} 
+		// Ende Update/Konvertierungsroutine 2.0.0/2.0.1 -> 2.0.2
 		
 		$this->config['Plugininformationen']['version'] = self::$version;
 		$this->config['Plugininformationen']['stand'] = self::$stand;

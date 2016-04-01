@@ -1,4 +1,4 @@
-Geburtstagsliste 2.0.1
+Geburtstagsliste 2.0.2
 
 Dieses Plugin erzeugt für einen bestimmten Zeitraum eine Geburtstags- und Jubiläumsliste der Mitglieder.
  
@@ -64,6 +64,11 @@ Zur Installation sind folgende Schritte durchzuführen:
 3. Versionshistorie
 ===================
 
+ * Version	: 2.0.2
+ * Datum        : 09.12.2015
+ * Änderung     : - Jahresversatz integriert (Wunsch von red)
+ * 		  - Fehler in der Datumsberechnung behoben (Kalenderjahr in Verbindung mit negativen Vorschautagen)   
+ *
  * Version	: 2.0.1
  * Datum        : 02.11.2015
  * Änderung     : - Fehler (verursacht durch die Methode addHeadline) behoben

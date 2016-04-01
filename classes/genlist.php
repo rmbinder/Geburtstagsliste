@@ -196,32 +196,36 @@ class GenList
 	{
 		global  $pPreferences;
 		
+		// aufgrund eines Wunsches von "red" im Forum wurde der Parameter Jahresversatz eingeführt
+		// dadurch ist es möglich, Geburtstage in nächsten oder vergangenen Jahren anzuzeigen
+		$yearsOffset = $pPreferences->config['Konfigurationen']['years_offset'][$this->conf];
+		
 		// standardmäßig wird die Geburtstagsliste immer ab dem aktuellen Datum angezeigt
 		// aufgrund eines Wunsches im Forum kann der Beginn der Anzeige auf den 1. Januar gesetzt werden (Kalenderjahr)
 		if($pPreferences->config['Konfigurationen']['calendar_year'][$this->conf])
 		{
 			if ($this->previewDays >= 0)
 			{
-				$this->date_min = date("U",strtotime('-1 day',strtotime(date("Y")."-01-01")));
-				$this->date_max = date("U",strtotime(($this->previewDays)." day",strtotime(date("Y")."-01-01")));
+				$this->date_min = date("U",strtotime($yearsOffset." year",strtotime('-1 day',strtotime(date("Y")."-01-01"))));
+				$this->date_max = date("U",strtotime($yearsOffset." year",strtotime(($this->previewDays)." day",strtotime(date("Y")."-01-01"))));
 			}
 			else
 			{
-				$this->date_min = date("U",strtotime(($this->previewDays)." day",strtotime(date("Y")."-01-01")));
-				$this->date_max = date("U",strtotime(date("Y")."-01-01"));
+				$this->date_min = date("U",strtotime($yearsOffset." year",strtotime(($this->previewDays-1)." day",strtotime(date("Y")."-01-01"))));
+				$this->date_max = date("U",strtotime($yearsOffset." year",strtotime(date("Y")."-01-01")));
 			}
 		}
 		else
 		{
 			if ($this->previewDays >= 0)
 			{
-				$this->date_min = date("U",strtotime('-1 day'));
-				$this->date_max = date("U",strtotime(($this->previewDays)." day"));				
+				$this->date_min = date("U",strtotime($yearsOffset." year",strtotime('-1 day')));
+				$this->date_max = date("U",strtotime($yearsOffset." year",strtotime(($this->previewDays)." day")));				
 			}
 			else
 			{
-				$this->date_min = date("U",strtotime(($this->previewDays-1)." day"));
-				$this->date_max = date("U");						
+				$this->date_min = date("U",strtotime($yearsOffset." year",strtotime(($this->previewDays-1)." day")));
+				$this->date_max = date("U",strtotime($yearsOffset." year"));						
 			}
 		}
 	}

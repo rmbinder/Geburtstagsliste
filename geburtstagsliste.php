@@ -2,7 +2,7 @@
 /******************************************************************************
  * Geburtstagsliste
  *
- * Version 2.0.1
+ * Version 2.0.2
  *
  * Dieses Plugin erzeugt für einen bestimmten Zeitraum eine Geburtstags- und Jubiläumsliste der Mitglieder.
  * 
@@ -12,9 +12,14 @@
  * Copyright    : (c) 2004 - 2015 The Admidio Team
  * Homepage     : http://www.admidio.org
  * License      : GNU Public License 2 http://www.gnu.org/licenses/gpl-2.0.html
- * Autor		    : rmb 
+ * Autor		: rmb 
  * 
- * Version		  : 2.0.1
+ * Version		: 2.0.2
+ * Datum        : 09.12.2015
+ * Änderung     : - Jahresversatz integriert (Wunsch von red)
+ * 				  - Fehler in der Datumsberechnung behoben (Kalenderjahr in Verbindung mit negativen Vorschautagen)   
+ * 
+ * Version		: 2.0.1
  * Datum        : 02.11.2015
  * Änderung     : - Fehler (verursacht durch die Methode addHeadline) behoben 
  * 
@@ -29,22 +34,22 @@
  * 				  - Verfahren zum Einbinden des Plugins (include) geändert 
  *                - Berechnungsalgorithmus umgestellt (dadurch unbegrenzte Vorschau von Tagen möglich)
  *                - Menübezeichnungen angepasst (gleichlautend mit anderen Plugins) 
- * 				        - Nur Intern: Verwaltung der Konfigurationsdaten geändert
+ * 				  - Nur Intern: Verwaltung der Konfigurationsdaten geändert
  *  
  * Version 		: 1.3.5
  * Datum        : 05.11.2014
  * Änderung    	: - Für den Export sind diverse Parameter jetzt im Setup einstellbar
- * 				        - Bei Namensgleichheit von Profilfeldern wird die Kategorie in Klammern angehängt
- * 				        - Die Option Kalenderjahr kann für jede Konfiguration separat eingestellt werden
+ * 				  - Bei Namensgleichheit von Profilfeldern wird die Kategorie in Klammern angehängt
+ * 				  - Die Option Kalenderjahr kann für jede Konfiguration separat eingestellt werden
  * 
  * Version 		: 1.3.4
  * Datum        : 15.05.2014
  * Änderung     : - Fehler ...indefined index:...beim ersten Aufruf des Plugins behoben
  *                - Default-Einstellungen um zusätzliche Einträge ergänzt
  *                - Aufruf des Plugins über die Klasse Menu realisiert
- * 				          (Systemanforderung jetzt Admidio Version 2.4.4 oder höher)
- * 				        - Anpassung von Menübezeichnungen
- * 				        - E-Mail-Texte für jede Konfiguration (Fokus) separat definierbar
+ * 				    (Systemanforderung jetzt Admidio Version 2.4.4 oder höher)
+ * 				  - Anpassung von Menübezeichnungen
+ * 				  - E-Mail-Texte für jede Konfiguration (Fokus) separat definierbar
  * 
  * Version 		: 1.3.3
  * Datum        : 09.01.2014
@@ -59,7 +64,7 @@
  * Version 		: 1.3.1 
  * Datum        : 12.11.2013
  * Änderung     : - Default-Einstellung für Fokus
- * 				        - Diverse Überprüfungen eingearbeitet
+ * 				  - Diverse Überprüfungen eingearbeitet
  *                - Anzeigemodus überarbeitet
  *                - E-Mail-Modul eingearbeitet
  *                - Die Konfigurationen können auf bestimmte Rollen 

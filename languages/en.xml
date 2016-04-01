@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <language id="en">
+<version id="2.0.2" translator="Rainer M. Binder">
+    <text id="PGL_YEARS_OFFSET" development="new" translation="todo">Years offset</text>
+    <text id="PGL_YEARS_OFFSET_DESC" development="new" translation="todo">This display can be shifted forward or backward for x years (0 corresponds to no offset).</text>
+</version>
 <version id="2.0.0" translator="Rainer M. Binder">
     <text id="PGL_ALL_MONTHS" development="new" translation="todo">- all months -</text>
     <text id="PGL_JANUARY" development="new" translation="edited">January</text>

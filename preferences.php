@@ -312,7 +312,8 @@ $page->addHtml('
                     		}
 				        	$form->addMultilineTextInput('col_mail'.$conf, $gL10n->get('PGL_NOTIFICATION_MAIL_TEXT'), $text[$conf]->getValue('txt_text'), 7,array('helpTextIdLabel' => 'PGL_NOTIFICATION_MAIL_TEXT_DESC'));	
                     		$form->addCheckbox('calendar_year'.$conf, $gL10n->get('PGL_SHOW_CALENDAR_YEAR'), $pPreferences->config['Konfigurationen']['calendar_year'][$conf], array('helpTextIdLabel' => 'PGL_SHOW_CALENDAR_YEAR_DESC'));
-							$form->closeGroupBox();
+							$form->addInput('years_offset'.$conf, $gL10n->get('PGL_YEARS_OFFSET'), $pPreferences->config['Konfigurationen']['years_offset'][$conf], array('type' => 'number',  'step' => 1, 'minNumber' => -99, 'maxNumber' => 99,'helpTextIdLabel' => 'PGL_YEARS_OFFSET_DESC') );  
+                    		$form->closeGroupBox();
 						}
                         $form->addDescription('</div>');
                         $form->addLine();
@@ -321,7 +322,6 @@ $page->addHtml('
                         $htmlDesc = '<div class="alert alert-warning alert-small" role="alert"><span class="glyphicon glyphicon-warning-sign"></span>'.$gL10n->get('ORG_NOT_SAVED_SETTINGS_LOST').'</div>';
                         $form->addCustomContent('', $html, array('helpTextIdInline' => $htmlDesc)); 
                         $form->addSubmitButton('btn_save_configurations', $gL10n->get('SYS_SAVE'), array('icon' => THEME_PATH.'/icons/disk.png', 'class' => ' col-sm-offset-3'));
-                        
                         $page->addHtml($form->show(false));
                     	$page->addHtml('
                     </div>

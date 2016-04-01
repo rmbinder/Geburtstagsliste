@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language id="de_sie">
+<version id="2.0.2" translator="Rainer M. Binder">
+    <text id="PGL_YEARS_OFFSET" development="new" translation="todo">Jahresversatz</text>
+    <text id="PGL_YEARS_OFFSET_DESC" development="new" translation="todo">Hiermit kann die Anzeige um x Jahre vor- oder zurückversetzt werden (0 entspricht keinem Versatz).</text>
+</version>
 <version id="2.0.0" translator="Rainer M. Binder">
     <text id="PGL_ALL_MONTHS" development="new" translation="todo">- alle Monate -</text>
     <text id="PGL_JANUARY" development="new" translation="todo">Januar</text>
