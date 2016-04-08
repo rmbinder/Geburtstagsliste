@@ -122,6 +122,7 @@ case 1:
    				$pPreferences->config['Optionen']['vorschau_tage_default'] = intval($_POST['vorschau_tage_default']>0) ? intval($_POST['vorschau_tage_default']) : 365;	    			
     			$pPreferences->config['Optionen']['vorschau_liste'] = explode(',',preg_replace('/[,]{2,}/', ',', trim(preg_replace('![^0-9,-]!', '', $_POST['vorschau_liste']),',')));		
  	        	$pPreferences->config['Optionen']['config_default'] = $_POST['config_default'];	
+ 	        	$pPreferences->config['Optionen']['configuration_as_header'] = isset($_POST['configuration_as_header']) ? 1 : 0 ;
 
             	break; 
                 

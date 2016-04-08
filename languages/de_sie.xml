@@ -25,6 +25,8 @@
     <string name="PLG_GEBURTSTAGSLISTE_CONFIGURATIONS">Konfigurationen</string>
     <string name="PLG_GEBURTSTAGSLISTE_CONFIGURATIONS_DESC">Beispiel:\nBezeichnung: Runder Geburtstag\nPrüfdatum: Geburtstag\nWerte: 30,40,50,60,70,80 (Wird keine Filterung gewünscht, so ist das Feld leer zu lassen)\nErgänzungstext: . Geburtstag am #Day#.#Month#.</string>
     <string name="PLG_GEBURTSTAGSLISTE_CONFIGURATIONS_HEADER">Hier können beliebig viele Konfigurationen für die Geburtstags- und Jubiläumsliste erstellt werden. In der Bildschirmanzeige wird jeweils eine dieser Konfigurationen über "Konfiguration wählen..." als Grundlage für Berechnungen und für die Anzeige verwendet.</string>
+    <string name="PLG_GEBURTSTAGSLISTE_CONFIGURATION_AS_HEADER">Konfigurationsname als Überschrift</string>
+    <string name="PLG_GEBURTSTAGSLISTE_CONFIGURATION_AS_HEADER_DESC">Soll der Konfigurationsname als Überschrift verwendet werden, so ist der Haken zu setzen.</string>
     <string name="PLG_GEBURTSTAGSLISTE_CONFIGURATION_DEFAULT_DESC">Standardeinstellung der Konfigurationen</string>
     <string name="PLG_GEBURTSTAGSLISTE_DECEMBER">Dezember</string>
     <string name="PLG_GEBURTSTAGSLISTE_DEINSTALLATION">Deinstallation</string>

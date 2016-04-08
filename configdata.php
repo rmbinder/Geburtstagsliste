@@ -33,7 +33,8 @@ $config_default['Konfigurationen'] = array('col_desc' 	=> array($gL10n->get('PLG
 
 $config_default['Optionen']['vorschau_tage_default'] = 365;    		
 $config_default['Optionen']['vorschau_liste'] = array(-14,0,14,31,365,1000);    		
-$config_default['Optionen']['config_default'] = 0;  
+$config_default['Optionen']['config_default'] = 0; 
+$config_default['Optionen']['configuration_as_header'] = 0; 
       
 $config_default['Plugininformationen']['version'] = '';
 $config_default['Plugininformationen']['stand'] = '';

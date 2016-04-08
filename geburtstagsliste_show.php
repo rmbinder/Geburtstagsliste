@@ -74,9 +74,21 @@ $getMonth       = admFuncVariableIsValid($_GET, 'month', 'string', array('validV
 $liste = new GenList($getConfig, $getPreviewDays, $getMonth);
 $liste->generate_listData();
 
+// define title (html) and headline
+$title = $gL10n->get('PLG_GEBURTSTAGSLISTE_BIRTHDAY_LIST');
+
 $subheadline= $gL10n->get('PLG_GEBURTSTAGSLISTE_FOR_THE_PERIOD',date("d.m.Y",strtotime('1 day',$liste->date_min)),date("d.m.Y",$liste->date_max),(trim($getPreviewDays,'X')<0 ? trim($getPreviewDays,'X') : '+'.trim($getPreviewDays,'X')) );
 $subheadline .= ($getMonth>0 ? ' - '.$monate[$getMonth] : '');
-$subheadline .= ' - '.$gL10n->get('PLG_GEBURTSTAGSLISTE_CONFIGURATION').': '.$pPreferences->config['Konfigurationen']['col_desc'][trim($getConfig,'X')];     
+
+if($pPreferences->config['Optionen']['configuration_as_header'])
+{
+	$headline = $pPreferences->config['Konfigurationen']['col_desc'][trim($getConfig,'X')];	
+}
+else 
+{
+	$headline = $gL10n->get('PLG_GEBURTSTAGSLISTE_BIRTHDAY_LIST');
+	$subheadline .= ' - '.$gL10n->get('PLG_GEBURTSTAGSLISTE_CONFIGURATION').': '.$pPreferences->config['Konfigurationen']['col_desc'][trim($getConfig,'X')];     	
+}
         
 // initialize some special mode parameters
 $separator   = '';
@@ -126,10 +138,6 @@ $numMembers = count($liste->listData);
 
 //die Spaltenanzahl bestimmen
 $columnCount = count($liste->headerData);
-    
-// define title (html) and headline
-$title = $gL10n->get('PLG_GEBURTSTAGSLISTE_BIRTHDAY_LIST');
-$headline = $gL10n->get('PLG_GEBURTSTAGSLISTE_BIRTHDAY_LIST');
 
 // if html mode and last url was not a list view then save this url to navigation stack
 if($getMode == 'html' && strpos($gNavigation->getUrl(), 'geburtstagsliste_show.php') === false)

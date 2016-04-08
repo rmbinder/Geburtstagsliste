@@ -25,6 +25,8 @@
     <string name="PLG_GEBURTSTAGSLISTE_CONFIGURATIONS">Configurations</string>
     <string name="PLG_GEBURTSTAGSLISTE_CONFIGURATIONS_DESC">Example:\nName: Round birthday\nDate of test: Birthday\nValues: 30,40,50,60,70,80 (No filtering is desired, then the field should be left blank)\nAdditional text: th birthday on the #Month#.#Day#.</string>
     <string name="PLG_GEBURTSTAGSLISTE_CONFIGURATIONS_HEADER">Here any number of configurations can be created for the birthday and anniversary list. In the display of the birthday list one of these configurations is selected using "Configuration selection..." as the basis for the presentation.</string>
+    <string name="PLG_GEBURTSTAGSLISTE_CONFIGURATION_AS_HEADER">Configuration name as a heading</string>
+    <string name="PLG_GEBURTSTAGSLISTE_CONFIGURATION_AS_HEADER_DESC">The respective checkbox has to be activated if you want to use the name of the configuration as a heading.</string>
     <string name="PLG_GEBURTSTAGSLISTE_CONFIGURATION_DEFAULT_DESC">Default setting for configurations</string>
     <string name="PLG_GEBURTSTAGSLISTE_DECEMBER">December</string>
     <string name="PLG_GEBURTSTAGSLISTE_DEINSTALLATION">Uninstall</string>

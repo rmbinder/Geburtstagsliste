@@ -349,6 +349,7 @@ $page->addHtml('
                         $html = '<a id="deinstallation" class="icon-text-link" href="'. $g_root_path.'/adm_plugins/'.$plugin_folder.'/preferences_function.php?mode=2"><img
                                     src="'. THEME_PATH. '/icons/delete.png" alt="'.$gL10n->get('PLG_GEBURTSTAGSLISTE_LINK_TO_DEINSTALLATION').'" />'.$gL10n->get('PLG_GEBURTSTAGSLISTE_LINK_TO_DEINSTALLATION').'</a>';
                         $form->addCustomContent($gL10n->get('PLG_GEBURTSTAGSLISTE_DEINSTALLATION'), $html, array('helpTextIdInline' => 'PLG_GEBURTSTAGSLISTE_DEINSTALLATION_DESC'));
+                        $form->addCheckbox('configuration_as_header', $gL10n->get('PLG_GEBURTSTAGSLISTE_CONFIGURATION_AS_HEADER'), $pPreferences->config['Optionen']['configuration_as_header'], array('helpTextIdInline' => 'PLG_GEBURTSTAGSLISTE_CONFIGURATION_AS_HEADER_DESC'));
                         $form->addSubmitButton('btn_save_options', $gL10n->get('SYS_SAVE'), array('icon' => THEME_PATH.'/icons/disk.png', 'class' => ' col-sm-offset-3'));
                         $page->addHtml($form->show(false));
                     	$page->addHtml('
