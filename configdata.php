@@ -28,6 +28,7 @@ $config_default['Konfigurationen'] = array('col_desc' 	=> array($gL10n->get('PLG
 																	$gProfileFields->getProperty('CITY', 'usf_id')),
 										'calendar_year' => array(''),
 										'years_offset'  => array('0'),
+										'suppress_age'  => array('0'),																	
 										'selection_role'=> array(' '),
 										'selection_cat'	=> array(' ')  );
 

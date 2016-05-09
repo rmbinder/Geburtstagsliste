@@ -181,7 +181,7 @@ class GenList
    						$suffix=str_replace('#Month#', $mon, $suffix);
    						$suffix=str_replace('#Year#', $jahr, $suffix);
    			
-   						$this->listData[$membercounter][$colcount]=$jubi.$suffix;
+						$this->listData[$membercounter][$colcount]=($pPreferences->config['Konfigurationen']['suppress_age'][$this->conf] ? '' : $jubi).$suffix;	
    						
 						$membercounter++;
 					}

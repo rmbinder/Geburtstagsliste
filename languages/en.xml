@@ -2,6 +2,8 @@
 <resources>
     <string name="PLG_GEBURTSTAGSLISTE_ADD_ANOTHER_COLUMN">Add another column</string>
     <string name="PLG_GEBURTSTAGSLISTE_ADD_ANOTHER_CONFIG">Add further configuration</string>
+    <string name="PLG_GEBURTSTAGSLISTE_AGE_OR_ANNIVERSARY_NOT_SHOW">Age or anniversary not show</string>    
+    <string name="PLG_GEBURTSTAGSLISTE_AGE_OR_ANNIVERSARY_NOT_SHOW_DESC">By default, the age or the anniversary is displayed in front of the additional text always. If this display should be suppressed, the checkbox has to be selected.</string>        
     <string name="PLG_GEBURTSTAGSLISTE_ALL_MONTHS">- all months -</string>
     <string name="PLG_GEBURTSTAGSLISTE_APRIL">April</string>
     <string name="PLG_GEBURTSTAGSLISTE_AUGUST">August</string>

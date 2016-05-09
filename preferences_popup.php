@@ -39,6 +39,8 @@ echo '
 	'.$gL10n->get('PLG_GEBURTSTAGSLISTE_COL_VALUES_DESC').'<br><br>
     <strong>'.$gL10n->get('PLG_GEBURTSTAGSLISTE_COL_SUFFIX').'</strong><br>
 	'.$gL10n->get('PLG_GEBURTSTAGSLISTE_COL_SUFFIX_DESC').'<br><br>
+    <strong>'.$gL10n->get('PLG_GEBURTSTAGSLISTE_AGE_OR_ANNIVERSARY_NOT_SHOW').'</strong><br>
+	'.$gL10n->get('PLG_GEBURTSTAGSLISTE_AGE_OR_ANNIVERSARY_NOT_SHOW_DESC').'<br><br>	
     <strong>'.$gL10n->get('PLG_GEBURTSTAGSLISTE_ROLE_SELECTION').'</strong><br>
 	'.$gL10n->get('PLG_GEBURTSTAGSLISTE_ROLE_SELECTION_CONF_DESC').'<br><br>
     <strong>'.$gL10n->get('PLG_GEBURTSTAGSLISTE_CAT_SELECTION').'</strong><br>
