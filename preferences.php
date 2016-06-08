@@ -34,6 +34,13 @@ $getAdd = admFuncVariableIsValid($_GET, 'add', 'boolean', array('defaultValue' =
 $pPreferences = new ConfigTablePGL();
 $pPreferences->read();
 
+// only authorized user are allowed to start this module
+if(!check_showpluginPGL($pPreferences->config['Pluginfreigabe']['freigabe_config']))
+{
+	$gMessage->setForwardUrl($gHomepage, 3000);
+    $gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
+}
+
 $configSelection = generate_configSelection();
 
 $headline = $gL10n->get('PLG_GEBURTSTAGSLISTE_BIRTHDAY_LIST');

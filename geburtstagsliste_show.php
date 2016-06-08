@@ -37,6 +37,13 @@ require_once($plugin_path. '/'.$plugin_folder.'/classes/genlist.php');
 $pPreferences = new ConfigTablePGL();
 $pPreferences->read();
 
+// only authorized user are allowed to start this module
+if(!check_showpluginPGL($pPreferences->config['Pluginfreigabe']['freigabe']))
+{
+	$gMessage->setForwardUrl($gHomepage, 3000);
+    $gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
+}
+
 $monate = array('00' => $gL10n->get('PLG_GEBURTSTAGSLISTE_ALL_MONTHS'),
 				'01' => $gL10n->get('PLG_GEBURTSTAGSLISTE_JANUARY'),
         		'02' => $gL10n->get('PLG_GEBURTSTAGSLISTE_FEBRUARY'),

@@ -38,6 +38,13 @@ $getSubject = '';
 $pPreferences = new ConfigTablePGL();
 $pPreferences->read();
 
+// only authorized user are allowed to start this module
+if(!check_showpluginPGL($pPreferences->config['Pluginfreigabe']['freigabe']))
+{
+	$gMessage->setForwardUrl($gHomepage, 3000);
+    $gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
+}
+
 // check if the call of the page was allowed by settings
 if ($gPreferences['enable_mail_module'] != 1 )
 {
