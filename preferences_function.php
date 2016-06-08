@@ -94,13 +94,14 @@ case 1:
     				{
     					$gMessage->show($gL10n->get('SYS_FIELD_EMPTY', $gL10n->get('PLG_GEBURTSTAGSLISTE_COLUMN')));
     				}
+
     				$pPreferences->config['Konfigurationen']['col_fields'][] = substr($fields,0,-1);	
-    				
-    				// die Fokusstandardeinstellung darf nicht größer sein, als die max. Anzahl der Konfigurationen
-    				if($pPreferences->config['Optionen']['config_default']>$konf_neu-1)
-    				{
-    					$pPreferences->config['Optionen']['config_default']=$konf_neu-1;
-    				}
+    			}
+    			    				
+    			// die Fokusstandardeinstellung darf nicht größer sein, als die max. Anzahl der Konfigurationen
+    			if($pPreferences->config['Optionen']['config_default']>$konf_neu-1)
+    			{
+    				$pPreferences->config['Optionen']['config_default']=$konf_neu-1;
     			}
     			
     			// wenn $konf_neu immer noch 0 ist, dann wurden alle Konfigurationen gelöscht (was nicht sein darf)
