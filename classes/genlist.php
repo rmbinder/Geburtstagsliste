@@ -56,8 +56,8 @@ class GenList
 		$colfields=explode(',',$pPreferences->config['Konfigurationen']['col_fields'][$this->conf]);
 		for($i=1; $i < count($colfields)+1; $i++)
 		{
-			$this->headerData[$i]['id'] = $colfields[$i-1] ;
-			$this->headerData[$i]['data'] = $gProfileFields->getPropertyById($colfields[$i-1], 'usf_name');
+			$this->headerData[$i]['id'] = (int) $colfields[$i-1] ;
+			$this->headerData[$i]['data'] = $gProfileFields->getPropertyById((int) $colfields[$i-1], 'usf_name');
 		}
 		$this->headerData[$i]['id'] = 0 ;
 		$this->headerData[$i]['data'] = $pPreferences->config['Konfigurationen']['col_desc'][$this->conf];
@@ -112,7 +112,7 @@ class GenList
 				// ein Profilfeld wurde als Fokusfeld gewählt
 				if(substr($pPreferences->config['Konfigurationen']['col_sel'][$this->conf],0,1)=='p')
         		{
-        			$workDate = $user->getValue($gProfileFields->getPropertyById(substr($pPreferences->config['Konfigurationen']['col_sel'][$this->conf],1), 'usf_name_intern'));
+        			$workDate = $user->getValue($gProfileFields->getPropertyById((int) substr($pPreferences->config['Konfigurationen']['col_sel'][$this->conf],1), 'usf_name_intern'));
         		}
         		// eine Rolle wurde als Fokusfeld gewählt (-> $workDate ist das Beginn der Rollenzugehörigkeit)
         		elseif(substr($pPreferences->config['Konfigurationen']['col_sel'][$this->conf],0,1)=='r')
@@ -156,14 +156,14 @@ class GenList
         				$colcount=1;
 						foreach(explode(',',$pPreferences->config['Konfigurationen']['col_fields'][$this->conf]) as $usfid )
 						{
-							if(  ($gProfileFields->getPropertyById($usfid, 'usf_type') == 'DROPDOWN'
-                       			|| $gProfileFields->getPropertyById($usfid, 'usf_type') == 'RADIO_BUTTON') )
+							if(  ($gProfileFields->getPropertyById((int) $usfid, 'usf_type') == 'DROPDOWN'
+                       			|| $gProfileFields->getPropertyById((int) $usfid, 'usf_type') == 'RADIO_BUTTON') )
     						{
-    							$this->listData[$membercounter][$colcount] = $user->getValue($gProfileFields->getPropertyById($usfid, 'usf_name_intern'),'database');
+    							$this->listData[$membercounter][$colcount] = $user->getValue($gProfileFields->getPropertyById((int) $usfid, 'usf_name_intern'),'database');
     						}
     						else 
     						{
-    							$this->listData[$membercounter][$colcount] = $user->getValue($gProfileFields->getPropertyById($usfid, 'usf_name_intern'));
+    							$this->listData[$membercounter][$colcount] = $user->getValue($gProfileFields->getPropertyById((int) $usfid, 'usf_name_intern'));
     						}
 							$colcount++;
 						}
