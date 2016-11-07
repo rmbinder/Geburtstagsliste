@@ -256,9 +256,9 @@ $page->addHtml('
                 <div id="collapse_configurations" class="panel-collapse collapse">
                     <div class="panel-body">');
                         // show form
-                        $form = new HtmlForm('configurations_form', ADMIDIO_URL .'/adm_plugins/'.$plugin_folder.'/preferences_function.php?form=configurations', $page, array('class' => 'form-preferences'));
+                        $form = new HtmlForm('configurations_form', ADMIDIO_URL . FOLDER_PLUGINS .'/'.$plugin_folder.'/preferences_function.php?form=configurations', $page, array('class' => 'form-preferences'));
   
-                        $html = '<a class="admidio-icon-link" data-toggle="modal" data-target="#admidio_modal" href="'. ADMIDIO_URL .'/adm_plugins/'.$plugin_folder.'/preferences_popup.php? " >
+                        $html = '<a class="admidio-icon-link" data-toggle="modal" data-target="#admidio_modal" href="'. ADMIDIO_URL . FOLDER_PLUGINS .'/'.$plugin_folder.'/preferences_popup.php? " >
                         		<img src="'. THEME_PATH. '/icons/help.png" alt="'.$gL10n->get('SYS_HELP').'" />'.$gL10n->get('SYS_HELP').'</a>';
                         $form->addDescription($gL10n->get('PLG_GEBURTSTAGSLISTE_CONFIGURATIONS_HEADER').' '.$html);
                         $form->addDescription('<small>'.$gL10n->get('PLG_GEBURTSTAGSLISTE_CONFIGURATIONS_DESC').'</small>');
@@ -326,7 +326,7 @@ $page->addHtml('
 						}
                         $form->addDescription('</div>');
                         $form->addLine();
-                        $html = '<a id="add_config" class="icon-text-link" href="'. ADMIDIO_URL .'/adm_plugins/'.$plugin_folder.'/preferences.php?add=true"><img
+                        $html = '<a id="add_config" class="icon-text-link" href="'. ADMIDIO_URL . FOLDER_PLUGINS .'/'.$plugin_folder.'/preferences.php?add=true"><img
                                     src="'. THEME_PATH. '/icons/add.png" alt="'.$gL10n->get('PLG_GEBURTSTAGSLISTE_ADD_ANOTHER_CONFIG').'" />'.$gL10n->get('PLG_GEBURTSTAGSLISTE_ADD_ANOTHER_CONFIG').'</a>';
                         $htmlDesc = '<div class="alert alert-warning alert-small" role="alert"><span class="glyphicon glyphicon-warning-sign"></span>'.$gL10n->get('ORG_NOT_SAVED_SETTINGS_LOST').'</div>';
                         $form->addCustomContent('', $html, array('helpTextIdInline' => $htmlDesc)); 
@@ -348,13 +348,13 @@ $page->addHtml('
                 <div id="collapse_options" class="panel-collapse collapse">
                     <div class="panel-body">');
                         // show form
-                        $form = new HtmlForm('options_preferences_form', ADMIDIO_URL .'/adm_plugins/'.$plugin_folder.'/preferences_function.php?form=options', $page, array('class' => 'form-preferences'));
+                        $form = new HtmlForm('options_preferences_form', ADMIDIO_URL . FOLDER_PLUGINS .'/'.$plugin_folder.'/preferences_function.php?form=options', $page, array('class' => 'form-preferences'));
                                                
                         $form->addInput('vorschau_tage_default', $gL10n->get('PLG_GEBURTSTAGSLISTE_PREVIEW_DAYS'), $pPreferences->config['Optionen']['vorschau_tage_default'], array('type' => 'number',  'step' => 1,'helpTextIdInline' => 'PLG_GEBURTSTAGSLISTE_PREVIEW_DAYS_DESC') );  
                         $form->addInput('vorschau_liste', $gL10n->get('PLG_GEBURTSTAGSLISTE_PREVIEW_LIST'), implode(',',$pPreferences->config['Optionen']['vorschau_liste']), array('helpTextIdInline' => 'PLG_GEBURTSTAGSLISTE_PREVIEW_LIST_DESC'));     
                         $form->addSelectBox('config_default', $gL10n->get('PLG_GEBURTSTAGSLISTE_CONFIGURATION'),$pPreferences->config['Konfigurationen']['col_desc'], array('defaultValue' => $pPreferences->config['Optionen']['config_default'], 'showContextDependentFirstEntry' => false, 'helpTextIdInline' => 'PLG_GEBURTSTAGSLISTE_CONFIGURATION_DEFAULT_DESC'));
 				                                           
-                        $html = '<a id="deinstallation" class="icon-text-link" href="'. ADMIDIO_URL .'/adm_plugins/'.$plugin_folder.'/preferences_function.php?mode=2"><img
+                        $html = '<a id="deinstallation" class="icon-text-link" href="'. ADMIDIO_URL . FOLDER_PLUGINS .'/'.$plugin_folder.'/preferences_function.php?mode=2"><img
                                     src="'. THEME_PATH. '/icons/delete.png" alt="'.$gL10n->get('PLG_GEBURTSTAGSLISTE_LINK_TO_DEINSTALLATION').'" />'.$gL10n->get('PLG_GEBURTSTAGSLISTE_LINK_TO_DEINSTALLATION').'</a>';
                         $form->addCustomContent($gL10n->get('PLG_GEBURTSTAGSLISTE_DEINSTALLATION'), $html, array('helpTextIdInline' => 'PLG_GEBURTSTAGSLISTE_DEINSTALLATION_DESC'));
                         $form->addCheckbox('configuration_as_header', $gL10n->get('PLG_GEBURTSTAGSLISTE_CONFIGURATION_AS_HEADER'), $pPreferences->config['Optionen']['configuration_as_header'], array('helpTextIdInline' => 'PLG_GEBURTSTAGSLISTE_CONFIGURATION_AS_HEADER_DESC'));
@@ -376,7 +376,7 @@ $page->addHtml('
                 <div id="collapse_plugin_control" class="panel-collapse collapse">
                     <div class="panel-body">');
                         // show form
-                        $form = new HtmlForm('plugin_control_preferences_form', ADMIDIO_URL .'/adm_plugins/'.$plugin_folder.'/preferences_function.php?form=plugin_control', $page, array('class' => 'form-preferences'));
+                        $form = new HtmlForm('plugin_control_preferences_form', ADMIDIO_URL . FOLDER_PLUGINS .'/'.$plugin_folder.'/preferences_function.php?form=plugin_control', $page, array('class' => 'form-preferences'));
   
                         $sql = 'SELECT rol.rol_id, rol.rol_name, cat.cat_name
                                 FROM '.TBL_CATEGORIES.' as cat, '.TBL_ROLES.' as rol

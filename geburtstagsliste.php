@@ -55,13 +55,13 @@ if(  strpos($gNavigation->getUrl(), 'preferences_function.php?mode=3') === false
 		{
 			// wenn in der my_body_bottom.php ein $pluginMenu definiert wurde, 
 			// dann innerhalb dieses Menüs anzeigen
-			$pluginMenu->addItem('birthdaylist_show', '/adm_plugins/'.$plugin_folder.'/geburtstagsliste_show.php?mode=html',
+			$pluginMenu->addItem('birthdaylist_show', FOLDER_PLUGINS .'/'.$plugin_folder.'/geburtstagsliste_show.php?mode=html',
 				$gL10n->get('PLG_GEBURTSTAGSLISTE_BIRTHDAY_LIST'), '/icons/lists.png'); 
 		}
 		else 
 		{
 			// wenn nicht, dann innerhalb des (immer vorhandenen) Module-Menus anzeigen
-			$moduleMenu->addItem('birthdaylist_show', '/adm_plugins/'.$plugin_folder.'/geburtstagsliste_show.php?mode=html',
+			$moduleMenu->addItem('birthdaylist_show', FOLDER_PLUGINS .'/'.$plugin_folder.'/geburtstagsliste_show.php?mode=html',
 				$gL10n->get('PLG_GEBURTSTAGSLISTE_BIRTHDAY_LIST'), '/icons/lists.png'); 
 		}
 	}
