@@ -3,13 +3,13 @@
  ***********************************************************************************************
  * Geburtstagsliste
  *
- * Version 2.1.1
+ * Version 2.2.0
  *
  * Dieses Plugin erzeugt für einen bestimmten Zeitraum eine Geburtstags- und Jubiläumsliste der Mitglieder.
  *
  * Author: rmb
  *
- * Compatible with Admidio version 3.1
+ * Compatible with Admidio version 3.2
  *
  * @copyright 2004-2016 The Admidio Team
  * @see http://www.admidio.org/

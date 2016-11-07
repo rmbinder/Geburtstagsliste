@@ -232,32 +232,32 @@ if($getMode != 'csv')
         $page->addJavascript('
             $("#export_list_to").change(function () {
                 if($(this).val().length > 1) {
-                    self.location.href = "'. $g_root_path. '/adm_plugins/'.$plugin_folder.'/geburtstagsliste_show.php?" +
+                    self.location.href = "'. ADMIDIO_URL . '/adm_plugins/'.$plugin_folder.'/geburtstagsliste_show.php?" +
                         "previewdays='.$getPreviewDays.'&month='.$getMonth.'&config='.$getConfig.'&mode=" + $(this).val();
                 }
             });
             $("#previewList").change(function () {
                 if($(this).val().length > 1) {
-                    self.location.href = "'. $g_root_path. '/adm_plugins/'.$plugin_folder.'/geburtstagsliste_show.php?" +
+                    self.location.href = "'. ADMIDIO_URL . '/adm_plugins/'.$plugin_folder.'/geburtstagsliste_show.php?" +
                         "mode=html&month='.$getMonth.'&full_screen='.$getFullScreen.'&config='.$getConfig.'&previewdays=" + $(this).val();
                 }
             });
             
             $("#monthList").change(function () {
                 if($(this).val().length > 0) {
-                    self.location.href = "'. $g_root_path. '/adm_plugins/'.$plugin_folder.'/geburtstagsliste_show.php?" +
+                    self.location.href = "'. ADMIDIO_URL . '/adm_plugins/'.$plugin_folder.'/geburtstagsliste_show.php?" +
                         "mode=html&previewdays='.$getPreviewDays.'&full_screen='.$getFullScreen.'&config='.$getConfig.'&month=" + $(this).val();
                 }
             });
             $("#configList").change(function () {
             	if($(this).val().length > 1) {
-                    self.location.href = "'. $g_root_path. '/adm_plugins/'.$plugin_folder.'/geburtstagsliste_show.php?" +
+                    self.location.href = "'. ADMIDIO_URL . '/adm_plugins/'.$plugin_folder.'/geburtstagsliste_show.php?" +
                         "mode=html&previewdays='.$getPreviewDays.'&full_screen='.$getFullScreen.'&month='.$getMonth.'&config=" + $(this).val();
                 }
             });
             
             $("#menu_item_print_view").click(function () {
-                window.open("'.$g_root_path. '/adm_plugins/'.$plugin_folder.'/geburtstagsliste_show.php?" +
+                window.open("'. ADMIDIO_URL . '/adm_plugins/'.$plugin_folder.'/geburtstagsliste_show.php?" +
                  "previewdays='.$getPreviewDays.'&month='.$getMonth.'&config='.$getConfig.'&mode=print", "_blank");
             });', true);
         
@@ -266,12 +266,12 @@ if($getMode != 'csv')
         
         if($getFullScreen == true)
         {
-            $listsMenu->addItem('menu_item_normal_picture', $g_root_path. '/adm_plugins/'.$plugin_folder.'/geburtstagsliste_show.php?mode=html&amp;previewdays='.$getPreviewDays.'&amp;month='.$getMonth.'&amp;config='.$getConfig.'&amp;full_screen=0', 
+            $listsMenu->addItem('menu_item_normal_picture', ADMIDIO_URL . '/adm_plugins/'.$plugin_folder.'/geburtstagsliste_show.php?mode=html&amp;previewdays='.$getPreviewDays.'&amp;month='.$getMonth.'&amp;config='.$getConfig.'&amp;full_screen=0',
                 $gL10n->get('SYS_NORMAL_PICTURE'), 'arrow_in.png');
         }
         else
         {
-            $listsMenu->addItem('menu_item_full_screen', $g_root_path. '/adm_plugins/'.$plugin_folder.'/geburtstagsliste_show.php?mode=html&amp;previewdays='.$getPreviewDays.'&amp;month='.$getMonth.'&amp;config='.$getConfig.'&amp;full_screen=1', 
+            $listsMenu->addItem('menu_item_full_screen', ADMIDIO_URL . '/adm_plugins/'.$plugin_folder.'/geburtstagsliste_show.php?mode=html&amp;previewdays='.$getPreviewDays.'&amp;month='.$getMonth.'&amp;config='.$getConfig.'&amp;full_screen=1',
                 $gL10n->get('SYS_FULL_SCREEN'), 'arrow_out.png');
         }
         
@@ -281,7 +281,7 @@ if($getMode != 'csv')
         if(check_showpluginPGL($pPreferences->config['Pluginfreigabe']['freigabe_config']))
 		{
     		// show link to pluginpreferences 
-    		$listsMenu->addItem('admMenuItemPreferencesLists', $g_root_path. '/adm_plugins/'.$plugin_folder.'/preferences.php', 
+    		$listsMenu->addItem('admMenuItemPreferencesLists', ADMIDIO_URL . '/adm_plugins/'.$plugin_folder.'/preferences.php',
                         $gL10n->get('PLG_GEBURTSTAGSLISTE_SETTINGS'), 'options.png');        
 		}
          
@@ -457,7 +457,7 @@ foreach($liste->listData as $memberdata)
 					}
 					else
 					{
-						$mail_link = $g_root_path.'/adm_plugins/'.$plugin_folder.'/message_write.php?usr_id='. $memberdata[0].'&config='. trim($getConfig,'X').'&configtext='.end($memberdata);			
+						$mail_link = ADMIDIO_URL .'/adm_plugins/'.$plugin_folder.'/message_write.php?usr_id='. $memberdata[0].'&config='. trim($getConfig,'X').'&configtext='.end($memberdata);
 					}
 					$columnValues[] = '<a href="'.$mail_link.'">'.$content.'</a><br />';
         		 }
@@ -480,7 +480,7 @@ foreach($liste->listData as $memberdata)
     }
     elseif($getMode == 'html')
     {
-        $table->addRowByArray($columnValues, null, array('style' => 'cursor: pointer', 'onclick' => 'window.location.href=\''. $g_root_path. '/adm_program/modules/profile/profile.php?user_id='. $memberdata[0]. '\''));
+        $table->addRowByArray($columnValues, null, array('style' => 'cursor: pointer', 'onclick' => 'window.location.href=\''. ADMIDIO_URL . '/adm_program/modules/profile/profile.php?user_id='. $memberdata[0]. '\''));
     }
     elseif($getMode == 'print' || $getMode == 'pdf')
     {
