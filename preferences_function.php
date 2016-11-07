@@ -181,7 +181,7 @@ case 2:
     $form = new HtmlForm('deinstallation_form', ADMIDIO_URL . FOLDER_PLUGINS .'/'.$plugin_folder.'/preferences_function.php?mode=3', $page);
     $radioButtonEntries = array('0' => $gL10n->get('PLG_GEBURTSTAGSLISTE_DEINST_ACTORGONLY'), '1' => $gL10n->get('PLG_GEBURTSTAGSLISTE_DEINST_ALLORG') );
     $form->addRadioButton('deinst_org_select',$gL10n->get('PLG_GEBURTSTAGSLISTE_ORG_CHOICE'),$radioButtonEntries);    
-    $form->addSubmitButton('btn_deinstall', $gL10n->get('PLG_GEBURTSTAGSLISTE_DEINSTALLATION'), array('icon' => THEME_PATH.'/icons/delete.png', 'class' => ' col-sm-offset-3'));
+    $form->addSubmitButton('btn_deinstall', $gL10n->get('PLG_GEBURTSTAGSLISTE_DEINSTALLATION'), array('icon' => THEME_URL .'/icons/delete.png', 'class' => ' col-sm-offset-3'));
     
     // add form to html page and show page
     $page->addHtml($form->show(false));

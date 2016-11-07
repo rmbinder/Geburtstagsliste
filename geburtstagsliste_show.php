@@ -176,7 +176,7 @@ if($getMode != 'csv')
     	{
     		ini_set('max_execution_time', 300); //300 seconds = 5 minutes
     	}
-        require_once(ADMIDIO_PATH. '/adm_program/libs/tcpdf/tcpdf.php');
+        require_once(ADMIDIO_PATH. FOLDER_LIBS_SERVER .'/tcpdf/tcpdf.php');
         $pdf = new TCPDF($orientation, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
         // set document information
@@ -480,7 +480,7 @@ foreach($liste->listData as $memberdata)
     }
     elseif($getMode == 'html')
     {
-        $table->addRowByArray($columnValues, null, array('style' => 'cursor: pointer', 'onclick' => 'window.location.href=\''. ADMIDIO_URL . '/adm_program/modules/profile/profile.php?user_id='. $memberdata[0]. '\''));
+        $table->addRowByArray($columnValues, null, array('style' => 'cursor: pointer', 'onclick' => 'window.location.href=\''. ADMIDIO_URL . FOLDER_MODULES .'/profile/profile.php?user_id='. $memberdata[0]. '\''));
     }
     elseif($getMode == 'print' || $getMode == 'pdf')
     {
@@ -529,14 +529,14 @@ elseif($getMode == 'pdf')
     $pdf->writeHTML($table->getHtmlTable(), true, false, true, false, '');
     
     //Save PDF to file
-    $pdf->Output(ADMIDIO_PATH. '/adm_my_files/'.$filename, 'F');
+    $pdf->Output(ADMIDIO_PATH. FOLDER_DATA .'/'.$filename, 'F');
     
     //Redirect
     header('Content-Type: application/pdf');
 
-    readfile(ADMIDIO_PATH. '/adm_my_files/'.$filename);
+    readfile(ADMIDIO_PATH. FOLDER_DATA .'/'.$filename);
     ignore_user_abort(true);
-    unlink(ADMIDIO_PATH. '/adm_my_files/'.$filename);
+    unlink(ADMIDIO_PATH. FOLDER_DATA .'/'.$filename);
 }
 elseif($getMode == 'html' || $getMode == 'print')
 {    

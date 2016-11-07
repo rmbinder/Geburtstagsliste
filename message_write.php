@@ -55,7 +55,7 @@ if ($gPreferences['enable_mail_module'] != 1 )
 // check if user has email address for sending a email
 if ($gValidLogin && strlen($gCurrentUser->getValue('EMAIL')) == 0)
 {
-    $gMessage->show($gL10n->get('SYS_CURRENT_USER_NO_EMAIL', '<a href="'. ADMIDIO_URL .'/adm_program/modules/profile/profile.php">', '</a>'));
+    $gMessage->show($gL10n->get('SYS_CURRENT_USER_NO_EMAIL', '<a href="'. ADMIDIO_URL . FOLDER_MODULES . '/profile/profile.php">', '</a>'));
 }
 
 //usr_id wurde uebergeben, dann Kontaktdaten des Users aus der DB fischen
@@ -207,7 +207,7 @@ else
 
 $form->closeGroupBox();
 
-$form->addSubmitButton('btn_send', $gL10n->get('SYS_SEND'), array('icon' => THEME_PATH.'/icons/email.png', 'class' => ' col-sm-offset-3'));
+$form->addSubmitButton('btn_send', $gL10n->get('SYS_SEND'), array('icon' => THEME_URL .'/icons/email.png', 'class' => ' col-sm-offset-3'));
 
 // add form to html page and show page
 $page->addHtml($form->show(false));
