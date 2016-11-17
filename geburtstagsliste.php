@@ -20,18 +20,12 @@
 //$gNaviagation ist zwar definiert, aber in bestimmten Fällen in diesem Script nicht sichtbar
 global $gNavigation;
 
-// Pfad des Plugins ermitteln
-$plugin_folder_pos = strpos(__FILE__, 'adm_plugins') + 11;
-$plugin_file_pos   = strpos(__FILE__, basename(__FILE__));
-$plugin_path       = substr(__FILE__, 0, $plugin_folder_pos);
-$plugin_folder     = substr(__FILE__, $plugin_folder_pos+1, $plugin_file_pos-$plugin_folder_pos-2);
-
-require_once($plugin_path. '/../adm_program/system/common.php');
-require_once($plugin_path. '/'.$plugin_folder.'/common_function.php');
-require_once($plugin_path. '/'.$plugin_folder.'/classes/configtable.php'); 
+require_once(__DIR__ . '/../../adm_program/system/common.php');
+require_once(__DIR__ . '/common_function.php');
+require_once(__DIR__ . '/classes/configtable.php');
 
 // Einbinden der Sprachdatei
-$gL10n->addLanguagePath($plugin_path.'/'.$plugin_folder.'/languages');
+$gL10n->addLanguagePath(ADMIDIO_PATH . FOLDER_PLUGINS . $plugin_folder . '/languages');
 
 $pPreferences = new ConfigTablePGL();
 
@@ -55,13 +49,13 @@ if(  strpos($gNavigation->getUrl(), 'preferences_function.php?mode=3') === false
 		{
 			// wenn in der my_body_bottom.php ein $pluginMenu definiert wurde, 
 			// dann innerhalb dieses Menüs anzeigen
-			$pluginMenu->addItem('birthdaylist_show', FOLDER_PLUGINS .'/'.$plugin_folder.'/geburtstagsliste_show.php?mode=html',
+			$pluginMenu->addItem('birthdaylist_show', FOLDER_PLUGINS . $plugin_folder .'/geburtstagsliste_show.php?mode=html',
 				$gL10n->get('PLG_GEBURTSTAGSLISTE_BIRTHDAY_LIST'), '/icons/lists.png'); 
 		}
 		else 
 		{
 			// wenn nicht, dann innerhalb des (immer vorhandenen) Module-Menus anzeigen
-			$moduleMenu->addItem('birthdaylist_show', FOLDER_PLUGINS .'/'.$plugin_folder.'/geburtstagsliste_show.php?mode=html',
+			$moduleMenu->addItem('birthdaylist_show', FOLDER_PLUGINS . $plugin_folder .'/geburtstagsliste_show.php?mode=html',
 				$gL10n->get('PLG_GEBURTSTAGSLISTE_BIRTHDAY_LIST'), '/icons/lists.png'); 
 		}
 	}
