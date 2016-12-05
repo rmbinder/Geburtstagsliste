@@ -48,7 +48,7 @@ class GenList
      */
 	public function generate_listData()
 	{
-		global $gDb, $gProfileFields, $gCurrentOrganization, $pPreferences;
+		global $gDb, $gProfileFields, $gCurrentOrganization, $pPreferences, $gCurrentUser;
 		
 		// die Werte fÃ¼r die runden Geburtstage, Jubilaeen usw einlesen
    		$jubi_rund = explode(',',$pPreferences->config['Konfigurationen']['col_values'][$this->conf]);
@@ -103,8 +103,23 @@ class GenList
         				$rolecatmarker = true;
         			}
         		}
-        	} 			
-			if ($rolecatmarker )
+        	} 
+        	
+        	// prüfen, ob der aktuelle user ($gCurrentUser) mindestens eine Rolle einsehen darf, in der das Geburtstagskind Mitglied ist
+        	$hasRightToView = false;
+        	$user->readDataById($usr_id);
+        	$rolesArr = $user->getRoleMemberships();
+        	
+        	foreach($rolesArr as $role_id)
+        	{
+        		if ($gCurrentUser->hasRightViewRole($role_id))
+        		{
+        			$hasRightToView = true;
+        			break;
+        		}
+        	}
+
+			if ($rolecatmarker  && $hasRightToView)
         	{
         		$workDate = '';
 				$user->readDataById($usr_id);
