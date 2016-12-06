@@ -10,19 +10,19 @@
  */
 
 /******************************************************************************
- * Klasse verwaltet die Daten für die Anzeige der Geburtstagsliste
+ * Klasse verwaltet die Daten fuer die Anzeige der Geburtstagsliste
  *
- * Folgende Methoden stehen zur Verfügung:
+ * Folgende Methoden stehen zur Verfuegung:
  *
- * generate_listData()		- erzeugt die Arrays listData und headerData für den Report
+ * generate_listData()		- erzeugt die Arrays listData und headerData fuer den Report
  * generate_dateMinMax		- erzeugt die Min- und Max-Datumsangaben zur Filterung
  *
  *****************************************************************************/
 
 class GenList
 {
-    public	$headerData = array();               ///< Array mit allen Spaltenüberschriften
-    public	$listData  	= array();               ///< Array mit den Daten für die Liste
+    public	$headerData = array();               ///< Array mit allen Spaltenueberschriften
+    public	$listData  	= array();               ///< Array mit den Daten fuer die Liste
 
     public	$conf;
     public	$previewDays = 0;
@@ -43,14 +43,14 @@ class GenList
     }
 
     /**
-     * Erzeugt die Arrays listData und headerData für die Anzeige
+     * Erzeugt die Arrays listData und headerData fuer die Anzeige
      * @return void
      */
 	public function generate_listData()
 	{
 		global $gDb, $gProfileFields, $gCurrentOrganization, $pPreferences, $gCurrentUser;
 		
-		// die Werte für die runden Geburtstage, Jubilaeen usw einlesen
+		// die Werte fuer die runden Geburtstage, Jubilaeen usw einlesen
    		$jubi_rund = explode(',',$pPreferences->config['Konfigurationen']['col_values'][$this->conf]);
    					
 		$colfields=explode(',',$pPreferences->config['Konfigurationen']['col_fields'][$this->conf]);
@@ -83,7 +83,7 @@ class GenList
 		$membercounter = 0;
 		foreach($workarray as $usr_id)
 		{
-			// bestehen Rollen- und/oder Kategorieeinschränkungen?
+			// bestehen Rollen- und/oder Kategorieeinschraenkungen?
         	$rolecatmarker = true;
         	if ($pPreferences->config['Konfigurationen']['selection_role'][$this->conf]<>' '
         	 || $pPreferences->config['Konfigurationen']['selection_cat'][$this->conf]<>' ')
@@ -105,7 +105,7 @@ class GenList
         		}
         	} 
         	
-        	// pr�fen, ob der aktuelle user ($gCurrentUser) mindestens eine Rolle einsehen darf, in der das Geburtstagskind Mitglied ist
+        	// pruefen, ob der aktuelle user ($gCurrentUser) mindestens eine Rolle einsehen darf, in der das Geburtstagskind Mitglied ist
         	$hasRightToView = false;
         	$user->readDataById($usr_id);
         	$rolesArr = $user->getRoleMemberships();
@@ -124,12 +124,12 @@ class GenList
         		$workDate = '';
 				$user->readDataById($usr_id);
         	
-				// ein Profilfeld wurde als Fokusfeld gewählt
+				// ein Profilfeld wurde als Fokusfeld gewaehlt
 				if(substr($pPreferences->config['Konfigurationen']['col_sel'][$this->conf],0,1)=='p')
         		{
         			$workDate = $user->getValue($gProfileFields->getPropertyById((int) substr($pPreferences->config['Konfigurationen']['col_sel'][$this->conf],1), 'usf_name_intern'));
         		}
-        		// eine Rolle wurde als Fokusfeld gewählt (-> $workDate ist das Beginn der Rollenzugehörigkeit)
+        		// eine Rolle wurde als Fokusfeld gewaehlt (-> $workDate ist der Beginn der Rollenzugehoerigkeit)
         		elseif(substr($pPreferences->config['Konfigurationen']['col_sel'][$this->conf],0,1)=='r')
         		{
         			$membership = new TableAccess($gDb, TBL_MEMBERS, 'rol');
@@ -160,7 +160,7 @@ class GenList
    							}	
    						}
 					}                
-					// in $jubi_data sind jetzt alle möglichen Geburtstage/Jubiläen
+					// in $jubi_data sind jetzt alle moeglichen Geburtstage/Jubilaeeen
 					
 					foreach($jubi_data as $jubi)
 					{
@@ -216,18 +216,18 @@ class GenList
 	}	
 	
     /**
-     * Generiert die Datumsgrenzen Min und Max für die Filterung
+     * Generiert die Datumsgrenzen Min und Max fuer die Filterung
      * @return void
      */
 	private function generate_dateMinMax()
 	{
 		global  $pPreferences;
 		
-		// aufgrund eines Wunsches von "red" im Forum wurde der Parameter Jahresversatz eingeführt
-		// dadurch ist es möglich, Geburtstage in nächsten oder vergangenen Jahren anzuzeigen
+		// aufgrund eines Wunsches von "red" im Forum wurde der Parameter Jahresversatz eingefuehrt
+		// dadurch ist es moeglich, Geburtstage in naechsten oder vergangenen Jahren anzuzeigen
 		$yearsOffset = $pPreferences->config['Konfigurationen']['years_offset'][$this->conf];
 		
-		// standardmäßig wird die Geburtstagsliste immer ab dem aktuellen Datum angezeigt
+		// standardmaessig wird die Geburtstagsliste immer ab dem aktuellen Datum angezeigt
 		// aufgrund eines Wunsches im Forum kann der Beginn der Anzeige auf den 1. Januar gesetzt werden (Kalenderjahr)
 		if($pPreferences->config['Konfigurationen']['calendar_year'][$this->conf])
 		{

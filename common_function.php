@@ -33,12 +33,12 @@ function getRole_IDPGL($role_name)
     $statement = $gDb->query($sql);
     $row = $statement->fetchObject();
 
-   // für den seltenen Fall, dass während des Betriebes die Sprache umgeschaltet wird:  $row->rol_id prüfen
+   // für den seltenen Fall, dass waehrend des Betriebes die Sprache umgeschaltet wird:  $row->rol_id pruefen
     return (isset($row->rol_id) ?  $row->rol_id : 0);
 }
 
 /**
- * Funktion prueft, ob der Nutzer, aufgrund seiner Rollenzugehörigkeit, berechtigt ist das Plugin aufzurufen
+ * Funktion prueft, ob der Nutzer aufgrund seiner Rollenzugehoerigkeit berechtigt ist, das Plugin aufzurufen
  * @param   array  $array   Array mit Rollen-IDs:   entweder $pPreferences->config['Pluginfreigabe']['freigabe']
  *                                                  oder $pPreferences->config['Pluginfreigabe']['freigabe_config']
  * @return  bool   $showPlugin
@@ -60,7 +60,7 @@ function check_showpluginPGL($array)
 }
 
 /**
- * Funktion überprüft den übergebenen Namen, ob er gemaess den Namenskonventionen für
+ * Funktion überprueft den uebergebenen Namen, ob er gemaess den Namenskonventionen für
  * Profilfelder und Kategorien zum Uebersetzen durch eine Sprachdatei geeignet ist
  * Bsp: SYS_COMMON --> Rueckgabe true
  * Bsp: Mitgliedsbeitrag --> Rueckgabe false
@@ -72,10 +72,10 @@ function check_languagePGL($field_name)
 {
     $ret = false;
  
-    //prüfen, ob die ersten 3 Zeichen von $field_name Grußbuchstaben sind
-    //prüfen, ob das vierte Zeichen von $field_name ein _ ist
+    //pruefen, ob die ersten 3 Zeichen von $field_name Grußbuchstaben sind
+    //pruefen, ob das vierte Zeichen von $field_name ein _ ist
 
-    //Prüfung entfällt: prüfen, ob die restlichen Zeichen von $field_name Grußbuchstaben sind
+    //Pruefung entfaellt: pruefen, ob die restlichen Zeichen von $field_name Grussbuchstaben sind
     //if ((ctype_upper(substr($field_name,0,3))) && ((substr($field_name,3,1))=='_')  && (ctype_upper(substr($field_name,4)))   )
 
     if ((ctype_upper(substr($field_name,0,3))) && ((substr($field_name,3,1))=='_')   )
@@ -119,7 +119,7 @@ function arr_dimsort_cmp($a,$b)
  * @param   array   $arr     das zu sortierende Array
  * @param   string  $dim     die Dimension, nach der sortiert werden soll
  * @param   string  $type    NUMBER oder STRING
- * @param   bool    $keepkey Schlüssel beibehalten
+ * @param   bool    $keepkey Schluessel beibehalten
  * @return  void
  */
 function g_arr_dimsort(&$arr,$dim,$type = '',$keepkey = false)
@@ -134,7 +134,7 @@ function g_arr_dimsort(&$arr,$dim,$type = '',$keepkey = false)
 }
 
 /**
- * Funktion prueft, ob ein User Angehöriger einer bestimmten Rolle ist
+ * Funktion prueft, ob ein User Angehoeriger einer bestimmten Rolle ist
  *
  * @param   int  $role_id   ID der zu pruefenden Rolle
  * @param   int  $user_id   ID des Users, fuer den die Mitgliedschaft geprueft werden soll
@@ -180,7 +180,7 @@ function hasRole_IDPGL($role_id, $user_id = 0)
 }
 
 /**
- * Funktion prueft, ob ein User Angehöriger einer bestimmten Kategorie ist
+ * Funktion prueft, ob ein User Angehoeriger einer bestimmten Kategorie ist
  *
  * @param   int  $cat_id    ID der zu pruefenden Kategorie
  * @param   int  $user_id   ID des Users, fuer den die Mitgliedschaft geprueft werden soll
@@ -261,7 +261,7 @@ function generate_configSelection()
 	$k = 0;
 	while ($row = $statement->fetch())
 	{
-		// ueberprüfen, ob der Kategoriename mittels der Sprachdatei übersetzt werden kann
+		// ueberpruefen, ob der Kategoriename mittels der Sprachdatei uebersetzt werden kann
         if(check_languagePGL($row['cat_name']))
         {
         	$row['cat_name'] = $gL10n->get($row['cat_name']);

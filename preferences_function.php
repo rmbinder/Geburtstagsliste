@@ -99,20 +99,20 @@ case 1:
     				$pPreferences->config['Konfigurationen']['col_fields'][] = substr($fields,0,-1);	
     			}
     			    				
-    			// die Fokusstandardeinstellung darf nicht größer sein, als die max. Anzahl der Konfigurationen
+    			// die Fokusstandardeinstellung darf nicht groesser sein, als die max. Anzahl der Konfigurationen
     			if($pPreferences->config['Optionen']['config_default']>$konf_neu-1)
     			{
     				$pPreferences->config['Optionen']['config_default']=$konf_neu-1;
     			}
     			
-    			// wenn $konf_neu immer noch 0 ist, dann wurden alle Konfigurationen gelöscht (was nicht sein darf)
+    			// wenn $konf_neu immer noch 0 ist, dann wurden alle Konfigurationen geloescht (was nicht sein darf)
     			if($konf_neu==0)
     			{
     				$gMessage->show($gL10n->get('PLG_GEBURTSTAGSLISTE_ERROR_MIN_CONFIG'));
     			}
     			else 
     			{
-    				// nicht mehr benötigte E-Mail-Texte in der DB löschen (ansonsten bleiben Leichen!!)
+    				// nicht mehr benoetigte E-Mail-Texte in der DB loeschen (ansonsten bleiben Leichen!!)
             		$sql = 'DELETE FROM '.TBL_TEXTS.'
             				WHERE txt_name LIKE \'PGLMAIL_NOTIFICATION%\'
             				AND txt_name >= \'PGLMAIL_NOTIFICATION'. $konf_neu. '\'

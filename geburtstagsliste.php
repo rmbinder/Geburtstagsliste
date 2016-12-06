@@ -5,7 +5,7 @@
  *
  * Version 2.2.0
  *
- * Dieses Plugin erzeugt für einen bestimmten Zeitraum eine Geburtstags- und Jubiläumsliste der Mitglieder.
+ * Dieses Plugin erzeugt für einen bestimmten Zeitraum eine Geburtstags- und Jubilaeumsliste der Mitglieder.
  *
  * Author: rmb
  *
@@ -17,7 +17,7 @@
  ***********************************************************************************************
  */
   
-//$gNaviagation ist zwar definiert, aber in bestimmten Fällen in diesem Script nicht sichtbar
+//$gNavigation ist zwar definiert, aber in bestimmten Fällen in diesem Script nicht sichtbar
 global $gNavigation;
 
 require_once(__DIR__ . '/../../adm_program/system/common.php');
@@ -29,8 +29,8 @@ $gL10n->addLanguagePath(ADMIDIO_PATH . FOLDER_PLUGINS . $plugin_folder . '/langu
 
 $pPreferences = new ConfigTablePGL();
 
-//Initialisierung und Anzeige des Links nur, wenn vorher keine Deinstallation stattgefunden hat
-// sonst wäre die Deinstallation hinfällig, da hier wieder Default-Werte der config in die DB geschrieben werden
+// Initialisierung und Anzeige des Links nur, wenn vorher keine Deinstallation stattgefunden hat
+// sonst waere die Deinstallation hinfaellig, da hier wieder Default-Werte der config in die DB geschrieben werden
 if(  strpos($gNavigation->getUrl(), 'preferences_function.php?mode=3') === false)
 {
 	if ($pPreferences->checkforupdate())
@@ -48,13 +48,13 @@ if(  strpos($gNavigation->getUrl(), 'preferences_function.php?mode=3') === false
 		if (isset($pluginMenu))
 		{
 			// wenn in der my_body_bottom.php ein $pluginMenu definiert wurde, 
-			// dann innerhalb dieses Menüs anzeigen
+			// dann innerhalb dieses Menues anzeigen
 			$pluginMenu->addItem('birthdaylist_show', FOLDER_PLUGINS . $plugin_folder .'/geburtstagsliste_show.php?mode=html',
 				$gL10n->get('PLG_GEBURTSTAGSLISTE_BIRTHDAY_LIST'), '/icons/lists.png'); 
 		}
 		else 
 		{
-			// wenn nicht, dann innerhalb des (immer vorhandenen) Module-Menus anzeigen
+			// wenn nicht, dann innerhalb des (immer vorhandenen) Module-Menues anzeigen
 			$moduleMenu->addItem('birthdaylist_show', FOLDER_PLUGINS . $plugin_folder .'/geburtstagsliste_show.php?mode=html',
 				$gL10n->get('PLG_GEBURTSTAGSLISTE_BIRTHDAY_LIST'), '/icons/lists.png'); 
 		}

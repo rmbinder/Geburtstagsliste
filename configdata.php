@@ -12,7 +12,7 @@
 
 global $gL10n, $gProfileFields;
 
-//Standardwerte einer Neuinstallation oder beim Anfügen einer zusätzlichen Konfiguration
+//Standardwerte einer Neuinstallation oder beim Anfuegen einer zusaetzlichen Konfiguration
 $config_default['Pluginfreigabe']['freigabe'] 			= array(getRole_IDPGL($gL10n->get('SYS_WEBMASTER')),
 															getRole_IDPGL($gL10n->get('SYS_MEMBER')) );    		
 $config_default['Pluginfreigabe']['freigabe_config'] 	= array(getRole_IDPGL($gL10n->get('SYS_WEBMASTER')),
@@ -43,11 +43,11 @@ $config_default['Plugininformationen']['stand'] = '';
 /*
  *  Mittels dieser Zeichenkombination werden Konfigurationsdaten, die zur Laufzeit als Array verwaltet werden,
  *  zu einem String zusammengefasst und in der Admidiodatenbank gespeichert. 
- *  Müssen die vorgegebenen Zeichenkombinationen (#_#) jedoch ebenfalls, z.B. in der Beschreibung 
+ *  Muessen die vorgegebenen Zeichenkombinationen (#_#) jedoch ebenfalls, z.B. in der Beschreibung 
  *  einer Konfiguration, verwendet werden, so kann das Plugin gespeicherte Konfigurationsdaten 
- *  nicht mehr richtig einlesen. In diesem Fall ist die vorgegebene Zeichenkombination abzuändern (z.B. in !-!)
+ *  nicht mehr richtig einlesen. In diesem Fall ist die vorgegebene Zeichenkombination abzuaendern (z.B. in !-!)
  *  
- *  Achtung: Vor einer Änderung muss eine Deinstallation durchgeführt werden!
- *  Bereits gespeicherte Werte in der Datenbank können nach einer Änderung nicht mehr eingelesen werden!
+ *  Achtung: Vor einer Aenderung muss eine Deinstallation durchgefuehrt werden!
+ *  Bereits gespeicherte Werte in der Datenbank koennen nach einer Aenderung nicht mehr eingelesen werden!
  */
 $dbtoken  = '#_#';  

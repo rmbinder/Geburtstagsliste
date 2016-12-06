@@ -14,11 +14,11 @@
  * mode   		: Output (html, print, csv-ms, csv-oo, pdf, pdfl)
  * full_screen  : 0 - (Default) show sidebar, head and page bottom of html page
  *                1 - Only show the list without any other html unnecessary elements
- * config		: Die gewählte Konfiguration (Alte Bezeichnung Fokus; die Standardeinstellung wurde über Einstellungen-Optionen festgelegt)
- * month		: Der gewählte Monat
+ * config		: Die gewaehlte Konfiguration (Alte Bezeichnung Fokus; die Standardeinstellung wurde über Einstellungen-Optionen festgelegt)
+ * month		: Der gewaehlte Monat
  * previewdays	: Die vorauszuschauenden Tage (Default wurde in Optionen festgelegt)
- * previewmode	: days   - (Default) Die Anzeige einer bestimmten Anzahl von Tagen wurde gewählt
- * 				  months - Die Anzeige für einen Monat wurde gewählt
+ * previewmode	: days   - (Default) Die Anzeige einer bestimmten Anzahl von Tagen wurde gewaehlt
+ * 				  months - Die Anzeige für einen Monat wurde gewaehlt
  ***********************************************************************************************
  */
 

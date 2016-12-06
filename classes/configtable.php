@@ -12,15 +12,15 @@
 /******************************************************************************
  * Klasse verwaltet die Konfigurationstabelle "adm_plugin_preferences"
  *
- * Folgende Methoden stehen zur Verfügung:
+ * Folgende Methoden stehen zur Verfuegung:
  *
- * init()						-	prüft, ob die Konfigurationstabelle existiert,
- * 									sie ggf. an und befüllt sie mit Standardwerten
+ * init()						-	prueft, ob die Konfigurationstabelle existiert,
+ * 									legt sie ggf. an und befuellt sie mit Standardwerten
  * save() 						- 	schreibt die Konfiguration in die Datenbank
  * read()						-	liest die Konfigurationsdaten aus der Datenbank
  * checkforupdate()				-	vergleicht die Angaben in der Datei version.php
  * 									mit den Daten in der DB
- * delete($deinst_org_select)	-	löscht die Konfigurationsdaten in der Datenbank
+ * delete($deinst_org_select)	-	loescht die Konfigurationsdaten in der Datenbank
  *
  *****************************************************************************/
 
@@ -64,7 +64,7 @@ class ConfigTablePGL
 	}
 	
     /**
-     * Prüft, ob die Konfigurationstabelle existiert, legt sie ggf an und befüllt sie mit Standardwerten
+     * Prueft, ob die Konfigurationstabelle existiert, legt sie ggf an und befuellt sie mit Standardwerten
      * @return void
      */
 	public function init()
@@ -196,16 +196,16 @@ class ConfigTablePGL
         		// gibt es diese Sektion bereits in der config?
         		if (isset($config_ist[$section][$key]))
         		{
-        			// wenn ja, diese Sektion in der Ist-config löschen
+        			// wenn ja, diese Sektion in der Ist-config loeschen
         			unset($config_ist[$section][$key]);
         		}
         		else
         		{
-        			// wenn nicht, diese Sektion in der config anlegen und mit den Standardwerten aus der Soll-config befüllen
+        			// wenn nicht, diese Sektion in der config anlegen und mit den Standardwerten aus der Soll-config befuellen
         			$this->config[$section][$key]=$value;
         		}
         	}
-        	// leere Abschnitte (=leere Arrays) löschen
+        	// leere Abschnitte (=leere Arrays) loeschen
         	if ((isset($config_ist[$section]) && count($config_ist[$section])==0))
         	{
         		unset($config_ist[$section]);
@@ -213,9 +213,9 @@ class ConfigTablePGL
     	}
     
     	// die Ist-config durchlaufen 
-    	// jetzt befinden sich hier nur noch die DB-Einträge, die nicht verwendet werden und deshalb: 
-    	// 1. in der DB gelöscht werden können
-    	// 2. in der normalen config gelöscht werden können
+    	// jetzt befinden sich hier nur noch die DB-Eintraege, die nicht verwendet werden und deshalb: 
+    	// 1. in der DB geloescht werden koennen
+    	// 2. in der normalen config geloescht werden koennen
 		foreach($config_ist as $section => $sectiondata)
     	{
     		foreach($sectiondata as $key => $value)
@@ -227,7 +227,7 @@ class ConfigTablePGL
 				$gDb->query($sql);
 				unset($this->config[$section][$key]);
         	}
-			// leere Abschnitte (=leere Arrays) löschen
+			// leere Abschnitte (=leere Arrays) loeschen
         	if (count($this->config[$section])==0)
         	{
         		unset($this->config[$section]);
@@ -374,8 +374,8 @@ class ConfigTablePGL
 	}
 	
     /**
-     * Löscht die Konfigurationsdaten in der Datenbank
-     * @param   int     $deinst_org_select  0 = Daten nur in aktueller Org löschen, 1 = Daten in allen Org löschen
+     * Loescht die Konfigurationsdaten in der Datenbank
+     * @param   int     $deinst_org_select  0 = Daten nur in aktueller Org loeschen, 1 = Daten in allen Org loeschen
      * @return  string  $result             Meldung
      */
 	public function delete($deinst_org_select)
@@ -387,7 +387,7 @@ class ConfigTablePGL
 		$result_db = false;
         $result_texts = false;
 		
-		if($deinst_org_select==0)                    //0 = Daten nur in aktueller Org löschen 
+		if($deinst_org_select==0)                    //0 = Daten nur in aktueller Org loeschen 
 		{
 			$sql = 'DELETE FROM '.$this->table_name.'
         			WHERE plp_name LIKE \''.self::$shortcut.'__%\'
@@ -399,7 +399,7 @@ class ConfigTablePGL
             		AND txt_org_id = '.$gCurrentOrganization->getValue('org_id').' ';
 			$result_texts = $gDb->query($sql);	
 		}
-		elseif ($deinst_org_select==1)              //1 = Daten in allen Orgs löschen 
+		elseif ($deinst_org_select==1)              //1 = Daten in allen Orgs loeschen 
 		{
 			$sql = 'DELETE FROM '.$this->table_name.'
         			WHERE plp_name LIKE \''.self::$shortcut.'__%\' ';
@@ -410,7 +410,7 @@ class ConfigTablePGL
 			$result_texts = $gDb->query($sql);	
 		}
 
-		// wenn die Tabelle nur Einträge dieses Plugins hatte, sollte sie jetzt leer sein und kann gelöscht werden
+		// wenn die Tabelle nur Eintraege dieses Plugins hatte, sollte sie jetzt leer sein und kann geloescht werden
 		$sql = 'SELECT * FROM '.$this->table_name.' ';
 		$statement = $gDb->query($sql);
 

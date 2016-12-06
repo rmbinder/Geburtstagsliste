@@ -31,7 +31,6 @@ $postBodySQL     = admFuncVariableIsValid($_POST, 'msg_body', 'string', array('d
 $postDeliveryConfirmation  = admFuncVariableIsValid($_POST, 'delivery_confirmation', 'boolean', array('defaultValue' => 0));
 $postCarbonCopy = admFuncVariableIsValid($_POST, 'carbon_copy', 'boolean', array('defaultValue' => 0));
 
-//vorbelegen
 $getMsgType      = 'EMAIL';
 
 // Stop if mail should be send and mail module is disabled

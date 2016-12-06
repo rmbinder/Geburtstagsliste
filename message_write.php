@@ -13,7 +13,7 @@
  *
  * usr_id       : E-Mail an den entsprechenden Benutzer schreiben
  * configtext   : Text in der letzten Spalte (Konfigurationsspalte)
- * config       : die gewählte Konfiguration
+ * config       : die gewaehlte Konfiguration
  ***********************************************************************************************
  */
 
@@ -135,7 +135,7 @@ $userEmail = $user->getValue('EMAIL');
 // dann soll das Formular gefuellt werden mit den Werten aus der Session
 if (strpos($gNavigation->getUrl(),'message_send.php') > 0 && isset($_SESSION['message_request']))
 {
-    // Das Formular wurde also schon einmal ausgef�llt,
+    // Das Formular wurde also schon einmal ausgefuellt,
     // da der User hier wieder gelandet ist nach der Mailversand-Seite
     $form_values = strStripSlashesDeep($_SESSION['message_request']);
     unset($_SESSION['message_request']);

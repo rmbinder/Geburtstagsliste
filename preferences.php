@@ -1,7 +1,7 @@
 <?php
 /**
  ***********************************************************************************************
- * Modul Preferences (Einstellungen) für das Admidio-Plugin Geburtstagsliste
+ * Modul Preferences (Einstellungen) fuer das Admidio-Plugin Geburtstagsliste
  *
  * @copyright 2004-2016 The Admidio Team
  * @see http://www.admidio.org/
@@ -148,7 +148,7 @@ $javascriptCode = '
             var selected = "";
             
             // bei gespeicherten Listen das entsprechende Profilfeld selektieren
-            // und den Feldnamen dem Listenarray hinzufügen
+            // und den Feldnamen dem Listenarray hinzufuegen
             if(arr_default_fields'.$conf.'[fieldNumberIntern'.$conf.'])
             {
                 if(arr_user_fields[counter]["id"] == arr_default_fields'.$conf.'[fieldNumberIntern'.$conf.']["id"])
