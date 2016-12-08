@@ -269,46 +269,62 @@ if($getMode != 'csv')
                 $gL10n->get('SYS_FULL_SCREEN'), 'arrow_out.png');
         }
         
-        // link to print overlay and exports
+        // link to print overlay, exports and preferences
         $listsMenu->addItem('menu_item_print_view', '#', $gL10n->get('LST_PRINT_PREVIEW'), 'print.png');
-        
-        if(check_showpluginPGL($pPreferences->config['Pluginfreigabe']['freigabe_config']))
-		{
-    		// show link to pluginpreferences 
-    		$listsMenu->addItem('admMenuItemPreferencesLists', ADMIDIO_URL . FOLDER_PLUGINS . $plugin_folder .'/preferences.php',
-                        $gL10n->get('PLG_GEBURTSTAGSLISTE_SETTINGS'), 'options.png');        
-		}
          
-        $form = new HtmlForm('navbar_export_to_form', '', $page, array('type' => 'navbar', 'setFocus' => false));
-       
+        if(check_showpluginPGL($pPreferences->config['Pluginfreigabe']['freigabe_config']))
+        {
+        	// show link to pluginpreferences
+        	$listsMenu->addItem('admMenuItemPreferencesLists', ADMIDIO_URL . FOLDER_PLUGINS . $plugin_folder .'/preferences.php',
+        			$gL10n->get('PLG_GEBURTSTAGSLISTE_SETTINGS'), 'options.png', 'right');
+        }
+        
+        $form = new HtmlForm('navbar_form', '', $page, array('type' => 'navbar', 'setFocus' => false));
         $selectBoxEntries = array('' => $gL10n->get('LST_EXPORT_TO').' ...', 'csv-ms' => $gL10n->get('LST_MICROSOFT_EXCEL').' ('.$gL10n->get('SYS_ISO_8859_1').')', 'pdf' => $gL10n->get('SYS_PDF').' ('.$gL10n->get('SYS_PORTRAIT').')', 
-                                  'pdfl' => $gL10n->get('SYS_PDF').' ('.$gL10n->get('SYS_LANDSCAPE').')', 'csv-oo' => $gL10n->get('SYS_CSV').' ('.$gL10n->get('SYS_UTF8').')');
+        	'pdfl' => $gL10n->get('SYS_PDF').' ('.$gL10n->get('SYS_LANDSCAPE').')', 'csv-oo' => $gL10n->get('SYS_CSV').' ('.$gL10n->get('SYS_UTF8').')');
 		$form->addSelectBox('export_list_to', null, $selectBoxEntries, array('showContextDependentFirstEntry' => false));
         
-		$selectBoxEntries = array('' => $gL10n->get('PLG_GEBURTSTAGSLISTE_SELECT_NUMBER_OF_DAYS').' ...');
-    	foreach ($pPreferences->config['Optionen']['vorschau_liste'] as $item)
-    	{
-    		// eine 0 in der Vorschauliste wird nicht korrekt dargestellt, deshalb alle Werte maskieren
-			$selectBoxEntries['X'.$item.'X'] =  $item;
-		}
+        if($getFullScreen == false)
+        {
+        	$listsMenu->addForm($form->show(false));
+        	
+        	// in normal screen mode create extra menu with elements for selection of configuration, months, days
+        	$selectionNavbar = new HtmlNavbar('menu_selection');
+        	$form = new HtmlForm('navbar_selection_form', ADMIDIO_URL.FOLDER_MODULES.'/lists/lists_show.php', $page, array('type' => 'navbar', 'setFocus' => false));
+        }
+        
+        $selectBoxEntries = array(' ' => $gL10n->get('PLG_GEBURTSTAGSLISTE_SELECT_CONFIGURATION').' ...');
+        foreach ($pPreferences->config['Konfigurationen']['col_desc'] as $key => $item)
+        {
+        	$selectBoxEntries['X'.$key.'X'] =  $item;
+        }
+        $form->addSelectBox('configList', null, $selectBoxEntries, array('showContextDependentFirstEntry' => false));
+        
+        $selectBoxEntries = array('' => $gL10n->get('PLG_GEBURTSTAGSLISTE_SELECT_NUMBER_OF_DAYS').' ...');
+        foreach ($pPreferences->config['Optionen']['vorschau_liste'] as $item)
+        {
+        	// eine 0 in der Vorschauliste wird nicht korrekt dargestellt, deshalb alle Werte maskieren
+        	$selectBoxEntries['X'.$item.'X'] =  $item;
+        }
         $form->addSelectBox('previewList', null, $selectBoxEntries, array('showContextDependentFirstEntry' => false));
         
         $selectBoxEntries = array('' => $gL10n->get('PLG_GEBURTSTAGSLISTE_SELECT_MONTH').' ...');
-    	foreach ($monate as $key => $item)
-    	{
-			$selectBoxEntries[$key] =  $item;
-		}
+        foreach ($monate as $key => $item)
+        {
+        	$selectBoxEntries[$key] =  $item;
+        }
         $form->addSelectBox('monthList', null, $selectBoxEntries, array('showContextDependentFirstEntry' => false));
         
-        $selectBoxEntries = array(' ' => $gL10n->get('PLG_GEBURTSTAGSLISTE_SELECT_CONFIGURATION').' ...');
-    	foreach ($pPreferences->config['Konfigurationen']['col_desc'] as $key => $item)
-    	{
-			$selectBoxEntries['X'.$key.'X'] =  $item;
-		}
-        $form->addSelectBox('configList', null, $selectBoxEntries, array('showContextDependentFirstEntry' => false));
-         
-        $listsMenu->addForm($form->show(false));
-        
+        if($getFullScreen == true)
+        {
+        	$listsMenu->addForm($form->show(false));
+        }
+        else 
+        {
+        	$selectionNavbar->addForm($form->show(false));
+        	$page->addHtml($selectionNavbar->show());
+        }
+       
         $table = new HtmlTable('adm_lists_table', $page, $hoverRows, $datatable, $classTable);
         $table->setDatatablesRowsPerPage($gPreferences['lists_members_per_page']);
     }
