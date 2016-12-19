@@ -5,7 +5,7 @@
  *
  * Version 2.2.0
  *
- * Dieses Plugin erzeugt für einen bestimmten Zeitraum eine Geburtstags- und Jubilaeumsliste der Mitglieder.
+ * Dieses Plugin erzeugt fuer einen bestimmten Zeitraum eine Geburtstags- und Jubilaeumsliste der Mitglieder.
  *
  * Author: rmb
  *
@@ -17,7 +17,7 @@
  ***********************************************************************************************
  */
   
-//$gNavigation ist zwar definiert, aber in bestimmten Fällen in diesem Script nicht sichtbar
+//$gNavigation ist zwar definiert, aber in bestimmten Faellen in diesem Script nicht sichtbar
 global $gNavigation;
 
 require_once(__DIR__ . '/../../adm_program/system/common.php');
