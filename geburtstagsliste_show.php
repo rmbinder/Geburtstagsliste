@@ -19,6 +19,9 @@
  * previewdays	: Die vorauszuschauenden Tage (Default wurde in Optionen festgelegt)
  * previewmode	: days   - (Default) Die Anzeige einer bestimmten Anzahl von Tagen wurde gewaehlt
  * 				  months - Die Anzeige für einen Monat wurde gewaehlt
+ * filter_enable: 0 - (Default) No filter option
+ *                1 - Filter option is enabled
+ * filter		: Filter string
  ***********************************************************************************************
  */
 
@@ -68,9 +71,11 @@ foreach ($pPreferences->config['Optionen']['vorschau_liste'] as $item)
 $getPreviewDays = admFuncVariableIsValid($_GET, 'previewdays', 'string', array('defaultValue' => 'X'.$pPreferences->config['Optionen']['vorschau_tage_default'].'X',  'validValues' => $validValues));
 unset($validValues);
 
-$getMode        = admFuncVariableIsValid($_GET, 'mode', 'string', array('requireValue' => true, 'validValues' => array('csv-ms', 'csv-oo', 'html', 'print', 'pdf', 'pdfl' )));
-$getFullScreen  = admFuncVariableIsValid($_GET, 'full_screen', 'numeric');
-$getMonth       = admFuncVariableIsValid($_GET, 'month', 'string', array('validValues' => array('00','01', '02', '03', '04', '05', '06','07','08','09','10','11','12' )));
+$getMode         = admFuncVariableIsValid($_GET, 'mode', 'string', array('requireValue' => true, 'validValues' => array('csv-ms', 'csv-oo', 'html', 'print', 'pdf', 'pdfl' )));
+$getFullScreen   = admFuncVariableIsValid($_GET, 'full_screen', 'numeric');
+$getMonth        = admFuncVariableIsValid($_GET, 'month', 'string', array('validValues' => array('00','01', '02', '03', '04', '05', '06','07','08','09','10','11','12' )));
+$getFilterEnable = admFuncVariableIsValid($_GET, 'filter_enable', 'numeric');
+$getFilter       = admFuncVariableIsValid($_GET, 'filter', 'string');
 
 $liste = new GenList($getConfig, $getPreviewDays, $getMonth);
 $liste->generate_listData();
@@ -227,32 +232,30 @@ if($getMode != 'csv')
             $("#export_list_to").change(function () {
                 if($(this).val().length > 1) {
                     self.location.href = "'. ADMIDIO_URL . FOLDER_PLUGINS . $plugin_folder .'/geburtstagsliste_show.php?" +
-                        "previewdays='.$getPreviewDays.'&month='.$getMonth.'&config='.$getConfig.'&mode=" + $(this).val();
+                        "previewdays='.$getPreviewDays.'&filter='.$getFilter.'&filter_enable='.$getFilterEnable.'&month='.$getMonth.'&config='.$getConfig.'&mode=" + $(this).val();
                 }
             });
             $("#previewList").change(function () {
                 if($(this).val().length > 1) {
                     self.location.href = "'. ADMIDIO_URL . FOLDER_PLUGINS . $plugin_folder .'/geburtstagsliste_show.php?" +
-                        "mode=html&month='.$getMonth.'&full_screen='.$getFullScreen.'&config='.$getConfig.'&previewdays=" + $(this).val();
+                        "mode=html&month='.$getMonth.'&filter='.$getFilter.'&filter_enable='.$getFilterEnable.'&full_screen='.$getFullScreen.'&config='.$getConfig.'&previewdays=" + $(this).val();
                 }
             });
-            
             $("#monthList").change(function () {
                 if($(this).val().length > 0) {
                     self.location.href = "'. ADMIDIO_URL . FOLDER_PLUGINS . $plugin_folder .'/geburtstagsliste_show.php?" +
-                        "mode=html&previewdays='.$getPreviewDays.'&full_screen='.$getFullScreen.'&config='.$getConfig.'&month=" + $(this).val();
+                        "mode=html&previewdays='.$getPreviewDays.'&filter='.$getFilter.'&filter_enable='.$getFilterEnable.'&full_screen='.$getFullScreen.'&config='.$getConfig.'&month=" + $(this).val();
                 }
             });
             $("#configList").change(function () {
             	if($(this).val().length > 1) {
                     self.location.href = "'. ADMIDIO_URL . FOLDER_PLUGINS . $plugin_folder .'/geburtstagsliste_show.php?" +
-                        "mode=html&previewdays='.$getPreviewDays.'&full_screen='.$getFullScreen.'&month='.$getMonth.'&config=" + $(this).val();
+                        "mode=html&previewdays='.$getPreviewDays.'&filter='.$getFilter.'&filter_enable='.$getFilterEnable.'&full_screen='.$getFullScreen.'&month='.$getMonth.'&config=" + $(this).val();
                 }
             });
-            
             $("#menu_item_print_view").click(function () {
                 window.open("'. ADMIDIO_URL . FOLDER_PLUGINS . $plugin_folder .'/geburtstagsliste_show.php?" +
-                 "previewdays='.$getPreviewDays.'&month='.$getMonth.'&config='.$getConfig.'&mode=print", "_blank");
+                 "previewdays='.$getPreviewDays.'&filter='.$getFilter.'&filter_enable='.$getFilterEnable.'&month='.$getMonth.'&config='.$getConfig.'&mode=print", "_blank");
             });', true);
         
         // get module menu
@@ -260,18 +263,32 @@ if($getMode != 'csv')
         
         if($getFullScreen == true)
         {
-            $listsMenu->addItem('menu_item_normal_picture', ADMIDIO_URL . FOLDER_PLUGINS . $plugin_folder .'/geburtstagsliste_show.php?mode=html&amp;previewdays='.$getPreviewDays.'&amp;month='.$getMonth.'&amp;config='.$getConfig.'&amp;full_screen=0',
+            $listsMenu->addItem('menu_item_normal_picture', ADMIDIO_URL . FOLDER_PLUGINS . $plugin_folder .'/geburtstagsliste_show.php?mode=html&amp;previewdays='.$getPreviewDays.'&amp;filter='.$getFilter.'&amp;month='.$getMonth.'&amp;filter_enable='.$getFilterEnable.'&amp;config='.$getConfig.'&amp;full_screen=0',
                 $gL10n->get('SYS_NORMAL_PICTURE'), 'arrow_in.png');
         }
         else
         {
-            $listsMenu->addItem('menu_item_full_screen', ADMIDIO_URL . FOLDER_PLUGINS . $plugin_folder .'/geburtstagsliste_show.php?mode=html&amp;previewdays='.$getPreviewDays.'&amp;month='.$getMonth.'&amp;config='.$getConfig.'&amp;full_screen=1',
+            $listsMenu->addItem('menu_item_full_screen', ADMIDIO_URL . FOLDER_PLUGINS . $plugin_folder .'/geburtstagsliste_show.php?mode=html&amp;previewdays='.$getPreviewDays.'&amp;filter='.$getFilter.'&amp;month='.$getMonth.'&amp;filter_enable='.$getFilterEnable.'&amp;config='.$getConfig.'&amp;full_screen=1',
                 $gL10n->get('SYS_FULL_SCREEN'), 'arrow_out.png');
         }
-        
-        // link to print overlay, exports and preferences
+       
+        // link to print overlay, exports, filter and preferences
         $listsMenu->addItem('menu_item_print_view', '#', $gL10n->get('LST_PRINT_PREVIEW'), 'print.png');
-         
+       
+        if($getFilterEnable == true)
+        {
+        	$listsMenu->addItem('filter_disable', ADMIDIO_URL . FOLDER_PLUGINS . $plugin_folder .'/geburtstagsliste_show.php?mode=html&amp;previewdays='.$getPreviewDays.'&amp;filter='.$getFilter.'&amp;month='.$getMonth.'&amp;full_screen='.$getFullScreen.'&amp;config='.$getConfig.'&amp;filter_enable=0',
+        			$gL10n->get('SYS_FILTER'), 'checkbox_checked.gif');
+        }
+        else
+        {
+        	$listsMenu->addItem('filter_enable', ADMIDIO_URL . FOLDER_PLUGINS . $plugin_folder .'/geburtstagsliste_show.php?mode=html&amp;previewdays='.$getPreviewDays.'&amp;filter='.$getFilter.'&amp;month='.$getMonth.'&amp;full_screen='.$getFullScreen.'&amp;config='.$getConfig.'&amp;filter_enable=1',
+        			$gL10n->get('SYS_FILTER'), 'checkbox.gif');
+        	
+        	// if filter is not enabled, reset filterstring
+        	$getFilter = '';
+        }
+        
         if(check_showpluginPGL($pPreferences->config['Pluginfreigabe']['freigabe_config']))
         {
         	// show link to pluginpreferences
@@ -279,18 +296,36 @@ if($getMode != 'csv')
         			$gL10n->get('PLG_GEBURTSTAGSLISTE_SETTINGS'), 'options.png', 'right');
         }
         
+        // input field for filter
+        if($getFilterEnable == true)
+        {
+        	// create filter menu
+        	$filterNavbar = new HtmlNavbar('menu_list_filter', null, null, 'filter');
+        	$form = new HtmlForm('navbar_filter_form', ADMIDIO_URL . FOLDER_PLUGINS . $plugin_folder .'/geburtstagsliste_show.php', $page, array('type' => 'navbar', 'setFocus' => false));
+        	$form->addInput('filter', '', $getFilter);
+        	$form->addInput('previewdays', '', $getPreviewDays, array('property' => FIELD_HIDDEN));
+        	$form->addInput('full_screen', '', $getFullScreen, array('property' => FIELD_HIDDEN));
+        	$form->addInput('month', '', $getMonth, array('property' => FIELD_HIDDEN));
+        	$form->addInput('config', '', $getConfig, array('property' => FIELD_HIDDEN));
+        	$form->addInput('mode', '', 'html', array('property' => FIELD_HIDDEN));
+        	$form->addInput('filter_enable', '',$getFilterEnable, array('property' => FIELD_HIDDEN));
+        	$form->addSubmitButton('btn_send', $gL10n->get('SYS_OK'));
+        	$filterNavbar->addForm($form->show(false));
+        	$page->addHtml($filterNavbar->show());
+        }
+        
         $form = new HtmlForm('navbar_form', '', $page, array('type' => 'navbar', 'setFocus' => false));
         $selectBoxEntries = array('' => $gL10n->get('LST_EXPORT_TO').' ...', 'csv-ms' => $gL10n->get('LST_MICROSOFT_EXCEL').' ('.$gL10n->get('SYS_ISO_8859_1').')', 'pdf' => $gL10n->get('SYS_PDF').' ('.$gL10n->get('SYS_PORTRAIT').')', 
         	'pdfl' => $gL10n->get('SYS_PDF').' ('.$gL10n->get('SYS_LANDSCAPE').')', 'csv-oo' => $gL10n->get('SYS_CSV').' ('.$gL10n->get('SYS_UTF8').')');
 		$form->addSelectBox('export_list_to', null, $selectBoxEntries, array('showContextDependentFirstEntry' => false));
-        
+		
         if($getFullScreen == false)
         {
         	$listsMenu->addForm($form->show(false));
         	
         	// in normal screen mode create extra menu with elements for selection of configuration, months, days
         	$selectionNavbar = new HtmlNavbar('menu_selection');
-        	$form = new HtmlForm('navbar_selection_form', ADMIDIO_URL.FOLDER_MODULES.'/lists/lists_show.php', $page, array('type' => 'navbar', 'setFocus' => false));
+        	$form = new HtmlForm('navbar_selection_form', ADMIDIO_URL . FOLDER_PLUGINS . $plugin_folder .'/geburtstagsliste_show.php', $page, array('type' => 'navbar', 'setFocus' => false));
         }
         
         $selectBoxEntries = array(' ' => $gL10n->get('PLG_GEBURTSTAGSLISTE_SELECT_CONFIGURATION').' ...');
@@ -402,14 +437,14 @@ $listRowNumber = 1;
 foreach($liste->listData as $memberdata) 
 {
 	$columnValues = array();
-
+	$tmp_csv = '';
+	
     // Felder zu Datensatz
-    $columnNumber=1;
     for($i=1; $i < count($memberdata); $i++)
     {         
     	if($getMode == 'html' || $getMode == 'print' || $getMode == 'pdf')
         {    
-        	if($columnNumber == 1)
+        	if($i == 1)
             {
             	// die Laufende Nummer noch davorsetzen
                 $columnValues[] = $listRowNumber;  
@@ -417,10 +452,10 @@ foreach($liste->listData as $memberdata)
         }
         else
         {
-            if($columnNumber == 1)
+            if($i == 1)
             {
                 // erste Spalte zeigt lfd. Nummer an
-                $str_csv = $str_csv. $valueQuotes. $listRowNumber. $valueQuotes;
+            	$tmp_csv = $tmp_csv.$valueQuotes. $listRowNumber. $valueQuotes;
             }
         }
         
@@ -446,7 +481,7 @@ foreach($liste->listData as $memberdata)
         
         if($getMode == 'csv')
         {
-        	$str_csv = $str_csv. $separator. $valueQuotes. $content. $valueQuotes;
+        	$tmp_csv = $tmp_csv. $separator. $valueQuotes. $content. $valueQuotes;
         }
         // create output in html layout
         else
@@ -481,23 +516,24 @@ foreach($liste->listData as $memberdata)
             	$columnValues[] = '&nbsp;';
             }
 		}
-		$columnNumber++;
     }
 
-	if($getMode == 'csv')
+    if($getFilter == '' || ($getFilter <> '' && (stristr(implode('',$columnValues), $getFilter  ) || stristr($tmp_csv, $getFilter  ))) )
     {
-    	$str_csv = $str_csv. "\n";
-    }
-    elseif($getMode == 'html')
-    {
-        $table->addRowByArray($columnValues, null, array('style' => 'cursor: pointer', 'onclick' => 'window.location.href=\''. ADMIDIO_URL . FOLDER_MODULES .'/profile/profile.php?user_id='. $memberdata[0]. '\''));
-    }
-    elseif($getMode == 'print' || $getMode == 'pdf')
-    {
-        $table->addRowByArray($columnValues, null, array('nobr' => 'true'));
-    }
-
-    $listRowNumber++;
+		if($getMode == 'csv')
+   	 	{
+    		$str_csv .= $tmp_csv. "\n";
+    	}
+    	elseif($getMode == 'html')
+    	{
+       		$table->addRowByArray($columnValues, null, array('style' => 'cursor: pointer', 'onclick' => 'window.location.href=\''. ADMIDIO_URL . FOLDER_MODULES .'/profile/profile.php?user_id='. $memberdata[0]. '\''));
+    	}
+   	 	elseif($getMode == 'print' || $getMode == 'pdf')
+    	{
+        	$table->addRowByArray($columnValues, null, array('nobr' => 'true'));
+    	}
+    	$listRowNumber++;
+     }
 }  // End-For (jeder gefundene User)
 
 // Settings for export file
