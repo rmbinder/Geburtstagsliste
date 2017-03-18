@@ -22,9 +22,9 @@ require_once(__DIR__ . '/../../adm_program/system/classes/tabletext.php');
 require_once(__DIR__ . '/common_function.php');
 require_once(__DIR__ . '/classes/configtable.php');
  
-$getUserId      = admFuncVariableIsValid($_GET, 'usr_id', 'numeric', array('defaultValue' => 0));
-$getConfigText  = admFuncVariableIsValid($_GET, 'configtext', 'string');
-$getConfig      = admFuncVariableIsValid($_GET, 'config', 'numeric', array('defaultValue' => 0));
+$getUserId     = admFuncVariableIsValid($_GET, 'usr_id', 'numeric', array('defaultValue' => 0));
+$getConfigText = admFuncVariableIsValid($_GET, 'configtext', 'string');
+$getConfig     = admFuncVariableIsValid($_GET, 'config', 'numeric', array('defaultValue' => 0));
 
 $getSubject = '';
 
@@ -33,7 +33,7 @@ $pPreferences = new ConfigTablePGL();
 $pPreferences->read();
 
 // only authorized user are allowed to start this module
-if(!check_showpluginPGL($pPreferences->config['Pluginfreigabe']['freigabe']))
+if (!check_showpluginPGL($pPreferences->config['Pluginfreigabe']['freigabe']))
 {
 	$gMessage->setForwardUrl($gHomepage, 3000);
     $gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
@@ -76,7 +76,7 @@ $mailSrcText = preg_replace ('/%organization_long_name%/', $gCurrentOrganization
 $mailSrcText = preg_replace ('/%config%/', $getConfigText,  $mailSrcText);
      
 // Betreff und Inhalt anhand von Kennzeichnungen splitten oder ggf. Default-Inhalte nehmen
-if(strpos($mailSrcText, '#subject#') !== false)
+if (strpos($mailSrcText, '#subject#') !== false)
 {
 	$getSubject = trim(substr($mailSrcText, strpos($mailSrcText, '#subject#') + 9, strpos($mailSrcText, '#content#') - 9));
 }
@@ -85,13 +85,13 @@ else
 	$getSubject = 'Nachricht von '. $gCurrentOrganization->getValue('org_longname');
 }
         
-if(strpos($mailSrcText, '#content#') !== false)
+if (strpos($mailSrcText, '#content#') !== false)
 {
-	$getBody   = trim(substr($mailSrcText, strpos($mailSrcText, '#content#') + 9));
+	$getBody = trim(substr($mailSrcText, strpos($mailSrcText, '#content#') + 9));
 }
 else
 {
-	$getBody   = $mailSrcText;
+	$getBody = $mailSrcText;
 }  
 
 $getBody = preg_replace ('/\r\n/', '<BR>', $getBody);
@@ -117,7 +117,7 @@ $messagesWriteMenu->addItem('menu_item_back', $gNavigation->getPreviousUrl(), $g
 $page->addHtml($messagesWriteMenu->show(false));
 
  //Datensatz für E-Mail-Adresse zusammensetzen
-if(strlen($user->getValue('EMAIL')) > 0)
+if (strlen($user->getValue('EMAIL')) > 0)
 {
 	$userEmail = $user->getValue('EMAIL');				
 }  
@@ -143,13 +143,13 @@ if (strpos($gNavigation->getUrl(),'message_send.php') > 0 && isset($_SESSION['me
 }
 else
 {
-    $form_values['name']         = '';
-    $form_values['mailfrom']     = '';
-    $form_values['subject']      = $getSubject;
-    $form_values['msg_body']     = $getBody;
-    $form_values['msg_to']       = 0;
-    $form_values['carbon_copy']  = 1;
-    $form_values['delivery_confirmation']  = 0;
+    $form_values['name']                  = '';
+    $form_values['mailfrom']              = '';
+    $form_values['subject']               = $getSubject;
+    $form_values['msg_body']              = $getBody;
+    $form_values['msg_to']                = 0;
+    $form_values['carbon_copy']           = 1;
+    $form_values['delivery_confirmation'] = 0;
 }
 
 $formParam = 'usr_id='.$getUserId.'&';
@@ -176,7 +176,7 @@ $form->addInput('name', $gL10n->get('MAI_YOUR_NAME'), $gCurrentUser->getValue('F
 $form->addInput('mailfrom', $gL10n->get('MAI_YOUR_EMAIL'), $gCurrentUser->getValue('EMAIL'), array('maxLength' => 50, 'property' => FIELD_DISABLED));
 $form->addCheckbox('carbon_copy', $gL10n->get('MAI_SEND_COPY'), $form_values['carbon_copy']);
  
-if (($gCurrentUser->getValue('usr_id') > 0 && $gPreferences['mail_delivery_confirmation']==2) || $gPreferences['mail_delivery_confirmation']==1)
+if (($gCurrentUser->getValue('usr_id') > 0 && $gPreferences['mail_delivery_confirmation'] == 2) || $gPreferences['mail_delivery_confirmation'] == 1)
 {
     $form->addCheckbox('delivery_confirmation', $gL10n->get('MAI_DELIVERY_CONFIRMATION'), $form_values['delivery_confirmation']);
 }
@@ -190,7 +190,7 @@ $form->addFileUpload('btn_add_attachment', $gL10n->get('MAI_ATTACHEMENT'), array
         'hideUploadField' => true, 'helpTextIdLabel' => array('MAI_MAX_ATTACHMENT_SIZE', Email::getMaxAttachementSize('mb'))));
 
 // add textfield or ckeditor to form
-if($gValidLogin == true && $gPreferences['mail_html_registered_users'] == 1)
+if ($gValidLogin == true && $gPreferences['mail_html_registered_users'] == 1)
 {
     $form->addEditor('msg_body', null, $form_values['msg_body']);
 }

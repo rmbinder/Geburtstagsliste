@@ -19,22 +19,22 @@ require_once(__DIR__ . '/../../adm_program/system/common.php');
 require_once(__DIR__ . '/../../adm_program/system/template.php');
 
 // Initialize and check the parameters
-$getUserId  = admFuncVariableIsValid($_GET, 'usr_id', 'numeric', array('defaultValue' => 0));
+$getUserId = admFuncVariableIsValid($_GET, 'usr_id', 'numeric', array('defaultValue' => 0));
 
 // Check form values
-$postFrom        = admFuncVariableIsValid($_POST, 'mailfrom', 'string', array('defaultValue' => ''));
-$postName        = admFuncVariableIsValid($_POST, 'name', 'string', array('defaultValue' => ''));
-$postSubject     = admFuncVariableIsValid($_POST, 'subject', 'html', array('defaultValue' => ''));
-$postSubjectSQL  = admFuncVariableIsValid($_POST, 'subject', 'string', array('defaultValue' => ''));
-$postBody        = admFuncVariableIsValid($_POST, 'msg_body', 'html', array('defaultValue' => ''));
-$postBodySQL     = admFuncVariableIsValid($_POST, 'msg_body', 'string', array('defaultValue' => ''));
+$postFrom                  = admFuncVariableIsValid($_POST, 'mailfrom', 'string', array('defaultValue' => ''));
+$postName                  = admFuncVariableIsValid($_POST, 'name', 'string', array('defaultValue' => ''));
+$postSubject               = admFuncVariableIsValid($_POST, 'subject', 'html', array('defaultValue' => ''));
+$postSubjectSQL            = admFuncVariableIsValid($_POST, 'subject', 'string', array('defaultValue' => ''));
+$postBody                  = admFuncVariableIsValid($_POST, 'msg_body', 'html', array('defaultValue' => ''));
+$postBodySQL               = admFuncVariableIsValid($_POST, 'msg_body', 'string', array('defaultValue' => ''));
 $postDeliveryConfirmation  = admFuncVariableIsValid($_POST, 'delivery_confirmation', 'boolean', array('defaultValue' => 0));
-$postCarbonCopy = admFuncVariableIsValid($_POST, 'carbon_copy', 'boolean', array('defaultValue' => 0));
+$postCarbonCopy            = admFuncVariableIsValid($_POST, 'carbon_copy', 'boolean', array('defaultValue' => 0));
 
-$getMsgType      = 'EMAIL';
+$getMsgType = 'EMAIL';
 
 // Stop if mail should be send and mail module is disabled
-if($gPreferences['enable_mail_module'] != 1)
+if ($gPreferences['enable_mail_module'] != 1)
 {
     $gMessage->show($gL10n->get('SYS_MODULE_DISABLED'));
 }
@@ -53,20 +53,19 @@ if ($gCurrentUser->getValue('usr_id') > 0)
 }
 
 // if no User is set, he is not able to ask for delivery confirmation 
-if(!($gCurrentUser->getValue('usr_id')>0 && $gPreferences['mail_delivery_confirmation']==2) && $gPreferences['mail_delivery_confirmation']!=1)
+if (!($gCurrentUser->getValue('usr_id') > 0 && $gPreferences['mail_delivery_confirmation'] == 2) && $gPreferences['mail_delivery_confirmation'] != 1)
 {
     $postDeliveryConfirmation = 0;
 }
 
 // put values into SESSION
 $_SESSION['message_request'] = array(
-		'name'          => $postName,
-		'msgfrom'       => $postFrom,
-		'subject'       => $postSubject,
-		'msg_body'      => $postBody,
-		'carbon_copy'   => $postCarbonCopy,
-		'delivery_confirmation' => $postDeliveryConfirmation,
-	);
+		'name'                  => $postName,
+		'msgfrom'               => $postFrom,
+		'subject'               => $postSubject,
+		'msg_body'              => $postBody,
+		'carbon_copy'           => $postCarbonCopy,
+		'delivery_confirmation' => $postDeliveryConfirmation );
 
 $receiver = array();
 
@@ -85,13 +84,13 @@ if (!strValidCharacters($user->getValue('EMAIL'), 'email'))
 $gNavigation->addUrl(CURRENT_URL);
 
 // check if name is given
-if(strlen($postName) == 0)
+if (strlen($postName) == 0)
 {
     $gMessage->show($gL10n->get('SYS_FIELD_EMPTY', $gL10n->get('SYS_NAME')));
 }
 
 // check sending attributes for user, to be sure that they are correct
-if ( $gValidLogin 
+if ($gValidLogin 
     && (  $postFrom != $gCurrentUser->getValue('EMAIL') 
        || $postName != $gCurrentUser->getValue('FIRST_NAME').' '.$gCurrentUser->getValue('LAST_NAME')) )
 {
@@ -114,7 +113,7 @@ if ($email->setSender($postFrom,$postName))
             }
             $attachmentSize = 0;
             // add now every attachment
-            for($currentAttachmentNo = 0; isset($_FILES['userfile']['name'][$currentAttachmentNo]) == true; $currentAttachmentNo++)
+            for ($currentAttachmentNo = 0; isset($_FILES['userfile']['name'][$currentAttachmentNo]) == true; $currentAttachmentNo++)
             {
                 // check if Upload was OK
                 if (($_FILES['userfile']['error'][$currentAttachmentNo] != 0) &&  ($_FILES['userfile']['error'][$currentAttachmentNo] != 4))
@@ -161,7 +160,7 @@ else
 }
 
 // if possible send html mail
-if($gValidLogin == true && $gPreferences['mail_html_registered_users'] == 1)
+if ($gValidLogin == true && $gPreferences['mail_html_registered_users'] == 1)
 {
     $email->sendDataAsHtml();
 }
@@ -172,7 +171,7 @@ if (isset($postCarbonCopy) && $postCarbonCopy == true)
     $email->setCopyToSenderFlag();
 
     // if mail was send to user than show recipients in copy of mail if current user has a valid login
-    if($gValidLogin)
+    if ($gValidLogin)
     {
         $email->setListRecipientsFlag();
     }
@@ -181,14 +180,14 @@ if (isset($postCarbonCopy) && $postCarbonCopy == true)
 $email->addRecipient($user->getValue('EMAIL'), $user->getValue('FIRST_NAME').' '.$user->getValue('LAST_NAME'));
 
 // add confirmation mail to the sender
-if($postDeliveryConfirmation == 1)
+if ($postDeliveryConfirmation == 1)
 {
     $email->ConfirmReadingTo = $gCurrentUser->getValue('EMAIL');
 }
 
 // load the template and set the new email body with template
 $emailTemplate = admReadTemplateFile("template.html");
-$emailTemplate = str_replace("#message#",$postBody,$emailTemplate);
+$emailTemplate = str_replace("#message#", $postBody, $emailTemplate);
 
 // set Text
 $email->setText($emailTemplate);
@@ -200,7 +199,7 @@ $sendResult = $email->sendEmail();
 if ($sendResult === TRUE)
 {
 	$sql = "SELECT MAX(msg_con_id) as max_id
-          	FROM ". TBL_MESSAGES;
+          	      FROM ". TBL_MESSAGES;
 
     $statement = $gDb->query($sql);
     $row = $statement->fetch();
@@ -208,7 +207,7 @@ if ($sendResult === TRUE)
     $getMsgId = $row['max_id'] + 1;
 
     $sql = "INSERT INTO ". TBL_MESSAGES. " (msg_type, msg_con_id, msg_part_id, msg_subject, msg_usr_id_sender, msg_usr_id_receiver, msg_message, msg_timestamp, msg_read) 
-            VALUES ('".$getMsgType."', '".$getMsgId."', 0, '".$postSubjectSQL."', '".$gCurrentUser->getValue('usr_id')."', '', '".$postBodySQL."', CURRENT_TIMESTAMP, '0')";
+                 VALUES ('".$getMsgType."', '".$getMsgId."', 0, '".$postSubjectSQL."', '".$gCurrentUser->getValue('usr_id')."', '', '".$postBodySQL."', CURRENT_TIMESTAMP, '0')";
 	$gDb->query($sql);    
  
     // after sending remove the actual Page from the NaviObject and remove also the send-page
@@ -216,7 +215,7 @@ if ($sendResult === TRUE)
     $gNavigation->deleteLastUrl();
     
     // message if sending was OK
-    if($gNavigation->count() > 0)
+    if ($gNavigation->count() > 0)
     {
 		$gMessage->setForwardUrl($gNavigation->getUrl(), 2000);
     }

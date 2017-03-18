@@ -25,7 +25,7 @@ $pPreferences = new ConfigTablePGL();
 $pPreferences->read();
 
 // only authorized user are allowed to start this module
-if(!check_showpluginPGL($pPreferences->config['Pluginfreigabe']['freigabe_config']))
+if (!check_showpluginPGL($pPreferences->config['Pluginfreigabe']['freigabe_config']))
 {
 	$gMessage->setForwardUrl($gHomepage, 3000);
     $gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
@@ -36,12 +36,12 @@ $getMode = admFuncVariableIsValid($_GET, 'mode', 'numeric', array('defaultValue'
 $getForm = admFuncVariableIsValid($_GET, 'form', 'string');
 
 // in ajax mode only return simple text on error
-if($getMode == 1)
+if ($getMode == 1)
 {
     $gMessage->showHtmlTextOnly(true);
 }
 
-switch($getMode)
+switch ($getMode)
 {
 case 1:
 	
@@ -53,7 +53,7 @@ case 1:
 				unset($pPreferences->config['Konfigurationen']);
 				$konf_neu = 0;
 				
-    			for($conf = 0; isset($_POST['col_desc'. $conf]); $conf++)
+    			for ($conf = 0; isset($_POST['col_desc'. $conf]); $conf++)
     			{
     				if (empty($_POST['col_desc'. $conf]))	
     				{
@@ -83,16 +83,16 @@ case 1:
     				$allColumnsEmpty = true;
 
     				$fields = '';
-    				for($number = 1; isset($_POST['column'.$conf.'_'.$number]); $number++)
+    				for ($number = 1; isset($_POST['column'.$conf.'_'.$number]); $number++)
     				{
-        				if(strlen($_POST['column'.$conf.'_'.$number]) > 0)
+        				if (strlen($_POST['column'.$conf.'_'.$number]) > 0)
         				{
         					$allColumnsEmpty = false;
             				$fields .= $_POST['column'.$conf.'_'.$number].',';
         				}
     				}
     			
-    				if($allColumnsEmpty)
+    				if ($allColumnsEmpty)
     				{
     					$gMessage->show($gL10n->get('SYS_FIELD_EMPTY', $gL10n->get('PLG_GEBURTSTAGSLISTE_COLUMN')));
     				}
@@ -101,13 +101,13 @@ case 1:
     			}
     			    				
     			// die Fokusstandardeinstellung darf nicht groesser sein, als die max. Anzahl der Konfigurationen
-    			if($pPreferences->config['Optionen']['config_default']>$konf_neu-1)
+    			if ($pPreferences->config['Optionen']['config_default'] > $konf_neu-1)
     			{
-    				$pPreferences->config['Optionen']['config_default']=$konf_neu-1;
+    				$pPreferences->config['Optionen']['config_default'] = $konf_neu-1;
     			}
     			
     			// wenn $konf_neu immer noch 0 ist, dann wurden alle Konfigurationen geloescht (was nicht sein darf)
-    			if($konf_neu==0)
+    			if ($konf_neu == 0)
     			{
     				$gMessage->show($gL10n->get('PLG_GEBURTSTAGSLISTE_ERROR_MIN_CONFIG'));
     			}
@@ -115,9 +115,9 @@ case 1:
     			{
     				// nicht mehr benoetigte E-Mail-Texte in der DB loeschen (ansonsten bleiben Leichen!!)
             		$sql = 'DELETE FROM '.TBL_TEXTS.'
-            				WHERE txt_name LIKE \'PGLMAIL_NOTIFICATION%\'
-            				AND txt_name >= \'PGLMAIL_NOTIFICATION'. $konf_neu. '\'
-            				AND txt_org_id = '.$gCurrentOrganization->getValue('org_id').' ';
+            				      WHERE txt_name LIKE \'PGLMAIL_NOTIFICATION%\'
+            				        AND txt_name >= \'PGLMAIL_NOTIFICATION'. $konf_neu. '\'
+            				        AND txt_org_id = '.$gCurrentOrganization->getValue('org_id').' ';
     				$gDb->query($sql);
     			}
             	break;
@@ -127,15 +127,14 @@ case 1:
     			$pPreferences->config['Optionen']['vorschau_liste'] = explode(',',preg_replace('/[,]{2,}/', ',', trim(preg_replace('![^0-9,-]!', '', $_POST['vorschau_liste']),',')));		
  	        	$pPreferences->config['Optionen']['config_default'] = $_POST['config_default'];	
  	        	$pPreferences->config['Optionen']['configuration_as_header'] = isset($_POST['configuration_as_header']) ? 1 : 0 ;
-
             	break; 
                 
         	case 'plugin_control':
-            	if(isset($_POST['freigabe']))
+            	if (isset($_POST['freigabe']))
             	{
     				$pPreferences->config['Pluginfreigabe']['freigabe'] = $_POST['freigabe'];
             	}
-            	if(isset($_POST['freigabe_config']))
+            	if (isset($_POST['freigabe_config']))
             	{
     				$pPreferences->config['Pluginfreigabe']['freigabe_config'] = $_POST['freigabe_config'];
             	}
@@ -152,14 +151,13 @@ case 1:
     
 	$pPreferences->save();
 	echo 'success';
-	
 	break;
 
 case 2:
 	
 	$headline = $gL10n->get('PLG_GEBURTSTAGSLISTE_DEINSTALLATION');
 	 
-	    // create html page object
+	// create html page object
     $page = new HtmlPage($headline);
     
     // add current url to navigation stack

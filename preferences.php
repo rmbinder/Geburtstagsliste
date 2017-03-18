@@ -29,7 +29,7 @@ $pPreferences = new ConfigTablePGL();
 $pPreferences->read();
 
 // only authorized user are allowed to start this module
-if(!check_showpluginPGL($pPreferences->config['Pluginfreigabe']['freigabe_config']))
+if (!check_showpluginPGL($pPreferences->config['Pluginfreigabe']['freigabe_config']))
 {
 	$gMessage->setForwardUrl($gHomepage, 3000);
     $gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
@@ -39,10 +39,10 @@ $configSelection = generate_configSelection();
 
 $headline = $gL10n->get('PLG_GEBURTSTAGSLISTE_BIRTHDAY_LIST');
 
-$num_configs	 = count($pPreferences->config['Konfigurationen']['col_desc']);
-if($getAdd)
+$num_configs = count($pPreferences->config['Konfigurationen']['col_desc']);
+if ($getAdd)
 {
-	foreach($pPreferences->config['Konfigurationen'] as $key => $dummy)
+	foreach ($pPreferences->config['Konfigurationen'] as $key => $dummy)
 	{
 		$pPreferences->config['Konfigurationen'][$key][$num_configs] = $pPreferences->config_default['Konfigurationen'][$key][0];
 	}
@@ -56,7 +56,7 @@ $page = new HtmlPage($headline);
 $page->enableModal();
 
 // open the module configurations if a new configuration is added 
-if($getAdd)
+if ($getAdd)
 {
     $page->addJavascript('$("#tabs_nav_common").attr("class", "active");
         $("#tabs-common").attr("class", "tab-pane active");
@@ -106,7 +106,7 @@ $page->addJavascript('
     ', true);
 
     // create a array with the necessary data
-	for ($conf=0;$conf<$num_configs;$conf++)
+	for ($conf = 0; $conf < $num_configs; $conf++)
     {      
     	if (!empty($pPreferences->config['Konfigurationen']['relation'][$conf]))
     	{
@@ -181,12 +181,12 @@ $page->addJavascript('
         var default_fields = new Array(); ';
             $fields = explode(',',$pPreferences->config['Konfigurationen']['col_fields'][$conf]);
             $user = new User($gDb, $gProfileFields);
-            for($number = 0; $number < count($fields); $number++)
+            for ($number = 0; $number < count($fields); $number++)
             {          	
             		$javascriptCode .= '
-                	default_fields['. $number. '] 		   = new Object();
-                	default_fields['. $number. ']["id"]    = "'. $fields[$number]. '";
-                	default_fields['. $number. ']["data"]  = "'. $user->getValue($gProfileFields->getPropertyById($number, 'usf_name')). '";
+                	default_fields['. $number. '] 		  = new Object();
+                	default_fields['. $number. ']["id"]   = "'. $fields[$number]. '";
+                	default_fields['. $number. ']["data"] = "'. $user->getValue($gProfileFields->getPropertyById($number, 'usf_name')). '";
                 	';
             }
         $javascriptCode .= '
@@ -200,16 +200,16 @@ $page->addJavascript('
     { 
         var user_fields = new Array(); ';
         $i = 1;
-        foreach($gProfileFields->mProfileFields as $field)
+        foreach ($gProfileFields->mProfileFields as $field)
         {    
             // add profile fields to user field array
-            if($field->getValue('usf_hidden') == 0 || $gCurrentUser->editUsers())
+            if ($field->getValue('usf_hidden') == 0 || $gCurrentUser->editUsers())
             {   
                 $javascriptCode .= '
-                user_fields['. $i. '] = new Object();
+                user_fields['. $i. ']             = new Object();
                 user_fields['. $i. ']["cat_name"] = "'. strtr($field->getValue('cat_name'), '"', '\''). '";
-                user_fields['. $i. ']["id"]   = "'. $field->getValue('usf_id'). '";
-                user_fields['. $i. ']["data"] = "'. addslashes($field->getValue('usf_name')). '";
+                user_fields['. $i. ']["id"]       = "'. $field->getValue('usf_id'). '";
+                user_fields['. $i. ']["data"]     = "'. addslashes($field->getValue('usf_name')). '";
                 ';
                 $i++;
             }
@@ -221,10 +221,10 @@ $page->addJavascript('
         	if (($field->getValue('usf_hidden') == 0 || $gCurrentUser->editUsers()) && $field->getValue('cat_name') == $gL10n->get('SYS_MASTER_DATA'))
         	{
         		$javascriptCode .= '
-                user_fields['. $i. '] = new Object();
+                user_fields['. $i. ']             = new Object();
                 user_fields['. $i. ']["cat_name"] =  "'. strtr($field->getValue('cat_name'), '"', '\'').'" + ": " + relation ;
-                user_fields['. $i. ']["id"]   = "r'. $field->getValue('usf_id'). '";    				//r wie Relationship(Beziehung)
-                user_fields['. $i. ']["data"] = "'. addslashes($field->getValue('usf_name')). '" + "*";
+                user_fields['. $i. ']["id"]       = "r'. $field->getValue('usf_id'). '";    				//r wie Relationship(Beziehung)
+                user_fields['. $i. ']["data"]     = "'. addslashes($field->getValue('usf_name')). '" + "*";
                 ';
         		$i++;
         	}
@@ -238,16 +238,16 @@ $page->addJavascript('
     { 
         var user_fields = new Array(); ';
         $i = 1;
-        foreach($gProfileFields->mProfileFields as $field)
+        foreach ($gProfileFields->mProfileFields as $field)
         {    
             // add profile fields to user field array
-            if($field->getValue('usf_hidden') == 0 || $gCurrentUser->editUsers())
+            if ($field->getValue('usf_hidden') == 0 || $gCurrentUser->editUsers())
             {   
                 $javascriptCode .= '
-                user_fields['. $i. '] = new Object();
+                user_fields['. $i. ']             = new Object();
                 user_fields['. $i. ']["cat_name"] = "'. strtr($field->getValue('cat_name'), '"', '\''). '";
-                user_fields['. $i. ']["id"]   = "'. $field->getValue('usf_id'). '";
-                user_fields['. $i. ']["data"] = "'. addslashes($field->getValue('usf_name')). '";
+                user_fields['. $i. ']["id"]       = "'. $field->getValue('usf_id'). '";
+                user_fields['. $i. ']["data"]     = "'. addslashes($field->getValue('usf_name')). '";
                 ';
                 $i++;
             }
@@ -261,7 +261,7 @@ $page->addJavascript('
 $page->addJavascript($javascriptCode);        
 $javascriptCode = '$(document).ready(function() {   
 ';
-	for($conf = 0; $conf < $num_configs; $conf++)
+	for ($conf = 0; $conf < $num_configs; $conf++)
 	{
 		$javascriptCode .= '  
     	for(var counter = 0; counter < '. count(explode(',',$pPreferences->config['Konfigurationen']['col_fields'][$conf])). '; counter++) {
@@ -306,7 +306,7 @@ $page->addHtml('
                         $form->addDescription('<small>'.$gL10n->get('PLG_GEBURTSTAGSLISTE_CONFIGURATIONS_DESC').'</small>');
                     	$form->addLine();
                         $form->addDescription('<div style="width:100%; height:550px; overflow:auto; border:20px;">');
-                        for ($conf=0;$conf<$num_configs;$conf++)
+                        for ($conf = 0; $conf < $num_configs; $conf++)
 						{
 							$form->openGroupBox('configurations_group',($conf+1).'. '.$gL10n->get('PLG_GEBURTSTAGSLISTE_CONFIGURATION'));
 							$form->addInput('col_desc'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_COL_DESC'), $pPreferences->config['Konfigurationen']['col_desc'][$conf]);
@@ -352,7 +352,7 @@ $page->addHtml('
                     		$text[$conf]->readDataByColumns(array('txt_name' => 'PGLMAIL_NOTIFICATION'.$conf, 'txt_org_id' => $gCurrentOrganization->getValue('org_id')));
 
                     		//wenn noch nichts drin steht, dann vorbelegen
-                    		if ($text[$conf]->getValue('txt_text')=='')
+                    		if ($text[$conf]->getValue('txt_text') == '')
                     		{
         						// convert <br /> to a normal line feed
         						$value = preg_replace('/<br[[:space:]]*\/?[[:space:]]*>/',chr(13).chr(10),$gL10n->get('PLG_GEBURTSTAGSLISTE_PGLMAIL_NOTIFICATION'));
@@ -431,10 +431,10 @@ $page->addHtml('
                         $form = new HtmlForm('plugin_control_preferences_form', ADMIDIO_URL . FOLDER_PLUGINS . $plugin_folder .'/preferences_function.php?form=plugin_control', $page, array('class' => 'form-preferences'));
   
                         $sql = 'SELECT rol.rol_id, rol.rol_name, cat.cat_name
-                                FROM '.TBL_CATEGORIES.' as cat, '.TBL_ROLES.' as rol
-                                WHERE cat.cat_id = rol.rol_cat_id
-                                AND (  cat.cat_org_id = '.$gCurrentOrganization->getValue('org_id').'
-                                OR cat.cat_org_id IS NULL )';
+                                  FROM '.TBL_CATEGORIES.' as cat, '.TBL_ROLES.' as rol
+                                 WHERE cat.cat_id = rol.rol_cat_id
+                                   AND ( cat.cat_org_id = '.$gCurrentOrganization->getValue('org_id').'
+                                    OR cat.cat_org_id IS NULL )';
 
                         $form->addSelectBoxFromSql('freigabe', $gL10n->get('PLG_GEBURTSTAGSLISTE_ROLE_SELECTION'), $gDb, $sql, array('defaultValue' => $pPreferences->config['Pluginfreigabe']['freigabe'], 'helpTextIdInline' => 'PLG_GEBURTSTAGSLISTE_ROLE_SELECTION_DESC','multiselect' => true));				                                                 
                         $form->addSelectBoxFromSql('freigabe_config', '', $gDb, $sql, array('defaultValue' => $pPreferences->config['Pluginfreigabe']['freigabe_config'], 'helpTextIdInline' => 'PLG_GEBURTSTAGSLISTE_ROLE_SELECTION_DESC2','multiselect' => true));

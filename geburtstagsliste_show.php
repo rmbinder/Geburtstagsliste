@@ -35,7 +35,7 @@ $pPreferences = new ConfigTablePGL();
 $pPreferences->read();
 
 // only authorized user are allowed to start this module
-if(!check_showpluginPGL($pPreferences->config['Pluginfreigabe']['freigabe']))
+if (!check_showpluginPGL($pPreferences->config['Pluginfreigabe']['freigabe']))
 {
 	$gMessage->setForwardUrl($gHomepage, 3000);
     $gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
@@ -61,7 +61,7 @@ foreach ($pPreferences->config['Konfigurationen']['col_desc'] as $key => $dummy)
 {
 	$validValues[] = 'X'.$key.'X';
 }
-$getConfig  = admFuncVariableIsValid($_GET, 'config', 'string', array('defaultValue' => 'X'.$pPreferences->config['Optionen']['config_default'].'X', 'validValues' => $validValues) );
+$getConfig = admFuncVariableIsValid($_GET, 'config', 'string', array('defaultValue' => 'X'.$pPreferences->config['Optionen']['config_default'].'X', 'validValues' => $validValues) );
 
 $validValues = array(0=>'X'.$pPreferences->config['Optionen']['vorschau_tage_default'].'X');
 foreach ($pPreferences->config['Optionen']['vorschau_liste'] as $item)
@@ -83,10 +83,10 @@ $liste->generate_listData();
 // define title (html) and headline
 $title = $gL10n->get('PLG_GEBURTSTAGSLISTE_BIRTHDAY_LIST');
 
-$subheadline= $gL10n->get('PLG_GEBURTSTAGSLISTE_FOR_THE_PERIOD',date("d.m.Y",strtotime('1 day',$liste->date_min)),date("d.m.Y",$liste->date_max),(trim($getPreviewDays,'X')<0 ? trim($getPreviewDays,'X') : '+'.trim($getPreviewDays,'X')) );
+$subheadline = $gL10n->get('PLG_GEBURTSTAGSLISTE_FOR_THE_PERIOD',date("d.m.Y",strtotime('1 day', $liste->date_min)),date("d.m.Y", $liste->date_max),(trim($getPreviewDays,'X')<0 ? trim($getPreviewDays,'X') : '+'.trim($getPreviewDays,'X')) );
 $subheadline .= ($getMonth>0 ? ' - '.$monate[$getMonth] : '');
 
-if($pPreferences->config['Optionen']['configuration_as_header'])
+if ($pPreferences->config['Optionen']['configuration_as_header'])
 {
 	$headline = $pPreferences->config['Konfigurationen']['col_desc'][trim($getConfig,'X')];	
 }
@@ -138,7 +138,7 @@ switch ($getMode)
         break;
 }
 
-$str_csv      = '';   // enthaelt die komplette CSV-Datei als String
+$str_csv = '';   // enthaelt die komplette CSV-Datei als String
 
 $numMembers = count($liste->listData);
 
@@ -151,12 +151,12 @@ if($getMode == 'html' && strpos($gNavigation->getUrl(), 'geburtstagsliste_show.p
     $gNavigation->addUrl(CURRENT_URL);
 }
 
-if($getMode != 'csv')
+if ($getMode != 'csv')
 {
     $datatable = false;
     $hoverRows = false;
 
-    if($getMode == 'print')
+    if ($getMode == 'print')
     {
         // create html page object without the custom theme files
         $page = new HtmlPage($headline);
@@ -169,9 +169,9 @@ if($getMode != 'csv')
         
         $table = new HtmlTable('adm_lists_table', $page, $hoverRows, $datatable, $classTable);
     }
-    elseif($getMode == 'pdf')
+    elseif ($getMode == 'pdf')
     {
-        if(ini_get('max_execution_time')<300)
+        if (ini_get('max_execution_time') < 300)
     	{
     		ini_set('max_execution_time', 300); //300 seconds = 5 minutes
     	}
@@ -186,6 +186,7 @@ if($getMode != 'csv')
         // remove default header/footer
         $pdf->setPrintHeader(true);
         $pdf->setPrintFooter(false);
+        
  		// set header and footer fonts
         $pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
         $pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
@@ -214,7 +215,7 @@ if($getMode != 'csv')
         $table->addColumn($subheadline, array('colspan' => $columnCount + 1));
         $table->addRow();
     }
-    elseif($getMode == 'html')
+    elseif ($getMode == 'html')
     {
         $datatable = true;
         $hoverRows = true;
@@ -222,7 +223,7 @@ if($getMode != 'csv')
         // create html page object
         $page = new HtmlPage($headline.'<h3>'.$subheadline.'</h3>');
 
-        if($getFullScreen == true)
+        if ($getFullScreen == true)
         {
         	$page->hideThemeHtml();
         }
@@ -261,7 +262,7 @@ if($getMode != 'csv')
         // get module menu
         $listsMenu = $page->getMenu();
         
-        if($getFullScreen == true)
+        if ($getFullScreen == true)
         {
             $listsMenu->addItem('menu_item_normal_picture', ADMIDIO_URL . FOLDER_PLUGINS . $plugin_folder .'/geburtstagsliste_show.php?mode=html&amp;previewdays='.$getPreviewDays.'&amp;filter='.$getFilter.'&amp;month='.$getMonth.'&amp;filter_enable='.$getFilterEnable.'&amp;config='.$getConfig.'&amp;full_screen=0',
                 $gL10n->get('SYS_NORMAL_PICTURE'), 'arrow_in.png');
@@ -275,7 +276,7 @@ if($getMode != 'csv')
         // link to print overlay, exports, filter and preferences
         $listsMenu->addItem('menu_item_print_view', '#', $gL10n->get('LST_PRINT_PREVIEW'), 'print.png');
        
-        if($getFilterEnable == true)
+        if ($getFilterEnable == true)
         {
         	$listsMenu->addItem('filter_disable', ADMIDIO_URL . FOLDER_PLUGINS . $plugin_folder .'/geburtstagsliste_show.php?mode=html&amp;previewdays='.$getPreviewDays.'&amp;filter='.$getFilter.'&amp;month='.$getMonth.'&amp;full_screen='.$getFullScreen.'&amp;config='.$getConfig.'&amp;filter_enable=0',
         			$gL10n->get('SYS_FILTER'), 'checkbox_checked.gif');
@@ -289,7 +290,7 @@ if($getMode != 'csv')
         	$getFilter = '';
         }
         
-        if(check_showpluginPGL($pPreferences->config['Pluginfreigabe']['freigabe_config']))
+        if (check_showpluginPGL($pPreferences->config['Pluginfreigabe']['freigabe_config']))
         {
         	// show link to pluginpreferences
         	$listsMenu->addItem('admMenuItemPreferencesLists', ADMIDIO_URL . FOLDER_PLUGINS . $plugin_folder .'/preferences.php',
@@ -297,7 +298,7 @@ if($getMode != 'csv')
         }
         
         // input field for filter
-        if($getFilterEnable == true)
+        if ($getFilterEnable == true)
         {
         	// create filter menu
         	$filterNavbar = new HtmlNavbar('menu_list_filter', null, null, 'filter');
@@ -319,7 +320,7 @@ if($getMode != 'csv')
         	'pdfl' => $gL10n->get('SYS_PDF').' ('.$gL10n->get('SYS_LANDSCAPE').')', 'csv-oo' => $gL10n->get('SYS_CSV').' ('.$gL10n->get('SYS_UTF8').')');
 		$form->addSelectBox('export_list_to', null, $selectBoxEntries, array('showContextDependentFirstEntry' => false));
 		
-        if($getFullScreen == false)
+        if ($getFullScreen == false)
         {
         	$listsMenu->addForm($form->show(false));
         	
@@ -331,7 +332,7 @@ if($getMode != 'csv')
         $selectBoxEntries = array(' ' => $gL10n->get('PLG_GEBURTSTAGSLISTE_SELECT_CONFIGURATION').' ...');
         foreach ($pPreferences->config['Konfigurationen']['col_desc'] as $key => $item)
         {
-        	$selectBoxEntries['X'.$key.'X'] =  $item;
+        	$selectBoxEntries['X'.$key.'X'] = $item;
         }
         $form->addSelectBox('configList', null, $selectBoxEntries, array('showContextDependentFirstEntry' => false));
         
@@ -350,7 +351,7 @@ if($getMode != 'csv')
         }
         $form->addSelectBox('monthList', null, $selectBoxEntries, array('showContextDependentFirstEntry' => false));
         
-        if($getFullScreen == true)
+        if ($getFullScreen == true)
         {
         	$listsMenu->addForm($form->show(false));
         }
@@ -373,17 +374,17 @@ $columnAlign  = array('left');
 $columnValues = array($gL10n->get('SYS_ABR_NO'));
 $columnNumber = 1;  
   
-foreach($liste->headerData as $columnHeader) 
+foreach ($liste->headerData as $columnHeader) 
 {
 	// bei Profilfeldern ist in 'id' die 'usf_id', ansonsten 0
 	$usf_id = $columnHeader['id'];
 	
-    if($gProfileFields->getPropertyById($usf_id, 'usf_type') == 'CHECKBOX'
+    if ($gProfileFields->getPropertyById($usf_id, 'usf_type') == 'CHECKBOX'
         || $gProfileFields->getPropertyById($usf_id, 'usf_name_intern') == 'GENDER')
     {
     	$columnAlign[] = 'center';
     }
-    elseif($gProfileFields->getPropertyById($usf_id, 'usf_type') == 'NUMBER'
+    elseif ($gProfileFields->getPropertyById($usf_id, 'usf_type') == 'NUMBER'
         || $gProfileFields->getPropertyById($usf_id, 'usf_type') == 'DECIMAL_NUMBER')
     {
         $columnAlign[] = 'right';
@@ -393,35 +394,35 @@ foreach($liste->headerData as $columnHeader)
     	$columnAlign[] = 'left';    
     }
 	 
-    if($getMode == 'csv')
+    if ($getMode == 'csv')
     {
-    	if($columnNumber == 1)
+    	if ($columnNumber == 1)
         {
         	// in der ersten Spalte die laufende Nummer noch davorsetzen
             $str_csv = $str_csv. $valueQuotes. $gL10n->get('SYS_ABR_NO'). $valueQuotes;
         }
         $str_csv = $str_csv. $separator. $valueQuotes. $columnHeader['data']. $valueQuotes;
     }
-    elseif($getMode == 'pdf')
+    elseif ($getMode == 'pdf')
     {
-    	if($columnNumber == 1)
+    	if ($columnNumber == 1)
         {
         	$table->addColumn($gL10n->get('SYS_ABR_NO'), array('style' => 'text-align: left;font-size:14;background-color:#C7C7C7;'), 'th');
         }
         $table->addColumn($columnHeader['data'], array('style' => 'text-align: left;font-size:14;background-color:#C7C7C7;'), 'th');
     }
-    elseif($getMode == 'html' || $getMode == 'print')
+    elseif ($getMode == 'html' || $getMode == 'print')
     {
     	$columnValues[] = $columnHeader['data'];
     }
     $columnNumber++;
 } 
 
-if($getMode == 'csv')
+if ($getMode == 'csv')
 {
     $str_csv = $str_csv. "\n";
 }
-elseif($getMode == 'html' || $getMode == 'print')
+elseif ($getMode == 'html' || $getMode == 'print')
 {
     $table->setColumnAlignByArray($columnAlign);
     $table->addRowHeadingByArray($columnValues);
@@ -434,17 +435,17 @@ else
 $listRowNumber = 1;    
 
 // die Daten einlesen
-foreach($liste->listData as $memberdata) 
+foreach ($liste->listData as $memberdata) 
 {
 	$columnValues = array();
 	$tmp_csv = '';
 	
     // Felder zu Datensatz
-    for($i=1; $i < count($memberdata); $i++)
+    for ($i = 1; $i < count($memberdata); $i++)
     {         
-    	if($getMode == 'html' || $getMode == 'print' || $getMode == 'pdf')
+    	if ($getMode == 'html' || $getMode == 'print' || $getMode == 'pdf')
         {    
-        	if($i == 1)
+        	if ($i == 1)
             {
             	// die Laufende Nummer noch davorsetzen
                 $columnValues[] = $listRowNumber;  
@@ -452,7 +453,7 @@ foreach($liste->listData as $memberdata)
         }
         else
         {
-            if($i == 1)
+            if ($i == 1)
             {
                 // erste Spalte zeigt lfd. Nummer an
             	$tmp_csv = $tmp_csv.$valueQuotes. $listRowNumber. $valueQuotes;
@@ -468,7 +469,7 @@ foreach($liste->listData as $memberdata)
     	$usf_id = 0;
         $usf_id = $liste->headerData[$i]['id'];
       
-        if( $usf_id  != 0 
+        if ($usf_id  != 0 
          && $getMode == 'csv'
          && $content > 0
          && ($gProfileFields->getPropertyById($usf_id, 'usf_type') == 'DROPDOWN'
@@ -479,24 +480,24 @@ foreach($liste->listData as $memberdata)
             $content       = $arrListValues[$content];
         }
         
-        if($getMode == 'csv')
+        if ($getMode == 'csv')
         {
         	$tmp_csv = $tmp_csv. $separator. $valueQuotes. $content. $valueQuotes;
         }
         // create output in html layout
         else
         {            	
-        	if($usf_id!=0 && $gProfileFields->getPropertyById($liste->headerData[$i]['id'], 'usf_type') != 'EMAIL')     //only profileFields without EMAIL
+        	if ($usf_id != 0 && $gProfileFields->getPropertyById($liste->headerData[$i]['id'], 'usf_type') != 'EMAIL')     //only profileFields without EMAIL
         	{
         		$content = $gProfileFields->getHtmlValue($gProfileFields->getPropertyById($usf_id, 'usf_name_intern'), $content, $memberdata[0]);
         	}
         	
             // if empty string pass a whitespace
-			if(strlen($content) > 0)
+			if (strlen($content) > 0)
             {
-        		 if($gProfileFields->getPropertyById($liste->headerData[$i]['id'], 'usf_type') == 'EMAIL')
+        		 if ($gProfileFields->getPropertyById($liste->headerData[$i]['id'], 'usf_type') == 'EMAIL')
         		 {
-        		 	if($gPreferences['enable_mail_module'] != 1)
+        		 	if ($gPreferences['enable_mail_module'] != 1)
 					{
 						$mail_link = 'mailto:'. $content;
 					}
@@ -518,17 +519,17 @@ foreach($liste->listData as $memberdata)
 		}
     }
 
-    if($getFilter == '' || ($getFilter <> '' && (stristr(implode('',$columnValues), $getFilter  ) || stristr($tmp_csv, $getFilter  ))) )
+    if ($getFilter == '' || ($getFilter <> '' && (stristr(implode('',$columnValues), $getFilter  ) || stristr($tmp_csv, $getFilter))))
     {
-		if($getMode == 'csv')
+		if ($getMode == 'csv')
    	 	{
     		$str_csv .= $tmp_csv. "\n";
     	}
-    	elseif($getMode == 'html')
+    	elseif ($getMode == 'html')
     	{
        		$table->addRowByArray($columnValues, null, array('style' => 'cursor: pointer', 'onclick' => 'window.location.href=\''. ADMIDIO_URL . FOLDER_MODULES .'/profile/profile.php?user_id='. $memberdata[0]. '\''));
     	}
-   	 	elseif($getMode == 'print' || $getMode == 'pdf')
+   	 	elseif ($getMode == 'print' || $getMode == 'pdf')
     	{
         	$table->addRowByArray($columnValues, null, array('nobr' => 'true'));
     	}
@@ -537,7 +538,7 @@ foreach($liste->listData as $memberdata)
 }  // End-For (jeder gefundene User)
 
 // Settings for export file
-if($getMode == 'csv' || $getMode == 'pdf')
+if ($getMode == 'csv' || $getMode == 'pdf')
 {
 	$filename .= '.'.$getMode;
 	
@@ -554,12 +555,12 @@ if($getMode == 'csv' || $getMode == 'pdf')
     header('Pragma: public');
 }
 
-if($getMode == 'csv')
+if ($getMode == 'csv')
 {
     // nun die erstellte CSV-Datei an den User schicken
     header('Content-Type: text/comma-separated-values; charset='.$charset);
 
-    if($charset == 'ISO-8859-1')
+    if ($charset == 'ISO-8859-1')
     {
         echo utf8_decode($str_csv);
     }
@@ -569,7 +570,7 @@ if($getMode == 'csv')
     }
 }
 // send the new PDF to the User
-elseif($getMode == 'pdf')
+elseif ($getMode == 'pdf')
 {
     // output the HTML content
     $pdf->writeHTML($table->getHtmlTable(), true, false, true, false, '');
@@ -584,7 +585,7 @@ elseif($getMode == 'pdf')
     ignore_user_abort(true);
     unlink(ADMIDIO_PATH. FOLDER_DATA .'/'.$filename);
 }
-elseif($getMode == 'html' || $getMode == 'print')
+elseif ($getMode == 'html' || $getMode == 'print')
 {    
     // add table list to the page
     $page->addHtml($table->show(false));

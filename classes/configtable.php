@@ -26,15 +26,15 @@
 
 class ConfigTablePGL
 {
-	public	  $config		= array();     ///< Array mit allen Konfigurationsdaten
+	public $config = array();     ///< Array mit allen Konfigurationsdaten
 	
 	protected $table_name;
-	protected static $shortcut =  'PGL';
-	protected static $version ;
+	protected static $shortcut = 'PGL';
+	protected static $version;
 	protected static $stand;
 	protected static $dbtoken;
 	
-	public $config_default= array();	
+	public $config_default = array();	
 	
     /**
      * ConfigTablePGL constructor
@@ -48,15 +48,15 @@ class ConfigTablePGL
 		
 		$this->table_name = $g_tbl_praefix.'_plugin_preferences';
 
-		if(isset($plugin_version))
+		if (isset($plugin_version))
 		{
 			self::$version = $plugin_version;
 		}
-		if(isset($plugin_stand))
+		if (isset($plugin_stand))
 		{
 			self::$stand = $plugin_stand;
 		}
-		if(isset($dbtoken))
+		if (isset($dbtoken))
 		{
 			self::$dbtoken = $dbtoken;
 		}
@@ -69,7 +69,7 @@ class ConfigTablePGL
      */
 	public function init()
 	{
-		global $gL10n, $gDb, $gCurrentOrganization,$gProfileFields;
+		global $gL10n, $gDb, $gCurrentOrganization, $gProfileFields;
 	
 		$config_ist = array();
 		
@@ -119,9 +119,9 @@ class ConfigTablePGL
     
 		if (isset($this->config['Spaltenkonfiguration']['selection_role']) )
     	{
-    		foreach($this->config['Spaltenkonfiguration']['selection_role'] as $role_field )
+    		foreach ($this->config['Spaltenkonfiguration']['selection_role'] as $role_field)
     		{
-    			if( $role_field<>'')
+    			if ($role_field <> '')
     			{
     				$this->config['Konfigurationen']['selection_role'][] = $role_field;
     			}
@@ -132,11 +132,11 @@ class ConfigTablePGL
     		}
     	}
 
-		if (isset($this->config['Spaltenkonfiguration']['selection_cat']) )
+		if (isset($this->config['Spaltenkonfiguration']['selection_cat']))
     	{
-    		foreach($this->config['Spaltenkonfiguration']['selection_cat'] as $cat_field )
+    		foreach ($this->config['Spaltenkonfiguration']['selection_cat'] as $cat_field)
     		{
-    			if( $cat_field<>'')
+    			if ($cat_field <> '')
     			{
     				$this->config['Konfigurationen']['selection_cat'][] = $cat_field;
     			}
@@ -149,17 +149,17 @@ class ConfigTablePGL
 			
 		if (isset($this->config['Optionen']['focus_default']) && isset($this->config['Spaltenkonfiguration']['col_desc']))
     	{      
-			$i_arr = array_keys($this->config['Spaltenkonfiguration']['col_desc'],$this->config['Optionen']['focus_default']);
+			$i_arr = array_keys($this->config['Spaltenkonfiguration']['col_desc'], $this->config['Optionen']['focus_default']);
 			$this->config['Optionen']['config_default'] = $i_arr[0];
     	}  
     
    	 	if (isset($this->config['Spaltenkonfiguration']['col_sel']))
     	{
-    		foreach($this->config['Spaltenkonfiguration']['col_sel'] as $col_sel_field )
+    		foreach ($this->config['Spaltenkonfiguration']['col_sel'] as $col_sel_field )
     		{
-    			foreach($gProfileFields->mProfileFields as $field)
+    			foreach ($gProfileFields->mProfileFields as $field)
     			{  
-    				if($col_sel_field == trim($gL10n->get($field->getValue('usf_name')),'#'))
+    				if ($col_sel_field == trim($gL10n->get($field->getValue('usf_name')),'#'))
     				{
     					$this->config['Konfigurationen']['col_sel'][] = 'p'.$field->getValue('usf_id');
     				}  		
@@ -189,9 +189,9 @@ class ConfigTablePGL
 		$config_ist = $this->config;
 	
 		// die Default-config durchlaufen
-		foreach($this->config_default as $section => $sectiondata)
+		foreach ($this->config_default as $section => $sectiondata)
     	{
-        	foreach($sectiondata as $key => $value)
+        	foreach ($sectiondata as $key => $value)
         	{
         		// gibt es diese Sektion bereits in der config?
         		if (isset($config_ist[$section][$key]))
@@ -206,7 +206,7 @@ class ConfigTablePGL
         		}
         	}
         	// leere Abschnitte (=leere Arrays) loeschen
-        	if ((isset($config_ist[$section]) && count($config_ist[$section])==0))
+        	if ((isset($config_ist[$section]) && count($config_ist[$section]) == 0))
         	{
         		unset($config_ist[$section]);
         	}
@@ -216,19 +216,19 @@ class ConfigTablePGL
     	// jetzt befinden sich hier nur noch die DB-Eintraege, die nicht verwendet werden und deshalb: 
     	// 1. in der DB geloescht werden koennen
     	// 2. in der normalen config geloescht werden koennen
-		foreach($config_ist as $section => $sectiondata)
+		foreach ($config_ist as $section => $sectiondata)
     	{
-    		foreach($sectiondata as $key => $value)
+    		foreach ($sectiondata as $key => $value)
         	{
         		$plp_name = self::$shortcut.'__'.$section.'__'.$key;
 				$sql = 'DELETE FROM '.$this->table_name.'
-        				WHERE plp_name = \''.$plp_name.'\' 
-        				AND plp_org_id = '.$gCurrentOrganization->getValue('org_id').' ';
+        				      WHERE plp_name = \''.$plp_name.'\' 
+        				        AND plp_org_id = '.$gCurrentOrganization->getValue('org_id').' ';
 				$gDb->query($sql);
 				unset($this->config[$section][$key]);
         	}
 			// leere Abschnitte (=leere Arrays) loeschen
-        	if (count($this->config[$section])==0)
+        	if (count($this->config[$section]) == 0)
         	{
         		unset($this->config[$section]);
         	}
@@ -246,9 +246,9 @@ class ConfigTablePGL
 	{
     	global $gDb, $gCurrentOrganization;
     
-    	foreach($this->config as $section => $sectiondata)
+    	foreach ($this->config as $section => $sectiondata)
     	{
-        	foreach($sectiondata as $key => $value)
+        	foreach ($sectiondata as $key => $value)
         	{
             	if (is_array($value))
             	{
@@ -259,20 +259,20 @@ class ConfigTablePGL
   				$plp_name = self::$shortcut.'__'.$section.'__'.$key;
           
             	$sql = ' SELECT plp_id 
-            			FROM '.$this->table_name.' 
-            			WHERE plp_name = \''.$plp_name.'\' 
-            			AND (  plp_org_id = '.$gCurrentOrganization->getValue('org_id').'
-                 		OR plp_org_id IS NULL ) ';
+            			   FROM '.$this->table_name.' 
+            			  WHERE plp_name = \''.$plp_name.'\' 
+            			    AND ( plp_org_id = '.$gCurrentOrganization->getValue('org_id').'
+                 		     OR plp_org_id IS NULL ) ';
             	$statement = $gDb->query($sql);
             	$row = $statement->fetchObject();
 
             	// Gibt es den Datensatz bereits?
             	// wenn ja: UPDATE des bestehende Datensatzes  
-            	if(isset($row->plp_id) AND strlen($row->plp_id) > 0)
+            	if (isset($row->plp_id) && strlen($row->plp_id) > 0)
             	{
                 	$sql = 'UPDATE '.$this->table_name.' 
-                			SET plp_value = \''.$value.'\' 
-                			WHERE plp_id = '.$row->plp_id;   
+                			   SET plp_value = \''.$value.'\' 
+                			 WHERE plp_id = '.$row->plp_id;   
                     
                 	$gDb->query($sql);           
             	}
@@ -280,7 +280,7 @@ class ConfigTablePGL
             	else
             	{
   					$sql = 'INSERT INTO '.$this->table_name.' (plp_org_id, plp_name, plp_value) 
-  							VALUES (\''.$gCurrentOrganization->getValue('org_id').'\' ,\''.self::$shortcut.'__'.$section.'__'.$key.'\' ,\''.$value.'\')'; 
+  							     VALUES (\''.$gCurrentOrganization->getValue('org_id').'\' ,\''.self::$shortcut.'__'.$section.'__'.$key.'\' ,\''.$value.'\')'; 
             		$gDb->query($sql); 
             	}   
         	} 
@@ -296,18 +296,18 @@ class ConfigTablePGL
     	global $gDb, $gCurrentOrganization;
      
 		$sql = ' SELECT plp_id, plp_name, plp_value
-             	FROM '.$this->table_name.'
-             	WHERE plp_name LIKE \''.self::$shortcut.'__%\'
-             	AND (  plp_org_id = '.$gCurrentOrganization->getValue('org_id').'
-                 	OR plp_org_id IS NULL ) ';
+             	   FROM '.$this->table_name.'
+             	  WHERE plp_name LIKE \''.self::$shortcut.'__%\'
+             	    AND ( plp_org_id = '.$gCurrentOrganization->getValue('org_id').'
+                  	 OR plp_org_id IS NULL ) ';
 		$statement = $gDb->query($sql);
 
-		while($row = $statement->fetch())
+		while ($row = $statement->fetch())
 		{
 			$array = explode('__',$row['plp_name']);
 		
 			// wenn plp_value von ((  )) eingeschlossen ist, dann ist es als Array einzulesen
-			if ((substr($row['plp_value'],0,2)=='((' ) && (substr($row['plp_value'],-2)=='))' ))
+			if ((substr($row['plp_value'],0,2) == '((' ) && (substr($row['plp_value'],-2) == '))' ))
         	{
         		$row['plp_value'] = substr($row['plp_value'],2,-2);
         		$this->config[$array[1]] [$array[2]] = explode(self::$dbtoken,$row['plp_value']); 
@@ -337,15 +337,15 @@ class ConfigTablePGL
 			$plp_name = self::$shortcut.'__Plugininformationen__version';
           
     		$sql = 'SELECT plp_value 
-            		FROM '.$this->table_name.' 
-            		WHERE plp_name = \''.$plp_name.'\' 
-            		AND (  plp_org_id = '.$gCurrentOrganization->getValue('org_id').'
+            		  FROM '.$this->table_name.' 
+            		 WHERE plp_name = \''.$plp_name.'\' 
+            		   AND ( plp_org_id = '.$gCurrentOrganization->getValue('org_id').'
             	    	OR plp_org_id IS NULL ) ';
     		$statement = $gDb->query($sql);
     		$row = $statement->fetchObject();
 
     		// Vergleich Version.php  ./. DB (hier: version)
-    		if(!isset($row->plp_value) || strlen($row->plp_value) == 0 || $row->plp_value<>self::$version)
+    		if (!isset($row->plp_value) || strlen($row->plp_value) == 0 || $row->plp_value <> self::$version)
     		{
     			$ret = true;    
     		}
@@ -353,15 +353,15 @@ class ConfigTablePGL
     		$plp_name = self::$shortcut.'__Plugininformationen__stand';
           
     		$sql = 'SELECT plp_value 
-            		FROM '.$this->table_name.' 
-            		WHERE plp_name = \''.$plp_name.'\' 
-            		AND (  plp_org_id = '.$gCurrentOrganization->getValue('org_id').'
+            		  FROM '.$this->table_name.' 
+            		 WHERE plp_name = \''.$plp_name.'\' 
+            		   AND ( plp_org_id = '.$gCurrentOrganization->getValue('org_id').'
                  		OR plp_org_id IS NULL ) ';
     		$statement = $gDb->query($sql);
     		$row = $statement->fetchObject();
 
     		// Vergleich Version.php  ./. DB (hier: stand)
-    		if(!isset($row->plp_value) || strlen($row->plp_value) == 0 || $row->plp_value<>self::$stand)
+    		if (!isset($row->plp_value) || strlen($row->plp_value) == 0 || $row->plp_value <> self::$stand)
     		{
     			$ret = true;    
     		}
@@ -383,30 +383,30 @@ class ConfigTablePGL
     	global $gDb, $gCurrentOrganization,$gL10n;
  	
     	$result = '';
-		$result_data=false;
+		$result_data = false;
 		$result_db = false;
         $result_texts = false;
 		
-		if($deinst_org_select==0)                    //0 = Daten nur in aktueller Org loeschen 
+		if ($deinst_org_select == 0)                    //0 = Daten nur in aktueller Org loeschen 
 		{
 			$sql = 'DELETE FROM '.$this->table_name.'
-        			WHERE plp_name LIKE \''.self::$shortcut.'__%\'
-        			AND plp_org_id = '.$gCurrentOrganization->getValue('org_id').' ';
+        			      WHERE plp_name LIKE \''.self::$shortcut.'__%\'
+        			        AND plp_org_id = '.$gCurrentOrganization->getValue('org_id').' ';
 			$result_data = $gDb->query($sql);	
 
 			$sql = 'DELETE FROM '.TBL_TEXTS.'
-					WHERE txt_name LIKE \''.self::$shortcut.'MAIL_NOTIFICATION%\'
-            		AND txt_org_id = '.$gCurrentOrganization->getValue('org_id').' ';
+					      WHERE txt_name LIKE \''.self::$shortcut.'MAIL_NOTIFICATION%\'
+            		        AND txt_org_id = '.$gCurrentOrganization->getValue('org_id').' ';
 			$result_texts = $gDb->query($sql);	
 		}
-		elseif ($deinst_org_select==1)              //1 = Daten in allen Orgs loeschen 
+		elseif ($deinst_org_select == 1)              //1 = Daten in allen Orgs loeschen 
 		{
 			$sql = 'DELETE FROM '.$this->table_name.'
-        			WHERE plp_name LIKE \''.self::$shortcut.'__%\' ';
+        			      WHERE plp_name LIKE \''.self::$shortcut.'__%\' ';
 			$result_data = $gDb->query($sql);	
 
 			$sql = 'DELETE FROM '.TBL_TEXTS.'
-        			WHERE txt_name LIKE \''.self::$shortcut.'MAIL_NOTIFICATION%\' ';
+        			      WHERE txt_name LIKE \''.self::$shortcut.'MAIL_NOTIFICATION%\' ';
 			$result_texts = $gDb->query($sql);	
 		}
 
@@ -414,7 +414,7 @@ class ConfigTablePGL
 		$sql = 'SELECT * FROM '.$this->table_name.' ';
 		$statement = $gDb->query($sql);
 
-    	if($statement->rowCount() ==0)
+    	if ($statement->rowCount() == 0)
     	{
         	$sql = 'DROP TABLE '.$this->table_name.' ';
         	$result_db = $gDb->query($sql);

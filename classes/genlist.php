@@ -35,9 +35,9 @@ class GenList
      */
     public function __construct($config, $previewDays, $month)
     {		
-		$this->conf=trim($config,'X');
-		$this->previewDays=trim($previewDays,'X');
-		$this->month=$month;
+		$this->conf = trim($config, 'X');
+		$this->previewDays = trim($previewDays, 'X');
+		$this->month = $month;
 
 		$this->generate_dateMinMax();
     }
@@ -51,14 +51,14 @@ class GenList
 		global $gDb, $gProfileFields, $gCurrentOrganization, $pPreferences, $gCurrentUser;
 		
 		// die Werte fuer die runden Geburtstage, Jubilaeen usw einlesen
-   		$jubi_rund = explode(',',$pPreferences->config['Konfigurationen']['col_values'][$this->conf]);
+   		$jubi_rund = explode(',', $pPreferences->config['Konfigurationen']['col_values'][$this->conf]);
    					
-		$colfields=explode(',',$pPreferences->config['Konfigurationen']['col_fields'][$this->conf]);
-		for($i=1; $i < count($colfields)+1; $i++)
+		$colfields = explode(',', $pPreferences->config['Konfigurationen']['col_fields'][$this->conf]);
+		for ($i = 1; $i < count($colfields)+1; $i++)
 		{
-			if (substr($colfields[$i-1],0,1) == 'r')          //relationship
+			if (substr($colfields[$i-1], 0, 1) == 'r')          //relationship
 			{
-				$colfields[$i-1] = substr($colfields[$i-1],1);
+				$colfields[$i-1] = substr($colfields[$i-1], 1);
 				$this->headerData[$i]['data'] = $gProfileFields->getPropertyById((int) $colfields[$i-1], 'usf_name').'*';
 			}
 			else 
@@ -104,15 +104,15 @@ class GenList
 		// $workarray[userid-member] = userid-Ehepartner
 		
 		$membercounter = 0;
-		foreach($workarray as $usr_id => $dummy)
+		foreach ($workarray as $usr_id => $dummy)
 		{
 			// bestehen Rollen- und/oder Kategorieeinschraenkungen?
         	$rolecatmarker = true;
-        	if ($pPreferences->config['Konfigurationen']['selection_role'][$this->conf]<>' '
-        	 || $pPreferences->config['Konfigurationen']['selection_cat'][$this->conf]<>' ')
+        	if ($pPreferences->config['Konfigurationen']['selection_role'][$this->conf] <> ' '
+        	 || $pPreferences->config['Konfigurationen']['selection_cat'][$this->conf] <> ' ')
         	{
         		$rolecatmarker = false;	
-        		foreach (explode(',',$pPreferences->config['Konfigurationen']['selection_role'][$this->conf]) as $rol)
+        		foreach (explode(',', $pPreferences->config['Konfigurationen']['selection_role'][$this->conf]) as $rol)
         		{
         			if (hasRole_IDPGL($rol, $usr_id))
         			{
@@ -133,7 +133,7 @@ class GenList
         	$user->readDataById($usr_id);
         	$rolesArr = $user->getRoleMemberships();
         	
-        	foreach($rolesArr as $role_id)
+        	foreach ($rolesArr as $role_id)
         	{
         		if ($gCurrentUser->hasRightViewRole($role_id))
         		{
@@ -142,67 +142,67 @@ class GenList
         		}
         	}
 
-			if ($rolecatmarker  && $hasRightToView)
+			if ($rolecatmarker && $hasRightToView)
         	{
         		$workDate = '';
         	
 				// ein Profilfeld wurde als Fokusfeld gewaehlt
-				if(substr($pPreferences->config['Konfigurationen']['col_sel'][$this->conf],0,1)=='p')
+				if (substr($pPreferences->config['Konfigurationen']['col_sel'][$this->conf], 0, 1) == 'p')
         		{
-        			$workDate = $user->getValue($gProfileFields->getPropertyById((int) substr($pPreferences->config['Konfigurationen']['col_sel'][$this->conf],1), 'usf_name_intern'));
+        			$workDate = $user->getValue($gProfileFields->getPropertyById((int) substr($pPreferences->config['Konfigurationen']['col_sel'][$this->conf], 1), 'usf_name_intern'));
         		}
         		// eine Rolle wurde als Fokusfeld gewaehlt (-> $workDate ist der Beginn der Rollenzugehoerigkeit)
-        		elseif(substr($pPreferences->config['Konfigurationen']['col_sel'][$this->conf],0,1)=='r')
+        		elseif (substr($pPreferences->config['Konfigurationen']['col_sel'][$this->conf],0,1) == 'r')
         		{
         			$membership = new TableAccess($gDb, TBL_MEMBERS, 'rol');
-        			$membership->readDataByColumns(array('mem_rol_id' => substr($pPreferences->config['Konfigurationen']['col_sel'][$this->conf],1), 'mem_usr_id' => $usr_id));
+        			$membership->readDataByColumns(array('mem_rol_id' => substr($pPreferences->config['Konfigurationen']['col_sel'][$this->conf], 1), 'mem_usr_id' => $usr_id));
         			$workDate = $membership->getValue('mem_begin');
         		}
         	
 				//nur weiter, wenn ein Datumswert von diesem Mitglied eingelesen werden konnte
         		if ($workDate <> '')
         		{
-        			$mon = date("m",strtotime($workDate));
-					$tag = date("d",strtotime($workDate));
-        			$jahr_min = jahre(date("Y-m-d",strtotime($workDate)),date('Y-m-d',$this->date_min));
-					$jahr_max = jahre(date("Y-m-d",strtotime($workDate)),date('Y-m-d',$this->date_max));
+        			$mon = date("m", strtotime($workDate));
+					$tag = date("d", strtotime($workDate));
+        			$jahr_min = jahre(date("Y-m-d", strtotime($workDate)), date('Y-m-d', $this->date_min));
+					$jahr_max = jahre(date("Y-m-d", strtotime($workDate)), date('Y-m-d', $this->date_max));
 					$jubi_data = array();
 					
-					for($i=($jahr_min+1); $i < ($jahr_max+1); $i++)
+					for ($i = ($jahr_min+1); $i < ($jahr_max+1); $i++)
 					{   			
-   						if(($jubi_rund[0]=='') && ($this->month==0 || $mon ==$this->month ) )
+   						if (($jubi_rund[0] == '') && ($this->month == 0 || $mon == $this->month))
    						{
-   							$jubi_data[]=$i;
+   							$jubi_data[] = $i;
    						}
    						else 
    						{
-   							if(in_array($i, $jubi_rund) && ($this->month==0 || $mon ==$this->month ) )
+   							if (in_array($i, $jubi_rund) && ($this->month == 0 || $mon == $this->month))
    							{
-   								$jubi_data[]=$i;
+   								$jubi_data[] = $i;
    							}	
    						}
 					}                
 					// in $jubi_data sind jetzt alle moeglichen Geburtstage/Jubilaeeen
 					
-					foreach($jubi_data as $jubi)
+					foreach ($jubi_data as $jubi)
 					{
-						$colcount=0;
+						$colcount = 0;
         				$this->listData[$membercounter] = array();
 						$this->listData[$membercounter][$colcount] = $usr_id; 
 
-        				$colcount=1;
-						foreach(explode(',',$pPreferences->config['Konfigurationen']['col_fields'][$this->conf]) as $usfid )
+        				$colcount = 1;
+						foreach (explode(',', $pPreferences->config['Konfigurationen']['col_fields'][$this->conf]) as $usfid )
 						{
-							if (substr($usfid,0,1)=='r' && !empty($workarray[$usr_id]))          //relationship
+							if (substr($usfid,0,1) == 'r' && !empty($workarray[$usr_id]))          //relationship
 							{
 								$usfid = substr($usfid,1);
 								$user->readDataById($workarray[$usr_id]);
 							}
 							
-							if(  ($gProfileFields->getPropertyById((int) $usfid, 'usf_type') == 'DROPDOWN'
+							if (($gProfileFields->getPropertyById((int) $usfid, 'usf_type') == 'DROPDOWN'
                        			|| $gProfileFields->getPropertyById((int) $usfid, 'usf_type') == 'RADIO_BUTTON') )
     						{
-    							$this->listData[$membercounter][$colcount] = $user->getValue($gProfileFields->getPropertyById((int) $usfid, 'usf_name_intern'),'database');
+    							$this->listData[$membercounter][$colcount] = $user->getValue($gProfileFields->getPropertyById((int) $usfid, 'usf_name_intern'), 'database');
     						}
     						else 
     						{
@@ -219,15 +219,15 @@ class GenList
 						$this->listData[$membercounter][$colcount] = '';              //$colcount ist jetzt die letzte Spalte
    						$this->listData[$membercounter]['jubi_datum'] = '';
    						
-						$jahr = date("Y",strtotime($workDate))+$jubi;
+						$jahr = date("Y", strtotime($workDate))+$jubi;
             			$jubi_datum = $jahr."-".$mon."-".$tag;	
         	
         				$this->listData[$membercounter]['jubi_datum'] = $jubi_datum;
    						
         				// falls konfiguriert: Tag, Monat und Jahr ersetzen
-   						$suffix=str_replace('#Day#', $tag, $pPreferences->config['Konfigurationen']['col_suffix'][$this->conf]);
-   						$suffix=str_replace('#Month#', $mon, $suffix);
-   						$suffix=str_replace('#Year#', $jahr, $suffix);
+   						$suffix = str_replace('#Day#', $tag, $pPreferences->config['Konfigurationen']['col_suffix'][$this->conf]);
+   						$suffix = str_replace('#Month#', $mon, $suffix);
+   						$suffix = str_replace('#Year#', $jahr, $suffix);
    			
 						$this->listData[$membercounter][$colcount]=($pPreferences->config['Konfigurationen']['suppress_age'][$this->conf] ? '' : $jubi).$suffix;	
    						
@@ -254,7 +254,7 @@ class GenList
      */
 	private function generate_dateMinMax()
 	{
-		global  $pPreferences;
+		global $pPreferences;
 		
 		// aufgrund eines Wunsches von "red" im Forum wurde der Parameter Jahresversatz eingefuehrt
 		// dadurch ist es moeglich, Geburtstage in naechsten oder vergangenen Jahren anzuzeigen
@@ -262,30 +262,30 @@ class GenList
 		
 		// standardmaessig wird die Geburtstagsliste immer ab dem aktuellen Datum angezeigt
 		// aufgrund eines Wunsches im Forum kann der Beginn der Anzeige auf den 1. Januar gesetzt werden (Kalenderjahr)
-		if($pPreferences->config['Konfigurationen']['calendar_year'][$this->conf])
+		if ($pPreferences->config['Konfigurationen']['calendar_year'][$this->conf])
 		{
 			if ($this->previewDays >= 0)
 			{
-				$this->date_min = date("U",strtotime($yearsOffset." year",strtotime('-1 day',strtotime(date("Y")."-01-01"))));
-				$this->date_max = date("U",strtotime($yearsOffset." year",strtotime(($this->previewDays)." day",strtotime(date("Y")."-01-01"))));
+				$this->date_min = date("U", strtotime($yearsOffset." year", strtotime('-1 day',strtotime(date("Y")."-01-01"))));
+				$this->date_max = date("U", strtotime($yearsOffset." year", strtotime(($this->previewDays)." day", strtotime(date("Y")."-01-01"))));
 			}
 			else
 			{
-				$this->date_min = date("U",strtotime($yearsOffset." year",strtotime(($this->previewDays-1)." day",strtotime(date("Y")."-01-01"))));
-				$this->date_max = date("U",strtotime($yearsOffset." year",strtotime(date("Y")."-01-01")));
+				$this->date_min = date("U", strtotime($yearsOffset." year", strtotime(($this->previewDays-1)." day", strtotime(date("Y")."-01-01"))));
+				$this->date_max = date("U", strtotime($yearsOffset." year", strtotime(date("Y")."-01-01")));
 			}
 		}
 		else
 		{
 			if ($this->previewDays >= 0)
 			{
-				$this->date_min = date("U",strtotime($yearsOffset." year",strtotime('-1 day')));
-				$this->date_max = date("U",strtotime($yearsOffset." year",strtotime(($this->previewDays)." day")));				
+				$this->date_min = date("U", strtotime($yearsOffset." year", strtotime('-1 day')));
+				$this->date_max = date("U", strtotime($yearsOffset." year", strtotime(($this->previewDays)." day")));				
 			}
 			else
 			{
-				$this->date_min = date("U",strtotime($yearsOffset." year",strtotime(($this->previewDays-1)." day")));
-				$this->date_max = date("U",strtotime($yearsOffset." year"));						
+				$this->date_min = date("U", strtotime($yearsOffset." year", strtotime(($this->previewDays-1)." day")));
+				$this->date_max = date("U", strtotime($yearsOffset." year"));						
 			}
 		}
 	}

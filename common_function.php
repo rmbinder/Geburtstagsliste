@@ -22,13 +22,13 @@ function getRole_IDPGL($role_name)
 {
     global $gDb, $gCurrentOrganization;
 	
-    $sql    = 'SELECT rol_id
-                 FROM '. TBL_ROLES. ', '. TBL_CATEGORIES. '
-                 WHERE rol_name   = \''.$role_name.'\'
-                 AND rol_valid  = 1 
-                 AND rol_cat_id = cat_id
-                 AND (  cat_org_id = '.$gCurrentOrganization->getValue('org_id').'
-                 OR cat_org_id IS NULL ) ';
+    $sql = 'SELECT rol_id
+              FROM '. TBL_ROLES. ', '. TBL_CATEGORIES. '
+             WHERE rol_name   = \''.$role_name.'\'
+               AND rol_valid  = 1 
+               AND rol_cat_id = cat_id
+               AND ( cat_org_id = '.$gCurrentOrganization->getValue('org_id').'
+                OR cat_org_id IS NULL ) ';
                       
     $statement = $gDb->query($sql);
     $row = $statement->fetchObject();
@@ -49,9 +49,9 @@ function check_showpluginPGL($array)
 	
     $showPlugin = false;
 
-    foreach ($array AS $i)
+    foreach ($array as $i)
     {
-        if($gCurrentUser ->isMemberOfRole($i))
+        if ($gCurrentUser ->isMemberOfRole($i))
         {
             $showPlugin = true;
         } 
@@ -78,7 +78,7 @@ function check_languagePGL($field_name)
     //Pruefung entfaellt: pruefen, ob die restlichen Zeichen von $field_name Grussbuchstaben sind
     //if ((ctype_upper(substr($field_name,0,3))) && ((substr($field_name,3,1))=='_')  && (ctype_upper(substr($field_name,4)))   )
 
-    if ((ctype_upper(substr($field_name,0,3))) && ((substr($field_name,3,1))=='_')   )
+    if ((ctype_upper(substr($field_name,0,3))) && ((substr($field_name,3,1)) == '_'))
     {
       $ret = true;
     }
@@ -101,7 +101,7 @@ function arr_dimsort_cmp($a,$b)
   	{
       	if ((float)$a[$G_ARR_SDIM] == (float)$b[$G_ARR_SDIM]) return 0;
 
-      	return (floatval($a[$G_ARR_SDIM]) > floatval($b[$G_ARR_SDIM])) ? 1: -1;
+      	return (floatval($a[$G_ARR_SDIM]) > floatval($b[$G_ARR_SDIM])) ? 1 : -1;
   	}
   	/* -- Sort strings? */
 
@@ -109,7 +109,7 @@ function arr_dimsort_cmp($a,$b)
 
   	/* -- First time: get the right data type */
 
-  	$G_ARR_STYPE = is_string($a[$G_ARR_SDIM])? 'STRING' : 'NUMBER';
+  	$G_ARR_STYPE = is_string($a[$G_ARR_SDIM]) ? 'STRING' : 'NUMBER';
 
   	return arr_dimsort_cmp($a,$b);
 }
@@ -122,7 +122,7 @@ function arr_dimsort_cmp($a,$b)
  * @param   bool    $keepkey Schluessel beibehalten
  * @return  void
  */
-function g_arr_dimsort(&$arr,$dim,$type = '',$keepkey = false)
+function g_arr_dimsort(&$arr, $dim, $type = '',$keepkey = false)
 {
   	global $G_ARR_SDIM, $G_ARR_STYPE;
 
@@ -144,32 +144,32 @@ function hasRole_IDPGL($role_id, $user_id = 0)
 {
     global $gCurrentUser, $gDb, $gCurrentOrganization;
 
-    if($user_id == 0)
+    if ($user_id == 0)
     {
         $user_id = $gCurrentUser->getValue('usr_id');
     }
-    elseif(is_numeric($user_id) == false)
+    elseif (is_numeric($user_id) == false)
     {
         return -1;
     }
 
-    $sql    = 'SELECT mem_id
-                FROM '. TBL_MEMBERS. ', '. TBL_ROLES. ', '. TBL_CATEGORIES. '
-                WHERE mem_usr_id = '.$user_id.'
-                AND mem_begin <= \''.DATE_NOW.'\'
-                AND mem_end    > \''.DATE_NOW.'\'
-                AND mem_rol_id = rol_id
-                AND rol_id   = \''.$role_id.'\'
-                AND rol_valid  = 1 
-                AND rol_cat_id = cat_id
-                AND (  cat_org_id = '.$gCurrentOrganization->getValue('org_id').'
+    $sql = 'SELECT mem_id
+              FROM '. TBL_MEMBERS. ', '. TBL_ROLES. ', '. TBL_CATEGORIES. '
+             WHERE mem_usr_id = '.$user_id.'
+               AND mem_begin <= \''.DATE_NOW.'\'
+               AND mem_end    > \''.DATE_NOW.'\'
+               AND mem_rol_id = rol_id
+               AND rol_id   = \''.$role_id.'\'
+               AND rol_valid  = 1 
+               AND rol_cat_id = cat_id
+               AND ( cat_org_id = '.$gCurrentOrganization->getValue('org_id').'
                 OR cat_org_id IS NULL ) ';
                 
     $statement = $gDb->query($sql);
 
     $user_found = $statement->rowCount();
 
-    if($user_found == 1)
+    if ($user_found == 1)
     {
         return 1;
     }
@@ -190,32 +190,32 @@ function hasCategorie_IDPGL($cat_id, $user_id = 0)
 {
     global $gCurrentUser, $gDb, $gCurrentOrganization;
 
-    if($user_id == 0)
+    if ($user_id == 0)
     {
         $user_id = $gCurrentUser->getValue('usr_id');
     }
-    elseif(is_numeric($user_id) == false)
+    elseif (is_numeric($user_id) == false)
     {
         return -1;
     }
 
-    $sql    = 'SELECT mem_id
-                FROM '. TBL_MEMBERS. ', '. TBL_ROLES. ', '. TBL_CATEGORIES. '
-                WHERE mem_usr_id = '.$user_id.'
-                AND mem_begin <= \''.DATE_NOW.'\'
-                AND mem_end    > \''.DATE_NOW.'\'
-                AND mem_rol_id = rol_id
-                AND cat_id   = \''.$cat_id.'\'
-                AND rol_valid  = 1 
-                AND rol_cat_id = cat_id
-                AND (  cat_org_id = '.$gCurrentOrganization->getValue('org_id').'
+    $sql = 'SELECT mem_id
+              FROM '. TBL_MEMBERS. ', '. TBL_ROLES. ', '. TBL_CATEGORIES. '
+             WHERE mem_usr_id = '.$user_id.'
+               AND mem_begin <= \''.DATE_NOW.'\'
+               AND mem_end    > \''.DATE_NOW.'\'
+               AND mem_rol_id = rol_id
+               AND cat_id   = \''.$cat_id.'\'
+               AND rol_valid  = 1 
+               AND rol_cat_id = cat_id
+               AND ( cat_org_id = '.$gCurrentOrganization->getValue('org_id').'
                 OR cat_org_id IS NULL ) ';
                 
     $statement = $gDb->query($sql);
 
     $user_found = $statement->rowCount();
 
-    if($user_found == 1)
+    if ($user_found == 1)
     {
         return 1;
     }
@@ -237,24 +237,24 @@ function generate_configSelection()
     $configSelection = array();  
         
     $i 	= 0;
-    foreach($gProfileFields->mProfileFields as $field)
+    foreach ($gProfileFields->mProfileFields as $field)
     {             
-        if(($field->getValue('usf_hidden') == 0 || $gCurrentUser->editUsers()) && $field->getValue('usf_type')== 'DATE')
+        if (($field->getValue('usf_hidden') == 0 || $gCurrentUser->editUsers()) && $field->getValue('usf_type') == 'DATE')
         {   
-        	$configSelection[$i][0]   = 'p'.$field->getValue('usf_id');
-            $configSelection[$i][1]   = addslashes($field->getValue('usf_name'));               
-            $configSelection[$i][2]   = $field->getValue('cat_name');
+        	$configSelection[$i][0] = 'p'.$field->getValue('usf_id');
+            $configSelection[$i][1] = addslashes($field->getValue('usf_name'));               
+            $configSelection[$i][2] = $field->getValue('cat_name');
 			$i++;
         }
     }
         
 	// alle (Rollen-)Kategorien der aktuellen Organisation einlesen
 	$sql = ' SELECT DISTINCT cat.cat_name, cat.cat_id
-             FROM '.TBL_CATEGORIES.' as cat, '.TBL_ROLES.' as rol
-             WHERE cat.cat_type = \'ROL\' 
-             AND cat.cat_id = rol.rol_cat_id
-             AND (  cat.cat_org_id = '.$gCurrentOrganization->getValue('org_id').'
-             OR cat.cat_org_id IS NULL )';
+                        FROM '.TBL_CATEGORIES.' as cat, '.TBL_ROLES.' as rol
+                       WHERE cat.cat_type = \'ROL\' 
+                         AND cat.cat_id = rol.rol_cat_id
+                         AND ( cat.cat_org_id = '.$gCurrentOrganization->getValue('org_id').'
+                          OR cat.cat_org_id IS NULL )';
 	
 	$statement = $gDb->query($sql);
 
@@ -262,7 +262,7 @@ function generate_configSelection()
 	while ($row = $statement->fetch())
 	{
 		// ueberpruefen, ob der Kategoriename mittels der Sprachdatei uebersetzt werden kann
-        if(check_languagePGL($row['cat_name']))
+        if (check_languagePGL($row['cat_name']))
         {
         	$row['cat_name'] = $gL10n->get($row['cat_name']);
         }
@@ -275,14 +275,14 @@ function generate_configSelection()
   	foreach ($categories as $data)
 	{
        	$sql = 'SELECT DISTINCT rol.rol_name, rol.rol_id
-                FROM '.TBL_CATEGORIES.' as cat, '.TBL_ROLES.' as rol
-                WHERE cat.cat_id = \''.$data['cat_id'].'\'
-                AND cat.cat_id = rol.rol_cat_id';
+                           FROM '.TBL_CATEGORIES.' as cat, '.TBL_ROLES.' as rol
+                          WHERE cat.cat_id = \''.$data['cat_id'].'\'
+                            AND cat.cat_id = rol.rol_cat_id';
     	$statement = $gDb->query($sql);
     		
         while ($row = $statement->fetch())
         {
-        	$configSelection[$i][0]  = 'r'.$row['rol_id'];
+        	$configSelection[$i][0] = 'r'.$row['rol_id'];
 			$configSelection[$i][1]	= $gL10n->get('SYS_ROLE').': '.$row['rol_name'];
 			$configSelection[$i][2]	= $data['cat_name'];
 			$i++;

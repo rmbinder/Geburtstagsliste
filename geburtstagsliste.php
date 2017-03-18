@@ -3,13 +3,13 @@
  ***********************************************************************************************
  * Geburtstagsliste
  *
- * Version 2.2.0
+ * Version 2.3.0
  *
  * Dieses Plugin erzeugt fuer einen bestimmten Zeitraum eine Geburtstags- und Jubilaeumsliste der Mitglieder.
  *
  * Author: rmb
  *
- * Compatible with Admidio version 3.2
+ * Compatible with Admidio version 3.3
  *
  * @copyright 2004-2016 The Admidio Team
  * @see http://www.admidio.org/
@@ -31,7 +31,7 @@ $pPreferences = new ConfigTablePGL();
 
 // Initialisierung und Anzeige des Links nur, wenn vorher keine Deinstallation stattgefunden hat
 // sonst waere die Deinstallation hinfaellig, da hier wieder Default-Werte der config in die DB geschrieben werden
-if(  strpos($gNavigation->getUrl(), 'preferences_function.php?mode=3') === false)
+if (strpos($gNavigation->getUrl(), 'preferences_function.php?mode=3') === false)
 {
 	if ($pPreferences->checkforupdate())
 	{
@@ -43,7 +43,7 @@ if(  strpos($gNavigation->getUrl(), 'preferences_function.php?mode=3') === false
 	}
 
 	// Zeige Link zum Plugin
-	if(check_showpluginPGL($pPreferences->config['Pluginfreigabe']['freigabe']) )
+	if (check_showpluginPGL($pPreferences->config['Pluginfreigabe']['freigabe']))
 	{
 		if (isset($pluginMenu))
 		{

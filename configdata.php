@@ -14,9 +14,9 @@ global $gL10n, $gProfileFields;
 
 //Standardwerte einer Neuinstallation oder beim Anfuegen einer zusaetzlichen Konfiguration
 $config_default['Pluginfreigabe']['freigabe'] 			= array(getRole_IDPGL($gL10n->get('SYS_ADMINISTRATOR')),
-															getRole_IDPGL($gL10n->get('SYS_MEMBER')) );    		
+															    getRole_IDPGL($gL10n->get('SYS_MEMBER')) );    		
 $config_default['Pluginfreigabe']['freigabe_config'] 	= array(getRole_IDPGL($gL10n->get('SYS_ADMINISTRATOR')),
-															getRole_IDPGL($gL10n->get('SYS_MEMBER')) );        		
+															    getRole_IDPGL($gL10n->get('SYS_MEMBER')) );        		
 
 $config_default['Konfigurationen'] = array('col_desc' 	=> array($gL10n->get('PLG_GEBURTSTAGSLISTE_PATTERN')),
 										'col_sel' 		=> array('p'.$gProfileFields->getProperty('BIRTHDAY', 'usf_id')),
