@@ -73,6 +73,8 @@
     <string name="PLG_GEBURTSTAGSLISTE_PREVIEW_DAYS_DESC">Standardeinstellung der Vorschautage</string>
     <string name="PLG_GEBURTSTAGSLISTE_PREVIEW_LIST">Vorschauliste</string>
     <string name="PLG_GEBURTSTAGSLISTE_PREVIEW_LIST_DESC">Die Werte für die Vorschauliste (Mehrere Einträge sind durch Kommata zu trennen; z.B.: -10,-1,0,1,2,10,20,30,365,1000)</string>
+    <string name="PLG_GEBURTSTAGSLISTE_RELATION">Beziehung</string>  
+    <string name="PLG_GEBURTSTAGSLISTE_RELATION_DESC">Um Daten eines Ehepartners anzuzeigen kann hier die Beziehung "Ehepartner/-in" gewählt werden. Nach dem Speichern und Aktualisieren der Seite gibt es in der Spaltenauswahl zusätzliche Wahlmöglichkeiten für diese Beziehung.</string>     
     <string name="PLG_GEBURTSTAGSLISTE_ROLE_SELECTION">Rollenwahl</string>
     <string name="PLG_GEBURTSTAGSLISTE_ROLE_SELECTION_CONF_DESC">Über Rollenwahl kann eine Konfiguration auf die Angehörigen der gewählten Rollen eingeschränkt werden.\n\n Soll keine Einschränkung erfolgen, so sind beide Felder (Rollenwahl und Kategoriewahl) leer zu lassen.</string>
     <string name="PLG_GEBURTSTAGSLISTE_ROLE_SELECTION_DESC">Wähle die Rollen aus, deren Mitglieder das Plugin aufrufen dürfen.</string>

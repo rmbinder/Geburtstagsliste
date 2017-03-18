@@ -56,32 +56,55 @@ class GenList
 		$colfields=explode(',',$pPreferences->config['Konfigurationen']['col_fields'][$this->conf]);
 		for($i=1; $i < count($colfields)+1; $i++)
 		{
+			if (substr($colfields[$i-1],0,1) == 'r')          //relationship
+			{
+				$colfields[$i-1] = substr($colfields[$i-1],1);
+				$this->headerData[$i]['data'] = $gProfileFields->getPropertyById((int) $colfields[$i-1], 'usf_name').'*';
+			}
+			else 
+			{
+				$this->headerData[$i]['data'] = $gProfileFields->getPropertyById((int) $colfields[$i-1], 'usf_name');
+			}
+			
 			$this->headerData[$i]['id'] = (int) $colfields[$i-1] ;
-			$this->headerData[$i]['data'] = $gProfileFields->getPropertyById((int) $colfields[$i-1], 'usf_name');
+			
 		}
 		$this->headerData[$i]['id'] = 0 ;
 		$this->headerData[$i]['data'] = $pPreferences->config['Konfigurationen']['col_desc'][$this->conf];
 	
 		$user = new User($gDb, $gProfileFields);
 		
-		// alle Mitglieder der aktuellen Organisation einlesen
-		$sql = ' SELECT mem.mem_usr_id, mem.mem_begin
-             	FROM '.TBL_MEMBERS.' as mem, '.TBL_ROLES.' as rol, '. TBL_CATEGORIES. ' as cat
-             	WHERE mem.mem_rol_id = rol.rol_id
-             	AND rol.rol_valid  = 1   
-             	AND rol.rol_cat_id = cat.cat_id
-             	AND (  cat_org_id = '.$gCurrentOrganization->getValue('org_id').'
-               	OR cat.cat_org_id IS NULL )
-             	AND mem.mem_end = \'9999-12-31\' ';
+		// Filter: nur Mitglieder der aktuellen Organisation
+		$orgCondition = ' mem_usr_id IN (
+        			    SELECT DISTINCT mem_usr_id
+        					       FROM '. TBL_MEMBERS. ', '. TBL_ROLES. ', '. TBL_CATEGORIES.  '
+                                  WHERE mem_rol_id = rol_id
+        					        AND mem_begin <= \''.DATE_NOW.'\'
+        						    AND mem_end    > \''.DATE_NOW.'\'
+        						    AND rol_valid  = 1
+        						    AND rol_cat_id = cat_id
+        						    AND (  cat_org_id = '. $gCurrentOrganization->getValue('org_id'). '
+            					     OR cat_org_id IS NULL ) )';
+		
+		// alle Mitglieder inkl. evtl. vorhandener Beziehungen einlesen
+		$sql = ' SELECT DISTINCT mem_usr_id, ure_usr_id2
+							FROM '.TBL_MEMBERS.'
+					   LEFT JOIN '.TBL_USER_RELATIONS.'
+							  ON ure_usr_id1 = mem_usr_id
+						     AND ure_urt_id = \''. $pPreferences->config['Konfigurationen']['relation'][$this->conf]. '\'
+						   WHERE '. $orgCondition. '  ';
+    
 		$statement = $gDb->query($sql);
 
 		while ($row = $statement->fetch())
 		{
-			$workarray[$row['mem_usr_id']] = $row['mem_usr_id'];
+			$workarray[$row['mem_usr_id']] = $row['ure_usr_id2'];
 		}
+		// wenn als Beziehung Ehepartner gewaehlt wurde, dann ist $workarray jetzt folgendermassen aufgebaut:
+		// $workarray[userid-member] = userid-Ehepartner
 		
 		$membercounter = 0;
-		foreach($workarray as $usr_id)
+		foreach($workarray as $usr_id => $dummy)
 		{
 			// bestehen Rollen- und/oder Kategorieeinschraenkungen?
         	$rolecatmarker = true;
@@ -122,7 +145,6 @@ class GenList
 			if ($rolecatmarker  && $hasRightToView)
         	{
         		$workDate = '';
-				$user->readDataById($usr_id);
         	
 				// ein Profilfeld wurde als Fokusfeld gewaehlt
 				if(substr($pPreferences->config['Konfigurationen']['col_sel'][$this->conf],0,1)=='p')
@@ -171,6 +193,12 @@ class GenList
         				$colcount=1;
 						foreach(explode(',',$pPreferences->config['Konfigurationen']['col_fields'][$this->conf]) as $usfid )
 						{
+							if (substr($usfid,0,1)=='r' && !empty($workarray[$usr_id]))          //relationship
+							{
+								$usfid = substr($usfid,1);
+								$user->readDataById($workarray[$usr_id]);
+							}
+							
 							if(  ($gProfileFields->getPropertyById((int) $usfid, 'usf_type') == 'DROPDOWN'
                        			|| $gProfileFields->getPropertyById((int) $usfid, 'usf_type') == 'RADIO_BUTTON') )
     						{
@@ -179,6 +207,11 @@ class GenList
     						else 
     						{
     							$this->listData[$membercounter][$colcount] = $user->getValue($gProfileFields->getPropertyById((int) $usfid, 'usf_name_intern'));
+    						}
+    						
+    						if (!empty($workarray[$usr_id]))          						//relationship
+    						{
+    							$user->readDataById($usr_id);
     						}
 							$colcount++;
 						}

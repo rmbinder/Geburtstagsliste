@@ -73,6 +73,8 @@
     <string name="PLG_GEBURTSTAGSLISTE_PREVIEW_DAYS_DESC">By default, the preview days</string>
     <string name="PLG_GEBURTSTAGSLISTE_PREVIEW_LIST">Preview list</string>
     <string name="PLG_GEBURTSTAGSLISTE_PREVIEW_LIST_DESC">The values for the preview list (Multiple entries must be separated by commas; e.g.: -10,-1,0,1,2,10,20,30,365,1000)</string>
+    <string name="PLG_GEBURTSTAGSLISTE_RELATION">Relationship</string>  
+    <string name="PLG_GEBURTSTAGSLISTE_RELATION_DESC">To display the data of a spouse, the relationship "spouse" can be selected here. After saving and updating the page, there are additional choices for this relationship in the column selection.</string>     
     <string name="PLG_GEBURTSTAGSLISTE_ROLE_SELECTION">Role selection</string>
     <string name="PLG_GEBURTSTAGSLISTE_ROLE_SELECTION_CONF_DESC">About roll select a configuration may be restricted to members of the selected roles.\n\n There should be no restriction, so both fields (role selection and category selection) are to be left blank.</string>
     <string name="PLG_GEBURTSTAGSLISTE_ROLE_SELECTION_DESC">Choose from the rollers, whose members may call the plugin.</string>

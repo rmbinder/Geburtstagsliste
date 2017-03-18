@@ -30,7 +30,8 @@ $config_default['Konfigurationen'] = array('col_desc' 	=> array($gL10n->get('PLG
 										'years_offset'  => array('0'),
 										'suppress_age'  => array('0'),																	
 										'selection_role'=> array(' '),
-										'selection_cat'	=> array(' ')  );
+										'selection_cat' => array(' '),                                        
+										'relation'		=> array('')  );
 
 $config_default['Optionen']['vorschau_tage_default'] = 365;    		
 $config_default['Optionen']['vorschau_liste'] = array(-14,0,14,31,365,1000);    		

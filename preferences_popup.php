@@ -43,6 +43,8 @@ echo '
 	'.$gL10n->get('PLG_GEBURTSTAGSLISTE_NOTIFICATION_MAIL_TEXT_DESC').'<br><br>
    <strong>'.$gL10n->get('PLG_GEBURTSTAGSLISTE_SHOW_CALENDAR_YEAR').'</strong><br>
 	'.$gL10n->get('PLG_GEBURTSTAGSLISTE_SHOW_CALENDAR_YEAR_DESC').'<br><br>
-   <strong>'.$gL10n->get('PLG_GEBURTSTAGSLISTE_YEARS_OFFSET').'</strong><br>
-	'.$gL10n->get('PLG_GEBURTSTAGSLISTE_YEARS_OFFSET_DESC').'	
+    <strong>'.$gL10n->get('PLG_GEBURTSTAGSLISTE_YEARS_OFFSET').'</strong><br>
+	'.$gL10n->get('PLG_GEBURTSTAGSLISTE_YEARS_OFFSET_DESC').'<br><br>    
+   <strong>'.$gL10n->get('PLG_GEBURTSTAGSLISTE_RELATION').'</strong><br>
+	'.$gL10n->get('PLG_GEBURTSTAGSLISTE_RELATION_DESC').'	
 </div>';

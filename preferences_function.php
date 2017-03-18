@@ -75,7 +75,8 @@ case 1:
     				$pPreferences->config['Konfigurationen']['calendar_year'][] = isset($_POST['calendar_year'. $conf]) ? 1 : 0 ;
     				$pPreferences->config['Konfigurationen']['suppress_age'][] = isset($_POST['suppress_age'. $conf]) ? 1 : 0 ;
     				$pPreferences->config['Konfigurationen']['years_offset'][] = isset($_POST['years_offset'. $conf]) ? $_POST['years_offset'. $conf] : 0 ;
-
+                    $pPreferences->config['Konfigurationen']['relation'][] = $_POST['relationtype_id'. $conf];
+                    
     				$pPreferences->config['Konfigurationen']['selection_role'][] = isset($_POST['selection_role'. $conf]) ? trim(implode(',',$_POST['selection_role'. $conf]),',') : ' ';
     				$pPreferences->config['Konfigurationen']['selection_cat'][] = isset($_POST['selection_cat'. $conf]) ? trim(implode(',',$_POST['selection_cat'. $conf]),',') : ' ';
 
