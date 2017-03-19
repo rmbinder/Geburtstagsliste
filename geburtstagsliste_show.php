@@ -377,7 +377,14 @@ $columnNumber = 1;
 foreach ($liste->headerData as $columnHeader) 
 {
 	// bei Profilfeldern ist in 'id' die 'usf_id', ansonsten 0
-	$usf_id = $columnHeader['id'];
+	if (substr($columnHeader['id'], 0, 1) == 'r')          //relationship
+	{
+		$usf_id = (int) substr($columnHeader['id'], 1);
+	}
+	else 
+	{
+		$usf_id = (int) $columnHeader['id'];
+	}
 	
     if ($gProfileFields->getPropertyById($usf_id, 'usf_type') == 'CHECKBOX'
         || $gProfileFields->getPropertyById($usf_id, 'usf_name_intern') == 'GENDER')
@@ -467,12 +474,19 @@ foreach ($liste->listData as $memberdata)
         
         // format value for csv export
     	$usf_id = 0;
-        $usf_id = $liste->headerData[$i]['id'];
-      
+    	if (substr($liste->headerData[$i]['id'], 0, 1) == 'r')          //relationship
+    	{
+    		$usf_id = (int) substr($liste->headerData[$i]['id'], 1);
+    	}
+    	else 
+    	{
+    		$usf_id = (int) $liste->headerData[$i]['id'];
+    	}
+        
         if ($usf_id  != 0 
-         && $getMode == 'csv'
-         && $content > 0
-         && ($gProfileFields->getPropertyById($usf_id, 'usf_type') == 'DROPDOWN'
+        	&& $getMode == 'csv'
+         	&& $content > 0
+         	&& ( $gProfileFields->getPropertyById($usf_id, 'usf_type') == 'DROPDOWN'
               || $gProfileFields->getPropertyById($usf_id, 'usf_type') == 'RADIO_BUTTON') )
         {
             // show selected text of optionfield or combobox
@@ -487,7 +501,7 @@ foreach ($liste->listData as $memberdata)
         // create output in html layout
         else
         {            	
-        	if ($usf_id != 0 && $gProfileFields->getPropertyById($liste->headerData[$i]['id'], 'usf_type') != 'EMAIL')     //only profileFields without EMAIL
+        	if ($usf_id != 0 && $gProfileFields->getPropertyById($usf_id, 'usf_type') != 'EMAIL')     //only profileFields without EMAIL
         	{
         		$content = $gProfileFields->getHtmlValue($gProfileFields->getPropertyById($usf_id, 'usf_name_intern'), $content, $memberdata[0]);
         	}
@@ -495,9 +509,9 @@ foreach ($liste->listData as $memberdata)
             // if empty string pass a whitespace
 			if (strlen($content) > 0)
             {
-        		 if ($gProfileFields->getPropertyById($liste->headerData[$i]['id'], 'usf_type') == 'EMAIL')
-        		 {
-        		 	if ($gPreferences['enable_mail_module'] != 1)
+        		if ($gProfileFields->getPropertyById($usf_id, 'usf_type') == 'EMAIL')
+        	 	{
+        			if ($gPreferences['enable_mail_module'] != 1)
 					{
 						$mail_link = 'mailto:'. $content;
 					}
@@ -506,11 +520,18 @@ foreach ($liste->listData as $memberdata)
 						$mail_link = ADMIDIO_URL . FOLDER_PLUGINS . $plugin_folder .'/message_write.php?usr_id='. $memberdata[0].'&config='. trim($getConfig,'X').'&configtext='.end($memberdata);
 					}
 					$columnValues[] = '<a href="'.$mail_link.'">'.$content.'</a><br />';
-        		 }
-        		 else 
-        		 {
+        		}
+        		elseif ($getMode === 'html'
+        		 	&&  (  $gProfileFields->getPropertyById($usf_id, 'usf_name_intern') == 'LAST_NAME'
+        		 		|| $gProfileFields->getPropertyById($usf_id, 'usf_name_intern') == 'FIRST_NAME')
+        		 	&& substr($liste->headerData[$i]['id'], 0, 1) != 'r')
+        		{
+        			$columnValues[] = '<a href="'.ADMIDIO_URL.FOLDER_MODULES.'/profile/profile.php?user_id='.$memberdata[0].'">'.$content.'</a>';
+        		}
+        		else 
+				{
         		 	$columnValues[] = $content;
-        		 }   
+        		}   
 			}
             else
             {
@@ -525,11 +546,7 @@ foreach ($liste->listData as $memberdata)
    	 	{
     		$str_csv .= $tmp_csv. "\n";
     	}
-    	elseif ($getMode == 'html')
-    	{
-       		$table->addRowByArray($columnValues, null, array('style' => 'cursor: pointer', 'onclick' => 'window.location.href=\''. ADMIDIO_URL . FOLDER_MODULES .'/profile/profile.php?user_id='. $memberdata[0]. '\''));
-    	}
-   	 	elseif ($getMode == 'print' || $getMode == 'pdf')
+   	 	else
     	{
         	$table->addRowByArray($columnValues, null, array('nobr' => 'true'));
     	}

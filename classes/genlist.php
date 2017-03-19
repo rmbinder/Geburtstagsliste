@@ -58,15 +58,13 @@ class GenList
 		{
 			if (substr($colfields[$i-1], 0, 1) == 'r')          //relationship
 			{
-				$colfields[$i-1] = substr($colfields[$i-1], 1);
-				$this->headerData[$i]['data'] = $gProfileFields->getPropertyById((int) $colfields[$i-1], 'usf_name').'*';
+				$this->headerData[$i]['data'] = $gProfileFields->getPropertyById((int) substr($colfields[$i-1], 1), 'usf_name').'*';
 			}
 			else 
 			{
 				$this->headerData[$i]['data'] = $gProfileFields->getPropertyById((int) $colfields[$i-1], 'usf_name');
 			}
-			
-			$this->headerData[$i]['id'] = (int) $colfields[$i-1] ;
+			$this->headerData[$i]['id'] =  $colfields[$i-1] ;
 			
 		}
 		$this->headerData[$i]['id'] = 0 ;
