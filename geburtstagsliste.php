@@ -33,7 +33,8 @@ $pPreferences = new ConfigTablePGL();
 
 // Initialisierung und Anzeige des Links nur, wenn vorher keine Deinstallation stattgefunden hat
 // sonst waere die Deinstallation hinfaellig, da hier wieder Default-Werte der config in die DB geschrieben werden
-if (strpos($gNavigation->getUrl(), 'preferences_function.php?mode=3') === false)
+// Zweite Voraussetzung: Ein User muss erfolgreich eingeloggt sein
+if (strpos($gNavigation->getUrl(), 'preferences_function.php?mode=3') === false && $gValidLogin)
 {
 	if ($pPreferences->checkforupdate())
 	{
