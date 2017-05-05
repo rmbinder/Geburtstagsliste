@@ -3,19 +3,23 @@
  ***********************************************************************************************
  * Modul Preferences (Einstellungen) fuer das Admidio-Plugin Geburtstagsliste
  *
- * @copyright 2004-2016 The Admidio Team
- * @see http://www.admidio.org/
+ * @copyright 2004-2017 The Admidio Team
+ * @see https://www.admidio.org/
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
+ ***********************************************************************************************
+ */
+
+/******************************************************************************
  *
  * Hinweis:  preferences.php ist eine modifizierte Kombination der Dateien
  *           .../modules/lists/mylist.php und .../modules/preferences/preferences.php
- *
+ *           
  * Parameters:
  *
  * add	:	Anlegen einer weiteren Konfiguration (true or false)
  *
- ***********************************************************************************************
- */
+ *
+ *****************************************************************************/
 
 require_once(__DIR__ . '/../../adm_program/system/common.php');
 require_once(__DIR__ . '/../../adm_program/system/login_valid.php');
@@ -105,7 +109,7 @@ $page->addJavascript('
     });
     ', true);
 
-    // create a array with the necessary data
+    // create an array with the necessary data
 	for ($conf = 0; $conf < $num_configs; $conf++)
     {      
     	if (!empty($pPreferences->config['Konfigurationen']['relation'][$conf]))
@@ -335,17 +339,17 @@ $page->addHtml('
 							$form->addCheckbox('suppress_age'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_AGE_OR_ANNIVERSARY_NOT_SHOW'), $pPreferences->config['Konfigurationen']['suppress_age'][$conf]);
 
                         	$sql = 'SELECT rol_id, rol_name, cat_name
-                                FROM '.TBL_CATEGORIES.' , '.TBL_ROLES.' 
-                                WHERE cat_id = rol_cat_id
-                                AND (  cat_org_id = '.$gCurrentOrganization->getValue('org_id').'
-                                OR cat_org_id IS NULL )';
+                                      FROM '.TBL_CATEGORIES.' , '.TBL_ROLES.' 
+                                     WHERE cat_id = rol_cat_id
+                                       AND ( cat_org_id = '.$gCurrentOrganization->getValue('org_id').'
+                                        OR cat_org_id IS NULL )';
                        		$form->addSelectBoxFromSql('selection_role'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_ROLE_SELECTION'), $gDb, $sql, array('defaultValue' => explode(',',$pPreferences->config['Konfigurationen']['selection_role'][$conf]),'multiselect' => true));
                         	
 				        	$sql = 'SELECT cat_id, cat_name
-                                    FROM '.TBL_CATEGORIES.' , '.TBL_ROLES.' 
-                                    WHERE cat_id = rol_cat_id
-                                    AND (  cat_org_id = '.$gCurrentOrganization->getValue('org_id').'
-                                    OR cat_org_id IS NULL )';
+                                      FROM '.TBL_CATEGORIES.' , '.TBL_ROLES.' 
+                                     WHERE cat_id = rol_cat_id
+                                       AND ( cat_org_id = '.$gCurrentOrganization->getValue('org_id').'
+                                        OR cat_org_id IS NULL )';
                        		$form->addSelectBoxFromSql('selection_cat'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_CAT_SELECTION'), $gDb, $sql, array('defaultValue' => explode(',',$pPreferences->config['Konfigurationen']['selection_cat'][$conf]),'multiselect' => true));
                         	
 							$text[$conf] = new TableText($gDb);

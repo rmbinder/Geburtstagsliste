@@ -3,17 +3,18 @@
  ***********************************************************************************************
  * Check message information and save it
  *
- * @copyright 2004-2016 The Admidio Team
- * @see http://www.admidio.org/
+ * @copyright 2004-2017 The Admidio Team
+ * @see https://www.admidio.org/
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
- *
- * Hinweis:  message_send.php ist eine modifizierte messages_send.php
- *
+ ***********************************************************************************************
+ */
+
+/******************************************************************************
  * Parameters:
  *
  * usr_id  : Send email to this user
- ***********************************************************************************************
- */
+ *
+ *****************************************************************************/
 
 require_once(__DIR__ . '/../../adm_program/system/common.php');
 require_once(__DIR__ . '/../../adm_program/system/template.php');

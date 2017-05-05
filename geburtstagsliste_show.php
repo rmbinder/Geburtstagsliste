@@ -3,12 +3,13 @@
  ***********************************************************************************************
  * Zeigt die Geburtstagsliste auf dem Bildschirm an
  *
- * @copyright 2004-2016 The Admidio Team
- * @see http://www.admidio.org/
+ * @copyright 2004-2017 The Admidio Team
+ * @see https://www.admidio.org/
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
- *
- * Hinweis:   geburtstagsliste_show ist eine modifierte lists_show
- *
+ ***********************************************************************************************
+ */
+
+/******************************************************************************
  * Parameters:
  *
  * mode   		: Output (html, print, csv-ms, csv-oo, pdf, pdfl)
@@ -22,8 +23,8 @@
  * filter_enable: 0 - (Default) No filter option
  *                1 - Filter option is enabled
  * filter		: Filter string
- ***********************************************************************************************
- */
+ *
+ *****************************************************************************/
 
 require_once(__DIR__ . '/../../adm_program/system/common.php');
 require_once(__DIR__ . '/common_function.php');
@@ -146,7 +147,7 @@ $numMembers = count($liste->listData);
 $columnCount = count($liste->headerData);
 
 // if html mode and last url was not a list view then save this url to navigation stack
-if($getMode == 'html' && strpos($gNavigation->getUrl(), 'geburtstagsliste_show.php') === false)
+if ($getMode == 'html' && strpos($gNavigation->getUrl(), 'geburtstagsliste_show.php') === false)
 {
     $gNavigation->addUrl(CURRENT_URL);
 }

@@ -3,19 +3,20 @@
  ***********************************************************************************************
  * E-Mails versenden aus dem Plugin Geburtstagsliste
  *
- * @copyright 2004-2016 The Admidio Team
- * @see http://www.admidio.org/
+ * @copyright 2004-2017 The Admidio Team
+ * @see https://www.admidio.org/
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
- *
- * Hinweis:  message_write.php ist eine modifizierte messages_write.php
- *
-  * Parameters:
- *
+ ***********************************************************************************************
+ */
+
+/******************************************************************************
+ * Parameters:
+ * 
  * usr_id       : E-Mail an den entsprechenden Benutzer schreiben
  * configtext   : Text in der letzten Spalte (Konfigurationsspalte)
  * config       : die gewaehlte Konfiguration
- ***********************************************************************************************
- */
+ *
+ *****************************************************************************/
 
 require_once(__DIR__ . '/../../adm_program/system/common.php');
 require_once(__DIR__ . '/../../adm_program/system/classes/tabletext.php');
