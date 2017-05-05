@@ -71,10 +71,10 @@ $text->readDataByColumns(array('txt_name' => 'PGLMAIL_NOTIFICATION'.$getConfig, 
 $mailSrcText = $text->getValue('txt_text');
 
 // now replace all parameters in email text
-$mailSrcText = preg_replace ('/%user_first_name%/', $user->getValue('FIRST_NAME'),  $mailSrcText);
-$mailSrcText = preg_replace ('/%user_last_name%/',  $user->getValue('LAST_NAME'), $mailSrcText);
-$mailSrcText = preg_replace ('/%organization_long_name%/', $gCurrentOrganization->getValue('org_longname'), $mailSrcText);
-$mailSrcText = preg_replace ('/%config%/', $getConfigText,  $mailSrcText);
+$mailSrcText = preg_replace ('/#user_first_name#/', $user->getValue('FIRST_NAME'),  $mailSrcText);
+$mailSrcText = preg_replace ('/#user_last_name#/',  $user->getValue('LAST_NAME'), $mailSrcText);
+$mailSrcText = preg_replace ('/#organization_long_name#/', $gCurrentOrganization->getValue('org_longname'), $mailSrcText);
+$mailSrcText = preg_replace ('/#config#/', $getConfigText,  $mailSrcText);
      
 // Betreff und Inhalt anhand von Kennzeichnungen splitten oder ggf. Default-Inhalte nehmen
 if (strpos($mailSrcText, '#subject#') !== false)
