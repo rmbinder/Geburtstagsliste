@@ -578,7 +578,7 @@ if ($getMode == 'csv')
     // nun die erstellte CSV-Datei an den User schicken
     header('Content-Type: text/comma-separated-values; charset='.$charset);
 
-    if ($charset == 'ISO-8859-1')
+    if ($charset === 'iso-8859-1')
     {
         echo utf8_decode($str_csv);
     }
