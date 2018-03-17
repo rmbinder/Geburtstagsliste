@@ -12,7 +12,7 @@
 require_once(__DIR__ . '/../../adm_program/system/common.php');
 
 // set headline of the script
-$headline = $gL10n->get('PLG_FORMFILLER_CONFIGURATIONS');
+$headline = $gL10n->get('PLG_GEBURTSTAGSLISTE_CONFIGURATIONS');
 
 header('Content-type: text/html; charset=utf-8');
 
