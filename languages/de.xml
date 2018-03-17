@@ -56,6 +56,7 @@
     <string name="PLG_GEBURTSTAGSLISTE_LINK_TO_DEINSTALLATION">Zur Deinstallation wechseln</string>
     <string name="PLG_GEBURTSTAGSLISTE_MARCH">März</string>
     <string name="PLG_GEBURTSTAGSLISTE_MAY">Mai</string>
+    <string name="PLG_GEBURTSTAGSLISTE_MENU_URL_ERROR">Die Authorisierungsprüfung des Plugins ist fehlgeschlagen. Es ist mehr als ein Menüpunkt mit derselben URL definiert.\n\n=> #VAR1_BOLD#</string> 
     <string name="PLG_GEBURTSTAGSLISTE_NOTIFICATION_MAIL_TEXT">E-Mail-Vorlage</string>
     <string name="PLG_GEBURTSTAGSLISTE_NOTIFICATION_MAIL_TEXT_DESC">Hier kann der Text für eine E-Mail angepasst und ergänzt werden. Der Text ist in 2 Bereiche (Betreff &amp; Inhalt) unterteilt und wird durch die Zeichenfolge #subject# und #content# identifiziert. Danach folgt dann der Inhalt für den Bereich. In jeder Mail können Platzhalter benutzt werden, welche dann zur Laufzeit durch die entsprechenden Inhalte ersetzt werden.\n\nWICHTIG: Zum Versenden von Mails muss das Profilfeld E-Mail in einer Spalte angezeigt werden.\n\nPlatzhalter:\n#user_first_name# = Vorname des Mitglieds\n#user_last_name# = Nachname des Mitglieds\n#organization_long_name# = Name der Organisation\n#config# = Text der letzten Spalte (Konfigurationsspalte)</string>
     <string name="PLG_GEBURTSTAGSLISTE_NOVEMBER">November</string>
@@ -64,7 +65,6 @@
     <string name="PLG_GEBURTSTAGSLISTE_ORG_CHOICE">Organisationswahl</string>
     <string name="PLG_GEBURTSTAGSLISTE_PATTERN">Runde Geburtstage</string>
     <string name="PLG_GEBURTSTAGSLISTE_PGLMAIL_NOTIFICATION">#subject# Gratulation\n#content# Sehr geehrtes Mitglied,\n\nzu Ihrem #config# übermitteln wir Ihnen die besten Glückwünsche.\n\nMit freundlichen Grüßen\n#organization_long_name#</string>
-    <string name="PLG_GEBURTSTAGSLISTE_PLUGIN_CONTROL">Pluginfreigabe</string>
     <string name="PLG_GEBURTSTAGSLISTE_PLUGIN_DATE">Stand</string>
     <string name="PLG_GEBURTSTAGSLISTE_PLUGIN_INFORMATION">Plugininformationen</string>
     <string name="PLG_GEBURTSTAGSLISTE_PLUGIN_NAME">Name des Plugins</string>
@@ -77,8 +77,6 @@
     <string name="PLG_GEBURTSTAGSLISTE_RELATION_DESC">Um Daten eines Ehepartners anzuzeigen kann hier die Beziehung "Ehepartner/-in" gewählt werden. Nach dem Speichern und Aktualisieren der Seite gibt es in der Spaltenauswahl zusätzliche Wahlmöglichkeiten für diese Beziehung.</string>     
     <string name="PLG_GEBURTSTAGSLISTE_ROLE_SELECTION">Rollenwahl</string>
     <string name="PLG_GEBURTSTAGSLISTE_ROLE_SELECTION_CONF_DESC">Über Rollenwahl kann eine Konfiguration auf die Angehörigen der gewählten Rollen eingeschränkt werden.\n\n Soll keine Einschränkung erfolgen, so sind beide Felder (Rollenwahl und Kategoriewahl) leer zu lassen.</string>
-    <string name="PLG_GEBURTSTAGSLISTE_ROLE_SELECTION_DESC">Wähle die Rollen aus, deren Mitglieder das Plugin aufrufen dürfen.</string>
-    <string name="PLG_GEBURTSTAGSLISTE_ROLE_SELECTION_DESC2">Wähle die Rollen aus, deren Mitglieder die Einstellungen des Plugins aufrufen dürfen.</string>
     <string name="PLG_GEBURTSTAGSLISTE_SELECT_CONFIGURATION">Konfiguration wählen</string>
     <string name="PLG_GEBURTSTAGSLISTE_SELECT_MONTH">Monat wählen</string>
     <string name="PLG_GEBURTSTAGSLISTE_SELECT_NUMBER_OF_DAYS">Vorschautage wählen</string>

@@ -23,15 +23,14 @@ require_once(__DIR__ . '/../../adm_program/system/common.php');
 require_once(__DIR__ . '/common_function.php');
 require_once(__DIR__ . '/classes/configtable.php');
 
+// only authorized user are allowed to start this module
+if (!$gCurrentUser->isAdministrator())
+{
+	$gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
+}
+
 $pPreferences = new ConfigTablePGL();
 $pPreferences->read();
-
-// only authorized user are allowed to start this module
-if (!check_showpluginPGL($pPreferences->config['Pluginfreigabe']['freigabe_config']))
-{
-	$gMessage->setForwardUrl($gHomepage, 3000);
-    $gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
-}
 
 // Initialize and check the parameters
 $getMode = admFuncVariableIsValid($_GET, 'mode', 'numeric', array('defaultValue' => 1));
@@ -130,17 +129,6 @@ case 1:
  	        	$pPreferences->config['Optionen']['config_default'] = $_POST['config_default'];	
  	        	$pPreferences->config['Optionen']['configuration_as_header'] = isset($_POST['configuration_as_header']) ? 1 : 0 ;
             	break; 
-                
-        	case 'plugin_control':
-            	if (isset($_POST['freigabe']))
-            	{
-    				$pPreferences->config['Pluginfreigabe']['freigabe'] = $_POST['freigabe'];
-            	}
-            	if (isset($_POST['freigabe_config']))
-            	{
-    				$pPreferences->config['Pluginfreigabe']['freigabe_config'] = $_POST['freigabe_config'];
-            	}
-    			break;
             
         	default:
            		$gMessage->show($gL10n->get('SYS_INVALID_PAGE_VIEW'));

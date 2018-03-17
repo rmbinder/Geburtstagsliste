@@ -23,6 +23,12 @@ require_once(__DIR__ . '/../../adm_program/system/classes/tabletext.php');
 require_once(__DIR__ . '/common_function.php');
 require_once(__DIR__ . '/classes/configtable.php');
  
+// only the main script can call and start this module
+if (strpos($gNavigation->getUrl(), 'geburtstagsliste.php') === false)
+{
+	$gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
+}
+
 $getUserId     = admFuncVariableIsValid($_GET, 'usr_id', 'numeric', array('defaultValue' => 0));
 $getConfigText = admFuncVariableIsValid($_GET, 'configtext', 'string');
 $getConfig     = admFuncVariableIsValid($_GET, 'config', 'numeric', array('defaultValue' => 0));
@@ -32,13 +38,6 @@ $getSubject = '';
 // Konfiguration einlesen          
 $pPreferences = new ConfigTablePGL();
 $pPreferences->read();
-
-// only authorized user are allowed to start this module
-if (!check_showpluginPGL($pPreferences->config['Pluginfreigabe']['freigabe']))
-{
-	$gMessage->setForwardUrl($gHomepage, 3000);
-    $gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
-}
 
 // check if the call of the page was allowed by settings
 if ($gPreferences['enable_mail_module'] != 1 )

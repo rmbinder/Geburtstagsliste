@@ -42,6 +42,12 @@ require_once(__DIR__ . '/classes/genlist.php');
 // Einbinden der Sprachdatei
 $gL10n->addLanguageFolderPath(ADMIDIO_PATH . FOLDER_PLUGINS . $plugin_folder . '/languages');
 
+// only authorized user are allowed to start this module
+if (!isUserAuthorized($_SERVER['SCRIPT_NAME']))
+{
+	$gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
+}
+
 // Konfiguration einlesen          
 $pPreferences = new ConfigTablePGL();
 if ($pPreferences->checkforupdate())
@@ -51,13 +57,6 @@ if ($pPreferences->checkforupdate())
 else
 {
 	$pPreferences->read();
-}
-
-// only authorized user are allowed to start this module
-if (!check_showpluginPGL($pPreferences->config['Pluginfreigabe']['freigabe']))
-{
-	$gMessage->setForwardUrl($gHomepage, 3000);
-    $gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
 }
 
 $monate = array('00' => $gL10n->get('PLG_GEBURTSTAGSLISTE_ALL_MONTHS'),
@@ -309,7 +308,7 @@ if ($getMode != 'csv')
         	$getFilter = '';
         }
         
-        if (check_showpluginPGL($pPreferences->config['Pluginfreigabe']['freigabe_config']))
+        if ($gCurrentUser->isAdministrator())
         {
         	// show link to pluginpreferences
         	$listsMenu->addItem('admMenuItemPreferencesLists', ADMIDIO_URL . FOLDER_PLUGINS . $plugin_folder .'/preferences.php',

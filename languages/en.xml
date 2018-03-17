@@ -56,6 +56,7 @@
     <string name="PLG_GEBURTSTAGSLISTE_LINK_TO_DEINSTALLATION">Skip to uninstall</string>
     <string name="PLG_GEBURTSTAGSLISTE_MARCH">March</string>
     <string name="PLG_GEBURTSTAGSLISTE_MAY">May</string>
+    <string name="PLG_GEBURTSTAGSLISTE_MENU_URL_ERROR">The authorization check of the plugin failed. There is more than one menu item with the same URL defined.\n\n=> #VAR1_BOLD#</string> 
     <string name="PLG_GEBURTSTAGSLISTE_NOTIFICATION_MAIL_TEXT">E-mail Template</string>
     <string name="PLG_GEBURTSTAGSLISTE_NOTIFICATION_MAIL_TEXT_DESC">Here, the text can be customized and added to an e-mail. Texts have two paragraphs (subject &amp; content) which are identified by titles like #subject# and #content#. Content parts follow after this titles. Each message can have free space for current messages.\n\nIMPORTANT: To send an e-mail, the the profile field Email has to be displayed in a column.\n\nPlaceholder:\n#user_first_name# = First name of the member\n#user_last_name# = Last name of the member\n#organization_long_name# = Name of the organization\n#config# = Text of the last column (configurations-column)</string>
     <string name="PLG_GEBURTSTAGSLISTE_NOVEMBER">November</string>
@@ -64,7 +65,6 @@
     <string name="PLG_GEBURTSTAGSLISTE_ORG_CHOICE">Organizational choice</string>
     <string name="PLG_GEBURTSTAGSLISTE_PATTERN">Milestone birthdays</string>
     <string name="PLG_GEBURTSTAGSLISTE_PGLMAIL_NOTIFICATION">#subject# Congratulations\n#content# Dear Member,\n\non your #config# we will send you best wishes.\n\nWith best regards\n#organization_long_name#</string>
-    <string name="PLG_GEBURTSTAGSLISTE_PLUGIN_CONTROL">Enabling plug-in</string>
     <string name="PLG_GEBURTSTAGSLISTE_PLUGIN_DATE">Situation</string>
     <string name="PLG_GEBURTSTAGSLISTE_PLUGIN_INFORMATION">Plug-in informations</string>
     <string name="PLG_GEBURTSTAGSLISTE_PLUGIN_NAME">Plug-in name</string>
@@ -77,8 +77,6 @@
     <string name="PLG_GEBURTSTAGSLISTE_RELATION_DESC">To display the data of a spouse, the relationship "spouse" can be selected here. After saving and updating the page, there are additional choices for this relationship in the column selection.</string>     
     <string name="PLG_GEBURTSTAGSLISTE_ROLE_SELECTION">Role selection</string>
     <string name="PLG_GEBURTSTAGSLISTE_ROLE_SELECTION_CONF_DESC">About roll select a configuration may be restricted to members of the selected roles.\n\n There should be no restriction, so both fields (role selection and category selection) are to be left blank.</string>
-    <string name="PLG_GEBURTSTAGSLISTE_ROLE_SELECTION_DESC">Choose from the rollers, whose members may call the plugin.</string>
-    <string name="PLG_GEBURTSTAGSLISTE_ROLE_SELECTION_DESC2">Choose from the rollers, whose members may access the settings of the plugin.</string>
     <string name="PLG_GEBURTSTAGSLISTE_SELECT_CONFIGURATION">Configuration selection</string>
     <string name="PLG_GEBURTSTAGSLISTE_SELECT_MONTH">Selecting month</string>
     <string name="PLG_GEBURTSTAGSLISTE_SELECT_NUMBER_OF_DAYS">Select preview days</string>
