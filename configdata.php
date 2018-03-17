@@ -23,7 +23,7 @@ $config_default['Konfigurationen'] = array('col_desc' 	=> array($gL10n->get('PLG
 										'col_suffix' 	=> array('. Geburtstag am #Day#.#Month#.#Year#'),
 										'col_fields' 	=> array(	$gProfileFields->getProperty('FIRST_NAME', 'usf_id').','.
 																	$gProfileFields->getProperty('LAST_NAME', 'usf_id').','.
-																	$gProfileFields->getProperty('ADDRESS', 'usf_id').','.
+																	$gProfileFields->getProperty('STREET', 'usf_id').','.
 																	$gProfileFields->getProperty('CITY', 'usf_id')),
 										'calendar_year' => array(''),
 										'years_offset'  => array('0'),
