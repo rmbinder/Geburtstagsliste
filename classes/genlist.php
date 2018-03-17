@@ -122,7 +122,7 @@ class GenList
         		}	
 				foreach (explode(',',$pPreferences->config['Konfigurationen']['selection_cat'][$this->conf]) as $cat)
         		{
-        			if (hasCategorie_IDPGL($cat, $usr_id))
+        			if (isMemberOfCategorie($cat, $usr_id))
         			{
         				$rolecatmarker = true;
         			}

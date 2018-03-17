@@ -141,7 +141,7 @@ function g_arr_dimsort(&$arr, $dim, $type = '',$keepkey = false)
  * @param   int  $user_id   ID des Users, fuer den die Mitgliedschaft geprueft werden soll
  * @return  bool
  */
-function hasCategorie_IDPGL($cat_id, $user_id = 0)
+function isMemberOfCategorie($cat_id, $user_id = 0)
 {
     global $gCurrentUser, $gDb, $gCurrentOrganization;
 
