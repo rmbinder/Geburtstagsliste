@@ -157,7 +157,7 @@ class ConfigTablePGL
     	{
     		foreach ($this->config['Spaltenkonfiguration']['col_sel'] as $col_sel_field )
     		{
-    			foreach ($gProfileFields->mProfileFields as $field)
+    			foreach ($gProfileFields->getProfileFields() as $field)
     			{  
     				if ($col_sel_field == trim($gL10n->get($field->getValue('usf_name')),'#'))
     				{

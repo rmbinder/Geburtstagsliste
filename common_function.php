@@ -237,7 +237,7 @@ function generate_configSelection()
     $configSelection = array();  
         
     $i 	= 0;
-    foreach ($gProfileFields->mProfileFields as $field)
+    foreach ($gProfileFields->getProfileFields() as $field)
     {             
         if (($field->getValue('usf_hidden') == 0 || $gCurrentUser->editUsers()) && $field->getValue('usf_type') == 'DATE')
         {   
