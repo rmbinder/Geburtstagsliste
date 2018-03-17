@@ -133,51 +133,6 @@ function g_arr_dimsort(&$arr, $dim, $type = '',$keepkey = false)
       	usort($arr,'arr_dimsort_cmp');
 }
 
-/**
- * Funktion prueft, ob ein User Angehoeriger einer bestimmten Rolle ist
- *
- * @param   int  $role_id   ID der zu pruefenden Rolle
- * @param   int  $user_id   ID des Users, fuer den die Mitgliedschaft geprueft werden soll
- * @return  bool
- */
-function hasRole_IDPGL($role_id, $user_id = 0)
-{
-    global $gCurrentUser, $gDb, $gCurrentOrganization;
-
-    if ($user_id == 0)
-    {
-        $user_id = $gCurrentUser->getValue('usr_id');
-    }
-    elseif (is_numeric($user_id) == false)
-    {
-        return -1;
-    }
-
-    $sql = 'SELECT mem_id
-              FROM '. TBL_MEMBERS. ', '. TBL_ROLES. ', '. TBL_CATEGORIES. '
-             WHERE mem_usr_id = '.$user_id.'
-               AND mem_begin <= \''.DATE_NOW.'\'
-               AND mem_end    > \''.DATE_NOW.'\'
-               AND mem_rol_id = rol_id
-               AND rol_id   = \''.$role_id.'\'
-               AND rol_valid  = 1 
-               AND rol_cat_id = cat_id
-               AND ( cat_org_id = '.$gCurrentOrganization->getValue('org_id').'
-                OR cat_org_id IS NULL ) ';
-                
-    $statement = $gDb->query($sql);
-
-    $user_found = $statement->rowCount();
-
-    if ($user_found == 1)
-    {
-        return 1;
-    }
-    else
-    {
-        return 0;
-    }
-}
 
 /**
  * Funktion prueft, ob ein User Angehoeriger einer bestimmten Kategorie ist

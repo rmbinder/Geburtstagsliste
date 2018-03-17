@@ -104,6 +104,9 @@ class GenList
 		$membercounter = 0;
 		foreach ($workarray as $usr_id => $dummy)
 		{
+			$user->readDataById($usr_id);
+			$rolesArr = $user->getRoleMemberships();
+			
 			// bestehen Rollen- und/oder Kategorieeinschraenkungen?
         	$rolecatmarker = true;
         	if ($pPreferences->config['Konfigurationen']['selection_role'][$this->conf] <> ' '
@@ -112,7 +115,7 @@ class GenList
         		$rolecatmarker = false;	
         		foreach (explode(',', $pPreferences->config['Konfigurationen']['selection_role'][$this->conf]) as $rol)
         		{
-        			if (hasRole_IDPGL($rol, $usr_id))
+        			if ($user->isMemberOfRole((int) $rol))
         			{
         				$rolecatmarker = true;
         			}
@@ -128,8 +131,6 @@ class GenList
         	
         	// pruefen, ob der aktuelle user ($gCurrentUser) mindestens eine Rolle einsehen darf, in der das Geburtstagskind Mitglied ist
         	$hasRightToView = false;
-        	$user->readDataById($usr_id);
-        	$rolesArr = $user->getRoleMemberships();
         	
         	foreach ($rolesArr as $role_id)
         	{
