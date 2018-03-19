@@ -40,7 +40,7 @@ require_once(__DIR__ . '/classes/configtable.php');
 require_once(__DIR__ . '/classes/genlist.php');
 
 // Einbinden der Sprachdatei
-$gL10n->addLanguageFolderPath(ADMIDIO_PATH . FOLDER_PLUGINS . $plugin_folder . '/languages');
+$gL10n->addLanguageFolderPath(ADMIDIO_PATH . FOLDER_PLUGINS . PLUGIN_FOLDER . '/languages');
 
 // only authorized user are allowed to start this module
 if (!isUserAuthorized($_SERVER['SCRIPT_NAME']))
@@ -250,30 +250,30 @@ if ($getMode != 'csv')
         $page->addJavascript('
             $("#export_list_to").change(function () {
                 if($(this).val().length > 1) {
-                    self.location.href = "'. ADMIDIO_URL . FOLDER_PLUGINS . $plugin_folder .'/geburtstagsliste.php?" +
+                    self.location.href = "'. ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/geburtstagsliste.php?" +
                         "previewdays='.$getPreviewDays.'&filter='.$getFilter.'&filter_enable='.$getFilterEnable.'&month='.$getMonth.'&config='.$getConfig.'&mode=" + $(this).val();
                 }
             });
             $("#previewList").change(function () {
                 if($(this).val().length > 1) {
-                    self.location.href = "'. ADMIDIO_URL . FOLDER_PLUGINS . $plugin_folder .'/geburtstagsliste.php?" +
+                    self.location.href = "'. ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/geburtstagsliste.php?" +
                         "mode=html&month='.$getMonth.'&filter='.$getFilter.'&filter_enable='.$getFilterEnable.'&full_screen='.$getFullScreen.'&config='.$getConfig.'&previewdays=" + $(this).val();
                 }
             });
             $("#monthList").change(function () {
                 if($(this).val().length > 0) {
-                    self.location.href = "'. ADMIDIO_URL . FOLDER_PLUGINS . $plugin_folder .'/geburtstagsliste.php?" +
+                    self.location.href = "'. ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/geburtstagsliste.php?" +
                         "mode=html&previewdays='.$getPreviewDays.'&filter='.$getFilter.'&filter_enable='.$getFilterEnable.'&full_screen='.$getFullScreen.'&config='.$getConfig.'&month=" + $(this).val();
                 }
             });
             $("#configList").change(function () {
             	if($(this).val().length > 1) {
-                    self.location.href = "'. ADMIDIO_URL . FOLDER_PLUGINS . $plugin_folder .'/geburtstagsliste.php?" +
+                    self.location.href = "'. ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/geburtstagsliste.php?" +
                         "mode=html&previewdays='.$getPreviewDays.'&filter='.$getFilter.'&filter_enable='.$getFilterEnable.'&full_screen='.$getFullScreen.'&month='.$getMonth.'&config=" + $(this).val();
                 }
             });
             $("#menu_item_print_view").click(function () {
-                window.open("'. ADMIDIO_URL . FOLDER_PLUGINS . $plugin_folder .'/geburtstagsliste.php?" +
+                window.open("'. ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/geburtstagsliste.php?" +
                  "previewdays='.$getPreviewDays.'&filter='.$getFilter.'&filter_enable='.$getFilterEnable.'&month='.$getMonth.'&config='.$getConfig.'&mode=print", "_blank");
             });', true);
         
@@ -282,12 +282,12 @@ if ($getMode != 'csv')
         
         if ($getFullScreen == true)
         {
-            $listsMenu->addItem('menu_item_normal_picture', ADMIDIO_URL . FOLDER_PLUGINS . $plugin_folder .'/geburtstagsliste.php?mode=html&amp;previewdays='.$getPreviewDays.'&amp;filter='.$getFilter.'&amp;month='.$getMonth.'&amp;filter_enable='.$getFilterEnable.'&amp;config='.$getConfig.'&amp;full_screen=0',
+            $listsMenu->addItem('menu_item_normal_picture', ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/geburtstagsliste.php?mode=html&amp;previewdays='.$getPreviewDays.'&amp;filter='.$getFilter.'&amp;month='.$getMonth.'&amp;filter_enable='.$getFilterEnable.'&amp;config='.$getConfig.'&amp;full_screen=0',
                 $gL10n->get('SYS_NORMAL_PICTURE'), 'arrow_in.png');
         }
         else
         {
-            $listsMenu->addItem('menu_item_full_screen', ADMIDIO_URL . FOLDER_PLUGINS . $plugin_folder .'/geburtstagsliste.php?mode=html&amp;previewdays='.$getPreviewDays.'&amp;filter='.$getFilter.'&amp;month='.$getMonth.'&amp;filter_enable='.$getFilterEnable.'&amp;config='.$getConfig.'&amp;full_screen=1',
+            $listsMenu->addItem('menu_item_full_screen', ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/geburtstagsliste.php?mode=html&amp;previewdays='.$getPreviewDays.'&amp;filter='.$getFilter.'&amp;month='.$getMonth.'&amp;filter_enable='.$getFilterEnable.'&amp;config='.$getConfig.'&amp;full_screen=1',
                 $gL10n->get('SYS_FULL_SCREEN'), 'arrow_out.png');
         }
        
@@ -296,12 +296,12 @@ if ($getMode != 'csv')
        
         if ($getFilterEnable == true)
         {
-        	$listsMenu->addItem('filter_disable', ADMIDIO_URL . FOLDER_PLUGINS . $plugin_folder .'/geburtstagsliste.php?mode=html&amp;previewdays='.$getPreviewDays.'&amp;filter='.$getFilter.'&amp;month='.$getMonth.'&amp;full_screen='.$getFullScreen.'&amp;config='.$getConfig.'&amp;filter_enable=0',
+        	$listsMenu->addItem('filter_disable', ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/geburtstagsliste.php?mode=html&amp;previewdays='.$getPreviewDays.'&amp;filter='.$getFilter.'&amp;month='.$getMonth.'&amp;full_screen='.$getFullScreen.'&amp;config='.$getConfig.'&amp;filter_enable=0',
         			$gL10n->get('SYS_FILTER'), 'checkbox_checked.gif');
         }
         else
         {
-        	$listsMenu->addItem('filter_enable', ADMIDIO_URL . FOLDER_PLUGINS . $plugin_folder .'/geburtstagsliste.php?mode=html&amp;previewdays='.$getPreviewDays.'&amp;filter='.$getFilter.'&amp;month='.$getMonth.'&amp;full_screen='.$getFullScreen.'&amp;config='.$getConfig.'&amp;filter_enable=1',
+        	$listsMenu->addItem('filter_enable', ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/geburtstagsliste.php?mode=html&amp;previewdays='.$getPreviewDays.'&amp;filter='.$getFilter.'&amp;month='.$getMonth.'&amp;full_screen='.$getFullScreen.'&amp;config='.$getConfig.'&amp;filter_enable=1',
         			$gL10n->get('SYS_FILTER'), 'checkbox.gif');
         	
         	// if filter is not enabled, reset filterstring
@@ -311,7 +311,7 @@ if ($getMode != 'csv')
         if ($gCurrentUser->isAdministrator())
         {
         	// show link to pluginpreferences
-        	$listsMenu->addItem('admMenuItemPreferencesLists', ADMIDIO_URL . FOLDER_PLUGINS . $plugin_folder .'/preferences.php',
+        	$listsMenu->addItem('admMenuItemPreferencesLists', ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences.php',
         			$gL10n->get('PLG_GEBURTSTAGSLISTE_SETTINGS'), 'options.png', 'right');
         }
         
@@ -320,7 +320,7 @@ if ($getMode != 'csv')
         {
         	// create filter menu
         	$filterNavbar = new HtmlNavbar('menu_list_filter', null, null, 'filter');
-        	$form = new HtmlForm('navbar_filter_form', ADMIDIO_URL . FOLDER_PLUGINS . $plugin_folder .'/geburtstagsliste.php', $page, array('type' => 'navbar', 'setFocus' => false));
+        	$form = new HtmlForm('navbar_filter_form', ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/geburtstagsliste.php', $page, array('type' => 'navbar', 'setFocus' => false));
         	$form->addInput('filter', '', $getFilter);
         	$form->addInput('previewdays', '', $getPreviewDays, array('property' => FIELD_HIDDEN));
         	$form->addInput('full_screen', '', $getFullScreen, array('property' => FIELD_HIDDEN));
@@ -344,7 +344,7 @@ if ($getMode != 'csv')
         	
         	// in normal screen mode create extra menu with elements for selection of configuration, months, days
         	$selectionNavbar = new HtmlNavbar('menu_selection');
-        	$form = new HtmlForm('navbar_selection_form', ADMIDIO_URL . FOLDER_PLUGINS . $plugin_folder .'/geburtstagsliste.php', $page, array('type' => 'navbar', 'setFocus' => false));
+        	$form = new HtmlForm('navbar_selection_form', ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/geburtstagsliste.php', $page, array('type' => 'navbar', 'setFocus' => false));
         }
         
         $selectBoxEntries = array(' ' => $gL10n->get('PLG_GEBURTSTAGSLISTE_SELECT_CONFIGURATION').' ...');
@@ -535,7 +535,7 @@ foreach ($liste->listData as $memberdata)
 					}
 					else
 					{
-						$mail_link = ADMIDIO_URL . FOLDER_PLUGINS . $plugin_folder .'/message_write.php?usr_id='. $memberdata[0].'&config='. trim($getConfig,'X').'&configtext='.end($memberdata);
+						$mail_link = ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/message_write.php?usr_id='. $memberdata[0].'&config='. trim($getConfig,'X').'&configtext='.end($memberdata);
 					}
 					$columnValues[] = '<a href="'.$mail_link.'">'.$content.'</a><br />';
         		}
