@@ -38,7 +38,7 @@
     <string name="PLG_GEBURTSTAGSLISTE_DEINST_ALLORG">Daten in allen Organisationen löschen.</string>
     <string name="PLG_GEBURTSTAGSLISTE_DEINST_DATA_DELETE_ERROR">- Beim Löschen der Daten ist ein Fehler aufgetreten.\n</string>
     <string name="PLG_GEBURTSTAGSLISTE_DEINST_DATA_DELETE_SUCCESS">- Die vom Plugin angelegten Daten wurden gelöscht.\n</string>
-    <string name="PLG_GEBURTSTAGSLISTE_DEINST_ENDMESSAGE">\nUm das Plugin vollständig zu entfernen, muss jetzt der Browser geschlossen und die Programmdateien und der Link im Menü entfernt werden. Der Button "Weiter" initialisert das Plugin neu mit Standardwerten.</string>
+    <string name="PLG_GEBURTSTAGSLISTE_DEINST_ENDMESSAGE">\nUm das Plugin vollständig zu entfernen, müssen noch die Programmdateien und der Menü-Eintrag gelöscht werden.</string>
     <string name="PLG_GEBURTSTAGSLISTE_DEINST_STARTMESSAGE">Folgende Löschvorgänge wurden durchgeführt:\n\n</string>
     <string name="PLG_GEBURTSTAGSLISTE_DEINST_TABLE_DELETE_ERROR">- Die Tabelle "adm_plugin_preferences" konnte nicht gelöscht werden, da sich darin noch Daten eines anderen Plugins befinden.\n</string>
     <string name="PLG_GEBURTSTAGSLISTE_DEINST_TABLE_DELETE_SUCCESS">- Die vom Plugin angelegte Tabelle "adm_plugin_preferences" wurde gelöscht.\n</string>
