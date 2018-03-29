@@ -63,7 +63,7 @@ case 1:
     				else 
     				{
     					$text = new TableText($gDb);
-    					$text->readDataByColumns(array('txt_name' => 'PGLMAIL_NOTIFICATION'.$conf, 'txt_org_id' => $gCurrentOrganization->getValue('org_id')));
+    					$text->readDataByColumns(array('txt_name' => 'PGLMAIL_NOTIFICATION'.$conf, 'txt_org_id' => ORG_ID));
 						$text->setValue('txt_text', $_POST['col_mail'. $konf_neu]);
             			$text->save();
             			
@@ -118,7 +118,7 @@ case 1:
             		$sql = 'DELETE FROM '.TBL_TEXTS.'
             				      WHERE txt_name LIKE \'PGLMAIL_NOTIFICATION%\'
             				        AND txt_name >= \'PGLMAIL_NOTIFICATION'. $konf_neu. '\'
-            				        AND txt_org_id = '.$gCurrentOrganization->getValue('org_id').' ';
+            				        AND txt_org_id = '.ORG_ID.' ';
     				$gDb->query($sql);
     			}
             	break;

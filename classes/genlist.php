@@ -48,7 +48,7 @@ class GenList
      */
 	public function generate_listData()
 	{
-		global $gDb, $gProfileFields, $gCurrentOrganization, $pPreferences, $gCurrentUser;
+		global $gDb, $gProfileFields, $pPreferences, $gCurrentUser;
 		
 		// die Werte fuer die runden Geburtstage, Jubilaeen usw einlesen
    		$jubi_rund = explode(',', $pPreferences->config['Konfigurationen']['col_values'][$this->conf]);
@@ -81,7 +81,7 @@ class GenList
         						    AND mem_end    > \''.DATE_NOW.'\'
         						    AND rol_valid  = 1
         						    AND rol_cat_id = cat_id
-        						    AND (  cat_org_id = '. $gCurrentOrganization->getValue('org_id'). '
+        						    AND (  cat_org_id = '. ORG_ID. '
             					     OR cat_org_id IS NULL ) )';
 		
 		// alle Mitglieder inkl. evtl. vorhandener Beziehungen einlesen

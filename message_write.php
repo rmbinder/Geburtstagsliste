@@ -65,7 +65,7 @@ if (($gCurrentUser->editUsers() == false && isMember($user->getValue('usr_id')) 
 // Subject und Body erzeugen
 $text = new TableText($gDb);
 
-$text->readDataByColumns(array('txt_name' => 'PGLMAIL_NOTIFICATION'.$getConfig, 'txt_org_id' => $gCurrentOrganization->getValue('org_id')));
+$text->readDataByColumns(array('txt_name' => 'PGLMAIL_NOTIFICATION'.$getConfig, 'txt_org_id' => ORG_ID));
 
 $mailSrcText = $text->getValue('txt_text');
 

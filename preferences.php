@@ -340,19 +340,19 @@ $page->addHtml('
                         	$sql = 'SELECT rol_id, rol_name, cat_name
                                       FROM '.TBL_CATEGORIES.' , '.TBL_ROLES.' 
                                      WHERE cat_id = rol_cat_id
-                                       AND ( cat_org_id = '.$gCurrentOrganization->getValue('org_id').'
+                                       AND ( cat_org_id = '.ORG_ID.'
                                         OR cat_org_id IS NULL )';
                        		$form->addSelectBoxFromSql('selection_role'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_ROLE_SELECTION'), $gDb, $sql, array('defaultValue' => explode(',',$pPreferences->config['Konfigurationen']['selection_role'][$conf]),'multiselect' => true));
                         	
 				        	$sql = 'SELECT cat_id, cat_name
                                       FROM '.TBL_CATEGORIES.' , '.TBL_ROLES.' 
                                      WHERE cat_id = rol_cat_id
-                                       AND ( cat_org_id = '.$gCurrentOrganization->getValue('org_id').'
+                                       AND ( cat_org_id = '.ORG_ID.'
                                         OR cat_org_id IS NULL )';
                        		$form->addSelectBoxFromSql('selection_cat'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_CAT_SELECTION'), $gDb, $sql, array('defaultValue' => explode(',',$pPreferences->config['Konfigurationen']['selection_cat'][$conf]),'multiselect' => true));
                         	
 							$text[$conf] = new TableText($gDb);
-                    		$text[$conf]->readDataByColumns(array('txt_name' => 'PGLMAIL_NOTIFICATION'.$conf, 'txt_org_id' => $gCurrentOrganization->getValue('org_id')));
+                    		$text[$conf]->readDataByColumns(array('txt_name' => 'PGLMAIL_NOTIFICATION'.$conf, 'txt_org_id' => ORG_ID));
 
                     		//wenn noch nichts drin steht, dann vorbelegen
                     		if ($text[$conf]->getValue('txt_text') == '')
@@ -362,7 +362,7 @@ $page->addHtml('
                     			
             					$text[$conf]->setValue('txt_text', $value);
             					$text[$conf]->save();
-            					$text[$conf]->readDataByColumns(array('txt_name' => 'PGLMAIL_NOTIFICATION'.$conf, 'txt_org_id' => $gCurrentOrganization->getValue('org_id')));
+            					$text[$conf]->readDataByColumns(array('txt_name' => 'PGLMAIL_NOTIFICATION'.$conf, 'txt_org_id' => ORG_ID));
                     		}
 				        	$form->addMultilineTextInput('col_mail'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_NOTIFICATION_MAIL_TEXT'), $text[$conf]->getValue('txt_text'), 7);	
                     		$form->addCheckbox('calendar_year'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_SHOW_CALENDAR_YEAR'), $pPreferences->config['Konfigurationen']['calendar_year'][$conf]);
