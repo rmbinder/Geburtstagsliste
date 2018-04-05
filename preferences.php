@@ -339,7 +339,7 @@ $page->addHtml('
                         for ($conf = 0; $conf < $num_configs; $conf++)
 						{
 							$form->openGroupBox('configurations_group',($conf+1).'. '.$gL10n->get('PLG_GEBURTSTAGSLISTE_CONFIGURATION'));
-							$form->addInput('col_desc'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_COL_DESC'), $pPreferences->config['Konfigurationen']['col_desc'][$conf]);
+							$form->addInput('col_desc'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_COL_DESC'), $pPreferences->config['Konfigurationen']['col_desc'][$conf], array('property' => FIELD_REQUIRED));
 							$html = '
 							<div class="table-responsive">
     							<table class="table table-condensed" id="mylist_fields_table">
