@@ -16,9 +16,9 @@
  *           
  * Parameters:
  *
- * add	:	Anlegen einer weiteren Konfiguration (true or false)
- *
- *
+ * add_delete : -1 - Erzeugen einer Konfiguration
+ * 				>0 - Löschen einer Konfiguration
+ * 
  *****************************************************************************/
 
 require_once(__DIR__ . '/../../adm_program/system/common.php');
@@ -33,7 +33,7 @@ if (!$gCurrentUser->isAdministrator())
 }
 
 // Initialize and check the parameters
-$getAdd = admFuncVariableIsValid($_GET, 'add', 'boolean', array('defaultValue' => false));
+$getAddDelete = admFuncVariableIsValid($_GET, 'add_delete', 'numeric', array('defaultValue' => 0));
 
 $pPreferences = new ConfigTablePGL();
 $pPreferences->read();
@@ -42,15 +42,42 @@ $configSelection = generate_configSelection();
 
 $headline = $gL10n->get('PLG_GEBURTSTAGSLISTE_BIRTHDAY_LIST');
 
-$num_configs = count($pPreferences->config['Konfigurationen']['col_desc']);
-if ($getAdd)
+if ($getAddDelete === -1)
 {
-	foreach ($pPreferences->config['Konfigurationen'] as $key => $dummy)
+	foreach($pPreferences->config['Konfigurationen'] as $key => $dummy)
 	{
-		$pPreferences->config['Konfigurationen'][$key][$num_configs] = $pPreferences->config_default['Konfigurationen'][$key][0];
+		$pPreferences->config['Konfigurationen'][$key][] = $pPreferences->config_default['Konfigurationen'][$key][0];
 	}
-	$num_configs++;
 }
+elseif ($getAddDelete > 0)
+{
+	$num_configs = count($pPreferences->config['Konfigurationen']['col_desc']);
+	foreach($pPreferences->config['Konfigurationen'] as $key => $dummy)
+	{
+		array_splice($pPreferences->config[Konfigurationen][$key], $getAddDelete-1, 1);
+	}
+	
+	$sql = 'DELETE FROM '.TBL_TEXTS.'
+            	  WHERE txt_name = \'PGLMAIL_NOTIFICATION'. ($getAddDelete-1). '\'
+            	    AND txt_org_id = '.ORG_ID.' ';
+	$gDb->query($sql);
+	
+	for ($i = $getAddDelete;  $i < $num_configs; $i++)
+	{
+		$sql = 'UPDATE '.TBL_TEXTS.'
+                   SET  txt_name = \'PGLMAIL_NOTIFICATION'. ($i-1). '\'
+                 WHERE txt_name = \'PGLMAIL_NOTIFICATION'. $i. '\'
+            	   AND txt_org_id = '.ORG_ID.' ';
+		$gDb->query($sql);
+	}
+	
+	// durch das Loeschen einer Konfiguration kann der Fall eintreten, dass es die eingestellte Standardkonfiguration nicht mehr gibt 
+	// daher die Standardkonfiguration auf die erste Konfiguration im Array setzen
+	$pPreferences->config['Optionen']['config_default'] = 0;
+}
+
+$num_configs = count($pPreferences->config['Konfigurationen']['col_desc']);
+$pPreferences->save();
 
 $gNavigation->addUrl(CURRENT_URL, $headline);
 
@@ -59,7 +86,7 @@ $page = new HtmlPage($headline);
 $page->enableModal();
 
 // open the module configurations if a new configuration is added 
-if ($getAdd)
+if ($getAddDelete)
 {
     $page->addJavascript('$("#tabs_nav_common").attr("class", "active");
         $("#tabs-common").attr("class", "tab-pane active");
@@ -376,12 +403,18 @@ $page->addHtml('
           							  ORDER BY urt_name';
                      			$form->addSelectBoxFromSql('relationtype_id'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_RELATION'), $gDb, $sql,
                      				array('defaultValue' => $pPreferences->config['Konfigurationen']['relation'][$conf],'showContextDependentFirstEntry' => true, 'multiselect' => false));
-                     		}                   		
+                     		} 
+                     		if($num_configs != 1)
+                     		{
+                     			$html = '<a id="delete_config" class="icon-text-link" href="'. ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences.php?add_delete='.($conf+1).'"><img
+                                        src="'. THEME_URL . '/icons/delete.png" alt="'.$gL10n->get('PLG_GEBURTSTAGSLISTE_DELETE_CONFIG').'" />'.$gL10n->get('PLG_KATEGORIEREPORT_DELETE_CONFIG').'</a>';
+                     			$form->addCustomContent('', $html);
+                     		}
                             $form->closeGroupBox();
 						}
                         $form->addDescription('</div>');
                         $form->addLine();
-                        $html = '<a id="add_config" class="icon-text-link" href="'. ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences.php?add=true"><img
+                        $html = '<a id="add_config" class="icon-text-link" href="'. ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences.php?add_delete=-1"><img
                                     src="'. THEME_URL . '/icons/add.png" alt="'.$gL10n->get('PLG_GEBURTSTAGSLISTE_ADD_ANOTHER_CONFIG').'" />'.$gL10n->get('PLG_GEBURTSTAGSLISTE_ADD_ANOTHER_CONFIG').'</a>';
                         $htmlDesc = '<div class="alert alert-warning alert-small" role="alert"><span class="glyphicon glyphicon-warning-sign"></span>'.$gL10n->get('ORG_NOT_SAVED_SETTINGS_LOST').'</div>';
                         $form->addCustomContent('', $html, array('helpTextIdInline' => $htmlDesc)); 

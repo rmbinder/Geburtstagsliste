@@ -52,23 +52,14 @@ case 1:
     	{            	
             case 'configurations':
 				unset($pPreferences->config['Konfigurationen']);
-				$konf_neu = 0;
 				
     			for ($conf = 0; isset($_POST['col_desc'. $conf]); $conf++)
     			{
-    				if (empty($_POST['col_desc'. $conf]))	
-    				{
-    					continue;
-    				}
-    				else 
-    				{
-    					$text = new TableText($gDb);
-    					$text->readDataByColumns(array('txt_name' => 'PGLMAIL_NOTIFICATION'.$conf, 'txt_org_id' => ORG_ID));
-						$text->setValue('txt_text', $_POST['col_mail'. $konf_neu]);
-            			$text->save();
+    				$text = new TableText($gDb);
+    				$text->readDataByColumns(array('txt_name' => 'PGLMAIL_NOTIFICATION'.$conf, 'txt_org_id' => ORG_ID));
+    				$text->setValue('txt_text', $_POST['col_mail'. $conf]);
+            		$text->save();
             			
-            			$konf_neu++;
-    				}
         			$pPreferences->config['Konfigurationen']['col_desc'][] = $_POST['col_desc'. $conf];
     				$pPreferences->config['Konfigurationen']['col_sel'][] = $_POST['col_sel'. $conf];
     				$pPreferences->config['Konfigurationen']['col_values'][] = trim(preg_replace('![^0-9,]!', '', $_POST['col_values'. $conf]),',');
@@ -99,27 +90,6 @@ case 1:
     				}
 
     				$pPreferences->config['Konfigurationen']['col_fields'][] = substr($fields,0,-1);	
-    			}
-    			    				
-    			// die Fokusstandardeinstellung darf nicht groesser sein, als die max. Anzahl der Konfigurationen
-    			if ($pPreferences->config['Optionen']['config_default'] > $konf_neu-1)
-    			{
-    				$pPreferences->config['Optionen']['config_default'] = $konf_neu-1;
-    			}
-    			
-    			// wenn $konf_neu immer noch 0 ist, dann wurden alle Konfigurationen geloescht (was nicht sein darf)
-    			if ($konf_neu == 0)
-    			{
-    				$gMessage->show($gL10n->get('PLG_GEBURTSTAGSLISTE_ERROR_MIN_CONFIG'));
-    			}
-    			else 
-    			{
-    				// nicht mehr benoetigte E-Mail-Texte in der DB loeschen (ansonsten bleiben Leichen!!)
-            		$sql = 'DELETE FROM '.TBL_TEXTS.'
-            				      WHERE txt_name LIKE \'PGLMAIL_NOTIFICATION%\'
-            				        AND txt_name >= \'PGLMAIL_NOTIFICATION'. $konf_neu. '\'
-            				        AND txt_org_id = '.ORG_ID.' ';
-    				$gDb->query($sql);
     			}
             	break;
             	
