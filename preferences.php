@@ -79,7 +79,11 @@ elseif ($getAddDelete > 0)
 $num_configs = count($pPreferences->config['Konfigurationen']['col_desc']);
 $pPreferences->save();
 
-$gNavigation->addUrl(CURRENT_URL, $headline);
+// add current url to navigation stack if last url was not the same page
+if (!admStrContains($gNavigation->getUrl(), 'preferences.php'))
+{
+    $gNavigation->addUrl(CURRENT_URL, $headline);
+}
 
 // create html page object
 $page = new HtmlPage($headline);
