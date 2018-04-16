@@ -98,7 +98,9 @@ $liste->generate_listData();
 // define title (html) and headline
 $title = $gL10n->get('PLG_GEBURTSTAGSLISTE_BIRTHDAY_LIST');
 
-$subheadline = $gL10n->get('PLG_GEBURTSTAGSLISTE_FOR_THE_PERIOD',date("d.m.Y",strtotime('1 day', $liste->date_min)),date("d.m.Y", $liste->date_max),(trim($getPreviewDays,'X')<0 ? trim($getPreviewDays,'X') : '+'.trim($getPreviewDays,'X')) );
+$subheadline = $gL10n->get('PLG_GEBURTSTAGSLISTE_FOR_THE_PERIOD', array(date("d.m.Y",strtotime('1 day', $liste->date_min)),
+																		date("d.m.Y", $liste->date_max),
+																		(trim($getPreviewDays,'X')<0 ? trim($getPreviewDays,'X') : '+'.trim($getPreviewDays,'X'))) );
 $subheadline .= ($getMonth>0 ? ' - '.$monate[$getMonth] : '');
 
 if ($pPreferences->config['Optionen']['configuration_as_header'])
