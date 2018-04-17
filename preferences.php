@@ -139,6 +139,8 @@ $page->addJavascript('
     });
     ', true);
 
+	$javascriptCode = '';
+
     // create an array with the necessary data
 	for ($conf = 0; $conf < $num_configs; $conf++)
     {      
