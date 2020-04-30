@@ -24,7 +24,7 @@ require_once(__DIR__ . '/common_function.php');
 require_once(__DIR__ . '/classes/configtable.php');
  
 // only the main script can call and start this module
-if (strpos($gNavigation->getUrl(), 'geburtstagsliste.php') === false)
+if (strpos($gNavigation->getUrl(), 'geburtstagsliste.php') === false && strpos($gNavigation->getUrl(), 'message_send.php') === false)
 {
 	$gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
 }
