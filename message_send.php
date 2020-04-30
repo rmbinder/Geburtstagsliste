@@ -189,8 +189,22 @@ if ($postDeliveryConfirmation == 1)
 }
 
 // load the template and set the new email body with template
-$emailTemplate = admReadTemplateFile("template.html");
-$emailTemplate = str_replace("#message#", $postBody, $emailTemplate);
+try
+{
+    $emailTemplate = FileSystemUtils::readFile(ADMIDIO_PATH . FOLDER_DATA . '/mail_templates/template.html');
+}
+catch (\RuntimeException $exception)
+{
+    $emailTemplate = '#message#';
+}
+
+$replaces = array(
+    '#sender#'   => $postName,
+    '#message#'  => $postBody,
+    '#receiver#' => $user->getValue('FIRST_NAME').' '.$user->getValue('LAST_NAME')
+);
+
+$emailTemplate = admStrMultiReplace($emailTemplate, $replaces);
 
 // set Text
 $email->setText($emailTemplate);
@@ -231,5 +245,5 @@ if ($sendResult === TRUE)
 }
 else
 {
-    $gMessage->show($sendResult.'<br />'.$gL10n->get('SYS_EMAIL_NOT_SEND', $sendResult));
+    $gMessage->show($sendResult . '<br />' . $gL10n->get('SYS_EMAIL_NOT_SEND', array($gL10n->get('SYS_RECIPIENT'), $sendResult)));
 }
