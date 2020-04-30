@@ -252,39 +252,80 @@ if ($getMode != 'csv')
         $page->addJavascript('
             $("#previewList").change(function () {
                 if($(this).val().length > 1) {
-                    self.location.href = "'. ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/geburtstagsliste.php?" +
-                        "mode=html&month='.$getMonth.'&filter='.$getFilter.'&filter_enable='.$getFilterEnable.'&full_screen='.$getFullScreen.'&config='.$getConfig.'&previewdays=" + $(this).val();
+                    self.location.href = "'.safeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/geburtstagsliste.php', array(
+                        'mode'          => 'html',
+                        'month'         => $getMonth,
+                        'filter'        => $getFilter,
+                        'filter_enable' => $getFilterEnable,
+                        'full_screen'   => $getFullScreen,
+                        'config'        => $getConfig
+                    )) . '&previewdays=" + $(this).val();
                 }
             });
             $("#monthList").change(function () {
                 if($(this).val().length > 0) {
-                    self.location.href = "'. ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/geburtstagsliste.php?" +
-                        "mode=html&previewdays='.$getPreviewDays.'&filter='.$getFilter.'&filter_enable='.$getFilterEnable.'&full_screen='.$getFullScreen.'&config='.$getConfig.'&month=" + $(this).val();
+                    self.location.href = "'.safeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/geburtstagsliste.php', array(
+                        'mode'          => 'html',
+                        'previewdays'   => $getPreviewDays,
+                        'filter'        => $getFilter,
+                        'filter_enable' => $getFilterEnable,
+                        'full_screen'   => $getFullScreen,
+                        'config'        => $getConfig
+                    )) . '&month=" + $(this).val();
                 }
             });
             $("#configList").change(function () {
             	if($(this).val().length > 1) {
-                    self.location.href = "'. ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/geburtstagsliste.php?" +
-                        "mode=html&previewdays='.$getPreviewDays.'&filter='.$getFilter.'&filter_enable='.$getFilterEnable.'&full_screen='.$getFullScreen.'&month='.$getMonth.'&config=" + $(this).val();
+                    self.location.href = "'.safeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/geburtstagsliste.php', array(
+                        'mode'          => 'html',
+                        'previewdays'   => $getPreviewDays,
+                        'filter'        => $getFilter, 
+                        'filter_enable' => $getFilterEnable, 
+                        'full_screen'   => $getFullScreen,
+                        'month'         => $getMonth
+                    )) . '&config=" + $(this).val();
                 }
             });
-            $("#menu_item_print_view").click(function () {
-                window.open("'. ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/geburtstagsliste.php?" +
-                 "previewdays='.$getPreviewDays.'&filter='.$getFilter.'&filter_enable='.$getFilterEnable.'&month='.$getMonth.'&config='.$getConfig.'&mode=print", "_blank");
-            });', true);
+            $("#menu_item_print_view").click(function() {
+                window.open("'.safeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/geburtstagsliste.php', array(
+                    'previewdays'   => $getPreviewDays, 
+                    'filter'        => $getFilter, 
+                    'filter_enable' => $getFilterEnable, 
+                    'month'         => $getMonth, 
+                    'config'        => $getConfig, 
+                    'mode'          => 'print'
+                )) . '", "_blank");
+            });
+        ', true);
         
         // get module menu
         $listsMenu = $page->getMenu();
         
         if ($getFullScreen == true)
         {
-            $listsMenu->addItem('menu_item_normal_picture', ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/geburtstagsliste.php?mode=html&amp;previewdays='.$getPreviewDays.'&amp;filter='.$getFilter.'&amp;month='.$getMonth.'&amp;filter_enable='.$getFilterEnable.'&amp;config='.$getConfig.'&amp;full_screen=0',
-                $gL10n->get('SYS_NORMAL_PICTURE'), 'arrow_in.png');
+            $listsMenu->addItem('menu_item_normal_picture', safeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/geburtstagsliste.php', array(
+                'mode'          => 'html',
+                'previewdays'   => $getPreviewDays,
+                'filter'        => $getFilter,
+                'month'         => $getMonth,
+                'full_screen'   => 0,
+                'config'        => $getConfig,
+                'filter_enable' => $getFilterEnable)),
+                $gL10n->get('SYS_NORMAL_PICTURE'), 'arrow_in.png'
+            );
         }
         else
         {
-            $listsMenu->addItem('menu_item_full_screen', ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/geburtstagsliste.php?mode=html&amp;previewdays='.$getPreviewDays.'&amp;filter='.$getFilter.'&amp;month='.$getMonth.'&amp;filter_enable='.$getFilterEnable.'&amp;config='.$getConfig.'&amp;full_screen=1',
-                $gL10n->get('SYS_FULL_SCREEN'), 'arrow_out.png');
+            $listsMenu->addItem('menu_item_full_screen', safeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/geburtstagsliste.php', array(
+                'mode'          => 'html',
+                'previewdays'   => $getPreviewDays,
+                'filter'        => $getFilter,
+                'month'         => $getMonth,
+                'full_screen'   => 1,
+                'config'        => $getConfig,
+                'filter_enable' => $getFilterEnable)),
+                $gL10n->get('SYS_FULL_SCREEN'), 'arrow_out.png'
+            );
         }
        
         // link to print overlay, exports, filter and preferences
@@ -292,13 +333,29 @@ if ($getMode != 'csv')
        
         if ($getFilterEnable == true)
         {
-        	$listsMenu->addItem('filter_disable', ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/geburtstagsliste.php?mode=html&amp;previewdays='.$getPreviewDays.'&amp;filter='.$getFilter.'&amp;month='.$getMonth.'&amp;full_screen='.$getFullScreen.'&amp;config='.$getConfig.'&amp;filter_enable=0',
-        			$gL10n->get('SYS_FILTER'), 'checkbox_checked.gif');
+            $listsMenu->addItem('filter_disable', safeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/geburtstagsliste.php', array(
+                'mode'          => 'html',
+                'previewdays'   => $getPreviewDays,
+                'filter'        => $getFilter,
+                'month'         => $getMonth,
+                'full_screen'   => $getFullScreen,
+                'config'        => $getConfig,
+                'filter_enable' => 0)),
+        		$gL10n->get('SYS_FILTER'), 'checkbox_checked.gif'
+        	);
         }
         else
         {
-        	$listsMenu->addItem('filter_enable', ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/geburtstagsliste.php?mode=html&amp;previewdays='.$getPreviewDays.'&amp;filter='.$getFilter.'&amp;month='.$getMonth.'&amp;full_screen='.$getFullScreen.'&amp;config='.$getConfig.'&amp;filter_enable=1',
-        			$gL10n->get('SYS_FILTER'), 'checkbox.gif');
+            $listsMenu->addItem('filter_enable', safeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/geburtstagsliste.php', array(
+                'mode'          => 'html',
+                'previewdays'   => $getPreviewDays,
+                'filter'        => $getFilter,
+                'month'         => $getMonth,
+                'full_screen'   => $getFullScreen,
+                'config'        => $getConfig,
+                'filter_enable' => 1)),
+        		$gL10n->get('SYS_FILTER'), 'checkbox.gif'
+            );
         	
         	// if filter is not enabled, reset filterstring
         	$getFilter = '';
@@ -567,7 +624,7 @@ foreach ($liste->listData as $memberdata)
 					}
 					else
 					{
-						$mail_link = ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/message_write.php?usr_id='. $memberdata[0].'&config='. trim($getConfig,'X').'&configtext='.end($memberdata);
+						$mail_link = safeUrl(ADMIDIO_URL.FOLDER_PLUGINS.PLUGIN_FOLDER.'/message_write.php', array('usr_id' => $memberdata[0], 'config' => trim($getConfig,'X'), 'configtext' => end($memberdata)));
 					}
 					$columnValues[] = '<a href="'.$mail_link.'">'.$content.'</a><br />';
         		}
@@ -576,7 +633,7 @@ foreach ($liste->listData as $memberdata)
         		 		|| $gProfileFields->getPropertyById($usf_id, 'usf_name_intern') == 'FIRST_NAME')
         		 	&& substr($liste->headerData[$i]['id'], 0, 1) != 'r')
         		{
-        			$columnValues[] = '<a href="'.ADMIDIO_URL.FOLDER_MODULES.'/profile/profile.php?user_id='.$memberdata[0].'">'.$content.'</a>';
+        			$columnValues[] = '<a href="'.safeUrl(ADMIDIO_URL.FOLDER_MODULES.'/profile/profile.php', array('user_id' => $memberdata[0])).'">'.$content.'</a>';
         		}
         		else 
 				{

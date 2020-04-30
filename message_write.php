@@ -152,16 +152,16 @@ else
     $form_values['delivery_confirmation'] = 0;
 }
 
-$formParam = 'usr_id='.$getUserId.'&';
+$formParams = array('usr_id' => $getUserId);
 
 // if subject was set as param then send this subject to next script
 if (strlen($getSubject) > 0)
 {
-    $formParam .= 'subject='.$getSubject.'&';
+    $formParams['subject'] = $getSubject;
 }
     
 // show form
-$form = new HtmlForm('mail_send_form', ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/message_send.php?'.$formParam, $page);
+$form = new HtmlForm('mail_send_form', safeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/message_send.php', $formParams), $page);
 $form->openGroupBox('gb_mail_contact_details', $gL10n->get('SYS_CONTACT_DETAILS'));
     
 if ($getUserId > 0)
