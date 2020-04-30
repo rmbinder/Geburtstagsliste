@@ -126,7 +126,7 @@ if ($email->setSender($postFrom,$postName))
                 {
                     // check the size of the attachment
                     $attachmentSize = $attachmentSize + $_FILES['userfile']['size'][$currentAttachmentNo];
-                    if($attachmentSize > $email->getMaxAttachementSize("b"))
+                    if($attachmentSize > $email->getMaxAttachmentSize("b"))
                     {
                         $gMessage->show($gL10n->get('MAI_ATTACHMENT_TO_LARGE'));
                     }
