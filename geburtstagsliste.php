@@ -250,12 +250,6 @@ if ($getMode != 'csv')
 
         $page->setTitle($title);
         $page->addJavascript('
-            $("#export_list_to").change(function () {
-                if($(this).val().length > 1) {
-                    self.location.href = "'. ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/geburtstagsliste.php?" +
-                        "previewdays='.$getPreviewDays.'&filter='.$getFilter.'&filter_enable='.$getFilterEnable.'&month='.$getMonth.'&config='.$getConfig.'&mode=" + $(this).val();
-                }
-            });
             $("#previewList").change(function () {
                 if($(this).val().length > 1) {
                     self.location.href = "'. ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/geburtstagsliste.php?" +
@@ -310,6 +304,45 @@ if ($getMode != 'csv')
         	$getFilter = '';
         }
         
+        $listsMenu->addItem('menu_item_export', '', $gL10n->get('LST_EXPORT_TO'), '', 'left');
+        
+        $listsMenu->addItem('admMenuItemExcel', safeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/geburtstagsliste.php', array(
+            'previewdays'   => $getPreviewDays,
+            'filter'        => $getFilter,
+            'filter_enable' => $getFilterEnable,
+            'month'         => $getMonth,
+            'config'        => $getConfig,
+            'mode'          => 'csv-ms')),
+            $gL10n->get('LST_MICROSOFT_EXCEL').' ('.$gL10n->get('SYS_ISO_8859_1').')', '', 'left', 'menu_item_export'
+        );
+        $listsMenu->addItem('admMenuItemCsv', safeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/geburtstagsliste.php', array(
+            'previewdays'   => $getPreviewDays,
+            'filter'        => $getFilter,
+            'filter_enable' => $getFilterEnable,
+            'month'         => $getMonth,
+            'config'        => $getConfig,
+            'mode'          => 'csv-oo')),
+            $gL10n->get('SYS_CSV').' ('.$gL10n->get('SYS_UTF8').')', '', 'left', 'menu_item_export'
+        );
+        $listsMenu->addItem('admMenuItemPdf', safeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/geburtstagsliste.php', array(
+            'previewdays'   => $getPreviewDays,
+            'filter'        => $getFilter,
+            'filter_enable' => $getFilterEnable,
+            'month'         => $getMonth,
+            'config'        => $getConfig,
+            'mode'          => 'pdf')),
+            $gL10n->get('SYS_PDF').' ('.$gL10n->get('SYS_PORTRAIT').')', '', 'left', 'menu_item_export'
+        );
+        $listsMenu->addItem('admMenuItemPdfL', safeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/geburtstagsliste.php', array(
+            'previewdays'   => $getPreviewDays,
+            'filter'        => $getFilter,
+            'filter_enable' => $getFilterEnable,
+            'month'         => $getMonth,
+            'config'        => $getConfig,
+            'mode'          => 'pdfl')),
+            $gL10n->get('SYS_PDF').' ('.$gL10n->get('SYS_LANDSCAPE').')', '', 'left', 'menu_item_export'
+        );
+        
         if ($gCurrentUser->isAdministrator())
         {
         	// show link to pluginpreferences
@@ -336,9 +369,6 @@ if ($getMode != 'csv')
         }
         
         $form = new HtmlForm('navbar_form', '', $page, array('type' => 'navbar', 'setFocus' => false));
-        $selectBoxEntries = array('' => $gL10n->get('LST_EXPORT_TO').' ...', 'csv-ms' => $gL10n->get('LST_MICROSOFT_EXCEL').' ('.$gL10n->get('SYS_ISO_8859_1').')', 'pdf' => $gL10n->get('SYS_PDF').' ('.$gL10n->get('SYS_PORTRAIT').')', 
-        	'pdfl' => $gL10n->get('SYS_PDF').' ('.$gL10n->get('SYS_LANDSCAPE').')', 'csv-oo' => $gL10n->get('SYS_CSV').' ('.$gL10n->get('SYS_UTF8').')');
-		$form->addSelectBox('export_list_to', null, $selectBoxEntries, array('showContextDependentFirstEntry' => false));
 		
         if ($getFullScreen == false)
         {
