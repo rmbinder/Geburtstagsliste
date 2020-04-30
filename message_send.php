@@ -46,15 +46,17 @@ if (empty($_POST))
     $gMessage->show($gL10n->get('SYS_INVALID_PAGE_VIEW'));
 }
 
+$currUsrId = (int) $gCurrentUser->getValue('usr_id');
+
 // if user is logged in then show sender name and email
-if ($gCurrentUser->getValue('usr_id') > 0)
+if ($currUsrId > 0)
 {
     $postName = $gCurrentUser->getValue('FIRST_NAME'). ' '. $gCurrentUser->getValue('LAST_NAME');
     $postFrom = $gCurrentUser->getValue('EMAIL');
 }
 
 // if no User is set, he is not able to ask for delivery confirmation 
-if (!($gCurrentUser->getValue('usr_id') > 0 && $gPreferences['mail_delivery_confirmation'] == 2) && $gPreferences['mail_delivery_confirmation'] != 1)
+if (!($currUsrId > 0 && $gPreferences['mail_delivery_confirmation'] == 2) && $gPreferences['mail_delivery_confirmation'] != 1)
 {
     $postDeliveryConfirmation = 0;
 }
@@ -199,18 +201,17 @@ $sendResult = $email->sendEmail();
 // message if send/save is OK
 if ($sendResult === TRUE)
 {
-	$sql = "SELECT MAX(msg_con_id) as max_id
-          	      FROM ". TBL_MESSAGES;
-
-    $statement = $gDb->query($sql);
-    $row = $statement->fetch();
-
-    $getMsgId = $row['max_id'] + 1;
-
-    $sql = "INSERT INTO ". TBL_MESSAGES. " (msg_type, msg_con_id, msg_part_id, msg_subject, msg_usr_id_sender, msg_usr_id_receiver, msg_message, msg_timestamp, msg_read) 
-                 VALUES ('".$getMsgType."', '".$getMsgId."', 0, '".$postSubjectSQL."', '".$gCurrentUser->getValue('usr_id')."', '', '".$postBodySQL."', CURRENT_TIMESTAMP, '0')";
-	$gDb->query($sql);    
- 
+	$sql = 'INSERT INTO '. TBL_MESSAGES. '
+                       (msg_type, msg_subject, msg_usr_id_sender, msg_usr_id_receiver, msg_timestamp, msg_read)
+                VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP, 0) -- $getMsgType, $postSubjectSQL, $currUsrId, $getUserId';
+	$gDb->queryPrepared($sql, array($getMsgType, $postSubjectSQL, $currUsrId, $getUserId));
+	$getMsgId = $gDb->lastInsertId();
+	
+	$sql = 'INSERT INTO '. TBL_MESSAGES_CONTENT. '
+                       (msc_msg_id, msc_part_id, msc_usr_id, msc_message, msc_timestamp)
+                VALUES (?, 1, ?, ?, CURRENT_TIMESTAMP) -- $getMsgId, $currUsrId, $postBody';
+	$gDb->queryPrepared($sql, array($getMsgId, $currUsrId, $postBody));
+	
     // after sending remove the actual Page from the NaviObject and remove also the send-page
     $gNavigation->deleteLastUrl();
     $gNavigation->deleteLastUrl();
