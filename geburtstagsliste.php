@@ -399,6 +399,13 @@ if ($getMode != 'csv')
             'mode'          => 'pdfl')),
             $gL10n->get('SYS_PDF').' ('.$gL10n->get('SYS_LANDSCAPE').')', '', 'left', 'menu_item_export'
         );
+        $listsMenu->addItem('admMenuItemICal', safeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/ical_export.php', array(
+            'previewdays' => $getPreviewDays,
+            'config'      => $getConfig,
+            'month'       => $getMonth,
+            'filter'      => $getFilter)),
+            $gL10n->get('PLG_GEBURTSTAGSLISTE_ICAL'), '', 'left', 'menu_item_export'
+        );
         
         if ($gCurrentUser->isAdministrator())
         {

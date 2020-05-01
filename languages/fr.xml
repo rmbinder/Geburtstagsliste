@@ -50,6 +50,8 @@
     <string name="PLG_GEBURTSTAGSLISTE_DOCUMENTATION_OPEN_DESC">Cela ouvre la documentation pour le plugin (une connexion Internet existante est nécessaire, car les données se trouvent sur admidio.org).</string>
     <string name="PLG_GEBURTSTAGSLISTE_FEBRUARY">février</string>
     <string name="PLG_GEBURTSTAGSLISTE_FOR_THE_PERIOD">Pour la période #VAR1# à #VAR2# (#VAR3# jours)</string>
+    <string name="PLG_GEBURTSTAGSLISTE_ICAL">iCal</string>
+    <string name="PLG_GEBURTSTAGSLISTE_ICAL_MISSING_DATA">Pour l'exportation iCal, au moins les champs de profil suivants doivent être disponibles dans la liste:\n\n- Date de naissance et\n- Prénom ou nom</string>
     <string name="PLG_GEBURTSTAGSLISTE_JANUARY">janvier</string>
     <string name="PLG_GEBURTSTAGSLISTE_JULY">juillet</string>
     <string name="PLG_GEBURTSTAGSLISTE_JUNE">juin</string>
