@@ -19,7 +19,7 @@
  *****************************************************************************/
 
 require_once(__DIR__ . '/../../adm_program/system/common.php');
-require_once(__DIR__ . '/../../adm_program/system/classes/tabletext.php');
+require_once(__DIR__ . '/../../adm_program/system/classes/TableText.php');
 require_once(__DIR__ . '/common_function.php');
 require_once(__DIR__ . '/classes/configtable.php');
  
@@ -188,6 +188,19 @@ $form->addInput('subject', $gL10n->get('MAI_SUBJECT'), $form_values['subject'], 
 
 $form->addFileUpload('btn_add_attachment', $gL10n->get('MAI_ATTACHEMENT'), array('enableMultiUploads' => true, 'multiUploadLabel' => $gL10n->get('MAI_ADD_ATTACHEMENT'), 
     'hideUploadField' => true, 'helpTextIdLabel' => array('MAI_MAX_ATTACHMENT_SIZE', Email::getMaxAttachmentSize('mb'))));
+
+$templates = admFuncGetDirectoryEntries(ADMIDIO_PATH . FOLDER_DATA . '/mail_templates');
+if (is_array($templates))
+{
+    foreach($templates as &$templateName)
+    {
+        $templateName = str_replace('.html', '', $templateName);
+    }
+    unset($templateName);
+    $form->addSelectBox('msg_template', $gL10n->get('PLG_GEBURTSTAGSLISTE_TEMPLATE'), $templates,
+        array('defaultValue' => 'template.html', 'showContextDependentFirstEntry' => true, 'helpTextIdLabel' => 'PLG_GEBURTSTAGSLISTE_TEMPLATE_DESC')
+    );
+}
 
 // add textfield or ckeditor to form
 if ($gValidLogin == true && $gPreferences['mail_html_registered_users'] == 1)

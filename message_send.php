@@ -31,6 +31,7 @@ $postBody                  = admFuncVariableIsValid($_POST, 'msg_body', 'html', 
 $postBodySQL               = admFuncVariableIsValid($_POST, 'msg_body', 'string', array('defaultValue' => ''));
 $postDeliveryConfirmation  = admFuncVariableIsValid($_POST, 'delivery_confirmation', 'boolean', array('defaultValue' => 0));
 $postCarbonCopy            = admFuncVariableIsValid($_POST, 'carbon_copy', 'boolean', array('defaultValue' => 0));
+$postTemplate              = admFuncVariableIsValid($_POST, 'msg_template', 'string', array('defaultValue' => ''));
 
 $getMsgType = 'EMAIL';
 
@@ -191,7 +192,7 @@ if ($postDeliveryConfirmation == 1)
 // load the template and set the new email body with template
 try
 {
-    $emailTemplate = FileSystemUtils::readFile(ADMIDIO_PATH . FOLDER_DATA . '/mail_templates/template.html');
+    $emailTemplate = FileSystemUtils::readFile(ADMIDIO_PATH . FOLDER_DATA . '/mail_templates/'.$postTemplate);
 }
 catch (\RuntimeException $exception)
 {

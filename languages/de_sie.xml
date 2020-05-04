@@ -86,6 +86,8 @@
     <string name="PLG_GEBURTSTAGSLISTE_SETTINGS">Einstellungen</string>
     <string name="PLG_GEBURTSTAGSLISTE_SHOW_CALENDAR_YEAR">Kalenderjahr</string>
     <string name="PLG_GEBURTSTAGSLISTE_SHOW_CALENDAR_YEAR_DESC">Standardmäßig wird ab dem aktuellen Datum angezeigt. Soll die Anzeige ab dem 1. Januar des aktuellen Jahres beginnen, so ist der Haken zu setzen.</string>
+    <string name="PLG_GEBURTSTAGSLISTE_TEMPLATE">Template</string>
+    <string name="PLG_GEBURTSTAGSLISTE_TEMPLATE_DESC">Hier kann ein Template aus dem Admidio-Ordner adm_my_files/mail_templates gewählt werden.</string>
     <string name="PLG_GEBURTSTAGSLISTE_YEARS_OFFSET">Jahresversatz</string>
     <string name="PLG_GEBURTSTAGSLISTE_YEARS_OFFSET_DESC">Hiermit kann die Anzeige um x Jahre vor- oder zurückversetzt werden (0 entspricht keinem Versatz).</string>
 </resources>

@@ -86,6 +86,8 @@
     <string name="PLG_GEBURTSTAGSLISTE_SETTINGS">Configurations</string>
     <string name="PLG_GEBURTSTAGSLISTE_SHOW_CALENDAR_YEAR">Année civile</string>
     <string name="PLG_GEBURTSTAGSLISTE_SHOW_CALENDAR_YEAR_DESC">La date par défaut est la date du jour. Si l\'affichage doit commencer le 1er janvier de l\'année en cours, la case doit être cochée.</string>
+    <string name="PLG_GEBURTSTAGSLISTE_TEMPLATE">Modèle standard</string>
+    <string name="PLG_GEBURTSTAGSLISTE_TEMPLATE_DESC">Ici, vous pouvez sélectionner un modèle dans le dossier adm_my_files/mail_templates admidio.</string>
     <string name="PLG_GEBURTSTAGSLISTE_YEARS_OFFSET">Décalage annuelle</string>
     <string name="PLG_GEBURTSTAGSLISTE_YEARS_OFFSET_DESC">Ceci permet d\'avancer ou de reculer l\'affichage de x années (0 ne correspond à aucun décalage).</string>
 </resources>

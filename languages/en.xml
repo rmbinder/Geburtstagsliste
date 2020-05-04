@@ -86,6 +86,8 @@
     <string name="PLG_GEBURTSTAGSLISTE_SETTINGS">Settings</string>
     <string name="PLG_GEBURTSTAGSLISTE_SHOW_CALENDAR_YEAR">Calendar year</string>
     <string name="PLG_GEBURTSTAGSLISTE_SHOW_CALENDAR_YEAR_DESC">By default, the current date is used. If the database is supposed to start January 1st of the current year, the checkbox has to be selected.</string>
+    <string name="PLG_GEBURTSTAGSLISTE_TEMPLATE">Template</string>
+    <string name="PLG_GEBURTSTAGSLISTE_TEMPLATE_DESC">Here you can select a template from the adm_my_files/mail_templates admidio folder.</string>
     <string name="PLG_GEBURTSTAGSLISTE_YEARS_OFFSET">Years offset</string>
     <string name="PLG_GEBURTSTAGSLISTE_YEARS_OFFSET_DESC">This display can be shifted forward or backward for x years (0 corresponds to no offset).</string>
 </resources>
