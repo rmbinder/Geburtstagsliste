@@ -237,7 +237,7 @@ function getIcalVEvent($domain, $contentArray)
     );
     
     $iCalVEvent[] = 'UID:' . date($dateTimeFormat) . '+' .$contentArray['USER_ID']. '@' . $domain;
-    $iCalVEvent[] = 'SUMMARY:' . escapeIcalText($contentArray['FIRST_NAME'].' '.$contentArray['LAST_NAME'].' ('.$contentArray['LASTCOL_AGEONLY'].')');
+    $iCalVEvent[] = 'SUMMARY:' . preg_replace('/\s+/', ' ',escapeIcalText($contentArray['FIRST_NAME'].' '.$contentArray['LAST_NAME'].' ('.$contentArray['LASTCOL_AGEONLY'].')'));
     $iCalVEvent[] = 'DESCRIPTION:' . escapeIcalText($contentArray['LASTCOL']);
     $iCalVEvent[] = 'DTSTAMP:' . date($dateTimeFormat);
     $iCalVEvent[] = 'LOCATION:' . escapeIcalText($contentArray['CITY']);
