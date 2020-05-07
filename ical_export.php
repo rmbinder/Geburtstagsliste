@@ -80,9 +80,9 @@ for ($i = 1; $i < count($liste->headerData); $i++)
     }
 } 
 
-if (!$markerName || !$markerBirthday)
+if (!$markerName || !$markerBirthday || $pPreferences->config['Konfigurationen']['suppress_age'][$liste->conf])
 {
-    $gMessage->show($gL10n->get('PLG_GEBURTSTAGSLISTE_ICAL_MISSING_DATA'));
+    $gMessage->show($gL10n->get('PLG_GEBURTSTAGSLISTE_ICAL_MISSING_DATA'),$gL10n->get('SYS_PROCESS_CANCELED'));
 }
 
 $iCal = getIcalHeader();

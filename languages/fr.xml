@@ -2,7 +2,7 @@
 <resources>
     <string name="PLG_GEBURTSTAGSLISTE_ADD_ANOTHER_COLUMN">Ajouter une colonne supplémentaire</string>
     <string name="PLG_GEBURTSTAGSLISTE_ADD_ANOTHER_CONFIG">Ajouter une configuration supplémentaire</string>
-    <string name="PLG_GEBURTSTAGSLISTE_AGE_OR_ANNIVERSARY_NOT_SHOW">Ne pas indiquer l\'année d\'âge ou de jubilé.</string>    
+    <string name="PLG_GEBURTSTAGSLISTE_AGE_OR_ANNIVERSARY_NOT_SHOW">Ne pas indiquer l\'année d\'âge ou de jubilé</string>    
     <string name="PLG_GEBURTSTAGSLISTE_AGE_OR_ANNIVERSARY_NOT_SHOW_DESC">Par défaut, l\'année de vie ou le jubilé est toujours affiché avant le texte supplémentaire. Si cet affichage doit être supprimé, la coche doit être activée.</string>    
     <string name="PLG_GEBURTSTAGSLISTE_ALL_MONTHS">- tous les mois -</string>
     <string name="PLG_GEBURTSTAGSLISTE_APRIL">avril</string>
@@ -51,7 +51,7 @@
     <string name="PLG_GEBURTSTAGSLISTE_FEBRUARY">février</string>
     <string name="PLG_GEBURTSTAGSLISTE_FOR_THE_PERIOD">Pour la période #VAR1# à #VAR2# (#VAR3# jours)</string>
     <string name="PLG_GEBURTSTAGSLISTE_ICAL">iCal</string>
-    <string name="PLG_GEBURTSTAGSLISTE_ICAL_MISSING_DATA">Pour l'exportation iCal, au moins les champs de profil suivants doivent être disponibles dans la liste:\n\n- Date de naissance et\n- Prénom ou nom</string>
+    <string name="PLG_GEBURTSTAGSLISTE_ICAL_MISSING_DATA">Pour l'exportation iCal, au moins les champs de profil suivants doivent être disponibles dans la liste:\n\n- Date de naissance et\n- Prénom ou nom\n\net\n\n"Ne pas indiquer l\'année d\'âge ou de jubilé" ne doit pas être défini dans la configuration.</string>
     <string name="PLG_GEBURTSTAGSLISTE_JANUARY">janvier</string>
     <string name="PLG_GEBURTSTAGSLISTE_JULY">juillet</string>
     <string name="PLG_GEBURTSTAGSLISTE_JUNE">juin</string>

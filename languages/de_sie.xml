@@ -51,7 +51,7 @@
     <string name="PLG_GEBURTSTAGSLISTE_FEBRUARY">Februar</string>
     <string name="PLG_GEBURTSTAGSLISTE_FOR_THE_PERIOD">Für den Zeitraum #VAR1# bis #VAR2# (#VAR3# Tage)</string>
     <string name="PLG_GEBURTSTAGSLISTE_ICAL">iCal</string>
-    <string name="PLG_GEBURTSTAGSLISTE_ICAL_MISSING_DATA">Für iCal-Export müssen mindestens folgende Profilfelder in der Liste vorhanden sein:\n\n- Geburtsdatum und\n- Vorname oder Nachname</string>
+    <string name="PLG_GEBURTSTAGSLISTE_ICAL_MISSING_DATA">Für iCal-Export müssen mindestens folgende Profilfelder in der Liste vorhanden sein:\n\n- Geburtsdatum und\n- Vorname oder Nachname\n\nund\n\nin der Konfiguration darf "Lebensjahr oder Jubiläum nicht anzeigen" nicht gesetzt sein.</string>
     <string name="PLG_GEBURTSTAGSLISTE_JANUARY">Januar</string>
     <string name="PLG_GEBURTSTAGSLISTE_JULY">Juli</string>
     <string name="PLG_GEBURTSTAGSLISTE_JUNE">Juni</string>

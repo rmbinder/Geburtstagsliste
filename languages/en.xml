@@ -51,7 +51,7 @@
     <string name="PLG_GEBURTSTAGSLISTE_FEBRUARY">February</string>
     <string name="PLG_GEBURTSTAGSLISTE_FOR_THE_PERIOD">Time frame: #VAR1# to #VAR2# (#VAR3# days)</string>
     <string name="PLG_GEBURTSTAGSLISTE_ICAL">iCal</string>
-    <string name="PLG_GEBURTSTAGSLISTE_ICAL_MISSING_DATA">For iCal export at least the following profile fields must be available in the list:\n\n- Date of birth and\n- First name or last name</string>
+    <string name="PLG_GEBURTSTAGSLISTE_ICAL_MISSING_DATA">For iCal export at least the following profile fields must be available in the list:\n\n- Date of birth and\n- First name or last name\n\nand\n\n"Age or anniversary not show" must not be set in the configuration.</string>
     <string name="PLG_GEBURTSTAGSLISTE_JANUARY">January</string>
     <string name="PLG_GEBURTSTAGSLISTE_JULY">July</string>
     <string name="PLG_GEBURTSTAGSLISTE_JUNE">June</string>
