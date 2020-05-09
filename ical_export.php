@@ -99,6 +99,8 @@ foreach ($liste->listData as $memberdata)
 	    'LASTCOL_AGEONLY' => '',
 	    'LASTCOL'         => '');
 	
+	$contentFilter = '';
+	
     // Felder zu Datensatz
     for ($i = 1; $i < count($memberdata)-1; $i++)
     {         
@@ -110,8 +112,7 @@ foreach ($liste->listData as $memberdata)
     	$usf_id = 0;
     	if (substr($liste->headerData[$i]['id'], 0, 1) == 'r')          //relationship
     	{
-    	    //Spalten mit Beziehungen überspringen
-    		continue;
+    	    $usf_id = (int) substr($liste->headerData[$i]['id'], 1);
     	}
     	else 
     	{
@@ -127,7 +128,7 @@ foreach ($liste->listData as $memberdata)
             $arrListValues = $gProfileFields->getPropertyById($usf_id, 'usf_value_list', 'text');
             $content       = $arrListValues[$content];
         }
-        if ($usf_id  != 0 )
+        if (($usf_id  != 0) && (substr($liste->headerData[$i]['id'], 0, 1) != 'r') )            //ohne Beziehungen
         {
             if ( $gProfileFields->getPropertyById($usf_id, 'usf_name_intern') == 'LAST_NAME')
             {
@@ -146,13 +147,15 @@ foreach ($liste->listData as $memberdata)
                 $contentArray['CITY'] = $content;
             }
         }
+        $contentFilter .= $content;
     }
     
     //die letzte Spalte (nach der for-Schleife zeigt $i darauf) ist "hard coded", darin steht immer das Alter und ein evtl. vorhandener Ergänzungstext
     $contentArray['LASTCOL'] = $memberdata[$i];
     $contentArray['LASTCOL_AGEONLY'] = intval($memberdata[$i]);
- 
-    if ($getFilter == '' || ($getFilter <> '' && stristr($content, $getFilter)))
+    $contentFilter .= $memberdata[$i];
+    
+    if ($getFilter == '' || ($getFilter <> '' && stristr($contentFilter, $getFilter)))
     {
         $iCal .= getIcalVEvent(DOMAIN, $contentArray);
     }
