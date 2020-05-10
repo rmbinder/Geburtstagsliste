@@ -3,7 +3,7 @@
  ***********************************************************************************************
   * Geburtstagsliste
  *
- * Version 2.3.2
+ * Version 2.3.3
  *
  * Dieses Plugin erzeugt fuer einen bestimmten Zeitraum eine Geburtstags- und Jubilaeumsliste der Mitglieder.
  *
