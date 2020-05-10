@@ -413,7 +413,7 @@ $page->addHtml('
                      		if($num_configs != 1)
                      		{
                      		    $html = '<a id="delete_config" class="icon-text-link" href="'. safeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences.php', array('add_delete' => $conf+1)).'"><img
-                                        src="'. THEME_URL . '/icons/delete.png" alt="'.$gL10n->get('PLG_GEBURTSTAGSLISTE_DELETE_CONFIG').'" />'.$gL10n->get('PLG_KATEGORIEREPORT_DELETE_CONFIG').'</a>';
+                                        src="'. THEME_URL . '/icons/delete.png" alt="'.$gL10n->get('PLG_GEBURTSTAGSLISTE_DELETE_CONFIG').'" />'.$gL10n->get('PLG_GEBURTSTAGSLISTE_DELETE_CONFIG').'</a>';
                      			$form->addCustomContent('', $html);
                      		}
                             $form->closeGroupBox();
@@ -448,7 +448,7 @@ $page->addHtml('
                         $form->addInput('vorschau_liste', $gL10n->get('PLG_GEBURTSTAGSLISTE_PREVIEW_LIST'), implode(',',$pPreferences->config['Optionen']['vorschau_liste']), array('helpTextIdInline' => 'PLG_GEBURTSTAGSLISTE_PREVIEW_LIST_DESC'));     
                         $form->addSelectBox('config_default', $gL10n->get('PLG_GEBURTSTAGSLISTE_CONFIGURATION'),$pPreferences->config['Konfigurationen']['col_desc'], array('defaultValue' => $pPreferences->config['Optionen']['config_default'], 'showContextDependentFirstEntry' => false, 'helpTextIdInline' => 'PLG_GEBURTSTAGSLISTE_CONFIGURATION_DEFAULT_DESC'));
 				                                           
-                        $html = '<a id="deinstallation" class="icon-text-link" href="'. safeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences_function.php', array('mode' => 2)).'><img
+                        $html = '<a id="deinstallation" class="icon-text-link" href="'. safeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences_function.php', array('mode' => 2)).'"><img
                                     src="'. THEME_URL . '/icons/delete.png" alt="'.$gL10n->get('PLG_GEBURTSTAGSLISTE_LINK_TO_DEINSTALLATION').'" />'.$gL10n->get('PLG_GEBURTSTAGSLISTE_LINK_TO_DEINSTALLATION').'</a>';
                         $form->addCustomContent($gL10n->get('PLG_GEBURTSTAGSLISTE_DEINSTALLATION'), $html, array('helpTextIdInline' => 'PLG_GEBURTSTAGSLISTE_DEINSTALLATION_DESC'));
                         $form->addCheckbox('configuration_as_header', $gL10n->get('PLG_GEBURTSTAGSLISTE_CONFIGURATION_AS_HEADER'), $pPreferences->config['Optionen']['configuration_as_header'], array('helpTextIdInline' => 'PLG_GEBURTSTAGSLISTE_CONFIGURATION_AS_HEADER_DESC'));
