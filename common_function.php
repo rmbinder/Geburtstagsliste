@@ -22,30 +22,6 @@ if(!defined('ORG_ID'))
 }
 
 /**
- * Funktion liest die Role-ID einer Rolle aus
- * @param   string  $role_name Name der zu pruefenden Rolle
- * @return  int     rol_id
- */
-function getRole_IDPGL($role_name)
-{
-    global $gDb;
-	
-    $sql = 'SELECT rol_id
-              FROM '. TBL_ROLES. ', '. TBL_CATEGORIES. '
-             WHERE rol_name   = \''.$role_name.'\'
-               AND rol_valid  = 1 
-               AND rol_cat_id = cat_id
-               AND ( cat_org_id = '.ORG_ID.'
-                OR cat_org_id IS NULL ) ';
-                      
-    $statement = $gDb->query($sql);
-    $row = $statement->fetchObject();
-
-   // für den seltenen Fall, dass waehrend des Betriebes die Sprache umgeschaltet wird:  $row->rol_id pruefen
-    return (isset($row->rol_id) ?  $row->rol_id : 0);
-}
-
-/**
  * Funktion prueft, ob der Nutzer berechtigt ist das Plugin aufzurufen.
  * Zur Prüfung werden die Einstellungen von 'Modulrechte' und 'Sichtbar für' 
  * verwendet, die im Modul Menü für dieses Plugin gesetzt wurden.
