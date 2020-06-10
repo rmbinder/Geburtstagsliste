@@ -75,7 +75,7 @@ class ConfigTablePGL
 		
 		// pruefen, ob es die Tabelle bereits gibt
 		$sql = 'SHOW TABLES LIKE \''.$this->table_name.'\' ';
-   	 	$statement = $gDb->query($sql);
+   	 	$statement = $gDb->queryPrepared($sql);
 
     	// Tabelle anlegen, wenn es sie noch nicht gibt
     	if (!$statement->rowCount())
@@ -91,7 +91,7 @@ class ConfigTablePGL
          		auto_increment = 1
           		default character set = utf8
          		collate = utf8_unicode_ci';
-    		$gDb->query($sql);
+    		$gDb->queryPrepared($sql);
     	} 
     
 		$this->read();
@@ -222,9 +222,10 @@ class ConfigTablePGL
         	{
         		$plp_name = self::$shortcut.'__'.$section.'__'.$key;
 				$sql = 'DELETE FROM '.$this->table_name.'
-        				      WHERE plp_name = \''.$plp_name.'\' 
-        				        AND plp_org_id = '.ORG_ID.' ';
-				$gDb->query($sql);
+        				      WHERE plp_name = ? 
+        				        AND plp_org_id = ? ';
+				$gDb->queryPrepared($sql, array($plp_name, ORG_ID));
+                
 				unset($this->config[$section][$key]);
         	}
 			// leere Abschnitte (=leere Arrays) loeschen
@@ -260,10 +261,10 @@ class ConfigTablePGL
           
             	$sql = ' SELECT plp_id 
             			   FROM '.$this->table_name.' 
-            			  WHERE plp_name = \''.$plp_name.'\' 
-            			    AND ( plp_org_id = '.ORG_ID.'
+            			  WHERE plp_name = ? 
+            			    AND ( plp_org_id = ?
                  		     OR plp_org_id IS NULL ) ';
-            	$statement = $gDb->query($sql);
+            	$statement = $gDb->queryPrepared($sql, array($plp_name, ORG_ID));
             	$row = $statement->fetchObject();
 
             	// Gibt es den Datensatz bereits?
@@ -271,17 +272,16 @@ class ConfigTablePGL
             	if (isset($row->plp_id) && strlen($row->plp_id) > 0)
             	{
                 	$sql = 'UPDATE '.$this->table_name.' 
-                			   SET plp_value = \''.$value.'\' 
-                			 WHERE plp_id = '.$row->plp_id;   
-                    
-                	$gDb->query($sql);           
+                			   SET plp_value = ?
+                			 WHERE plp_id = ? ';   
+                	$gDb->queryPrepared($sql, array($value, $row->plp_id));          
             	}
             	// wenn nicht: INSERT eines neuen Datensatzes 
             	else
             	{
   					$sql = 'INSERT INTO '.$this->table_name.' (plp_org_id, plp_name, plp_value) 
-  							     VALUES (\''.ORG_ID.'\' ,\''.self::$shortcut.'__'.$section.'__'.$key.'\' ,\''.$value.'\')'; 
-            		$gDb->query($sql); 
+  							VALUES (? , ? , ?)  -- ORG_ID, self::$shortcut.\'__\'.$section.\'__\'.$key, $value '; 
+            		$gDb->queryPrepared($sql, array(ORG_ID, self::$shortcut.'__'.$section.'__'.$key, $value));
             	}   
         	} 
     	}
@@ -295,12 +295,12 @@ class ConfigTablePGL
 	{
     	global $gDb;
      
-		$sql = ' SELECT plp_id, plp_name, plp_value
-             	   FROM '.$this->table_name.'
-             	  WHERE plp_name LIKE \''.self::$shortcut.'__%\'
-             	    AND ( plp_org_id = '.ORG_ID.'
-                  	 OR plp_org_id IS NULL ) ';
-		$statement = $gDb->query($sql);
+        $sql = 'SELECT plp_id, plp_name, plp_value
+             	  FROM '.$this->table_name.'
+             	 WHERE plp_name LIKE ?
+             	   AND ( plp_org_id = ?
+                 	OR plp_org_id IS NULL ) ';
+		$statement = $gDb->queryPrepared($sql, array(self::$shortcut.'__%', ORG_ID)); 
 
 		while ($row = $statement->fetch())
 		{
@@ -330,7 +330,7 @@ class ConfigTablePGL
  	
 	 	// pruefen, ob es die Tabelle überhaupt gibt
 		$sql = 'SHOW TABLES LIKE \''.$this->table_name.'\' ';
-   	 	$tableExistStatement = $gDb->query($sql);
+   	 	$tableExistStatement = $gDb->queryPrepared($sql);
     
         if ($tableExistStatement->rowCount())
     	{
@@ -338,10 +338,10 @@ class ConfigTablePGL
           
     		$sql = 'SELECT plp_value 
             		  FROM '.$this->table_name.' 
-            		 WHERE plp_name = \''.$plp_name.'\' 
-            		   AND ( plp_org_id = '.ORG_ID.'
+            		 WHERE plp_name = ? 
+            		   AND ( plp_org_id = ?
             	    	OR plp_org_id IS NULL ) ';
-    		$statement = $gDb->query($sql);
+    		$statement = $gDb->queryPrepared($sql, array($plp_name, ORG_ID));
     		$row = $statement->fetchObject();
 
     		// Vergleich Version.php  ./. DB (hier: version)
@@ -354,10 +354,10 @@ class ConfigTablePGL
           
     		$sql = 'SELECT plp_value 
             		  FROM '.$this->table_name.' 
-            		 WHERE plp_name = \''.$plp_name.'\' 
-            		   AND ( plp_org_id = '.ORG_ID.'
+            		 WHERE plp_name = ?
+            		   AND ( plp_org_id = ?
                  		OR plp_org_id IS NULL ) ';
-    		$statement = $gDb->query($sql);
+            $statement = $gDb->queryPrepared($sql, array($plp_name, ORG_ID));
     		$row = $statement->fetchObject();
 
     		// Vergleich Version.php  ./. DB (hier: stand)
@@ -390,34 +390,34 @@ class ConfigTablePGL
 		if ($deinst_org_select == 0)                    //0 = Daten nur in aktueller Org loeschen 
 		{
 			$sql = 'DELETE FROM '.$this->table_name.'
-        			      WHERE plp_name LIKE \''.self::$shortcut.'__%\'
-        			        AND plp_org_id = '.ORG_ID.' ';
-			$result_data = $gDb->query($sql);	
+        			      WHERE plp_name LIKE ?
+        			        AND plp_org_id = ? ';
+			$result_data = $gDb->queryPrepared($sql, array(self::$shortcut.'__%', ORG_ID));	
 
 			$sql = 'DELETE FROM '.TBL_TEXTS.'
-					      WHERE txt_name LIKE \''.self::$shortcut.'MAIL_NOTIFICATION%\'
-            		        AND txt_org_id = '.ORG_ID.' ';
-			$result_texts = $gDb->query($sql);	
+					      WHERE txt_name LIKE ?
+            		        AND txt_org_id = ? ';
+			$result_texts = $gDb->queryPrepared($sql, array(self::$shortcut.'MAIL_NOTIFICATION%', ORG_ID));	
 		}
 		elseif ($deinst_org_select == 1)              //1 = Daten in allen Orgs loeschen 
 		{
 			$sql = 'DELETE FROM '.$this->table_name.'
-        			      WHERE plp_name LIKE \''.self::$shortcut.'__%\' ';
-			$result_data = $gDb->query($sql);	
+        			      WHERE plp_name LIKE ? ';
+			$result_data = $gDb->queryPrepared($sql, array(self::$shortcut.'__%'));	
 
 			$sql = 'DELETE FROM '.TBL_TEXTS.'
-        			      WHERE txt_name LIKE \''.self::$shortcut.'MAIL_NOTIFICATION%\' ';
-			$result_texts = $gDb->query($sql);	
+        			      WHERE txt_name LIKE ? ';
+			$result_texts = $gDb->queryPrepared($sql, array(self::$shortcut.'MAIL_NOTIFICATION%'));	
 		}
 
 		// wenn die Tabelle nur Eintraege dieses Plugins hatte, sollte sie jetzt leer sein und kann geloescht werden
 		$sql = 'SELECT * FROM '.$this->table_name.' ';
-		$statement = $gDb->query($sql);
+		$statement = $gDb->queryPrepared($sql);
 
     	if ($statement->rowCount() == 0)
     	{
         	$sql = 'DROP TABLE '.$this->table_name.' ';
-        	$result_db = $gDb->query($sql);
+        	$result_db = $gDb->queryPrepared($sql);
     	}
     	
     	$result  = ($result_data ? $gL10n->get('PLG_GEBURTSTAGSLISTE_DEINST_DATA_DELETE_SUCCESS') : $gL10n->get('PLG_GEBURTSTAGSLISTE_DEINST_DATA_DELETE_ERROR') );

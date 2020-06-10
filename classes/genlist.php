@@ -77,11 +77,11 @@ class GenList
         			    SELECT DISTINCT mem_usr_id
         					       FROM '. TBL_MEMBERS. ', '. TBL_ROLES. ', '. TBL_CATEGORIES.  '
                                   WHERE mem_rol_id = rol_id
-        					        AND mem_begin <= \''.DATE_NOW.'\'
-        						    AND mem_end    > \''.DATE_NOW.'\'
+        					        AND mem_begin <= ? -- DATE_NOW
+        						    AND mem_end    > ? -- DATE_NOW
         						    AND rol_valid  = 1
         						    AND rol_cat_id = cat_id
-        						    AND (  cat_org_id = '. ORG_ID. '
+        						    AND (  cat_org_id = ? -- ORG_ID
             					     OR cat_org_id IS NULL ) )';
 		
 		// alle Mitglieder inkl. evtl. vorhandener Beziehungen einlesen
@@ -89,10 +89,16 @@ class GenList
 							FROM '.TBL_MEMBERS.'
 					   LEFT JOIN '.TBL_USER_RELATIONS.'
 							  ON ure_usr_id1 = mem_usr_id
-						     AND ure_urt_id = \''. $pPreferences->config['Konfigurationen']['relation'][$this->conf]. '\'
+						     AND ure_urt_id = ? -- $pPreferences->config[\'Konfigurationen\'][\'relation\'][$this->conf]
 						   WHERE '. $orgCondition. '  ';
-    
-		$statement = $gDb->query($sql);
+
+        $queryParams = array(
+            $pPreferences->config['Konfigurationen']['relation'][$this->conf],
+			DATE_NOW,
+			DATE_NOW,
+			ORG_ID
+		);    
+		$statement = $gDb->queryPrepared($sql, $queryParams);
 
 		while ($row = $statement->fetch())
 		{

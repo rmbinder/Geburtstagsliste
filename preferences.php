@@ -58,17 +58,17 @@ elseif ($getAddDelete > 0)
 	}
 	
 	$sql = 'DELETE FROM '.TBL_TEXTS.'
-            	  WHERE txt_name = \'PGLMAIL_NOTIFICATION'. ($getAddDelete-1). '\'
-            	    AND txt_org_id = '.ORG_ID.' ';
-	$gDb->query($sql);
+            	  WHERE txt_name = ?
+            	    AND txt_org_id = ? ';
+	$gDb->queryPrepared($sql, array('PGLMAIL_NOTIFICATION'. ($getAddDelete-1), ORG_ID));
 	
 	for ($i = $getAddDelete;  $i < $num_configs; $i++)
 	{
 		$sql = 'UPDATE '.TBL_TEXTS.'
-                   SET  txt_name = \'PGLMAIL_NOTIFICATION'. ($i-1). '\'
-                 WHERE txt_name = \'PGLMAIL_NOTIFICATION'. $i. '\'
-            	   AND txt_org_id = '.ORG_ID.' ';
-		$gDb->query($sql);
+                   SET  txt_name = ?
+                 WHERE txt_name = ?
+            	   AND txt_org_id = ? ';
+		$gDb->queryPrepared($sql, array('PGLMAIL_NOTIFICATION'. ($i-1), 'PGLMAIL_NOTIFICATION'. $i, ORG_ID ));
 	}
 	
 	// durch das Loeschen einer Konfiguration kann der Fall eintreten, dass es die eingestellte Standardkonfiguration nicht mehr gibt 

@@ -176,20 +176,26 @@ function isMemberOfCategorie($cat_id, $user_id = 0)
         return -1;
     }
 
-    $sql = 'SELECT mem_id
-              FROM '. TBL_MEMBERS. ', '. TBL_ROLES. ', '. TBL_CATEGORIES. '
-             WHERE mem_usr_id = '.$user_id.'
-               AND mem_begin <= \''.DATE_NOW.'\'
-               AND mem_end    > \''.DATE_NOW.'\'
-               AND mem_rol_id = rol_id
-               AND cat_id   = \''.$cat_id.'\'
-               AND rol_valid  = 1 
-               AND rol_cat_id = cat_id
-               AND ( cat_org_id = '.ORG_ID.'
-                OR cat_org_id IS NULL ) ';
-                
-    $statement = $gDb->query($sql);
-
+    $sql    = 'SELECT mem_id
+                 FROM '. TBL_MEMBERS. ', '. TBL_ROLES. ', '. TBL_CATEGORIES. '
+                WHERE mem_usr_id = ? -- $user_id
+                  AND mem_begin <= ? -- DATE_NOW
+                  AND mem_end    > ? -- DATE_NOW
+                  AND mem_rol_id = rol_id
+                  AND cat_id   = ? -- $cat_id
+                  AND rol_valid  = 1
+                  AND rol_cat_id = cat_id
+                  AND (  cat_org_id = ? -- ORG_ID
+                   OR cat_org_id IS NULL ) ';
+    
+    $queryParams = array(
+        $user_id,
+        DATE_NOW,
+        DATE_NOW,
+        $cat_id,
+        ORG_ID
+    );
+    $statement = $gDb->queryPrepared($sql, $queryParams);
     $user_found = $statement->rowCount();
 
     if ($user_found == 1)
@@ -230,10 +236,10 @@ function generate_configSelection()
                         FROM '.TBL_CATEGORIES.' as cat, '.TBL_ROLES.' as rol
                        WHERE cat.cat_type = \'ROL\' 
                          AND cat.cat_id = rol.rol_cat_id
-                         AND ( cat.cat_org_id = '.ORG_ID.'
+                         AND ( cat.cat_org_id = ?
                           OR cat.cat_org_id IS NULL )';
 	
-	$statement = $gDb->query($sql);
+	$statement = $gDb->queryPrepared($sql, array(ORG_ID));
 
 	$k = 0;
 	while ($row = $statement->fetch())
@@ -253,9 +259,9 @@ function generate_configSelection()
 	{
        	$sql = 'SELECT DISTINCT rol.rol_name, rol.rol_id
                            FROM '.TBL_CATEGORIES.' as cat, '.TBL_ROLES.' as rol
-                          WHERE cat.cat_id = \''.$data['cat_id'].'\'
+                          WHERE cat.cat_id = ?
                             AND cat.cat_id = rol.rol_cat_id';
-    	$statement = $gDb->query($sql);
+    	$statement = $gDb->queryPrepared($sql, array($data['cat_id']));
     		
         while ($row = $statement->fetch())
         {
