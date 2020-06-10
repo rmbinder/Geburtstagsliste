@@ -48,6 +48,7 @@
     <string name="PLG_GEBURTSTAGSLISTE_DOCUMENTATION">Dokumentation</string>
     <string name="PLG_GEBURTSTAGSLISTE_DOCUMENTATION_OPEN">Dokumentation öffnen</string>
     <string name="PLG_GEBURTSTAGSLISTE_DOCUMENTATION_OPEN_DESC">Hiermit kann die Dokumentation zum Plugin geöffnet werden (Eine bestehende Internetverbindung wird vorausgesetzt, da sich die Daten auf admidio.org befinden).</string>
+    <string name="PLG_GEBURTSTAGSLISTE_EXPORT_AND_FILTER">Export und Filter</string>
     <string name="PLG_GEBURTSTAGSLISTE_FEBRUARY">Februar</string>
     <string name="PLG_GEBURTSTAGSLISTE_FOR_THE_PERIOD">Für den Zeitraum #VAR1# bis #VAR2# (#VAR3# Tage)</string>
     <string name="PLG_GEBURTSTAGSLISTE_ICAL">iCal</string>
@@ -90,5 +91,4 @@
     <string name="PLG_GEBURTSTAGSLISTE_TEMPLATE_DESC">Hier kann ein Template aus dem Admidio-Ordner adm_my_files/mail_templates gewählt werden.</string>
     <string name="PLG_GEBURTSTAGSLISTE_YEARS_OFFSET">Jahresversatz</string>
     <string name="PLG_GEBURTSTAGSLISTE_YEARS_OFFSET_DESC">Hiermit kann die Anzeige um x Jahre vor- oder zurückversetzt werden (0 entspricht keinem Versatz).</string>
-       <string name="PLG_GEBURTSTAGSLISTE_EXPORT_AND_FILTER">Export und Filter</string>
 </resources>

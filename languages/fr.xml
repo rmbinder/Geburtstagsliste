@@ -48,6 +48,7 @@
     <string name="PLG_GEBURTSTAGSLISTE_DOCUMENTATION">Documentation</string>
     <string name="PLG_GEBURTSTAGSLISTE_DOCUMENTATION_OPEN">Ouvrir la documentation</string>
     <string name="PLG_GEBURTSTAGSLISTE_DOCUMENTATION_OPEN_DESC">Cela ouvre la documentation pour le plugin (une connexion Internet existante est nécessaire, car les données se trouvent sur admidio.org).</string>
+    <string name="PLG_GEBURTSTAGSLISTE_EXPORT_AND_FILTER">Exporter et filtrer</string> 
     <string name="PLG_GEBURTSTAGSLISTE_FEBRUARY">février</string>
     <string name="PLG_GEBURTSTAGSLISTE_FOR_THE_PERIOD">Pour la période #VAR1# à #VAR2# (#VAR3# jours)</string>
     <string name="PLG_GEBURTSTAGSLISTE_ICAL">iCal</string>

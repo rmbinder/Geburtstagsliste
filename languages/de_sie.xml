@@ -44,10 +44,11 @@
     <string name="PLG_GEBURTSTAGSLISTE_DEINST_TABLE_DELETE_SUCCESS">- Die vom Plugin angelegte Tabelle "adm_plugin_preferences" wurde gelöscht.\n</string>
     <string name="PLG_GEBURTSTAGSLISTE_DEINST_TEXTS_DELETE_ERROR">- Beim Löschen der E-Mail-Texte ist ein Fehler aufgetreten.\n</string>
     <string name="PLG_GEBURTSTAGSLISTE_DEINST_TEXTS_DELETE_SUCCESS">- Die vom Plugin angelegten E-Mail-Texte wurden gelöscht.\n</string>
-     <string name="PLG_GEBURTSTAGSLISTE_DELETE_CONFIG">Diese Konfiguration löschen</string>
+    <string name="PLG_GEBURTSTAGSLISTE_DELETE_CONFIG">Diese Konfiguration löschen</string>
     <string name="PLG_GEBURTSTAGSLISTE_DOCUMENTATION">Dokumentation</string>
     <string name="PLG_GEBURTSTAGSLISTE_DOCUMENTATION_OPEN">Dokumentation öffnen</string>
     <string name="PLG_GEBURTSTAGSLISTE_DOCUMENTATION_OPEN_DESC">Hiermit kann die Dokumentation zum Plugin geöffnet werden (Eine bestehende Internetverbindung wird vorausgesetzt, da sich die Daten auf admidio.org befinden).</string>
+    <string name="PLG_GEBURTSTAGSLISTE_EXPORT_AND_FILTER">Export und Filter</string>
     <string name="PLG_GEBURTSTAGSLISTE_FEBRUARY">Februar</string>
     <string name="PLG_GEBURTSTAGSLISTE_FOR_THE_PERIOD">Für den Zeitraum #VAR1# bis #VAR2# (#VAR3# Tage)</string>
     <string name="PLG_GEBURTSTAGSLISTE_ICAL">iCal</string>

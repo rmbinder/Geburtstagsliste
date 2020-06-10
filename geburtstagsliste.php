@@ -89,10 +89,10 @@ foreach ($pPreferences->config['Optionen']['vorschau_liste'] as $item)
 $getPreviewDays = admFuncVariableIsValid($_GET, 'previewdays', 'string', array('defaultValue' => 'X'.$pPreferences->config['Optionen']['vorschau_tage_default'].'X',  'validValues' => $validValues));
 unset($validValues);
 
-$getMode         = admFuncVariableIsValid($_GET, 'mode', 'string', array('defaultValue' => 'html', 'validValues' => array('csv-ms', 'csv-oo', 'html', 'print', 'pdf', 'pdfl' )));
-$getMonth        = admFuncVariableIsValid($_GET, 'month', 'string', array('validValues' => array('00','01', '02', '03', '04', '05', '06','07','08','09','10','11','12' )));
-$getFilterEnable = admFuncVariableIsValid($_GET, 'filter_enable', 'numeric');
-$getFilter       = admFuncVariableIsValid($_GET, 'filter', 'string');
+$getMode            = admFuncVariableIsValid($_GET, 'mode', 'string', array('defaultValue' => 'html', 'validValues' => array('csv-ms', 'csv-oo', 'html', 'print', 'pdf', 'pdfl' )));
+$getMonth           = admFuncVariableIsValid($_GET, 'month', 'string', array('validValues' => array('00','01', '02', '03', '04', '05', '06','07','08','09','10','11','12' )));
+$getFilter          = admFuncVariableIsValid($_GET, 'filter', 'string');
+$getExportAndFilter = admFuncVariableIsValid($_GET, 'export_and_filter', 'bool', array('defaultValue' => false));
 
 $liste = new GenList($getConfig, $getPreviewDays, $getMonth);
 $liste->generate_listData();
@@ -236,7 +236,14 @@ if ($getMode != 'csv')
     }
     elseif ($getMode == 'html')
     {
-        $datatable = true;
+        if ($getExportAndFilter)
+        {
+            $datatable = false;
+        }
+        else
+        {
+            $datatable = true;
+        }
         $hoverRows = true;
 
         // create html page object
@@ -249,47 +256,47 @@ if ($getMode != 'csv')
             $("#previewList").change(function () {
                 if($(this).val().length > 1) {
                     self.location.href = "'.SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/geburtstagsliste.php', array(
-                        'mode'          => 'html',
-                        'month'         => $getMonth,
-                        'filter'        => $getFilter,
-                        'filter_enable' => $getFilterEnable,
-                        'config'        => $getConfig
+                        'mode'              => 'html',
+                        'month'             => $getMonth,
+                        'filter'            => $getFilter,
+                        'export_and_filter' => $getExportAndFilter,
+                        'config'            => $getConfig
                     )) . '&previewdays=" + $(this).val();
                 }
             });
             $("#monthList").change(function () {
                 if($(this).val().length > 0) {
                     self.location.href = "'.SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/geburtstagsliste.php', array(
-                        'mode'          => 'html',
-                        'previewdays'   => $getPreviewDays,
-                        'filter'        => $getFilter,
-                        'filter_enable' => $getFilterEnable,
-                        'config'        => $getConfig
+                        'mode'              => 'html',
+                        'previewdays'       => $getPreviewDays,
+                        'filter'            => $getFilter,
+                        'export_and_filter' => $getExportAndFilter,
+                        'config'            => $getConfig
                     )) . '&month=" + $(this).val();
                 }
             });
             $("#configList").change(function () {
             	if($(this).val().length > 1) {
                     self.location.href = "'.SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/geburtstagsliste.php', array(
-                        'mode'          => 'html',
-                        'previewdays'   => $getPreviewDays,
-                        'filter'        => $getFilter, 
-                        'filter_enable' => $getFilterEnable, 
-                        'month'         => $getMonth
+                        'mode'              => 'html',
+                        'previewdays'       => $getPreviewDays,
+                        'filter'            => $getFilter, 
+                        'export_and_filter' => $getExportAndFilter, 
+                        'month'             => $getMonth
                     )) . '&config=" + $(this).val();
                 }
             });
             $("#menu_item_lists_print_view").click(function() {
                 window.open("'.SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/geburtstagsliste.php', array(
-                    'previewdays'   => $getPreviewDays, 
-                    'filter'        => $getFilter, 
-                    'filter_enable' => $getFilterEnable, 
-                    'month'         => $getMonth, 
-                    'config'        => $getConfig, 
-                    'mode'          => 'print'
+                    'previewdays'       => $getPreviewDays, 
+                    'filter'            => $getFilter, 
+                    'export_and_filter' => $getExportAndFilter, 
+                    'month'             => $getMonth, 
+                    'config'            => $getConfig, 
+                    'mode'              => 'print'
                 )) . '", "_blank");
             });
-            $("#filter_enable").change(function() {
+            $("#export_and_filter").change(function() {
                 $("#navbar_birthdaylist_form").submit();
             });
             $("#filter").change(function() {
@@ -297,56 +304,58 @@ if ($getMode != 'csv')
             });
         ', true);             
         
-        // links to print and exports
-        $page->addPageFunctionsMenuItem('menu_item_lists_print_view', $gL10n->get('LST_PRINT_PREVIEW'), 'javascript:void(0);', 'fa-print');
+        if ($getExportAndFilter)
+        {
+            // links to print and exports
+            $page->addPageFunctionsMenuItem('menu_item_lists_print_view', $gL10n->get('LST_PRINT_PREVIEW'), 'javascript:void(0);', 'fa-print');
         
-        // dropdown menu item with all export possibilities
-        $page->addPageFunctionsMenuItem('menu_item_lists_export', $gL10n->get('LST_EXPORT_TO'), '#', 'fa-file-download');
-        $page->addPageFunctionsMenuItem('menu_item_lists_csv_ms', $gL10n->get('LST_MICROSOFT_EXCEL'),
-            SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/geburtstagsliste.php', array(
-                'previewdays'   => $getPreviewDays,
-                'filter'        => $getFilter,
-                'filter_enable' => $getFilterEnable,
-                'month'         => $getMonth,
-                'config'        => $getConfig,
-                'mode'          => 'csv-ms')),
-            'fa-file-excel', 'menu_item_lists_export');
-        $page->addPageFunctionsMenuItem('menu_item_lists_pdf', $gL10n->get('SYS_PDF').' ('.$gL10n->get('SYS_PORTRAIT').')',
-            SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/geburtstagsliste.php', array(
-                'previewdays'   => $getPreviewDays,
-                'filter'        => $getFilter,
-                'filter_enable' => $getFilterEnable,
-                'month'         => $getMonth,
-                'config'        => $getConfig,
-                'mode'          => 'pdf')),
-            'fa-file-pdf', 'menu_item_lists_export');
-        $page->addPageFunctionsMenuItem('menu_item_lists_pdfl', $gL10n->get('SYS_PDF').' ('.$gL10n->get('SYS_LANDSCAPE').')',
-            SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/geburtstagsliste.php', array(
-                'previewdays'   => $getPreviewDays,
-                'filter'        => $getFilter,
-                'filter_enable' => $getFilterEnable,
-                'month'         => $getMonth,
-                'config'        => $getConfig,
-                'mode'          => 'pdfl')),
-            'fa-file-pdf', 'menu_item_lists_export');
-        $page->addPageFunctionsMenuItem('menu_item_lists_csv', $gL10n->get('SYS_CSV').' ('.$gL10n->get('SYS_UTF8').')',
-            SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/geburtstagsliste.php', array(
-                'previewdays'   => $getPreviewDays,
-                'filter'        => $getFilter,
-                'filter_enable' => $getFilterEnable,
-                'month'         => $getMonth,
-                'config'        => $getConfig,
-                'mode'          => 'csv-oo')),
-            'fa-file-csv', 'menu_item_lists_export');
-        $page->addPageFunctionsMenuItem('menu_item_ical', $gL10n->get('PLG_GEBURTSTAGSLISTE_ICAL'),
-            SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/ical_export.php', array(
-                'previewdays' => $getPreviewDays,
-                'config'      => $getConfig,
-                'month'       => $getMonth,
-                'filter'      => $getFilter)),
-            'fa-calendar', 'menu_item_lists_export');
-
-        if (!$getFilterEnable)
+            // dropdown menu item with all export possibilities
+            $page->addPageFunctionsMenuItem('menu_item_lists_export', $gL10n->get('LST_EXPORT_TO'), '#', 'fa-file-download');
+            $page->addPageFunctionsMenuItem('menu_item_lists_csv_ms', $gL10n->get('LST_MICROSOFT_EXCEL'),
+                SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/geburtstagsliste.php', array(
+                    'previewdays'       => $getPreviewDays,
+                    'filter'            => $getFilter,
+                    'export_and_filter' => $getExportAndFilter,
+                    'month'             => $getMonth,
+                    'config'            => $getConfig,
+                    'mode'              => 'csv-ms')),
+                'fa-file-excel', 'menu_item_lists_export');
+            $page->addPageFunctionsMenuItem('menu_item_lists_pdf', $gL10n->get('SYS_PDF').' ('.$gL10n->get('SYS_PORTRAIT').')',
+                SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/geburtstagsliste.php', array(
+                    'previewdays'       => $getPreviewDays,
+                    'filter'            => $getFilter,
+                    'export_and_filter' => $getExportAndFilter,
+                    'month'             => $getMonth,
+                    'config'            => $getConfig,
+                    'mode'              => 'pdf')),
+                'fa-file-pdf', 'menu_item_lists_export');
+            $page->addPageFunctionsMenuItem('menu_item_lists_pdfl', $gL10n->get('SYS_PDF').' ('.$gL10n->get('SYS_LANDSCAPE').')',
+                SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/geburtstagsliste.php', array(
+                    'previewdays'       => $getPreviewDays,
+                    'filter'            => $getFilter,
+                    'export_and_filter' => $getExportAndFilter,
+                    'month'             => $getMonth,
+                    'config'            => $getConfig,
+                    'mode'              => 'pdfl')),
+                'fa-file-pdf', 'menu_item_lists_export');
+            $page->addPageFunctionsMenuItem('menu_item_lists_csv', $gL10n->get('SYS_CSV').' ('.$gL10n->get('SYS_UTF8').')',
+                SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/geburtstagsliste.php', array(
+                    'previewdays'       => $getPreviewDays,
+                    'filter'            => $getFilter,
+                    'export_and_filter' => $getExportAndFilter,
+                    'month'             => $getMonth,
+                    'config'            => $getConfig,
+                    'mode'              => 'csv-oo')),
+                'fa-file-csv', 'menu_item_lists_export');
+            $page->addPageFunctionsMenuItem('menu_item_ical', $gL10n->get('PLG_GEBURTSTAGSLISTE_ICAL'),
+                SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/ical_export.php', array(
+                    'previewdays' => $getPreviewDays,
+                    'config'      => $getConfig,
+                    'month'       => $getMonth,
+                    'filter'      => $getFilter)),
+                'fa-calendar', 'menu_item_lists_export');
+        }
+        else
         {
             // if filter is not enabled, reset filterstring
             $getFilter = '';
@@ -383,12 +392,11 @@ if ($getMode != 'csv')
         }
         $form->addSelectBox('monthList', null, $selectBoxEntries, array('showContextDependentFirstEntry' => false));
         
-        if ($getFilterEnable)
+        if ($getExportAndFilter)
         {
             $form->addInput('filter', $gL10n->get('SYS_FILTER'), $getFilter);
         }
-        
-        $form->addCheckbox('filter_enable', $gL10n->get('SYS_FILTER'), $getFilterEnable);
+        $form->addCheckbox('export_and_filter', $gL10n->get('PLG_GEBURTSTAGSLISTE_EXPORT_AND_FILTER'), $getExportAndFilter);
         
         //hidden fields
         $form->addInput('previewdays', '', $getPreviewDays, array('property' => HtmlForm::FIELD_HIDDEN));
