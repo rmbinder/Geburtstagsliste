@@ -79,87 +79,87 @@ elseif ($getAddDelete > 0)
 $num_configs = count($pPreferences->config['Konfigurationen']['col_desc']);
 $pPreferences->save();
 
-// add current url to navigation stack if last url was not the same page
-if (!admStrContains($gNavigation->getUrl(), 'preferences.php'))
+// if html mode and last url was not a list view then save this url to navigation stack
+if ( !StringUtils::strContains($gNavigation->getUrl(), 'preferences.php'))
 {
-    $gNavigation->addUrl(CURRENT_URL, $headline);
+    $gNavigation->addUrl(CURRENT_URL);
 }
 
 // create html page object
 $page = new HtmlPage($headline);
-$page->enableModal();
+$page->setUrlPreviousPage($gNavigation->getPreviousUrl());
 
 // open the module configurations if a new configuration is added 
 if ($getAddDelete)
 {
-    $page->addJavascript('$("#tabs_nav_common").attr("class", "active");
+    $page->addJavascript('
+        $("#tabs_nav_common").attr("class", "active");
         $("#tabs-common").attr("class", "tab-pane active");
         $("#collapse_configurations").attr("class", "panel-collapse collapse in");
-        location.hash = "#" + "panel_configurations";', true);
+        location.hash = "#" + "panel_configurations";
+    ', true);
 }
 else
 {
-    $page->addJavascript('$("#tabs_nav_common").attr("class", "active");
-     $("#tabs-common").attr("class", "tab-pane active");
-     ', true);
+    $page->addJavascript('
+        $("#tabs_nav_common").attr("class", "active");
+        $("#tabs-common").attr("class", "tab-pane active");
+    ', true);
 }
 
-$page->addJavascript('$("#tabs_nav_common").attr("class", "active");
-     $("#tabs-common").attr("class", "tab-pane active");
-     ', true);
+$page->addJavascript('
+    $("#tabs_nav_common").attr("class", "active");
+    $("#tabs-common").attr("class", "tab-pane active");
+', true);
 
 $page->addJavascript('
     $(".form-preferences").submit(function(event) {
         var id = $(this).attr("id");
         var action = $(this).attr("action");
-        $("#"+id+" .form-alert").hide();
+        var formAlert = $("#" + id + " .form-alert");
+        formAlert.hide();
 
         // disable default form submit
         event.preventDefault();
-        
-        $.ajax({
-            type:    "POST",
-            url:     action,
-            data:    $(this).serialize(),
+
+        $.post({
+            url: action,
+            data: $(this).serialize(),
             success: function(data) {
-                if(data == "success") {
-                    $("#"+id+" .form-alert").attr("class", "alert alert-success form-alert");
-                    $("#"+id+" .form-alert").html("<span class=\"glyphicon glyphicon-ok\"></span><strong>'.$gL10n->get('SYS_SAVE_DATA').'</strong>");
-                    $("#"+id+" .form-alert").fadeIn("slow");
-                    $("#"+id+" .form-alert").animate({opacity: 1.0}, 2500);
-                    $("#"+id+" .form-alert").fadeOut("slow");
-                }
-                else {
-                    $("#"+id+" .form-alert").attr("class", "alert alert-danger form-alert");
-                    $("#"+id+" .form-alert").fadeIn();
-                    $("#"+id+" .form-alert").html("<span class=\"glyphicon glyphicon-remove\"></span>"+data);
+                if (data === "success") {
+
+                    formAlert.attr("class", "alert alert-success form-alert");
+                    formAlert.html("<i class=\"fas fa-check\"></i><strong>'.$gL10n->get('SYS_SAVE_DATA').'</strong>");
+                    formAlert.fadeIn("slow");
+                    formAlert.animate({opacity: 1.0}, 2500);
+                    formAlert.fadeOut("slow");
+                } else {
+                    formAlert.attr("class", "alert alert-danger form-alert");
+                    formAlert.fadeIn();
+                    formAlert.html("<i class=\"fas fa-exclamation-circle\"></i>" + data);
                 }
             }
-        });    
-    });
-    ', true);
+        });
+    });',
+    true
+);
 
-	$javascriptCode = '';
+$javascriptCode = '';
 
-    // create an array with the necessary data
-	for ($conf = 0; $conf < $num_configs; $conf++)
-    {      
-    	if (!empty($pPreferences->config['Konfigurationen']['relation'][$conf]))
-    	{
-    		$relationtype = new TableUserRelationType($gDb, $pPreferences->config['Konfigurationen']['relation'][$conf]);
-    		$javascriptCode .= '
- 			var arr_user_fields'.$conf.' = createProfileFieldsRelationArray("'.$relationtype->getValue('urt_name').'");
-    		';
-    	}
-    	else
-    	{
-    		$javascriptCode .= '
-  			var arr_user_fields'.$conf.' = createProfileFieldsArray();
-    		';
-    	}
+// create an array with the necessary data
+for ($conf = 0; $conf < $num_configs; $conf++)
+{      
+    if (!empty($pPreferences->config['Konfigurationen']['relation'][$conf]))
+    {
+    	$relationtype = new TableUserRelationType($gDb, $pPreferences->config['Konfigurationen']['relation'][$conf]);
+    	$javascriptCode .= 'var arr_user_fields'.$conf.' = createProfileFieldsRelationArray("'.$relationtype->getValue('urt_name').'"); ';
+    }
+    else
+    {
+    	$javascriptCode .= 'var arr_user_fields'.$conf.' = createProfileFieldsArray(); ';
+    }
     	
-    	$javascriptCode .= ' 
-                
+    $javascriptCode .= ' 
         var arr_default_fields'.$conf.' = createColumnsArray'.$conf.'();
         var fieldNumberIntern'.$conf.'  = 0;
                 
@@ -228,10 +228,10 @@ $page->addJavascript('
         $javascriptCode .= '
         return default_fields;
     }    
-    
     ';
-    }       
-    $javascriptCode .= '
+}       
+    
+$javascriptCode .= '
     function createProfileFieldsRelationArray(relation)
     { 
         var user_fields = new Array(); ';
@@ -295,8 +295,7 @@ $page->addJavascript('
 ';
         
 $page->addJavascript($javascriptCode);        
-$javascriptCode = '$(document).ready(function() {   
-';
+$javascriptCode = '$(document).ready(function() { ';
 	for ($conf = 0; $conf < $num_configs; $conf++)
 	{
 		$javascriptCode .= '  
@@ -305,188 +304,175 @@ $javascriptCode = '$(document).ready(function() {
     	}
     	';
 	}     	
-$javascriptCode .= '
-});
-';
+$javascriptCode .= ' }); ';
 $page->addJavascript($javascriptCode, true);  
 
-// create module menu with back link
-$preferencesMenu = new HtmlNavbar('menu_dates_create', $headline, $page);
-$preferencesMenu->addItem('menu_item_back', $gNavigation->getPreviousUrl(), $gL10n->get('SYS_BACK'), 'back.png');
-$page->addHtml($preferencesMenu->show(false));
-
-$page->addHtml('
-<ul class="nav nav-tabs" id="preferences_tabs">
-  	<li id="tabs_nav_common"><a href="#tabs-common" data-toggle="tab">'.$gL10n->get('SYS_SETTINGS').'</a></li>
-</ul>
-
-<div class="tab-content">
-    <div class="tab-pane" id="tabs-common">
-        <div class="panel-group" id="accordion_common">
-            <div class="panel panel-default" id="panel_configurations">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a class="icon-text-link" data-toggle="collapse" data-parent="#accordion_common" href="#collapse_configurations">
-                            <img src="'.THEME_URL .'/icons/application_form_edit.png" alt="'.$gL10n->get('PLG_GEBURTSTAGSLISTE_CONFIGURATIONS').'" title="'.$gL10n->get('PLG_GEBURTSTAGSLISTE_CONFIGURATIONS').'" />'.$gL10n->get('PLG_GEBURTSTAGSLISTE_CONFIGURATIONS').'
-                        </a>
-                    </h4>
-                </div>
-                <div id="collapse_configurations" class="panel-collapse collapse">
-                    <div class="panel-body">');
-                        // show form
-                        $form = new HtmlForm('configurations_form', safeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences_function.php', array('form' => 'configurations')), $page, array('class' => 'form-preferences'));
-  
-                        $html = '<a class="admidio-icon-link" data-toggle="modal" data-target="#admidio_modal" href="'. ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences_popup.php? " >
-                        		<img src="'. THEME_URL . '/icons/help.png" alt="'.$gL10n->get('SYS_HELP').'" />'.$gL10n->get('SYS_HELP').'</a>';
-                        $form->addDescription($gL10n->get('PLG_GEBURTSTAGSLISTE_CONFIGURATIONS_HEADER').' '.$html);
-                        $form->addDescription('<small>'.$gL10n->get('PLG_GEBURTSTAGSLISTE_CONFIGURATIONS_DESC').'</small>');
-                    	$form->addLine();
-                        $form->addDescription('<div style="width:100%; height:550px; overflow:auto; border:20px;">');
-                        for ($conf = 0; $conf < $num_configs; $conf++)
-						{
-							$form->openGroupBox('configurations_group',($conf+1).'. '.$gL10n->get('PLG_GEBURTSTAGSLISTE_CONFIGURATION'));
-							$form->addInput('col_desc'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_COL_DESC'), $pPreferences->config['Konfigurationen']['col_desc'][$conf], array('property' => FIELD_REQUIRED));
-							$html = '
-							<div class="table-responsive">
-    							<table class="table table-condensed" id="mylist_fields_table">
-        							<thead>
-            							<tr>
-                							<th style="width: 20%;">'.$gL10n->get('SYS_ABR_NO').'</th>
-                							<th style="width: 37%;">'.$gL10n->get('SYS_CONTENT').'</th>   
-            							</tr>
-        							</thead>
-        							<tbody id="mylist_fields_tbody'.$conf.'">
-            							<tr id="table_row_button">
-                							<td colspan="2">
-                    							<a class="icon-text-link" href="javascript:addColumn'.$conf.'()"><img src="'. THEME_URL . '/icons/add.png" alt="'.$gL10n->get('PLG_GEBURTSTAGSLISTE_ADD_ANOTHER_COLUMN').'" />'.$gL10n->get('PLG_GEBURTSTAGSLISTE_ADD_ANOTHER_COLUMN').'</a>
-                							</td>
-            							</tr>
-        							</tbody>
-    							</table>
-    						</div>';
-                        	$form->addCustomContent($gL10n->get('PLG_GEBURTSTAGSLISTE_COLUMN_SELECTION'), $html); 
-                       		$form->addSelectBox('col_sel'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_COL_SEL'), $configSelection, array('defaultValue' => $pPreferences->config['Konfigurationen']['col_sel'][$conf], 'showContextDependentFirstEntry' => false));
-                        	$form->addInput('col_values'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_COL_VALUES'), $pPreferences->config['Konfigurationen']['col_values'][$conf]);
-                        	$form->addInput('col_suffix'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_COL_SUFFIX'), $pPreferences->config['Konfigurationen']['col_suffix'][$conf]);
-							$form->addCheckbox('suppress_age'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_AGE_OR_ANNIVERSARY_NOT_SHOW'), $pPreferences->config['Konfigurationen']['suppress_age'][$conf]);
-
-                        	$sql = 'SELECT rol_id, rol_name, cat_name
-                                      FROM '.TBL_CATEGORIES.' , '.TBL_ROLES.' 
-                                     WHERE cat_id = rol_cat_id
-                                       AND ( cat_org_id = '.ORG_ID.'
-                                        OR cat_org_id IS NULL )';
-                       		$form->addSelectBoxFromSql('selection_role'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_ROLE_SELECTION'), $gDb, $sql, array('defaultValue' => explode(',',$pPreferences->config['Konfigurationen']['selection_role'][$conf]),'multiselect' => true));
-                        	
-				        	$sql = 'SELECT cat_id, cat_name
-                                      FROM '.TBL_CATEGORIES.' , '.TBL_ROLES.' 
-                                     WHERE cat_id = rol_cat_id
-                                       AND ( cat_org_id = '.ORG_ID.'
-                                        OR cat_org_id IS NULL )';
-                       		$form->addSelectBoxFromSql('selection_cat'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_CAT_SELECTION'), $gDb, $sql, array('defaultValue' => explode(',',$pPreferences->config['Konfigurationen']['selection_cat'][$conf]),'multiselect' => true));
-                        	
-							$text[$conf] = new TableText($gDb);
-                    		$text[$conf]->readDataByColumns(array('txt_name' => 'PGLMAIL_NOTIFICATION'.$conf, 'txt_org_id' => ORG_ID));
-
-                    		//wenn noch nichts drin steht, dann vorbelegen
-                    		if ($text[$conf]->getValue('txt_text') == '')
-                    		{
-        						// convert <br /> to a normal line feed
-        						$value = preg_replace('/<br[[:space:]]*\/?[[:space:]]*>/',chr(13).chr(10),$gL10n->get('PLG_GEBURTSTAGSLISTE_PGLMAIL_NOTIFICATION'));
-                    			
-            					$text[$conf]->setValue('txt_text', $value);
-            					$text[$conf]->save();
-            					$text[$conf]->readDataByColumns(array('txt_name' => 'PGLMAIL_NOTIFICATION'.$conf, 'txt_org_id' => ORG_ID));
-                    		}
-				        	$form->addMultilineTextInput('col_mail'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_NOTIFICATION_MAIL_TEXT'), $text[$conf]->getValue('txt_text'), 7);	
-                    		$form->addCheckbox('calendar_year'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_SHOW_CALENDAR_YEAR'), $pPreferences->config['Konfigurationen']['calendar_year'][$conf]);
-							$form->addInput('years_offset'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_YEARS_OFFSET'), $pPreferences->config['Konfigurationen']['years_offset'][$conf], array('type' => 'number',  'step' => 1, 'minNumber' => -99, 'maxNumber' => 99) );  
- 
-                            if ($gPreferences['members_enable_user_relations'] == 1)
-                     		{
-                     			// select box showing all relation types
-                     			$sql = 'SELECT urt_id, urt_name
-              						      FROM '.TBL_USER_RELATION_TYPES.'
-          							  ORDER BY urt_name';
-                     			$form->addSelectBoxFromSql('relationtype_id'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_RELATION'), $gDb, $sql,
-                     				array('defaultValue' => $pPreferences->config['Konfigurationen']['relation'][$conf],'showContextDependentFirstEntry' => true, 'multiselect' => false));
-                     		} 
-                     		if($num_configs != 1)
-                     		{
-                     		    $html = '<a id="delete_config" class="icon-text-link" href="'. safeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences.php', array('add_delete' => $conf+1)).'"><img
-                                        src="'. THEME_URL . '/icons/delete.png" alt="'.$gL10n->get('PLG_GEBURTSTAGSLISTE_DELETE_CONFIG').'" />'.$gL10n->get('PLG_GEBURTSTAGSLISTE_DELETE_CONFIG').'</a>';
-                     			$form->addCustomContent('', $html);
-                     		}
-                            $form->closeGroupBox();
-						}
-                        $form->addDescription('</div>');
-                        $form->addLine();
-                        $html = '<a id="add_config" class="icon-text-link" href="'. safeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences.php', array('add_delete' => -1)).'"><img
-                                    src="'. THEME_URL . '/icons/add.png" alt="'.$gL10n->get('PLG_GEBURTSTAGSLISTE_ADD_ANOTHER_CONFIG').'" />'.$gL10n->get('PLG_GEBURTSTAGSLISTE_ADD_ANOTHER_CONFIG').'</a>';
-                        $htmlDesc = '<div class="alert alert-warning alert-small" role="alert"><span class="glyphicon glyphicon-warning-sign"></span>'.$gL10n->get('ORG_NOT_SAVED_SETTINGS_LOST').'</div>';
-                        $form->addCustomContent('', $html, array('helpTextIdInline' => $htmlDesc)); 
-                        $form->addSubmitButton('btn_save_configurations', $gL10n->get('SYS_SAVE'), array('icon' => THEME_URL .'/icons/disk.png', 'class' => ' col-sm-offset-3'));
-                        $page->addHtml($form->show(false));
-                    	$page->addHtml('
-                    </div>
-                </div>
-            </div>           
-
-            <div class="panel panel-default" id="panel_options">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a class="icon-text-link" data-toggle="collapse" data-parent="#accordion_common" href="#collapse_options">
-                            <img src="'.THEME_URL .'/icons/options.png" alt="'.$gL10n->get('PLG_GEBURTSTAGSLISTE_OPTIONS').'" title="'.$gL10n->get('PLG_GEBURTSTAGSLISTE_OPTIONS').'" />'.$gL10n->get('PLG_GEBURTSTAGSLISTE_OPTIONS').'
-                        </a>
-                    </h4>
-                </div>
-                <div id="collapse_options" class="panel-collapse collapse">
-                    <div class="panel-body">');
-                        // show form
-                    	$form = new HtmlForm('options_preferences_form', safeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences_function.php', array('form' => 'options')), $page, array('class' => 'form-preferences'));
-                                               
-                        $form->addInput('vorschau_tage_default', $gL10n->get('PLG_GEBURTSTAGSLISTE_PREVIEW_DAYS'), $pPreferences->config['Optionen']['vorschau_tage_default'], array('type' => 'number',  'step' => 1,'helpTextIdInline' => 'PLG_GEBURTSTAGSLISTE_PREVIEW_DAYS_DESC') );  
-                        $form->addInput('vorschau_liste', $gL10n->get('PLG_GEBURTSTAGSLISTE_PREVIEW_LIST'), implode(',',$pPreferences->config['Optionen']['vorschau_liste']), array('helpTextIdInline' => 'PLG_GEBURTSTAGSLISTE_PREVIEW_LIST_DESC'));     
-                        $form->addSelectBox('config_default', $gL10n->get('PLG_GEBURTSTAGSLISTE_CONFIGURATION'),$pPreferences->config['Konfigurationen']['col_desc'], array('defaultValue' => $pPreferences->config['Optionen']['config_default'], 'showContextDependentFirstEntry' => false, 'helpTextIdInline' => 'PLG_GEBURTSTAGSLISTE_CONFIGURATION_DEFAULT_DESC'));
-				                                           
-                        $html = '<a id="deinstallation" class="icon-text-link" href="'. safeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences_function.php', array('mode' => 2)).'"><img
-                                    src="'. THEME_URL . '/icons/delete.png" alt="'.$gL10n->get('PLG_GEBURTSTAGSLISTE_LINK_TO_DEINSTALLATION').'" />'.$gL10n->get('PLG_GEBURTSTAGSLISTE_LINK_TO_DEINSTALLATION').'</a>';
-                        $form->addCustomContent($gL10n->get('PLG_GEBURTSTAGSLISTE_DEINSTALLATION'), $html, array('helpTextIdInline' => 'PLG_GEBURTSTAGSLISTE_DEINSTALLATION_DESC'));
-                        $form->addCheckbox('configuration_as_header', $gL10n->get('PLG_GEBURTSTAGSLISTE_CONFIGURATION_AS_HEADER'), $pPreferences->config['Optionen']['configuration_as_header'], array('helpTextIdInline' => 'PLG_GEBURTSTAGSLISTE_CONFIGURATION_AS_HEADER_DESC'));
-                        $form->addSubmitButton('btn_save_options', $gL10n->get('SYS_SAVE'), array('icon' => THEME_URL .'/icons/disk.png', 'class' => ' col-sm-offset-3'));
-                        $page->addHtml($form->show(false));
-                    	$page->addHtml('
-                    </div>
-                </div>
+/**
+ * @param string $group
+ * @param string $id
+ * @param string $title
+ * @param string $icon
+ * @param string $body
+ * @return string
+ */
+function getPreferencePanel($group, $id, $title, $icon, $body)
+{
+    $html = '
+        <div class="card" id="panel_' . $id . '">
+            <div class="card-header">
+                <a type="button" data-toggle="collapse" data-target="#collapse_' . $id . '">
+                    <i class="' . $icon . ' fa-fw"></i>' . $title . '
+                </a>
             </div>
-            
-            <div class="panel panel-default" id="panel_plugin_informations">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a class="icon-text-link" data-toggle="collapse" data-parent="#accordion_common" href="#collapse_plugin_informations">
-                            <img src="'.THEME_URL .'/icons/info.png" alt="'.$gL10n->get('PLG_GEBURTSTAGSLISTE_PLUGIN_INFORMATION').'" title="'.$gL10n->get('PLG_GEBURTSTAGSLISTE_PLUGIN_INFORMATION').'" />'.$gL10n->get('PLG_GEBURTSTAGSLISTE_PLUGIN_INFORMATION').'
-                        </a>
-                    </h4>
-                </div>
-                <div id="collapse_plugin_informations" class="panel-collapse collapse">
-                    <div class="panel-body">');
-                        // create a static form
-                        $form = new HtmlForm('plugin_informations_preferences_form', null, $page);
-                        
-                        $form->addStaticControl('plg_name', $gL10n->get('PLG_GEBURTSTAGSLISTE_PLUGIN_NAME'), $gL10n->get('PLG_GEBURTSTAGSLISTE_BIRTHDAY_LIST'));
-                        $form->addStaticControl('plg_version', $gL10n->get('PLG_GEBURTSTAGSLISTE_PLUGIN_VERSION'), $pPreferences->config['Plugininformationen']['version']);
-                        $form->addStaticControl('plg_date', $gL10n->get('PLG_GEBURTSTAGSLISTE_PLUGIN_DATE'), $pPreferences->config['Plugininformationen']['stand']);
-                        
-                        $html = '<a class="icon-text-link" href="https://www.admidio.org/dokuwiki/doku.php?id=de:plugins:geburtstagsliste#geburtstagsliste" target="_blank"><img
-                                    src="'. THEME_URL . '/icons/eye.png" alt="'.$gL10n->get('PLG_GEBURTSTAGSLISTE_DOCUMENTATION_OPEN').'" />'.$gL10n->get('PLG_GEBURTSTAGSLISTE_DOCUMENTATION_OPEN').'</a>';
-                        $form->addCustomContent($gL10n->get('PLG_GEBURTSTAGSLISTE_DOCUMENTATION'), $html, array('helpTextIdInline' => 'PLG_GEBURTSTAGSLISTE_DOCUMENTATION_OPEN_DESC'));
-                        $page->addHtml($form->show(false));
-                    	$page->addHtml('
-                    </div>
+            <div id="collapse_' . $id . '" class="collapse" aria-labelledby="headingOne" data-parent="#accordion_preferences">
+                <div class="card-body">
+                    ' . $body . '
                 </div>
             </div>
         </div>
+    ';
+    return $html;
+}
+
+$page->addHtml('
+<ul id="preferences_tabs" class="nav nav-tabs" role="tablist">
+    <li class="nav-item">
+        <a id="tabs_nav_common" class="nav-link" href="#tabs-common" data-toggle="tab" role="tab">'.$gL10n->get('SYS_SETTINGS').'</a>
+    </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade" id="tabs-common" role="tabpanel">
+        <div class="accordion" id="accordion_preferences">');
+
+ // PANEL: CONFIGURATIONS
+
+$formConfigurations = new HtmlForm('configurations_preferences_form', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences_function.php', array('form' => 'configurations')), $page, array('class' => 'form-preferences'));
+  
+$html = '<a class="admidio-icon-link openPopup" href="javascript:void(0);"
+    data-href="'.SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences_popup.php').'">'.
+    '<i class="fas fa-info" data-toggle="tooltip" title="' . $gL10n->get('SYS_HELP') . '"></i> '.$gL10n->get('SYS_HELP').'</a>';
+$formConfigurations->addDescription($gL10n->get('PLG_GEBURTSTAGSLISTE_CONFIGURATIONS_HEADER').' '.$html);
+$formConfigurations->addDescription('<small>'.$gL10n->get('PLG_GEBURTSTAGSLISTE_CONFIGURATIONS_DESC').'</small>');
+$formConfigurations->addLine();
+$formConfigurations->addDescription('<div style="width:100%; height:550px; overflow:auto; border:20px;">');
+for ($conf = 0; $conf < $num_configs; $conf++)
+{
+	$formConfigurations->openGroupBox('configurations_group',($conf+1).'. '.$gL10n->get('PLG_GEBURTSTAGSLISTE_CONFIGURATION'));
+	$formConfigurations->addInput('col_desc'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_COL_DESC'), $pPreferences->config['Konfigurationen']['col_desc'][$conf], array('property' => HtmlForm::FIELD_REQUIRED));
+	$html = '
+		<div class="table-responsive">
+    		<table class="table table-condensed" id="mylist_fields_table">
+        		<thead>
+            		<tr>
+                		<th style="width: 20%;">'.$gL10n->get('SYS_ABR_NO').'</th>
+                		<th style="width: 37%;">'.$gL10n->get('SYS_CONTENT').'</th>   
+            		</tr>
+        		</thead>
+                <tbody id="mylist_fields_tbody'.$conf.'">
+            		<tr id="table_row_button">
+                		<td colspan="2">
+                    		<a class="icon-text-link" href="javascript:addColumn'.$conf.'()"><i class="fas fa-plus-circle"></i>'.$gL10n->get('PLG_GEBURTSTAGSLISTE_ADD_ANOTHER_COLUMN').'</a>
+                		</td>
+            		</tr>
+        		</tbody>
+    		</table>
+    	</div>
+    ';
+    $formConfigurations->addCustomContent($gL10n->get('PLG_GEBURTSTAGSLISTE_COLUMN_SELECTION'), $html); 
+    $formConfigurations->addSelectBox('col_sel'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_COL_SEL'), $configSelection, array('defaultValue' => $pPreferences->config['Konfigurationen']['col_sel'][$conf], 'showContextDependentFirstEntry' => false));
+    $formConfigurations->addInput('col_values'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_COL_VALUES'), $pPreferences->config['Konfigurationen']['col_values'][$conf]);
+    $formConfigurations->addInput('col_suffix'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_COL_SUFFIX'), $pPreferences->config['Konfigurationen']['col_suffix'][$conf]);
+	$formConfigurations->addCheckbox('suppress_age'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_AGE_OR_ANNIVERSARY_NOT_SHOW'), $pPreferences->config['Konfigurationen']['suppress_age'][$conf]);
+
+    $sql = 'SELECT rol_id, rol_name, cat_name
+              FROM '.TBL_CATEGORIES.' , '.TBL_ROLES.' 
+             WHERE cat_id = rol_cat_id
+               AND ( cat_org_id = '.ORG_ID.'
+                OR cat_org_id IS NULL )';
+    $formConfigurations->addSelectBoxFromSql('selection_role'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_ROLE_SELECTION'), $gDb, $sql, array('defaultValue' => explode(',',$pPreferences->config['Konfigurationen']['selection_role'][$conf]),'multiselect' => true));
+                        	
+	$sql = 'SELECT cat_id, cat_name
+              FROM '.TBL_CATEGORIES.' , '.TBL_ROLES.' 
+             WHERE cat_id = rol_cat_id
+               AND ( cat_org_id = '.ORG_ID.'
+                OR cat_org_id IS NULL )';
+    $formConfigurations->addSelectBoxFromSql('selection_cat'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_CAT_SELECTION'), $gDb, $sql, array('defaultValue' => explode(',',$pPreferences->config['Konfigurationen']['selection_cat'][$conf]),'multiselect' => true));
+                        	
+	$text[$conf] = new TableText($gDb);
+    $text[$conf]->readDataByColumns(array('txt_name' => 'PGLMAIL_NOTIFICATION'.$conf, 'txt_org_id' => ORG_ID));
+
+    //wenn noch nichts drin steht, dann vorbelegen
+    if ($text[$conf]->getValue('txt_text') == '')
+    {
+        // convert <br /> to a normal line feed
+        $value = preg_replace('/<br[[:space:]]*\/?[[:space:]]*>/',chr(13).chr(10),$gL10n->get('PLG_GEBURTSTAGSLISTE_PGLMAIL_NOTIFICATION'));
+                    			
+        $text[$conf]->setValue('txt_text', $value);
+        $text[$conf]->save();
+        $text[$conf]->readDataByColumns(array('txt_name' => 'PGLMAIL_NOTIFICATION'.$conf, 'txt_org_id' => ORG_ID));
+    }
+	$formConfigurations->addMultilineTextInput('col_mail'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_NOTIFICATION_MAIL_TEXT'), $text[$conf]->getValue('txt_text'), 7);	
+    $formConfigurations->addCheckbox('calendar_year'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_SHOW_CALENDAR_YEAR'), $pPreferences->config['Konfigurationen']['calendar_year'][$conf]);
+	$formConfigurations->addInput('years_offset'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_YEARS_OFFSET'), $pPreferences->config['Konfigurationen']['years_offset'][$conf], array('type' => 'number',  'step' => 1, 'minNumber' => -99, 'maxNumber' => 99) );  
+ 
+    if ($gSettingsManager->getInt('members_enable_user_relations') == 1)
+    {
+        // select box showing all relation types
+        $sql = 'SELECT urt_id, urt_name
+                  FROM '.TBL_USER_RELATION_TYPES.'
+          		 ORDER BY urt_name';
+        $formConfigurations->addSelectBoxFromSql('relationtype_id'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_RELATION'), $gDb, $sql,
+                array('defaultValue' => $pPreferences->config['Konfigurationen']['relation'][$conf],'showContextDependentFirstEntry' => true, 'multiselect' => false));
+    } 
+    if($num_configs != 1)
+    {
+        $html = '<a id="delete_config" class="icon-text-link" href="'. SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences.php', array('add_delete' => $conf+1)).'">
+                <i class="fas fa-trash-alt"></i> '.$gL10n->get('PLG_GEBURTSTAGSLISTE_DELETE_CONFIG').'</a>';
+        $formConfigurations->addCustomContent('', $html);
+    }
+    $formConfigurations->closeGroupBox();
+}
+$formConfigurations->addDescription('</div>');
+$formConfigurations->addLine();
+$html = '<a id="add_config" class="icon-text-link" href="'. SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences.php', array('add_delete' => -1)).'">
+        <i class="fas fa-clone"></i> '.$gL10n->get('PLG_GEBURTSTAGSLISTE_ADD_ANOTHER_CONFIG').'</a>';
+$htmlDesc = '<div class="alert alert-warning alert-small" role="alert"><span class="glyphicon glyphicon-warning-sign"></span>'.$gL10n->get('ORG_NOT_SAVED_SETTINGS_LOST').'</div>';
+$formConfigurations->addCustomContent('', $html, array('helpTextIdInline' => $htmlDesc)); 
+$formConfigurations->addSubmitButton('btn_save_configurations', $gL10n->get('SYS_SAVE'), array('icon' => 'fa-check', 'class' => ' offset-sm-3'));
+                        
+$page->addHtml(getPreferencePanel('common', 'configurations', $gL10n->get('PLG_GEBURTSTAGSLISTE_CONFIGURATIONS'), 'fas fa-cogs', $formConfigurations->show()));
+
+// PANEL: OPTIONS                        
+                        
+$formOptions = new HtmlForm('options_preferences_form', SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences_function.php', array('form' => 'options')),$page, array('class' => 'form-preferences'));                         
+$formOptions->addInput('vorschau_tage_default', $gL10n->get('PLG_GEBURTSTAGSLISTE_PREVIEW_DAYS'), $pPreferences->config['Optionen']['vorschau_tage_default'], array('type' => 'number',  'step' => 1,'helpTextIdInline' => 'PLG_GEBURTSTAGSLISTE_PREVIEW_DAYS_DESC') );  
+$formOptions->addInput('vorschau_liste', $gL10n->get('PLG_GEBURTSTAGSLISTE_PREVIEW_LIST'), implode(',',$pPreferences->config['Optionen']['vorschau_liste']), array('helpTextIdInline' => 'PLG_GEBURTSTAGSLISTE_PREVIEW_LIST_DESC'));     
+$formOptions->addSelectBox('config_default', $gL10n->get('PLG_GEBURTSTAGSLISTE_CONFIGURATION'),$pPreferences->config['Konfigurationen']['col_desc'], array('defaultValue' => $pPreferences->config['Optionen']['config_default'], 'showContextDependentFirstEntry' => false, 'helpTextIdInline' => 'PLG_GEBURTSTAGSLISTE_CONFIGURATION_DEFAULT_DESC'));
+				                                           
+$html = '<a id="deinstallation" class="icon-text-link" href="'. SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences_function.php', array('mode' => 2)).'">
+        <i class="fas fa-trash-alt"></i> '.$gL10n->get('PLG_GEBURTSTAGSLISTE_LINK_TO_DEINSTALLATION').'</a>';
+$formOptions->addCustomContent($gL10n->get('PLG_GEBURTSTAGSLISTE_DEINSTALLATION'), $html, array('helpTextIdInline' => 'PLG_GEBURTSTAGSLISTE_DEINSTALLATION_DESC'));
+$formOptions->addCheckbox('configuration_as_header', $gL10n->get('PLG_GEBURTSTAGSLISTE_CONFIGURATION_AS_HEADER'), $pPreferences->config['Optionen']['configuration_as_header'], array('helpTextIdInline' => 'PLG_GEBURTSTAGSLISTE_CONFIGURATION_AS_HEADER_DESC'));
+$formOptions->addSubmitButton('btn_save_options', $gL10n->get('SYS_SAVE'), array('icon' => 'fa-check', 'class' => ' offset-sm-3'));
+
+$page->addHtml(getPreferencePanel('common', 'options', $gL10n->get('PLG_GEBURTSTAGSLISTE_OPTIONS'), 'fas fa-cog', $formOptions->show()));
+
+// PANEL: PLUGIN INFORMATIONS
+
+$formPluginInformations = new HtmlForm('plugin_informations_preferences_form', null,$page, array('class' => 'form-preferences'));
+$formPluginInformations->addStaticControl('plg_name', $gL10n->get('PLG_GEBURTSTAGSLISTE_PLUGIN_NAME'), $gL10n->get('PLG_GEBURTSTAGSLISTE_BIRTHDAY_LIST'));
+$formPluginInformations->addStaticControl('plg_version', $gL10n->get('PLG_GEBURTSTAGSLISTE_PLUGIN_VERSION'), $pPreferences->config['Plugininformationen']['version']);
+$formPluginInformations->addStaticControl('plg_date', $gL10n->get('PLG_GEBURTSTAGSLISTE_PLUGIN_DATE'), $pPreferences->config['Plugininformationen']['stand']);
+                        
+$html = '<a class="icon-text-link" href="https://www.admidio.org/dokuwiki/doku.php?id=de:plugins:geburtstagsliste#geburtstagsliste" target="_blank">
+        <i class="fas fa-external-link-square-alt"></i> '.$gL10n->get('PLG_GEBURTSTAGSLISTE_DOCUMENTATION_OPEN').'</a>';
+$formPluginInformations->addCustomContent($gL10n->get('PLG_GEBURTSTAGSLISTE_DOCUMENTATION'), $html, array('helpTextIdInline' => 'PLG_GEBURTSTAGSLISTE_DOCUMENTATION_OPEN_DESC'));
+$page->addHtml(getPreferencePanel('common', 'plugin_informations', $gL10n->get('PLG_GEBURTSTAGSLISTE_PLUGIN_INFORMATION'), 'fas fa-info-circle', $formPluginInformations->show()));
+
+$page->addHtml('
+        </div>
     </div>
-</div>
-');
+</div>');
 
 $page->show();

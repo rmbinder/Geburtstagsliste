@@ -90,4 +90,5 @@
     <string name="PLG_GEBURTSTAGSLISTE_TEMPLATE_DESC">Hier kann ein Template aus dem Admidio-Ordner adm_my_files/mail_templates gewählt werden.</string>
     <string name="PLG_GEBURTSTAGSLISTE_YEARS_OFFSET">Jahresversatz</string>
     <string name="PLG_GEBURTSTAGSLISTE_YEARS_OFFSET_DESC">Hiermit kann die Anzeige um x Jahre vor- oder zurückversetzt werden (0 entspricht keinem Versatz).</string>
+       <string name="PLG_GEBURTSTAGSLISTE_EXPORT_AND_FILTER">Export und Filter</string>
 </resources>

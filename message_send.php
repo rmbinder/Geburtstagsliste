@@ -17,7 +17,6 @@
  *****************************************************************************/
 
 require_once(__DIR__ . '/../../adm_program/system/common.php');
-require_once(__DIR__ . '/../../adm_program/system/template.php');
 
 // Initialize and check the parameters
 $getUserId = admFuncVariableIsValid($_GET, 'usr_id', 'numeric', array('defaultValue' => 0));
@@ -36,7 +35,7 @@ $postTemplate              = admFuncVariableIsValid($_POST, 'msg_template', 'str
 $getMsgType = 'EMAIL';
 
 // Stop if mail should be send and mail module is disabled
-if ($gPreferences['enable_mail_module'] != 1)
+if ($gSettingsManager->getInt('enable_mail_module') != 1)
 {
     $gMessage->show($gL10n->get('SYS_MODULE_DISABLED'));
 }
@@ -57,7 +56,7 @@ if ($currUsrId > 0)
 }
 
 // if no User is set, he is not able to ask for delivery confirmation 
-if (!($currUsrId > 0 && $gPreferences['mail_delivery_confirmation'] == 2) && $gPreferences['mail_delivery_confirmation'] != 1)
+if (!($currUsrId > 0 && $gSettingsManager->getInt('mail_delivery_confirmation') == 2) && $gSettingsManager->getInt('mail_delivery_confirmation') != 1)
 {
     $postDeliveryConfirmation = 0;
 }
@@ -79,7 +78,7 @@ $email = new Email();
 $user = new User($gDb, $gProfileFields, $getUserId);
                 
 // error if no valid Email for given user ID
-if (!strValidCharacters($user->getValue('EMAIL'), 'email'))
+if (!StringUtils::strValidCharacters($user->getValue('EMAIL'), 'email'))
 {
 	$gMessage->show($gL10n->get('SYS_USER_NO_EMAIL', $user->getValue('FIRST_NAME').' '.$user->getValue('LAST_NAME')));
 }
@@ -164,21 +163,15 @@ else
 }
 
 // if possible send html mail
-if ($gValidLogin == true && $gPreferences['mail_html_registered_users'] == 1)
+if ($gValidLogin && $gSettingsManager->getBool('mail_html_registered_users'))
 {
-    $email->sendDataAsHtml();
+    $email->setHtmlMail();
 }
 
 // set flag if copy should be send to sender
-if (isset($postCarbonCopy) && $postCarbonCopy == true)
+if (isset($postCarbonCopy) && $postCarbonCopy)
 {
     $email->setCopyToSenderFlag();
-
-    // if mail was send to user than show recipients in copy of mail if current user has a valid login
-    if ($gValidLogin)
-    {
-        $email->setListRecipientsFlag();
-    }
 }
 
 $email->addRecipient($user->getValue('EMAIL'), $user->getValue('FIRST_NAME').' '.$user->getValue('LAST_NAME'));
@@ -188,6 +181,10 @@ if ($postDeliveryConfirmation == 1)
 {
     $email->ConfirmReadingTo = $gCurrentUser->getValue('EMAIL');
 }
+
+// in der Originaldatei messages_send.php wird setTemplateText() verwendet um das Mail-Template einzulesen und die Platzhalter zu ersetzen
+// diese Methode kann nicht verwendet werden, da das Mail-Template hard-coded ist,
+// das Plugin Geburstagsliste jedoch mit variablen Templates (=$postTemplate) arbeitet
 
 // load the template and set the new email body with template
 try
@@ -199,16 +196,26 @@ catch (\RuntimeException $exception)
     $emailTemplate = '#message#';
 }
 
+// replace all line feeds within the mailtext into simple breaks because only those are valid within mails
+$postBody = str_replace("\r\n", "\n", $postBody);
+
+// replace parameters in email template
 $replaces = array(
-    '#sender#'   => $postName,
-    '#message#'  => $postBody,
-    '#receiver#' => $user->getValue('FIRST_NAME').' '.$user->getValue('LAST_NAME')
+    '#sender#'       => $postName,
+    '#sender_name#'  => $postName,
+    '#sender_email#' => $gCurrentUser->getValue('EMAIL'),
+    '#message#'      => $postBody,
+    '#receiver#'     => $user->getValue('FIRST_NAME').' '.$user->getValue('LAST_NAME'),
+    '#recipients#'   => $user->getValue('FIRST_NAME').' '.$user->getValue('LAST_NAME'),
+    '#organization_name#'      => $gCurrentOrganization->getValue('org_longname'),
+    '#organization_shortname#' => $gCurrentOrganization->getValue('org_shortname'),
+    '#organization_website#'   => $gCurrentOrganization->getValue('org_homepage')
 );
 
-$emailTemplate = admStrMultiReplace($emailTemplate, $replaces);
+$emailHtmlText = StringUtils::strMultiReplace($emailTemplate, $replaces);
 
 // set Text
-$email->setText($emailTemplate);
+$email->setText($emailHtmlText);
 
 // finally send the mail
 $sendResult = $email->sendEmail();

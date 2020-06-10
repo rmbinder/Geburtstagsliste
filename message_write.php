@@ -22,9 +22,10 @@ require_once(__DIR__ . '/../../adm_program/system/common.php');
 require_once(__DIR__ . '/../../adm_program/system/classes/TableText.php');
 require_once(__DIR__ . '/common_function.php');
 require_once(__DIR__ . '/classes/configtable.php');
- 
+//if ($getMode === 'html' && !StringUtils::strContains($gNavigation->getUrl(), 'geburtstagsliste.php')) 
 // only the main script can call and start this module
-if (strpos($gNavigation->getUrl(), 'geburtstagsliste.php') === false && strpos($gNavigation->getUrl(), 'message_send.php') === false)
+//if (strpos($gNavigation->getUrl(), 'geburtstagsliste.php') === false && strpos($gNavigation->getUrl(), 'message_send.php') === false)
+if (!StringUtils::strContains($gNavigation->getUrl(), 'geburtstagsliste.php') && !StringUtils::strContains($gNavigation->getUrl(), 'message_send.php'))
 {
 	$gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
 }
@@ -40,7 +41,7 @@ $pPreferences = new ConfigTablePGL();
 $pPreferences->read();
 
 // check if the call of the page was allowed by settings
-if ($gPreferences['enable_mail_module'] != 1 )
+if ($gSettingsManager->getInt('enable_mail_module') != 1 )
 {
     // message if the sending of PM is not allowed
     $gMessage->show($gL10n->get('SYS_MODULE_DISABLED'));
@@ -110,11 +111,7 @@ $page = new HtmlPage($headline);
 
 // add current url to navigation stack
 $gNavigation->addUrl(CURRENT_URL, $headline);
-
-// create module menu with back link
-$messagesWriteMenu = new HtmlNavbar('menu_messages_write', $headline, $page);
-$messagesWriteMenu->addItem('menu_item_back', $gNavigation->getPreviousUrl(), $gL10n->get('SYS_BACK'), 'back.png');
-$page->addHtml($messagesWriteMenu->show(false));
+$page->setUrlPreviousPage($gNavigation->getPreviousUrl());
 
  //Datensatz für E-Mail-Adresse zusammensetzen
 if (strlen($user->getValue('EMAIL')) > 0)
@@ -123,13 +120,12 @@ if (strlen($user->getValue('EMAIL')) > 0)
 }  
 
 // besitzt der User eine gueltige E-Mail-Adresse
-if (!strValidCharacters($user->getValue('EMAIL'), 'email'))
+if (!StringUtils::strValidCharacters($user->getValue('EMAIL'), 'email'))
 {
 	$gMessage->show($gL10n->get('SYS_USER_NO_EMAIL', $user->getValue('FIRST_NAME').' '.$user->getValue('LAST_NAME')));
 }
 
 $userEmail = $user->getValue('EMAIL');
-
 
 // Wenn die letzte URL in der Zuruecknavigation die des Scriptes message_send.php ist,
 // dann soll das Formular gefuellt werden mit den Werten aus der Session
@@ -161,7 +157,7 @@ if (strlen($getSubject) > 0)
 }
     
 // show form
-$form = new HtmlForm('mail_send_form', safeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/message_send.php', $formParams), $page);
+$form = new HtmlForm('mail_send_form', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/message_send.php', $formParams), $page);
 $form->openGroupBox('gb_mail_contact_details', $gL10n->get('SYS_CONTACT_DETAILS'));
     
 if ($getUserId > 0)
@@ -170,13 +166,13 @@ if ($getUserId > 0)
     $preload_data = '{ id: "' .$getUserId. '", text: "' .$userEmail. '", locked: true}';
 }
  
-$form->addInput('msg_to', $gL10n->get('SYS_TO'), $userEmail, array('maxLength' => 50, 'property' => FIELD_DISABLED)); 
+$form->addInput('msg_to', $gL10n->get('SYS_TO'), $userEmail, array('maxLength' => 50, 'property' => HtmlForm::FIELD_DISABLED)); 
 $form->addLine();
-$form->addInput('name', $gL10n->get('MAI_YOUR_NAME'), $gCurrentUser->getValue('FIRST_NAME'). ' '. $gCurrentUser->getValue('LAST_NAME'), array('maxLength' => 50, 'property' => FIELD_DISABLED));
-$form->addInput('mailfrom', $gL10n->get('MAI_YOUR_EMAIL'), $gCurrentUser->getValue('EMAIL'), array('maxLength' => 50, 'property' => FIELD_DISABLED));
+$form->addInput('name', $gL10n->get('MAI_YOUR_NAME'), $gCurrentUser->getValue('FIRST_NAME'). ' '. $gCurrentUser->getValue('LAST_NAME'), array('maxLength' => 50, 'property' => HtmlForm::FIELD_DISABLED));
+$form->addInput('mailfrom', $gL10n->get('MAI_YOUR_EMAIL'), $gCurrentUser->getValue('EMAIL'), array('maxLength' => 50, 'property' => HtmlForm::FIELD_DISABLED));
 $form->addCheckbox('carbon_copy', $gL10n->get('MAI_SEND_COPY'), $form_values['carbon_copy']);
  
-if (($gCurrentUser->getValue('usr_id') > 0 && $gPreferences['mail_delivery_confirmation'] == 2) || $gPreferences['mail_delivery_confirmation'] == 1)
+if (($gCurrentUser->getValue('usr_id') > 0 && $gSettingsManager->getInt('mail_delivery_confirmation') == 2) || $gSettingsManager->getInt('mail_delivery_confirmation') == 1)
 {
     $form->addCheckbox('delivery_confirmation', $gL10n->get('MAI_DELIVERY_CONFIRMATION'), $form_values['delivery_confirmation']);
 }
@@ -184,26 +180,40 @@ if (($gCurrentUser->getValue('usr_id') > 0 && $gPreferences['mail_delivery_confi
 $form->closeGroupBox();
 
 $form->openGroupBox('gb_mail_message', $gL10n->get('SYS_MESSAGE'));
-$form->addInput('subject', $gL10n->get('MAI_SUBJECT'), $form_values['subject'], array('maxLength' => 77, 'property' => FIELD_REQUIRED));
+$form->addInput('subject', $gL10n->get('MAI_SUBJECT'), $form_values['subject'], array('maxLength' => 77, 'property' => HtmlForm::FIELD_REQUIRED));
 
-$form->addFileUpload('btn_add_attachment', $gL10n->get('MAI_ATTACHEMENT'), array('enableMultiUploads' => true, 'multiUploadLabel' => $gL10n->get('MAI_ADD_ATTACHEMENT'), 
-    'hideUploadField' => true, 'helpTextIdLabel' => array('MAI_MAX_ATTACHMENT_SIZE', Email::getMaxAttachmentSize('mb'))));
+if (($gSettingsManager->getInt('max_email_attachment_size') > 0) && PhpIniUtils::isFileUploadEnabled())
+{
+    $form->addFileUpload(
+        'btn_add_attachment', $gL10n->get('MAI_ATTACHEMENT'),
+        array(
+            'enableMultiUploads' => true,
+            'maxUploadSize'      => Email::getMaxAttachmentSize(),
+            'multiUploadLabel'   => $gL10n->get('MAI_ADD_ATTACHEMENT'),
+            'hideUploadField'    => true,
+            'helpTextIdLabel'    => $gL10n->get('MAI_MAX_ATTACHMENT_SIZE', array(Email::getMaxAttachmentSize(Email::SIZE_UNIT_MEBIBYTE))),
+            
+            'icon'               => 'fa-paperclip'
+        )
+    );
+}
 
 $templates = admFuncGetDirectoryEntries(ADMIDIO_PATH . FOLDER_DATA . '/mail_templates');
+$selectBoxEntries = array();
 if (is_array($templates))
 {
-    foreach($templates as &$templateName)
+    foreach($templates as $templateName)
     {
-        $templateName = str_replace('.html', '', $templateName);
+        $selectBoxEntries[$templateName] = str_replace('.html', '', $templateName);
     }
     unset($templateName);
-    $form->addSelectBox('msg_template', $gL10n->get('PLG_GEBURTSTAGSLISTE_TEMPLATE'), $templates,
+    $form->addSelectBox('msg_template', $gL10n->get('PLG_GEBURTSTAGSLISTE_TEMPLATE'), $selectBoxEntries,
         array('defaultValue' => 'template.html', 'showContextDependentFirstEntry' => true, 'helpTextIdLabel' => 'PLG_GEBURTSTAGSLISTE_TEMPLATE_DESC')
     );
 }
 
 // add textfield or ckeditor to form
-if ($gValidLogin == true && $gPreferences['mail_html_registered_users'] == 1)
+if ($gValidLogin == true && $gSettingsManager->getInt('mail_html_registered_users') == 1)
 {
     $form->addEditor('msg_body', null, $form_values['msg_body']);
 }
@@ -213,8 +223,7 @@ else
 }
 
 $form->closeGroupBox();
-
-$form->addSubmitButton('btn_send', $gL10n->get('SYS_SEND'), array('icon' => THEME_URL .'/icons/email.png', 'class' => ' col-sm-offset-3'));
+$form->addSubmitButton('btn_send', $gL10n->get('SYS_SEND'), array('icon' => 'fa-envelope'));
 
 // add form to html page and show page
 $page->addHtml($form->show(false));

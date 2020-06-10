@@ -275,6 +275,6 @@ function escapeIcalText($text)
         '<br />' => '\n' // workaround
     );
     
-    return trim(admStrMultiReplace($text, $replaces));
+    return trim(StringUtils::strMultiReplace($text, $replaces));
 }
     
