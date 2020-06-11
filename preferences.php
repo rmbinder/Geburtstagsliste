@@ -89,15 +89,16 @@ if ( !StringUtils::strContains($gNavigation->getUrl(), 'preferences.php'))
 $page = new HtmlPage($headline);
 $page->setUrlPreviousPage($gNavigation->getPreviousUrl());
 
-// open the module configurations if a new configuration is added 
+// open the module configurations if a configuration is added or deleted
 if ($getAddDelete)
 {
     $page->addJavascript('
-        $("#tabs_nav_common").attr("class", "active");
-        $("#tabs-common").attr("class", "tab-pane active");
-        $("#collapse_configurations").attr("class", "panel-collapse collapse in");
-        location.hash = "#" + "panel_configurations";
-    ', true);
+        $("#tabs_nav_common").attr("class", "nav-link active");
+        $("#tabs-common").attr("class", "tab-pane fade show active");
+        $("#collapse_configurations").attr("class", "collapse show");
+        location.hash = "#" + "panel_configurations";',
+        true
+    );
 }
 else
 {
@@ -106,11 +107,6 @@ else
         $("#tabs-common").attr("class", "tab-pane active");
     ', true);
 }
-
-$page->addJavascript('
-    $("#tabs_nav_common").attr("class", "active");
-    $("#tabs-common").attr("class", "tab-pane active");
-', true);
 
 $page->addJavascript('
     $(".form-preferences").submit(function(event) {
