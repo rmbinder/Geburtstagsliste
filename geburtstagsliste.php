@@ -164,9 +164,10 @@ $numMembers = count($liste->listData);
 //die Spaltenanzahl bestimmen
 $columnCount = count($liste->headerData);
 
-// if html mode and last url was not a list view then save this url to navigation stack
-if ($getMode === 'html' && !StringUtils::strContains($gNavigation->getUrl(), 'geburtstagsliste.php'))
+// in html mode save the current url (with passed variables) to navigation stack
+if ($getMode === 'html' )
 {
+    $gNavigation->deleteLastUrl();
     $gNavigation->addUrl(CURRENT_URL);
 }
 

@@ -79,7 +79,6 @@ elseif ($getAddDelete > 0)
 $num_configs = count($pPreferences->config['Konfigurationen']['col_desc']);
 $pPreferences->save();
 
-// if html mode and last url was not a list view then save this url to navigation stack
 if ( !StringUtils::strContains($gNavigation->getUrl(), 'preferences.php'))
 {
     $gNavigation->addUrl(CURRENT_URL);

@@ -248,7 +248,6 @@ if ($sendResult === TRUE)
         $gMessage->setForwardUrl($gHomepage, 2000);
     }
 
-    //$gMessage->show($gL10n->get('SYS_EMAIL_SEND', $user->getValue('FIRST_NAME').' '.$user->getValue('LAST_NAME')));
     $gMessage->show($gL10n->get('SYS_EMAIL_SEND'));
 }
 else
