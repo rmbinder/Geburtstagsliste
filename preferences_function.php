@@ -118,7 +118,7 @@ case 2:
 	$headline = $gL10n->get('PLG_GEBURTSTAGSLISTE_DEINSTALLATION');
 	 
 	// create html page object
-    $page = new HtmlPage($headline);
+    $page = new HtmlPage('plg-geburtstagsliste-deinstallation', $headline);
     
     $gNavigation->addUrl(CURRENT_URL, $headline);
     $page->setUrlPreviousPage($gNavigation->getPreviousUrl());

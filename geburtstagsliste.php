@@ -179,7 +179,7 @@ if ($getMode != 'csv')
     if ($getMode == 'print')
     {
         // create html page object without the custom theme files
-        $page = new HtmlPage($headline);
+        $page = new HtmlPage('plg-geburtstagsliste-main-print', $headline);
         $page->hideThemeHtml();
         $page->hideMenu();
         $page->setPrintMode();
@@ -248,7 +248,7 @@ if ($getMode != 'csv')
         $hoverRows = true;
 
         // create html page object
-        $page = new HtmlPage();
+        $page = new HtmlPage('plg-geburtstagsliste-main-html');
         $page->setTitle($title);
         $page->setHeadline($headline);
         $page->addHtml('<h5>'.$subheadline.'</h5>');
