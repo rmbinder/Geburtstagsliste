@@ -1,7 +1,7 @@
 <?php
 /**
  ***********************************************************************************************
-  * Geburtstagsliste
+ * Geburtstagsliste
  *
  * Version 3.0.0-Beta1
  *
@@ -20,17 +20,15 @@
 /******************************************************************************
  * Parameters:
  *
- * mode   		: Output (html, print, csv-ms, csv-oo, pdf, pdfl)
- * full_screen  : 0 - (Default) show sidebar, head and page bottom of html page
- *                1 - Only show the list without any other html unnecessary elements
- * config		: Die gewaehlte Konfiguration (Alte Bezeichnung Fokus; die Standardeinstellung wurde über Einstellungen-Optionen festgelegt)
- * month		: Der gewaehlte Monat
- * previewdays	: Die vorauszuschauenden Tage (Default wurde in Optionen festgelegt)
- * previewmode	: days   - (Default) Die Anzeige einer bestimmten Anzahl von Tagen wurde gewaehlt
- * 				  months - Die Anzeige für einen Monat wurde gewaehlt
- * filter_enable: 0 - (Default) No filter option
- *                1 - Filter option is enabled
- * filter		: Filter string
+ * mode   		     : Output (html, print, csv-ms, csv-oo, pdf, pdfl)
+ * config		     : Die gewaehlte Konfiguration (Alte Bezeichnung Fokus; die Standardeinstellung wurde über Einstellungen-Optionen festgelegt)
+ * month		     : Der gewaehlte Monat
+ * previewdays	     : Die vorauszuschauenden Tage (Default wurde in Optionen festgelegt)
+ * previewmode	     : days   - (Default) Die Anzeige einer bestimmten Anzahl von Tagen wurde gewaehlt
+ * 				       months - Die Anzeige für einen Monat wurde gewaehlt
+ * export_and_filter : 0 - (Default) No filter and export menu
+ *                     1 - Filter and export menu is enabled
+ * filter		     : Filter string
  *
  *****************************************************************************/
 
@@ -178,10 +176,7 @@ if ($getMode != 'csv')
 
     if ($getMode == 'print')
     {
-        // create html page object without the custom theme files
         $page = new HtmlPage('plg-geburtstagsliste-main-print', $headline);
-        $page->hideThemeHtml();
-        $page->hideMenu();
         $page->setPrintMode();
                 
         $page->setTitle($title);
@@ -368,7 +363,6 @@ if ($getMode != 'csv')
     		$page->addPageFunctionsMenuItem('admMenuItemPreferencesLists', $gL10n->get('PLG_KATEGORIEREPORT_SETTINGS'), SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences.php'),  'fa-cog');
 		} 
         
-        $birthdaylistNavbar = new HtmlNavbar('navbar_birthdaylist');
 		$form = new HtmlForm('navbar_birthdaylist_form', SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/geburtstagsliste.php', array('headline' => $headline)), $page, array('type' => 'navbar', 'setFocus' => false));
         
         $selectBoxEntries = array(' ' => $gL10n->get('PLG_GEBURTSTAGSLISTE_SELECT_CONFIGURATION').' ...');
@@ -404,8 +398,7 @@ if ($getMode != 'csv')
         $form->addInput('month', '', $getMonth, array('property' => HtmlForm::FIELD_HIDDEN));
         $form->addInput('config', '', $getConfig, array('property' => HtmlForm::FIELD_HIDDEN));
         
-        $birthdaylistNavbar->addForm($form->show());
-		$page->addHtml($birthdaylistNavbar->show());
+        $page->addHtml($form->show());
         
         $table = new HtmlTable('adm_lists_table', $page, $hoverRows, $datatable, $classTable);
         $table->setDatatablesRowsPerPage($gSettingsManager->getInt('lists_members_per_page'));
@@ -614,7 +607,7 @@ if ($getMode == 'csv' || $getMode == 'pdf')
 
 if ($getMode == 'csv')
 {
-   // download CSV file
+    // download CSV file
     header('Content-Type: text/comma-separated-values; charset='.$charset);
 
     if ($charset === 'iso-8859-1')
@@ -653,11 +646,17 @@ elseif ($getMode == 'pdf')
         // TODO
     }
 }
-elseif ($getMode == 'html' || $getMode == 'print')
-{    
-    // add table list to the page
+elseif ($getMode == 'html' && $getExportAndFilter)
+{ 
+    $page->addHtml('<div style="width:100%; height: 500px; overflow:auto; border:20px;">');
     $page->addHtml($table->show(false));
-
-    // show complete html page
+    $page->addHtml('</div><br/>');
+   
+    $page->show();
+}
+elseif (($getMode == 'html' && !$getExportAndFilter) || $getMode == 'print')
+{
+    $page->addHtml($table->show(false));
+    
     $page->show();
 }
