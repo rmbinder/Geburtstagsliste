@@ -121,7 +121,7 @@ case 2:
     $page = new HtmlPage('plg-geburtstagsliste-deinstallation', $headline);
     
     $gNavigation->addUrl(CURRENT_URL, $headline);
-    $page->setUrlPreviousPage($gNavigation->getPreviousUrl());
+
     $page->addHtml('<p class="lead">'.$gL10n->get('PLG_GEBURTSTAGSLISTE_DEINSTALLATION_FORM_DESC').'</p>');
 
     // show form

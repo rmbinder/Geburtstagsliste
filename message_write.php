@@ -109,7 +109,6 @@ $page = new HtmlPage('plg-geburtstagsliste-message-write', $headline);
 
 // add current url to navigation stack
 $gNavigation->addUrl(CURRENT_URL, $headline);
-$page->setUrlPreviousPage($gNavigation->getPreviousUrl());
 
  //Datensatz für E-Mail-Adresse zusammensetzen
 if (strlen($user->getValue('EMAIL')) > 0)
