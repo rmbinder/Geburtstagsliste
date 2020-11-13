@@ -401,7 +401,7 @@ if ($getMode != 'csv')
         $page->addHtml($form->show());
         
         $table = new HtmlTable('adm_lists_table', $page, $hoverRows, $datatable, $classTable);
-        $table->setDatatablesRowsPerPage($gSettingsManager->getInt('lists_members_per_page'));
+        $table->setDatatablesRowsPerPage($gSettingsManager->getInt('groups_roles_members_per_page'));
     }
 	else
 	{
