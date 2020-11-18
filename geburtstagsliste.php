@@ -162,11 +162,9 @@ $numMembers = count($liste->listData);
 //die Spaltenanzahl bestimmen
 $columnCount = count($liste->headerData);
 
-// in html mode save the current url (with passed variables) to navigation stack
 if ($getMode === 'html' )
 {
-    $gNavigation->deleteLastUrl();
-    $gNavigation->addUrl(CURRENT_URL);
+    $gNavigation->addStartUrl(CURRENT_URL, $headline);
 }
 
 if ($getMode != 'csv')
