@@ -195,7 +195,7 @@ if (($gSettingsManager->getInt('max_email_attachment_size') > 0) && PhpIniUtils:
     );
 }
 
-$templates = admFuncGetDirectoryEntries(ADMIDIO_PATH . FOLDER_DATA . '/mail_templates');
+$templates = array_keys(FileSystemUtils::getDirectoryContent(ADMIDIO_PATH . FOLDER_DATA . '/mail_templates', false, false, array(FileSystemUtils::CONTENT_TYPE_FILE)));
 $selectBoxEntries = array();
 if (is_array($templates))
 {
