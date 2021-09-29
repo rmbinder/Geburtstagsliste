@@ -158,12 +158,6 @@ if (strlen($getSubject) > 0)
 // show form
 $form = new HtmlForm('mail_send_form', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/message_send.php', $formParams), $page);
 $form->openGroupBox('gb_mail_contact_details', $gL10n->get('SYS_CONTACT_DETAILS'));
-    
-if ($userId > 0)
-{
-    // usr_id wurde uebergeben, dann E-Mail direkt an den User schreiben
-    $preload_data = '{ id: "' .$userId. '", text: "' .$userEmail. '", locked: true}';
-}
  
 $form->addInput('msg_to', $gL10n->get('SYS_TO'), $userEmail, array('maxLength' => 50, 'property' => HtmlForm::FIELD_DISABLED)); 
 $form->addLine();
