@@ -82,32 +82,6 @@ function isUserAuthorized($scriptName)
 }
 
 /**
- * Funktion überprueft den uebergebenen Namen, ob er gemaess den Namenskonventionen für
- * Profilfelder und Kategorien zum Uebersetzen durch eine Sprachdatei geeignet ist
- * Bsp: SYS_COMMON --> Rueckgabe true
- * Bsp: Mitgliedsbeitrag --> Rueckgabe false
- *
- * @param   string  $field_name
- * @return  bool
- */
-function check_languagePGL($field_name)
-{
-    $ret = false;
- 
-    //pruefen, ob die ersten 3 Zeichen von $field_name Grußbuchstaben sind
-    //pruefen, ob das vierte Zeichen von $field_name ein _ ist
-
-    //Pruefung entfaellt: pruefen, ob die restlichen Zeichen von $field_name Grussbuchstaben sind
-    //if ((ctype_upper(substr($field_name,0,3))) && ((substr($field_name,3,1))=='_')  && (ctype_upper(substr($field_name,4)))   )
-
-    if ((ctype_upper(substr($field_name,0,3))) && ((substr($field_name,3,1)) == '_'))
-    {
-      $ret = true;
-    }
-    return $ret;
-}
-
-/**
  * Vergleichsfunktion für g_arr_dimsort (aus dem Web)
  * @param   mixed  $a
  * @param   mixed  $b
@@ -244,10 +218,10 @@ function generate_configSelection()
 	$k = 0;
 	while ($row = $statement->fetch())
 	{
-		// ueberpruefen, ob der Kategoriename mittels der Sprachdatei uebersetzt werden kann
-        if (check_languagePGL($row['cat_name']))
+        // check if the category name must be translated
+        if (Language::isTranslationStringId($row['cat_name']))
         {
-        	$row['cat_name'] = $gL10n->get($row['cat_name']);
+            $row['cat_name'] = $gL10n->get($row['cat_name']);
         }
 		$categories[$k]['cat_id']   = $row['cat_id'];
 		$categories[$k]['cat_name'] = $row['cat_name'];
