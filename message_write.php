@@ -99,11 +99,11 @@ $getBody = preg_replace ('/\r\n/', '<BR>', $getBody);
 
 if (strlen($getSubject) > 0)
 {
-    $headline = $gL10n->get('MAI_SUBJECT').': '.$getSubject;
+    $headline = $gL10n->get('SYS_SUBJECT').': '.$getSubject;
 }
 else
 {
-    $headline = $gL10n->get('MAI_SEND_EMAIL');
+    $headline = $gL10n->get('SYS_SEND_EMAIL');
 }
 
 // create html page object
@@ -167,30 +167,30 @@ if ($userId > 0)
  
 $form->addInput('msg_to', $gL10n->get('SYS_TO'), $userEmail, array('maxLength' => 50, 'property' => HtmlForm::FIELD_DISABLED)); 
 $form->addLine();
-$form->addInput('name', $gL10n->get('MAI_YOUR_NAME'), $gCurrentUser->getValue('FIRST_NAME'). ' '. $gCurrentUser->getValue('LAST_NAME'), array('maxLength' => 50, 'property' => HtmlForm::FIELD_DISABLED));
-$form->addInput('mailfrom', $gL10n->get('MAI_YOUR_EMAIL'), $gCurrentUser->getValue('EMAIL'), array('maxLength' => 50, 'property' => HtmlForm::FIELD_DISABLED));
-$form->addCheckbox('carbon_copy', $gL10n->get('MAI_SEND_COPY'), $form_values['carbon_copy']);
+$form->addInput('name', $gL10n->get('SYS_YOUR_NAME'), $gCurrentUser->getValue('FIRST_NAME'). ' '. $gCurrentUser->getValue('LAST_NAME'), array('maxLength' => 50, 'property' => HtmlForm::FIELD_DISABLED));
+$form->addInput('mailfrom', $gL10n->get('SYS_YOUR_EMAIL'), $gCurrentUser->getValue('EMAIL'), array('maxLength' => 50, 'property' => HtmlForm::FIELD_DISABLED));
+$form->addCheckbox('carbon_copy', $gL10n->get('SYS_SEND_COPY'), $form_values['carbon_copy']);
  
 if (($gCurrentUser->getValue('usr_id') > 0 && $gSettingsManager->getInt('mail_delivery_confirmation') == 2) || $gSettingsManager->getInt('mail_delivery_confirmation') == 1)
 {
-    $form->addCheckbox('delivery_confirmation', $gL10n->get('MAI_DELIVERY_CONFIRMATION'), $form_values['delivery_confirmation']);
+    $form->addCheckbox('delivery_confirmation', $gL10n->get('SYS_DELIVERY_CONFIRMATION'), $form_values['delivery_confirmation']);
 }
 
 $form->closeGroupBox();
 
 $form->openGroupBox('gb_mail_message', $gL10n->get('SYS_MESSAGE'));
-$form->addInput('subject', $gL10n->get('MAI_SUBJECT'), $form_values['subject'], array('maxLength' => 77, 'property' => HtmlForm::FIELD_REQUIRED));
+$form->addInput('subject', $gL10n->get('SYS_SUBJECT'), $form_values['subject'], array('maxLength' => 77, 'property' => HtmlForm::FIELD_REQUIRED));
 
 if (($gSettingsManager->getInt('max_email_attachment_size') > 0) && PhpIniUtils::isFileUploadEnabled())
 {
     $form->addFileUpload(
-        'btn_add_attachment', $gL10n->get('MAI_ATTACHEMENT'),
+        'btn_add_attachment', $gL10n->get('SYS_ATTACHMENT'),
         array(
             'enableMultiUploads' => true,
             'maxUploadSize'      => Email::getMaxAttachmentSize(),
-            'multiUploadLabel'   => $gL10n->get('MAI_ADD_ATTACHEMENT'),
+            'multiUploadLabel'   => $gL10n->get('SYS_ADD_ATTACHMENT'),
             'hideUploadField'    => true,
-            'helpTextIdLabel'    => $gL10n->get('MAI_MAX_ATTACHMENT_SIZE', array(Email::getMaxAttachmentSize(Email::SIZE_UNIT_MEBIBYTE))),
+            'helpTextIdLabel'    => $gL10n->get('SYS_MAX_ATTACHMENT_SIZE', array(Email::getMaxAttachmentSize(Email::SIZE_UNIT_MEBIBYTE))),
             
             'icon'               => 'fa-paperclip'
         )

@@ -123,7 +123,7 @@ if ($email->setSender($postFrom,$postName))
                 // check if Upload was OK
                 if (($_FILES['userfile']['error'][$currentAttachmentNo] != 0) &&  ($_FILES['userfile']['error'][$currentAttachmentNo] != 4))
                 {
-                    $gMessage->show($gL10n->get('MAI_ATTACHMENT_TO_LARGE'));
+                    $gMessage->show($gL10n->get('SYS_ATTACHMENT_TO_LARGE'));
                 }
                     
                 if ($_FILES['userfile']['error'][$currentAttachmentNo] == 0)
@@ -132,7 +132,7 @@ if ($email->setSender($postFrom,$postName))
                     $attachmentSize = $attachmentSize + $_FILES['userfile']['size'][$currentAttachmentNo];
                     if($attachmentSize > $email->getMaxAttachmentSize("b"))
                     {
-                        $gMessage->show($gL10n->get('MAI_ATTACHMENT_TO_LARGE'));
+                        $gMessage->show($gL10n->get('SYS_ATTACHMENT_TO_LARGE'));
                     }
 
                     // set filetyp to standart if not given
@@ -156,7 +156,7 @@ if ($email->setSender($postFrom,$postName))
     }
     else
     {
-        $gMessage->show($gL10n->get('SYS_FIELD_EMPTY', $gL10n->get('MAI_SUBJECT')));
+        $gMessage->show($gL10n->get('SYS_FIELD_EMPTY', $gL10n->get('SYS_SUBJECT')));
     }
 }
 else
