@@ -16,7 +16,7 @@
     <string name="PLG_GEBURTSTAGSLISTE_COLUMN_SELECTION">Column selection</string>
     <string name="PLG_GEBURTSTAGSLISTE_COLUMN_SELECTION_DESC">Here the columns are selected to be displayed in the list.</string>
     <string name="PLG_GEBURTSTAGSLISTE_COL_DESC">Name</string>
-    <string name="PLG_GEBURTSTAGSLISTE_COL_DESC_DESC">The bearing is here will appear in the display selection menu "Configuration selection ...".\n\nA configuration can be deleted by the contents of the field name is deleted.</string>
+    <string name="PLG_GEBURTSTAGSLISTE_COL_DESC_DESC">The bearing is here will appear in the display selection menu "Configuration selection ...".</string>
     <string name="PLG_GEBURTSTAGSLISTE_COL_SEL">Date of test</string>
     <string name="PLG_GEBURTSTAGSLISTE_COL_SEL_DESC">Date of test is the date field used for the calculations (Either a profile field of type "Date" or choosing a role, the beginning of role membership)</string>
     <string name="PLG_GEBURTSTAGSLISTE_COL_SUFFIX">Additional text</string>

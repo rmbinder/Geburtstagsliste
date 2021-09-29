@@ -16,7 +16,7 @@
     <string name="PLG_GEBURTSTAGSLISTE_COLUMN_SELECTION">Spaltenauswahl</string>
     <string name="PLG_GEBURTSTAGSLISTE_COLUMN_SELECTION_DESC">Hier werden die Spalten ausgewählt, die in der Liste angezeigt werden sollen.</string>
     <string name="PLG_GEBURTSTAGSLISTE_COL_DESC">Bezeichnung</string>
-    <string name="PLG_GEBURTSTAGSLISTE_COL_DESC_DESC">Die hier eingetragende Bezeichnung erscheint in der Bildschirmanzeige im Auswahlmenü "Konfiguration wählen...".\n\nEine Konfiguration kann gelöscht werden, indem der Inhalt des Feldes Bezeichnung gelöscht wird.</string>
+    <string name="PLG_GEBURTSTAGSLISTE_COL_DESC_DESC">Die hier eingetragende Bezeichnung erscheint in der Bildschirmanzeige im Auswahlmenü "Konfiguration wählen...".</string>
     <string name="PLG_GEBURTSTAGSLISTE_COL_SEL">Prüfdatum</string>
     <string name="PLG_GEBURTSTAGSLISTE_COL_SEL_DESC">Prüfdatum ist das für die Berechnungen verwendete Datumsfeld (Entweder ein Profilfeld vom Typ "Datum" oder bei Wahl einer Rolle, der Beginn der Rollenmitgliedschaft)</string>
     <string name="PLG_GEBURTSTAGSLISTE_COL_SUFFIX">Ergänzungstext</string>

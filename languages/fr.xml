@@ -16,7 +16,7 @@
     <string name="PLG_GEBURTSTAGSLISTE_COLUMN_SELECTION">Sélection de colonne</string>
     <string name="PLG_GEBURTSTAGSLISTE_COLUMN_SELECTION_DESC">Les colonnes à afficher dans la liste sont sélectionnées ici.</string>
     <string name="PLG_GEBURTSTAGSLISTE_COL_DESC">Nom</string>
-    <string name="PLG_GEBURTSTAGSLISTE_COL_DESC_DESC">Le nom saisi ici apparaît dans le menu de sélection "Sélectionner la configuration...." à l\'écran.\n\nUne configuration peut être supprimée en supprimant le contenu du champ Nom.</string>
+    <string name="PLG_GEBURTSTAGSLISTE_COL_DESC_DESC">Le nom saisi ici apparaît dans le menu de sélection "Sélectionner la configuration...." à l\'écran.</string>
     <string name="PLG_GEBURTSTAGSLISTE_COL_SEL">Date de contrôle</string>
     <string name="PLG_GEBURTSTAGSLISTE_COL_SEL_DESC"> La date de contrôle est le champ de date utilisé pour les calculs (soit un champ de profil de type "Date" ou, si un rôle est sélectionné, le début de l\'adhésion au rôle).</string>
     <string name="PLG_GEBURTSTAGSLISTE_COL_SUFFIX">Texte complémentaire</string>
