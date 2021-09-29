@@ -19,7 +19,7 @@
 require_once(__DIR__ . '/../../adm_program/system/common.php');
 
 // Initialize and check the parameters
-$getUserId = admFuncVariableIsValid($_GET, 'usr_id', 'numeric', array('defaultValue' => 0));
+$getUserUuid   = admFuncVariableIsValid($_GET, 'user_uuid', 'string', array('defaultValue' => $gCurrentUser->getValue('usr_uuid')));
 
 // Check form values
 $postFrom                  = admFuncVariableIsValid($_POST, 'mailfrom', 'string', array('defaultValue' => ''));
@@ -75,7 +75,9 @@ $receiver = array();
 // Create new Email Object
 $email = new Email();
 
-$user = new User($gDb, $gProfileFields, $getUserId);
+$user = new User($gDb, $gProfileFields);
+$user->readDataByUuid($getUserUuid);
+$userId = $user->getValue('usr_id');
                 
 // error if no valid Email for given user ID
 if (!StringUtils::strValidCharacters($user->getValue('EMAIL'), 'email'))
@@ -225,8 +227,8 @@ if ($sendResult === TRUE)
 {
 	$sql = 'INSERT INTO '. TBL_MESSAGES. '
                        (msg_type, msg_subject, msg_usr_id_sender, msg_usr_id_receiver, msg_timestamp, msg_read)
-                VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP, 0) -- $getMsgType, $postSubjectSQL, $currUsrId, $getUserId';
-	$gDb->queryPrepared($sql, array($getMsgType, $postSubjectSQL, $currUsrId, $getUserId));
+                VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP, 0) -- $getMsgType, $postSubjectSQL, $currUsrId, $userId';
+	$gDb->queryPrepared($sql, array($getMsgType, $postSubjectSQL, $currUsrId, $userId));
 	$getMsgId = $gDb->lastInsertId();
 	
 	$sql = 'INSERT INTO '. TBL_MESSAGES_CONTENT. '

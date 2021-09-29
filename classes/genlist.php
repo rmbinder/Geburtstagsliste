@@ -193,7 +193,7 @@ class GenList
 					{
 						$colcount = 0;
         				$this->listData[$membercounter] = array();
-						$this->listData[$membercounter][$colcount] = $usr_id; 
+        				$this->listData[$membercounter][$colcount] = array('usr_id' => $usr_id, 'usr_uuid' => $user->getValue('usr_uuid')); 
 
         				$colcount = 1;
 						foreach (explode(',', $pPreferences->config['Konfigurationen']['col_fields'][$this->conf]) as $usfid )

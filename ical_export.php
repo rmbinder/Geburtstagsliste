@@ -91,7 +91,7 @@ $iCal = getIcalHeader();
 foreach ($liste->listData as $memberdata) 
 {
 	$contentArray = array(
-	    'USER_ID'         => $memberdata[0],
+	    'USER_UUID'       => $memberdata[0]['usr_uuid'],
 	    'LAST_NAME'       => '',
 	    'FIRST_NAME'      => '',
 	    'BIRTHDAY'        => '',
@@ -239,7 +239,7 @@ function getIcalVEvent($domain, $contentArray)
         'CREATED:' . date($dateTimeFormat)
     );
     
-    $iCalVEvent[] = 'UID:' . date($dateTimeFormat) . '+' .$contentArray['USER_ID']. '@' . $domain;
+    $iCalVEvent[] = 'UID:' . date($dateTimeFormat) . '+' .$contentArray['USER_UUID']. '@' . $domain;
     $iCalVEvent[] = 'SUMMARY:' . preg_replace('/\s+/', ' ',escapeIcalText($contentArray['FIRST_NAME'].' '.$contentArray['LAST_NAME'].' ('.$contentArray['LASTCOL_AGEONLY'].')'));
     $iCalVEvent[] = 'DESCRIPTION:' . escapeIcalText($contentArray['LASTCOL']);
     $iCalVEvent[] = 'DTSTAMP:' . date($dateTimeFormat);

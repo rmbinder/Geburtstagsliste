@@ -88,7 +88,7 @@ $getPreviewDays = admFuncVariableIsValid($_GET, 'previewdays', 'string', array('
 unset($validValues);
 
 $getMode            = admFuncVariableIsValid($_GET, 'mode', 'string', array('defaultValue' => 'html', 'validValues' => array('csv-ms', 'csv-oo', 'html', 'print', 'pdf', 'pdfl' )));
-$getMonth           = admFuncVariableIsValid($_GET, 'month', 'string', array('validValues' => array('00','01', '02', '03', '04', '05', '06','07','08','09','10','11','12' )));
+$getMonth           = admFuncVariableIsValid($_GET, 'month', 'string', array('defaultValue' => '00', 'validValues' => array('00','01', '02', '03', '04', '05', '06','07','08','09','10','11','12' )));
 $getFilter          = admFuncVariableIsValid($_GET, 'filter', 'string');
 $getExportAndFilter = admFuncVariableIsValid($_GET, 'export_and_filter', 'bool', array('defaultValue' => false));
 
@@ -540,7 +540,7 @@ foreach ($liste->listData as $memberdata)
         {            	
         	if ($usf_id != 0 && $gProfileFields->getPropertyById($usf_id, 'usf_type') != 'EMAIL')     //only profileFields without EMAIL
         	{
-        		$content = $gProfileFields->getHtmlValue($gProfileFields->getPropertyById($usf_id, 'usf_name_intern'), $content, $memberdata[0]);
+        	    $content = $gProfileFields->getHtmlValue($gProfileFields->getPropertyById($usf_id, 'usf_name_intern'), $content, $memberdata[0]['usr_id']);
         	}
         	
             // if empty string pass a whitespace
@@ -554,7 +554,7 @@ foreach ($liste->listData as $memberdata)
 					}
 					else
 					{
-						$mail_link = SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS.PLUGIN_FOLDER.'/message_write.php', array('usr_id' => $memberdata[0], 'config' => trim($getConfig,'X'), 'configtext' => end($memberdata)));
+					    $mail_link = SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS.PLUGIN_FOLDER.'/message_write.php', array('user_uuid' => $memberdata[0]['usr_uuid'], 'config' => trim($getConfig,'X'), 'configtext' => end($memberdata)));
 					}
 					$columnValues[] = '<a href="'.$mail_link.'">'.$content.'</a><br />';
         		}
@@ -563,7 +563,7 @@ foreach ($liste->listData as $memberdata)
         		 		|| $gProfileFields->getPropertyById($usf_id, 'usf_name_intern') == 'FIRST_NAME')
         		 	&& substr($liste->headerData[$i]['id'], 0, 1) != 'r')
         		{
-        			$columnValues[] = '<a href="'.SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_MODULES.'/profile/profile.php', array('user_id' => $memberdata[0])).'">'.$content.'</a>';
+        		    $columnValues[] = '<a href="'.SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_MODULES.'/profile/profile.php', array('user_uuid' => $memberdata[0]['usr_uuid'])).'">'.$content.'</a>';
         		}
         		else 
 				{

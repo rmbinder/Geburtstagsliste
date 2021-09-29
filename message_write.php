@@ -28,7 +28,7 @@ if (!StringUtils::strContains($gNavigation->getUrl(), 'geburtstagsliste.php') &&
 	$gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
 }
 
-$getUserId     = admFuncVariableIsValid($_GET, 'usr_id', 'numeric', array('defaultValue' => 0));
+$getUserUuid   = admFuncVariableIsValid($_GET, 'user_uuid', 'string', array('defaultValue' => $gCurrentUser->getValue('usr_uuid')));
 $getConfigText = admFuncVariableIsValid($_GET, 'configtext', 'string');
 $getConfig     = admFuncVariableIsValid($_GET, 'config', 'numeric', array('defaultValue' => 0));
 
@@ -51,8 +51,10 @@ if ($gValidLogin && strlen($gCurrentUser->getValue('EMAIL')) == 0)
     $gMessage->show($gL10n->get('SYS_CURRENT_USER_NO_EMAIL', '<a href="'. ADMIDIO_URL . FOLDER_MODULES . '/profile/profile.php">', '</a>'));
 }
 
-//usr_id wurde uebergeben, dann Kontaktdaten des Users aus der DB fischen
-$user = new User($gDb, $gProfileFields, $getUserId);
+//user_uuid wurde uebergeben, dann Kontaktdaten des Users aus der DB fischen
+$user = new User($gDb, $gProfileFields);
+$user->readDataByUuid($getUserUuid);
+$userId = $user->getValue('usr_id');
 
 // if an User ID is given, we need to check if the actual user is alowed to contact this user  
 if (($gCurrentUser->editUsers() == false && isMember($user->getValue('usr_id')) == false)
@@ -145,7 +147,7 @@ else
     $form_values['delivery_confirmation'] = 0;
 }
 
-$formParams = array('usr_id' => $getUserId);
+$formParams = array('user_uuid' => $getUserUuid);
 
 // if subject was set as param then send this subject to next script
 if (strlen($getSubject) > 0)
@@ -157,10 +159,10 @@ if (strlen($getSubject) > 0)
 $form = new HtmlForm('mail_send_form', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/message_send.php', $formParams), $page);
 $form->openGroupBox('gb_mail_contact_details', $gL10n->get('SYS_CONTACT_DETAILS'));
     
-if ($getUserId > 0)
+if ($userId > 0)
 {
     // usr_id wurde uebergeben, dann E-Mail direkt an den User schreiben
-    $preload_data = '{ id: "' .$getUserId. '", text: "' .$userEmail. '", locked: true}';
+    $preload_data = '{ id: "' .$userId. '", text: "' .$userEmail. '", locked: true}';
 }
  
 $form->addInput('msg_to', $gL10n->get('SYS_TO'), $userEmail, array('maxLength' => 50, 'property' => HtmlForm::FIELD_DISABLED)); 
