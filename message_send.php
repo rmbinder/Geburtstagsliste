@@ -3,7 +3,7 @@
  ***********************************************************************************************
  * Check message information and save it
  *
- * @copyright 2004-2020 The Admidio Team
+ * @copyright 2004-2021 The Admidio Team
  * @see https://www.admidio.org/
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
  ***********************************************************************************************
@@ -12,7 +12,7 @@
 /******************************************************************************
  * Parameters:
  *
- * usr_id  : Send email to this user
+ * usr_uuid  : Send email to this user
  *
  *****************************************************************************/
 
@@ -22,53 +22,46 @@ require_once(__DIR__ . '/../../adm_program/system/common.php');
 $getUserUuid   = admFuncVariableIsValid($_GET, 'user_uuid', 'string', array('defaultValue' => $gCurrentUser->getValue('usr_uuid')));
 
 // Check form values
-$postFrom                  = admFuncVariableIsValid($_POST, 'mailfrom', 'string', array('defaultValue' => ''));
-$postName                  = admFuncVariableIsValid($_POST, 'name', 'string', array('defaultValue' => ''));
-$postSubject               = admFuncVariableIsValid($_POST, 'subject', 'html', array('defaultValue' => ''));
-$postSubjectSQL            = admFuncVariableIsValid($_POST, 'subject', 'string', array('defaultValue' => ''));
-$postBody                  = admFuncVariableIsValid($_POST, 'msg_body', 'html', array('defaultValue' => ''));
-$postBodySQL               = admFuncVariableIsValid($_POST, 'msg_body', 'string', array('defaultValue' => ''));
-$postDeliveryConfirmation  = admFuncVariableIsValid($_POST, 'delivery_confirmation', 'boolean', array('defaultValue' => 0));
+$postFrom                  = admFuncVariableIsValid($_POST, 'mailfrom', 'string', array('defaultValue' => $gCurrentUser->getValue('EMAIL')));
+$postName                  = admFuncVariableIsValid($_POST, 'namefrom', 'string', array('defaultValue' => $gCurrentUser->getValue('FIRST_NAME'). ' '. $gCurrentUser->getValue('LAST_NAME')));
+$postSubject               = StringUtils::strStripTags($_POST['msg_subject']); 
+$postBody                  = admFuncVariableIsValid($_POST, 'msg_body', 'html');
+$postDeliveryConfirmation  = admFuncVariableIsValid($_POST, 'delivery_confirmation', 'bool');
 $postCarbonCopy            = admFuncVariableIsValid($_POST, 'carbon_copy', 'boolean', array('defaultValue' => 0));
 $postTemplate              = admFuncVariableIsValid($_POST, 'msg_template', 'string', array('defaultValue' => ''));
 
-$getMsgType = 'EMAIL';
+// save form data in session for back navigation
+$_SESSION['message_request'] = $_POST;
 
 // Stop if mail should be send and mail module is disabled
-if ($gSettingsManager->getInt('enable_mail_module') != 1)
+if (!$gSettingsManager->getBool('enable_mail_module'))
 {
     $gMessage->show($gL10n->get('SYS_MODULE_DISABLED'));
+    // => EXIT
 }
 
 // if Attachmentsize is higher than max_post_size from php.ini, then $_POST is empty.
 if (empty($_POST))
 {
     $gMessage->show($gL10n->get('SYS_INVALID_PAGE_VIEW'));
+    // => EXIT
 }
 
+$sendResult = false;
 $currUsrId = (int) $gCurrentUser->getValue('usr_id');
-
-// if user is logged in then show sender name and email
-if ($currUsrId > 0)
-{
-    $postName = $gCurrentUser->getValue('FIRST_NAME'). ' '. $gCurrentUser->getValue('LAST_NAME');
-    $postFrom = $gCurrentUser->getValue('EMAIL');
-}
 
 // if no User is set, he is not able to ask for delivery confirmation 
 if (!($currUsrId > 0 && $gSettingsManager->getInt('mail_delivery_confirmation') == 2) && $gSettingsManager->getInt('mail_delivery_confirmation') != 1)
 {
-    $postDeliveryConfirmation = 0;
+    $postDeliveryConfirmation = false;
 }
-
-// put values into SESSION
-$_SESSION['message_request'] = array(
-		'name'                  => $postName,
-		'msgfrom'               => $postFrom,
-		'subject'               => $postSubject,
-		'msg_body'              => $postBody,
-		'carbon_copy'           => $postCarbonCopy,
-		'delivery_confirmation' => $postDeliveryConfirmation );
+      
+// object to handle the current message in the database
+$message = new TableMessage($gDb);
+$message->setValue('msg_type', TableMessage::MESSAGE_TYPE_EMAIL);
+$message->setValue('msg_subject', $postSubject);
+$message->setValue('msg_usr_id_sender', $gCurrentUser->getValue('usr_id'));
+$message->addContent($postBody);        
 
 $receiver = array();
 
@@ -77,7 +70,6 @@ $email = new Email();
 
 $user = new User($gDb, $gProfileFields);
 $user->readDataByUuid($getUserUuid);
-$userId = $user->getValue('usr_id');
                 
 // error if no valid Email for given user ID
 if (!StringUtils::strValidCharacters($user->getValue('EMAIL'), 'email'))
@@ -92,14 +84,6 @@ $gNavigation->addUrl(CURRENT_URL);
 if (strlen($postName) == 0)
 {
     $gMessage->show($gL10n->get('SYS_FIELD_EMPTY', $gL10n->get('SYS_NAME')));
-}
-
-// check sending attributes for user, to be sure that they are correct
-if ($gValidLogin 
-    && (  $postFrom != $gCurrentUser->getValue('EMAIL') 
-       || $postName != $gCurrentUser->getValue('FIRST_NAME').' '.$gCurrentUser->getValue('LAST_NAME')) )
-{
-    $gMessage->show($gL10n->get('SYS_INVALID_PAGE_VIEW'));
 }
 
 // set sending address
@@ -118,21 +102,31 @@ if ($email->setSender($postFrom,$postName))
             }
             $attachmentSize = 0;
             // add now every attachment
-            for ($currentAttachmentNo = 0; isset($_FILES['userfile']['name'][$currentAttachmentNo]) == true; $currentAttachmentNo++)
+            for ($currentAttachmentNo = 0; isset($_FILES['userfile']['name'][$currentAttachmentNo]); ++$currentAttachmentNo)
             {
                 // check if Upload was OK
-                if (($_FILES['userfile']['error'][$currentAttachmentNo] != 0) &&  ($_FILES['userfile']['error'][$currentAttachmentNo] != 4))
+                if (($_FILES['userfile']['error'][$currentAttachmentNo] !== UPLOAD_ERR_OK) 
+                &&  ($_FILES['userfile']['error'][$currentAttachmentNo] !== UPLOAD_ERR_NO_FILE))
                 {
                     $gMessage->show($gL10n->get('SYS_ATTACHMENT_TO_LARGE'));
+                    // => EXIT
+                }
+                
+                // check if a file was really uploaded
+                if(!file_exists($_FILES['userfile']['tmp_name'][$currentAttachmentNo]) || !is_uploaded_file($_FILES['userfile']['tmp_name'][$currentAttachmentNo]))
+                {
+                    $gMessage->show($gL10n->get('SYS_FILE_NOT_EXIST'));
+                    // => EXIT
                 }
                     
-                if ($_FILES['userfile']['error'][$currentAttachmentNo] == 0)
+                if ($_FILES['userfile']['error'][$currentAttachmentNo] === UPLOAD_ERR_OK)
                 {
                     // check the size of the attachment
-                    $attachmentSize = $attachmentSize + $_FILES['userfile']['size'][$currentAttachmentNo];
-                    if($attachmentSize > $email->getMaxAttachmentSize("b"))
+                    $attachmentSize += $_FILES['userfile']['size'][$currentAttachmentNo];
+                    if ($attachmentSize > Email::getMaxAttachmentSize())
                     {
                         $gMessage->show($gL10n->get('SYS_ATTACHMENT_TO_LARGE'));
+                        // => EXIT
                     }
 
                     // set filetyp to standart if not given
@@ -145,6 +139,7 @@ if ($email->setSender($postFrom,$postName))
                     try
                     {
                         $email->AddAttachment($_FILES['userfile']['tmp_name'][$currentAttachmentNo], $_FILES['userfile']['name'][$currentAttachmentNo], $encoding = 'base64', $_FILES['userfile']['type'][$currentAttachmentNo]);
+                        $message->addAttachment($_FILES['userfile']['tmp_name'][$currentAttachmentNo], $_FILES['userfile']['name'][$currentAttachmentNo]);
                     }
                     catch (phpmailerException $e)
                     {
@@ -157,11 +152,13 @@ if ($email->setSender($postFrom,$postName))
     else
     {
         $gMessage->show($gL10n->get('SYS_FIELD_EMPTY', $gL10n->get('SYS_SUBJECT')));
+        // => EXIT
     }
 }
 else
 {
     $gMessage->show($gL10n->get('SYS_EMAIL_INVALID', $gL10n->get('SYS_EMAIL')));
+    // => EXIT
 }
 
 // if possible send html mail
@@ -178,8 +175,11 @@ if (isset($postCarbonCopy) && $postCarbonCopy)
 
 $email->addRecipient($user->getValue('EMAIL'), $user->getValue('FIRST_NAME').' '.$user->getValue('LAST_NAME'));
 
+// add user to the message object
+$message->addUser((int) $user->getValue('usr_id'), $user->getValue('FIRST_NAME') . ' ' . $user->getValue('LAST_NAME'));
+                             
 // add confirmation mail to the sender
-if ($postDeliveryConfirmation == 1)
+if ($postDeliveryConfirmation)
 {
     $email->ConfirmReadingTo = $gCurrentUser->getValue('EMAIL');
 }
@@ -225,16 +225,8 @@ $sendResult = $email->sendEmail();
 // message if send/save is OK
 if ($sendResult === TRUE)
 {
-	$sql = 'INSERT INTO '. TBL_MESSAGES. '
-                       (msg_type, msg_subject, msg_usr_id_sender, msg_usr_id_receiver, msg_timestamp, msg_read)
-                VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP, 0) -- $getMsgType, $postSubjectSQL, $currUsrId, $userId';
-	$gDb->queryPrepared($sql, array($getMsgType, $postSubjectSQL, $currUsrId, $userId));
-	$getMsgId = $gDb->lastInsertId();
-	
-	$sql = 'INSERT INTO '. TBL_MESSAGES_CONTENT. '
-                       (msc_msg_id, msc_part_id, msc_usr_id, msc_message, msc_timestamp)
-                VALUES (?, 1, ?, ?, CURRENT_TIMESTAMP) -- $getMsgId, $currUsrId, $postBody';
-	$gDb->queryPrepared($sql, array($getMsgId, $currUsrId, $postBody));
+    // save mail to database
+    $message->save();
 	
     // after sending remove the actual Page from the NaviObject and remove also the send-page
     $gNavigation->deleteLastUrl();
