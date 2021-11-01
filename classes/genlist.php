@@ -51,7 +51,26 @@ class GenList
 		global $gDb, $gProfileFields, $pPreferences, $gCurrentUser;
 		
 		// die Werte fuer die runden Geburtstage, Jubilaeen usw einlesen
-   		$jubi_rund = explode(',', $pPreferences->config['Konfigurationen']['col_values'][$this->conf]);
+		if (stristr($pPreferences->config['Konfigurationen']['col_values'][$this->conf],'-'))         // wenn das Zeichen '-' vorhanden ist, dann ist es ein Wertebereich (x-y;z)
+		{
+		    $jubi_rund = array();
+		    $jubi_rund_work = preg_split('/[-;]/', $pPreferences->config['Konfigurationen']['col_values'][$this->conf] );
+		    
+		    for ($x = $jubi_rund_work[0]; $x <= $jubi_rund_work[1]; $x += $jubi_rund_work[2] )
+		    {
+		        $jubi_rund[] = $x;
+		    } 
+		    
+		    //für den Fall, dass im Wertebereich (Von-Bis;Schrittweite) der "Von"-Wert größer als der "Bis-"Wert ist
+		    if (empty($jubi_rund))
+		    {
+		        $jubi_rund[] = '';
+		    }
+		}
+		else                                                                                          // else: leer ('') oder Einzelwerte (x1,x2,x3...)
+		{
+   	        $jubi_rund = explode(',', $pPreferences->config['Konfigurationen']['col_values'][$this->conf]);
+		}		
    					
 		$colfields = explode(',', $pPreferences->config['Konfigurationen']['col_fields'][$this->conf]);
 		for ($i = 1; $i < count($colfields)+1; $i++)
