@@ -62,7 +62,27 @@ case 1:
             			
         			$pPreferences->config['Konfigurationen']['col_desc'][] = $_POST['col_desc'. $conf];
     				$pPreferences->config['Konfigurationen']['col_sel'][] = $_POST['col_sel'. $conf];
-    				$pPreferences->config['Konfigurationen']['col_values'][] = trim(preg_replace('![^0-9,]!', '', $_POST['col_values'. $conf]),',');
+    				
+    				// die eingegebenen Werte überprüfen und bereinigt in der Datenbank ablegen
+    				// 1.: alle nicht relevanten Zeichen entfernen
+    				$_POST['col_values'. $conf] = preg_replace('![^0-9,-;]!', '', $_POST['col_values'. $conf]);
+    				// 2.: erstes Zeichen muss numerisch sein, wenn nicht: entfernen
+    				while (preg_match('/^[^1-9]/', $_POST['col_values'. $conf]))
+    				{
+    				    $_POST['col_values'. $conf] = substr($_POST['col_values'. $conf],1);
+    				}
+    				// 3.: letztes Zeichen muss numerisch sein, wenn nicht: entfernen
+    				while (preg_match('/[^0-9]$/', $_POST['col_values'. $conf]))
+    				{
+    				    $_POST['col_values'. $conf] = substr($_POST['col_values'. $conf],0,-1);
+    				}
+    				// 4.: wenn nicht leer oder nicht im Format "x-y;z" (für Wertebereich), dann kann es nur eine Zahlenliste sein "x1,x2,x3,..."
+    				if (!($_POST['col_values'. $conf] === '' || preg_match('/^[1-9][0-9]{0,}[-][1-9][0-9]{0,}?[;][1-9][0-9]{0,}$/', $_POST['col_values'. $conf])))
+    				{
+    				    $_POST['col_values'. $conf] = implode(',',preg_split('/[-;,]/', $_POST['col_values'. $conf], null, PREG_SPLIT_NO_EMPTY ));
+    				}
+    				$pPreferences->config['Konfigurationen']['col_values'][] = $_POST['col_values'. $conf];    
+    				
     				$pPreferences->config['Konfigurationen']['col_suffix'][] = $_POST['col_suffix'. $conf]; 
     				$pPreferences->config['Konfigurationen']['calendar_year'][] = isset($_POST['calendar_year'. $conf]) ? 1 : 0 ;
     				$pPreferences->config['Konfigurationen']['suppress_age'][] = isset($_POST['suppress_age'. $conf]) ? 1 : 0 ;

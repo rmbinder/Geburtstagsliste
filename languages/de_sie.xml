@@ -22,10 +22,10 @@
     <string name="PLG_GEBURTSTAGSLISTE_COL_SUFFIX">Ergänzungstext</string>
     <string name="PLG_GEBURTSTAGSLISTE_COL_SUFFIX_DESC">Der angegebene Text wird an das Lebensjahr oder Jubiläum angehängt.\n\n "ster Geburtstag am #Day#.#Month#" könnte z.B. angezeigt werden als "30ster Geburtstag am 10.02.".\n\nPlatzhalter:\n#Day# = Tag\n#Month# = Monat\n#Year# = Jahr</string>
     <string name="PLG_GEBURTSTAGSLISTE_COL_VALUES">Werte</string>
-    <string name="PLG_GEBURTSTAGSLISTE_COL_VALUES_DESC">Über Werte kann die Anzeige auf bestimmte Werte gefiltert werden. 30,40,50 bedeutet z.B., dass nur 30., 40. oder 50. Geburtstage oder Jubiläen angezeigt werden. Soll nicht gefiltert werden, so ist das Feld leer zu lassen.</string>
+    <string name="PLG_GEBURTSTAGSLISTE_COL_VALUES_DESC">Über Werte kann die Anzeige auf bestimmte Werte gefiltert werden. 30,40,50 bedeutet z.B., dass nur 30., 40. oder 50. Geburtstage oder Jubiläen angezeigt werden. Einzelne Werte können auch als Bereichsangabe "Von-Bis;Schrittweite" definiert werden (Bsp: 30-50;10 ergibt 30,40,50). Soll nicht gefiltert werden, so ist das Feld leer zu lassen.</string>
     <string name="PLG_GEBURTSTAGSLISTE_CONFIGURATION">Konfiguration</string>
     <string name="PLG_GEBURTSTAGSLISTE_CONFIGURATIONS">Konfigurationen</string>
-    <string name="PLG_GEBURTSTAGSLISTE_CONFIGURATIONS_DESC">Beispiel:\nBezeichnung: Runder Geburtstag\nPrüfdatum: Geburtstag\nWerte: 30,40,50,60,70,80 (Wird keine Filterung gewünscht, so ist das Feld leer zu lassen)\nErgänzungstext: . Geburtstag am #Day#.#Month#.</string>
+    <string name="PLG_GEBURTSTAGSLISTE_CONFIGURATIONS_DESC">Beispiel:\nBezeichnung: Runder Geburtstag\nPrüfdatum: Geburtstag\nWerte: 30,40,50,60,70,80 oder 30-80;10 (Wird keine Filterung gewünscht, so ist das Feld leer zu lassen)\nErgänzungstext: . Geburtstag am #Day#.#Month#.</string>
     <string name="PLG_GEBURTSTAGSLISTE_CONFIGURATIONS_HEADER">Hier können beliebig viele Konfigurationen für die Geburtstags- und Jubiläumsliste erstellt werden. In der Bildschirmanzeige wird jeweils eine dieser Konfigurationen über "Konfiguration wählen..." als Grundlage für Berechnungen und für die Anzeige verwendet.</string>
     <string name="PLG_GEBURTSTAGSLISTE_CONFIGURATION_AS_HEADER">Konfigurationsname als Überschrift</string>
     <string name="PLG_GEBURTSTAGSLISTE_CONFIGURATION_AS_HEADER_DESC">Soll der Konfigurationsname als Überschrift verwendet werden, so ist der Haken zu setzen.</string>
