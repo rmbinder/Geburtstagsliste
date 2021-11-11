@@ -539,7 +539,7 @@ foreach ($liste->listData as $memberdata)
         {            	
         	if ($usf_id != 0 && $gProfileFields->getPropertyById($usf_id, 'usf_type') != 'EMAIL')     //only profileFields without EMAIL
         	{
-        	    $content = $gProfileFields->getHtmlValue($gProfileFields->getPropertyById($usf_id, 'usf_name_intern'), $content, $memberdata[0]['usr_id']);
+        	    $content = $gProfileFields->getHtmlValue($gProfileFields->getPropertyById($usf_id, 'usf_name_intern'), $content);
         	}
         	
             // if empty string pass a whitespace
