@@ -3,16 +3,16 @@
  ***********************************************************************************************
  * Konfigurationsdaten fuer das Admidio-Plugin Geburtstagsliste
  *
- * @copyright 2004-2020 The Admidio Team
+ * @copyright 2004-2021 The Admidio Team
  * @see https://www.admidio.org/
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
  ***********************************************************************************************
  */
 
-global $gL10n, $gProfileFields;
+global $gProfileFields;
 
 //Standardwerte einer Neuinstallation oder beim Anfuegen einer zusaetzlichen Konfiguration       		
-$config_default['Konfigurationen'] = array('col_desc' 	=> array($gL10n->get('PLG_GEBURTSTAGSLISTE_PATTERN')),
+$config_default['Konfigurationen'] = array('col_desc' 	=> array($GLOBALS['gL10n']->get('PLG_GEBURTSTAGSLISTE_PATTERN')),
 										'col_sel' 		=> array('p'.$gProfileFields->getProperty('BIRTHDAY', 'usf_id')),
 										'col_values' 	=> array('50,60,70,80'),
 										'col_suffix' 	=> array('. Geburtstag am #Day#.#Month#.#Year#'),

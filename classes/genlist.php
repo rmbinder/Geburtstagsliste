@@ -48,7 +48,7 @@ class GenList
      */
 	public function generate_listData()
 	{
-		global $gDb, $gProfileFields, $pPreferences, $gCurrentUser;
+		global $gProfileFields, $pPreferences;
 		
 		// die Werte fuer die runden Geburtstage, Jubilaeen usw einlesen
 		if (stristr($pPreferences->config['Konfigurationen']['col_values'][$this->conf],'-'))         // wenn das Zeichen '-' vorhanden ist, dann ist es ein Wertebereich (x-y;z)
@@ -89,7 +89,7 @@ class GenList
 		$this->headerData[$i]['id'] = 0 ;
 		$this->headerData[$i]['data'] = $pPreferences->config['Konfigurationen']['col_desc'][$this->conf];
 	
-		$user = new User($gDb, $gProfileFields);
+		$user = new User($GLOBALS['gDb'], $gProfileFields);
 		
 		// Filter: nur Mitglieder der aktuellen Organisation
 		$orgCondition = ' mem_usr_id IN (
@@ -100,7 +100,7 @@ class GenList
         						    AND mem_end    > ? -- DATE_NOW
         						    AND rol_valid  = 1
         						    AND rol_cat_id = cat_id
-        						    AND (  cat_org_id = ? -- ORG_ID
+        						    AND (  cat_org_id = ? -- $GLOBALS[\'gCurrentOrgId\']
             					     OR cat_org_id IS NULL ) )';
 		
 		// alle Mitglieder inkl. evtl. vorhandener Beziehungen einlesen
@@ -115,9 +115,9 @@ class GenList
             $pPreferences->config['Konfigurationen']['relation'][$this->conf],
 			DATE_NOW,
 			DATE_NOW,
-			ORG_ID
+			$GLOBALS['gCurrentOrgId']
 		);    
-		$statement = $gDb->queryPrepared($sql, $queryParams);
+		$statement = $GLOBALS['gDb']->queryPrepared($sql, $queryParams);
 
 		while ($row = $statement->fetch())
 		{
@@ -159,7 +159,7 @@ class GenList
         	
         	foreach ($rolesArr as $role_id)
         	{
-        		if ($gCurrentUser->hasRightViewRole($role_id))
+        		if ($GLOBALS['gCurrentUser']->hasRightViewRole($role_id))
         		{
         			$hasRightToView = true;
         			break;
@@ -178,7 +178,7 @@ class GenList
         		// eine Rolle wurde als Fokusfeld gewaehlt (-> $workDate ist der Beginn der Rollenzugehoerigkeit)
         		elseif (substr($pPreferences->config['Konfigurationen']['col_sel'][$this->conf],0,1) == 'r')
         		{
-        			$membership = new TableAccess($gDb, TBL_MEMBERS, 'rol');
+        			$membership = new TableAccess($GLOBALS['gDb'], TBL_MEMBERS, 'rol');
         			$membership->readDataByColumns(array('mem_rol_id' => substr($pPreferences->config['Konfigurationen']['col_sel'][$this->conf], 1), 'mem_usr_id' => $usr_id));
         			$workDate = $membership->getValue('mem_begin');
         		}

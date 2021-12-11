@@ -3,7 +3,7 @@
  ***********************************************************************************************
  * Gemeinsame Funktionen fuer das Admidio-Plugin Geburtstagsliste
  *
- * @copyright 2004-2020 The Admidio Team
+ * @copyright 2004-2021 The Admidio Team
  * @see https://www.admidio.org/
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
  ***********************************************************************************************
@@ -16,11 +16,6 @@ if(!defined('PLUGIN_FOLDER'))
 	define('PLUGIN_FOLDER', '/'.substr(__DIR__,strrpos(__DIR__,DIRECTORY_SEPARATOR)+1));
 }
 
-if(!defined('ORG_ID'))
-{
-	define('ORG_ID', (int) $gCurrentOrganization->getValue('org_id'));
-}
-
 /**
  * Funktion prueft, ob der Nutzer berechtigt ist das Plugin aufzurufen.
  * Zur Prüfung werden die Einstellungen von 'Modulrechte' und 'Sichtbar für' 
@@ -30,7 +25,7 @@ if(!defined('ORG_ID'))
  */
 function isUserAuthorized($scriptName)
 {
-	global $gDb, $gCurrentUser, $gMessage, $gL10n, $gLogger;
+	global $gMessage;
 	
 	$userIsAuthorized = false;
 	$menId = 0;
@@ -39,13 +34,13 @@ function isUserAuthorized($scriptName)
               FROM '.TBL_MENU.'
              WHERE men_url = ? -- $scriptName ';
 	
-	$menuStatement = $gDb->queryPrepared($sql, array($scriptName));
+	$menuStatement = $GLOBALS['gDb']->queryPrepared($sql, array($scriptName));
 	
 	if ( $menuStatement->rowCount() === 0 || $menuStatement->rowCount() > 1)
 	{
-		$gLogger->notice('BirthdayList: Error with menu entry: Found rows: '. $menuStatement->rowCount() );
-		$gLogger->notice('BirthdayList: Error with menu entry: ScriptName: '. $scriptName);
-		$gMessage->show($gL10n->get('PLG_GEBURTSTAGSLISTE_MENU_URL_ERROR', array($scriptName)), $gL10n->get('SYS_ERROR'));
+		$GLOBALS['gLogger']->notice('BirthdayList: Error with menu entry: Found rows: '. $menuStatement->rowCount() );
+		$GLOBALS['gLogger']->notice('BirthdayList: Error with menu entry: ScriptName: '. $scriptName);
+		$gMessage->show($GLOBALS['gL10n']->get('PLG_GEBURTSTAGSLISTE_MENU_URL_ERROR', array($scriptName)), $GLOBALS['gL10n']->get('SYS_ERROR'));
 	}
 	else
 	{
@@ -62,17 +57,17 @@ function isUserAuthorized($scriptName)
              WHERE men_id = ? -- $menId
           ORDER BY men_men_id_parent DESC, men_order';
 	
-	$menuStatement = $gDb->queryPrepared($sql, array($menId));
+	$menuStatement = $GLOBALS['gDb']->queryPrepared($sql, array($menId));
 	while ($row = $menuStatement->fetch())
 	{
 		if ((int) $row['men_com_id'] === 0 || Component::isVisible($row['com_name_intern']))
 		{
 			// Read current roles rights of the menu
-			$displayMenu = new RolesRights($gDb, 'menu_view', $row['men_id']);
+			$displayMenu = new RolesRights($GLOBALS['gDb'], 'menu_view', $row['men_id']);
 			$rolesDisplayRight = $displayMenu->getRolesIds();
 			
 			// check for right to show the menu
-			if (count($rolesDisplayRight) === 0 || $displayMenu->hasRight($gCurrentUser->getRoleMemberships()))
+			if (count($rolesDisplayRight) === 0 || $displayMenu->hasRight($GLOBALS['gCurrentUser']->getRoleMemberships()))
 			{
 				$userIsAuthorized = true;
 			}
@@ -139,11 +134,9 @@ function g_arr_dimsort(&$arr, $dim, $type = '',$keepkey = false)
  */
 function isMemberOfCategorie($cat_id, $user_id = 0)
 {
-    global $gCurrentUser, $gDb;
-
     if ($user_id == 0)
     {
-        $user_id = $gCurrentUser->getValue('usr_id');
+        $user_id = $GLOBALS['gCurrentUserId'];
     }
     elseif (is_numeric($user_id) == false)
     {
@@ -159,7 +152,7 @@ function isMemberOfCategorie($cat_id, $user_id = 0)
                   AND cat_id   = ? -- $cat_id
                   AND rol_valid  = 1
                   AND rol_cat_id = cat_id
-                  AND (  cat_org_id = ? -- ORG_ID
+                  AND (  cat_org_id = ? -- $GLOBALS[\'gCurrentOrgId\']
                    OR cat_org_id IS NULL ) ';
     
     $queryParams = array(
@@ -167,9 +160,9 @@ function isMemberOfCategorie($cat_id, $user_id = 0)
         DATE_NOW,
         DATE_NOW,
         $cat_id,
-        ORG_ID
+        $GLOBALS['gCurrentOrgId']
     );
-    $statement = $gDb->queryPrepared($sql, $queryParams);
+    $statement = $GLOBALS['gDb']->queryPrepared($sql, $queryParams);
     $user_found = $statement->rowCount();
 
     if ($user_found == 1)
@@ -188,7 +181,7 @@ function isMemberOfCategorie($cat_id, $user_id = 0)
  */
 function generate_configSelection()
 {
-	global $gDb,  $gL10n, $gProfileFields, $gCurrentUser;
+	global $gProfileFields;
 	    
     $categories = array(); 
     $configSelection = array();  
@@ -196,7 +189,7 @@ function generate_configSelection()
     $i 	= 0;
     foreach ($gProfileFields->getProfileFields() as $field)
     {             
-        if (($field->getValue('usf_hidden') == 0 || $gCurrentUser->editUsers()) && $field->getValue('usf_type') == 'DATE')
+        if (($field->getValue('usf_hidden') == 0 || $GLOBALS['gCurrentUser']->editUsers()) && $field->getValue('usf_type') == 'DATE')
         {   
         	$configSelection[$i][0] = 'p'.$field->getValue('usf_id');
             $configSelection[$i][1] = addslashes($field->getValue('usf_name'));               
@@ -213,7 +206,7 @@ function generate_configSelection()
                          AND ( cat.cat_org_id = ?
                           OR cat.cat_org_id IS NULL )';
 	
-	$statement = $gDb->queryPrepared($sql, array(ORG_ID));
+	$statement = $GLOBALS['gDb']->queryPrepared($sql, array($GLOBALS['gCurrentOrgId']));
 
 	$k = 0;
 	while ($row = $statement->fetch())
@@ -221,7 +214,7 @@ function generate_configSelection()
         // check if the category name must be translated
         if (Language::isTranslationStringId($row['cat_name']))
         {
-            $row['cat_name'] = $gL10n->get($row['cat_name']);
+            $row['cat_name'] = $GLOBALS['gL10n']->get($row['cat_name']);
         }
 		$categories[$k]['cat_id']   = $row['cat_id'];
 		$categories[$k]['cat_name'] = $row['cat_name'];
@@ -235,12 +228,12 @@ function generate_configSelection()
                            FROM '.TBL_CATEGORIES.' as cat, '.TBL_ROLES.' as rol
                           WHERE cat.cat_id = ?
                             AND cat.cat_id = rol.rol_cat_id';
-    	$statement = $gDb->queryPrepared($sql, array($data['cat_id']));
+    	$statement = $GLOBALS['gDb']->queryPrepared($sql, array($data['cat_id']));
     		
         while ($row = $statement->fetch())
         {
         	$configSelection[$i][0] = 'r'.$row['rol_id'];
-			$configSelection[$i][1]	= $gL10n->get('SYS_ROLE').': '.$row['rol_name'];
+			$configSelection[$i][1]	= $GLOBALS['gL10n']->get('SYS_ROLE').': '.$row['rol_name'];
 			$configSelection[$i][2]	= $data['cat_name'];
 			$i++;
         }	

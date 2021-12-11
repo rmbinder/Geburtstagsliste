@@ -3,7 +3,7 @@
  ***********************************************************************************************
  * Verarbeiten der Einstellungen des Admidio-Plugins Geburtstagsliste
  *
- * @copyright 2004-2020 The Admidio Team
+ * @copyright 2004-2021 The Admidio Team
  * @see https://www.admidio.org/
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
  ***********************************************************************************************
@@ -56,7 +56,7 @@ case 1:
     			for ($conf = 0; isset($_POST['col_desc'. $conf]); $conf++)
     			{
     				$text = new TableText($gDb);
-    				$text->readDataByColumns(array('txt_name' => 'PGLMAIL_NOTIFICATION'.$conf, 'txt_org_id' => ORG_ID));
+    				$text->readDataByColumns(array('txt_name' => 'PGLMAIL_NOTIFICATION'.$conf, 'txt_org_id' => $gCurrentOrgId));
     				$text->setValue('txt_text', $_POST['col_mail'. $conf]);
             		$text->save();
             			

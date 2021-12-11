@@ -48,10 +48,9 @@ if (empty($_POST))
 }
 
 $sendResult = false;
-$currUsrId = (int) $gCurrentUser->getValue('usr_id');
 
 // if no User is set, he is not able to ask for delivery confirmation 
-if (!($currUsrId > 0 && $gSettingsManager->getInt('mail_delivery_confirmation') == 2) && $gSettingsManager->getInt('mail_delivery_confirmation') != 1)
+if (!($gCurrentUserId > 0 && $gSettingsManager->getInt('mail_delivery_confirmation') == 2) && $gSettingsManager->getInt('mail_delivery_confirmation') != 1)
 {
     $postDeliveryConfirmation = false;
 }
@@ -60,7 +59,7 @@ if (!($currUsrId > 0 && $gSettingsManager->getInt('mail_delivery_confirmation') 
 $message = new TableMessage($gDb);
 $message->setValue('msg_type', TableMessage::MESSAGE_TYPE_EMAIL);
 $message->setValue('msg_subject', $postSubject);
-$message->setValue('msg_usr_id_sender', $gCurrentUser->getValue('usr_id'));
+$message->setValue('msg_usr_id_sender', $gCurrentUserId);
 $message->addContent($postBody);        
 
 $receiver = array();

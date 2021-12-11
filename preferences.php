@@ -3,7 +3,7 @@
  ***********************************************************************************************
  * Modul Preferences (Einstellungen) fuer das Admidio-Plugin Geburtstagsliste
  *
- * @copyright 2004-2020 The Admidio Team
+ * @copyright 2004-2021 The Admidio Team
  * @see https://www.admidio.org/
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
  ***********************************************************************************************
@@ -60,7 +60,7 @@ elseif ($getAddDelete > 0)
 	$sql = 'DELETE FROM '.TBL_TEXTS.'
             	  WHERE txt_name = ?
             	    AND txt_org_id = ? ';
-	$gDb->queryPrepared($sql, array('PGLMAIL_NOTIFICATION'. ($getAddDelete-1), ORG_ID));
+	$gDb->queryPrepared($sql, array('PGLMAIL_NOTIFICATION'. ($getAddDelete-1), $gCurrentOrgId));
 	
 	for ($i = $getAddDelete;  $i < $num_configs; $i++)
 	{
@@ -68,7 +68,7 @@ elseif ($getAddDelete > 0)
                    SET  txt_name = ?
                  WHERE txt_name = ?
             	   AND txt_org_id = ? ';
-		$gDb->queryPrepared($sql, array('PGLMAIL_NOTIFICATION'. ($i-1), 'PGLMAIL_NOTIFICATION'. $i, ORG_ID ));
+		$gDb->queryPrepared($sql, array('PGLMAIL_NOTIFICATION'. ($i-1), 'PGLMAIL_NOTIFICATION'. $i, $gCurrentOrgId ));
 	}
 	
 	// durch das Loeschen einer Konfiguration kann der Fall eintreten, dass es die eingestellte Standardkonfiguration nicht mehr gibt 
@@ -379,19 +379,19 @@ for ($conf = 0; $conf < $num_configs; $conf++)
     $sql = 'SELECT rol_id, rol_name, cat_name
               FROM '.TBL_CATEGORIES.' , '.TBL_ROLES.' 
              WHERE cat_id = rol_cat_id
-               AND ( cat_org_id = '.ORG_ID.'
+               AND ( cat_org_id = '.$gCurrentOrgId.'
                 OR cat_org_id IS NULL )';
     $formConfigurations->addSelectBoxFromSql('selection_role'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_ROLE_SELECTION'), $gDb, $sql, array('defaultValue' => explode(',',$pPreferences->config['Konfigurationen']['selection_role'][$conf]), 'helpTextIdLabel' => 'PLG_GEBURTSTAGSLISTE_ROLE_SELECTION_CONF_DESC', 'multiselect' => true));
                         	
 	$sql = 'SELECT cat_id, cat_name
               FROM '.TBL_CATEGORIES.' , '.TBL_ROLES.' 
              WHERE cat_id = rol_cat_id
-               AND ( cat_org_id = '.ORG_ID.'
+               AND ( cat_org_id = '.$gCurrentOrgId.'
                 OR cat_org_id IS NULL )';
 	$formConfigurations->addSelectBoxFromSql('selection_cat'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_CAT_SELECTION'), $gDb, $sql, array('defaultValue' => explode(',',$pPreferences->config['Konfigurationen']['selection_cat'][$conf]), 'helpTextIdLabel' => 'PLG_GEBURTSTAGSLISTE_CAT_SELECTION_CONF_DESC', 'multiselect' => true));
                         	
 	$text[$conf] = new TableText($gDb);
-    $text[$conf]->readDataByColumns(array('txt_name' => 'PGLMAIL_NOTIFICATION'.$conf, 'txt_org_id' => ORG_ID));
+    $text[$conf]->readDataByColumns(array('txt_name' => 'PGLMAIL_NOTIFICATION'.$conf, 'txt_org_id' => $gCurrentOrgId));
 
     //wenn noch nichts drin steht, dann vorbelegen
     if ($text[$conf]->getValue('txt_text') == '')
@@ -401,7 +401,7 @@ for ($conf = 0; $conf < $num_configs; $conf++)
                     			
         $text[$conf]->setValue('txt_text', $value);
         $text[$conf]->save();
-        $text[$conf]->readDataByColumns(array('txt_name' => 'PGLMAIL_NOTIFICATION'.$conf, 'txt_org_id' => ORG_ID));
+        $text[$conf]->readDataByColumns(array('txt_name' => 'PGLMAIL_NOTIFICATION'.$conf, 'txt_org_id' => $gCurrentOrgId));
     }
     $formConfigurations->addMultilineTextInput('col_mail'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_NOTIFICATION_MAIL_TEXT'), $text[$conf]->getValue('txt_text'), 7, array('helpTextIdLabel' => 'PLG_GEBURTSTAGSLISTE_NOTIFICATION_MAIL_TEXT_DESC'));	
     $formConfigurations->addCheckbox('calendar_year'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_SHOW_CALENDAR_YEAR'), $pPreferences->config['Konfigurationen']['calendar_year'][$conf], array('helpTextIdLabel' => 'PLG_GEBURTSTAGSLISTE_SHOW_CALENDAR_YEAR_DESC'));

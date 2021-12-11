@@ -3,7 +3,7 @@
  ***********************************************************************************************
  * Class manages the configuration table
  *
- * @copyright 2004-2020 The Admidio Team
+ * @copyright 2004-2021 The Admidio Team
  * @see https://www.admidio.org/
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
  ***********************************************************************************************
@@ -41,7 +41,7 @@ class ConfigTablePGL
      */
 	public function __construct()
 	{
-		global  $gDb, $g_tbl_praefix;
+		global $g_tbl_praefix;
 
 		require_once(__DIR__ . '/../version.php');
 		include(__DIR__ . '/../configdata.php');
@@ -69,13 +69,13 @@ class ConfigTablePGL
      */
 	public function init()
 	{
-		global $gL10n, $gDb, $gProfileFields;
+		global $gProfileFields;
 	
 		$config_ist = array();
 		
 		// pruefen, ob es die Tabelle bereits gibt
 		$sql = 'SHOW TABLES LIKE \''.$this->table_name.'\' ';
-   	 	$statement = $gDb->queryPrepared($sql);
+   	 	$statement = $GLOBALS['gDb']->queryPrepared($sql);
 
     	// Tabelle anlegen, wenn es sie noch nicht gibt
     	if (!$statement->rowCount())
@@ -91,7 +91,7 @@ class ConfigTablePGL
          		auto_increment = 1
           		default character set = utf8
          		collate = utf8_unicode_ci';
-    		$gDb->queryPrepared($sql);
+    		$GLOBALS['gDb']->queryPrepared($sql);
     	} 
     
 		$this->read();
@@ -159,7 +159,7 @@ class ConfigTablePGL
     		{
     			foreach ($gProfileFields->getProfileFields() as $field)
     			{  
-    				if ($col_sel_field == trim($gL10n->get($field->getValue('usf_name')),'#'))
+    				if ($col_sel_field == trim($GLOBALS['gL10n']->get($field->getValue('usf_name')),'#'))
     				{
     					$this->config['Konfigurationen']['col_sel'][] = 'p'.$field->getValue('usf_id');
     				}  		
@@ -224,7 +224,7 @@ class ConfigTablePGL
 				$sql = 'DELETE FROM '.$this->table_name.'
         				      WHERE plp_name = ? 
         				        AND plp_org_id = ? ';
-				$gDb->queryPrepared($sql, array($plp_name, ORG_ID));
+				$GLOBALS['gDb']->queryPrepared($sql, array($plp_name, $GLOBALS['gCurrentOrgId']));
                 
 				unset($this->config[$section][$key]);
         	}
@@ -245,8 +245,6 @@ class ConfigTablePGL
      */
 	public function save()
 	{
-    	global $gDb;
-    
     	foreach ($this->config as $section => $sectiondata)
     	{
         	foreach ($sectiondata as $key => $value)
@@ -264,7 +262,7 @@ class ConfigTablePGL
             			  WHERE plp_name = ? 
             			    AND ( plp_org_id = ?
                  		     OR plp_org_id IS NULL ) ';
-            	$statement = $gDb->queryPrepared($sql, array($plp_name, ORG_ID));
+            	$statement = $GLOBALS['gDb']->queryPrepared($sql, array($plp_name, $GLOBALS['gCurrentOrgId']));
             	$row = $statement->fetchObject();
 
             	// Gibt es den Datensatz bereits?
@@ -274,14 +272,14 @@ class ConfigTablePGL
                 	$sql = 'UPDATE '.$this->table_name.' 
                 			   SET plp_value = ?
                 			 WHERE plp_id = ? ';   
-                	$gDb->queryPrepared($sql, array($value, $row->plp_id));          
+                	$GLOBALS['gDb']->queryPrepared($sql, array($value, $row->plp_id));          
             	}
             	// wenn nicht: INSERT eines neuen Datensatzes 
             	else
             	{
   					$sql = 'INSERT INTO '.$this->table_name.' (plp_org_id, plp_name, plp_value) 
-  							VALUES (? , ? , ?)  -- ORG_ID, self::$shortcut.\'__\'.$section.\'__\'.$key, $value '; 
-            		$gDb->queryPrepared($sql, array(ORG_ID, self::$shortcut.'__'.$section.'__'.$key, $value));
+  							VALUES (? , ? , ?)  -- $GLOBALS[\'gCurrentOrgId\'], self::$shortcut.\'__\'.$section.\'__\'.$key, $value '; 
+            		$GLOBALS['gDb']->queryPrepared($sql, array($GLOBALS['gCurrentOrgId'], self::$shortcut.'__'.$section.'__'.$key, $value));
             	}   
         	} 
     	}
@@ -293,14 +291,12 @@ class ConfigTablePGL
      */
 	public function read()
 	{
-    	global $gDb;
-     
         $sql = 'SELECT plp_id, plp_name, plp_value
              	  FROM '.$this->table_name.'
              	 WHERE plp_name LIKE ?
              	   AND ( plp_org_id = ?
                  	OR plp_org_id IS NULL ) ';
-		$statement = $gDb->queryPrepared($sql, array(self::$shortcut.'__%', ORG_ID)); 
+		$statement = $GLOBALS['gDb']->queryPrepared($sql, array(self::$shortcut.'__%', $GLOBALS['gCurrentOrgId'])); 
 
 		while ($row = $statement->fetch())
 		{
@@ -325,12 +321,11 @@ class ConfigTablePGL
      */
 	public function checkforupdate()
 	{
-	 	global $gL10n, $gDb;
 	 	$ret = false;
  	
 	 	// pruefen, ob es die Tabelle überhaupt gibt
 		$sql = 'SHOW TABLES LIKE \''.$this->table_name.'\' ';
-   	 	$tableExistStatement = $gDb->queryPrepared($sql);
+   	 	$tableExistStatement = $GLOBALS['gDb']->queryPrepared($sql);
     
         if ($tableExistStatement->rowCount())
     	{
@@ -341,7 +336,7 @@ class ConfigTablePGL
             		 WHERE plp_name = ? 
             		   AND ( plp_org_id = ?
             	    	OR plp_org_id IS NULL ) ';
-    		$statement = $gDb->queryPrepared($sql, array($plp_name, ORG_ID));
+    		$statement = $GLOBALS['gDb']->queryPrepared($sql, array($plp_name, $GLOBALS['gCurrentOrgId']));
     		$row = $statement->fetchObject();
 
     		// Vergleich Version.php  ./. DB (hier: version)
@@ -357,7 +352,7 @@ class ConfigTablePGL
             		 WHERE plp_name = ?
             		   AND ( plp_org_id = ?
                  		OR plp_org_id IS NULL ) ';
-            $statement = $gDb->queryPrepared($sql, array($plp_name, ORG_ID));
+            $statement = $GLOBALS['gDb']->queryPrepared($sql, array($plp_name, $GLOBALS['gCurrentOrgId']));
     		$row = $statement->fetchObject();
 
     		// Vergleich Version.php  ./. DB (hier: stand)
@@ -380,8 +375,6 @@ class ConfigTablePGL
      */
 	public function delete($deinst_org_select)
 	{
-    	global $gDb, $gL10n;
- 	
     	$result = '';
 		$result_data = false;
 		$result_db = false;
@@ -392,38 +385,38 @@ class ConfigTablePGL
 			$sql = 'DELETE FROM '.$this->table_name.'
         			      WHERE plp_name LIKE ?
         			        AND plp_org_id = ? ';
-			$result_data = $gDb->queryPrepared($sql, array(self::$shortcut.'__%', ORG_ID));	
+			$result_data = $GLOBALS['gDb']->queryPrepared($sql, array(self::$shortcut.'__%', $GLOBALS['gCurrentOrgId']));	
 
 			$sql = 'DELETE FROM '.TBL_TEXTS.'
 					      WHERE txt_name LIKE ?
             		        AND txt_org_id = ? ';
-			$result_texts = $gDb->queryPrepared($sql, array(self::$shortcut.'MAIL_NOTIFICATION%', ORG_ID));	
+			$result_texts = $GLOBALS['gDb']->queryPrepared($sql, array(self::$shortcut.'MAIL_NOTIFICATION%', $GLOBALS['gCurrentOrgId']));	
 		}
 		elseif ($deinst_org_select == 1)              //1 = Daten in allen Orgs loeschen 
 		{
 			$sql = 'DELETE FROM '.$this->table_name.'
         			      WHERE plp_name LIKE ? ';
-			$result_data = $gDb->queryPrepared($sql, array(self::$shortcut.'__%'));	
+			$result_data = $GLOBALS['gDb']->queryPrepared($sql, array(self::$shortcut.'__%'));	
 
 			$sql = 'DELETE FROM '.TBL_TEXTS.'
         			      WHERE txt_name LIKE ? ';
-			$result_texts = $gDb->queryPrepared($sql, array(self::$shortcut.'MAIL_NOTIFICATION%'));	
+			$result_texts = $GLOBALS['gDb']->queryPrepared($sql, array(self::$shortcut.'MAIL_NOTIFICATION%'));	
 		}
 
 		// wenn die Tabelle nur Eintraege dieses Plugins hatte, sollte sie jetzt leer sein und kann geloescht werden
 		$sql = 'SELECT * FROM '.$this->table_name.' ';
-		$statement = $gDb->queryPrepared($sql);
+		$statement = $GLOBALS['gDb']->queryPrepared($sql);
 
     	if ($statement->rowCount() == 0)
     	{
         	$sql = 'DROP TABLE '.$this->table_name.' ';
-        	$result_db = $gDb->queryPrepared($sql);
+        	$result_db = $GLOBALS['gDb']->queryPrepared($sql);
     	}
     	
-    	$result  = ($result_data ? $gL10n->get('PLG_GEBURTSTAGSLISTE_DEINST_DATA_DELETE_SUCCESS') : $gL10n->get('PLG_GEBURTSTAGSLISTE_DEINST_DATA_DELETE_ERROR') );
-    	$result .= ($result_texts ? $gL10n->get('PLG_GEBURTSTAGSLISTE_DEINST_TEXTS_DELETE_SUCCESS') : $gL10n->get('PLG_GEBURTSTAGSLISTE_DEINST_TEXTS_DELETE_ERROR') );
-		$result .= ($result_db ? $gL10n->get('PLG_GEBURTSTAGSLISTE_DEINST_TABLE_DELETE_SUCCESS') : $gL10n->get('PLG_GEBURTSTAGSLISTE_DEINST_TABLE_DELETE_ERROR') );
-    	$result .= ($result_data ? $gL10n->get('PLG_GEBURTSTAGSLISTE_DEINST_ENDMESSAGE') : '' );
+    	$result  = ($result_data ? $GLOBALS['gL10n']->get('PLG_GEBURTSTAGSLISTE_DEINST_DATA_DELETE_SUCCESS') : $GLOBALS['gL10n']->get('PLG_GEBURTSTAGSLISTE_DEINST_DATA_DELETE_ERROR') );
+    	$result .= ($result_texts ? $GLOBALS['gL10n']->get('PLG_GEBURTSTAGSLISTE_DEINST_TEXTS_DELETE_SUCCESS') : $GLOBALS['gL10n']->get('PLG_GEBURTSTAGSLISTE_DEINST_TEXTS_DELETE_ERROR') );
+		$result .= ($result_db ? $GLOBALS['gL10n']->get('PLG_GEBURTSTAGSLISTE_DEINST_TABLE_DELETE_SUCCESS') : $GLOBALS['gL10n']->get('PLG_GEBURTSTAGSLISTE_DEINST_TABLE_DELETE_ERROR') );
+    	$result .= ($result_data ? $GLOBALS['gL10n']->get('PLG_GEBURTSTAGSLISTE_DEINST_ENDMESSAGE') : '' );
 		
 		return $result;
 	}
