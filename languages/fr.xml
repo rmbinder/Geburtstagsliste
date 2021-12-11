@@ -30,6 +30,7 @@
     <string name="PLG_GEBURTSTAGSLISTE_CONFIGURATION_AS_HEADER">Nom de la configuration comme en-tête</string>
     <string name="PLG_GEBURTSTAGSLISTE_CONFIGURATION_AS_HEADER_DESC">Si le nom de la configuration doit être utilisé comme titre, la case à cocher doit être cochée.</string>
     <string name="PLG_GEBURTSTAGSLISTE_CONFIGURATION_DEFAULT_DESC">Paramètres de configuration par défaut</string>
+    <string name="PLG_GEBURTSTAGSLISTE_CREATED_WITH">créé avec le plugin liste d'anniversaire de la gestion des membres en ligne Admidio</string>
     <string name="PLG_GEBURTSTAGSLISTE_DECEMBER">décembre</string>
     <string name="PLG_GEBURTSTAGSLISTE_DEINSTALLATION">Désinstallation</string>
     <string name="PLG_GEBURTSTAGSLISTE_DEINSTALLATION_DESC">En désinstallant le plugin, les entrées créées par le plugin peuvent être supprimées de la base de données.</string>

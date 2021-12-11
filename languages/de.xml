@@ -30,6 +30,7 @@
     <string name="PLG_GEBURTSTAGSLISTE_CONFIGURATION_AS_HEADER">Konfigurationsname als Überschrift</string>
     <string name="PLG_GEBURTSTAGSLISTE_CONFIGURATION_AS_HEADER_DESC">Soll der Konfigurationsname als Überschrift verwendet werden, so ist der Haken zu setzen.</string>
     <string name="PLG_GEBURTSTAGSLISTE_CONFIGURATION_DEFAULT_DESC">Standardeinstellung der Konfigurationen</string>
+    <string name="PLG_GEBURTSTAGSLISTE_CREATED_WITH">erstellt mit dem Plugin Geburtstagsliste der Online-Mitgliederverwaltung Admidio</string>
     <string name="PLG_GEBURTSTAGSLISTE_DECEMBER">Dezember</string>
     <string name="PLG_GEBURTSTAGSLISTE_DEINSTALLATION">Deinstallation</string>
     <string name="PLG_GEBURTSTAGSLISTE_DEINSTALLATION_DESC">Über die Deinstallation können vom Plugin erzeugte Einträge in der Datenbank gelöscht werden.</string>

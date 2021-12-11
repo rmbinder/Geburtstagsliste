@@ -20,7 +20,7 @@
 /******************************************************************************
  * Parameters:
  *
- * mode   		     : Output (html, print, csv-ms, csv-oo, pdf, pdfl)
+ * mode   		     : Output (html, print, csv-ms, csv-oo, pdf, pdfl, xlsx)
  * config		     : Die gewaehlte Konfiguration (Alte Bezeichnung Fokus; die Standardeinstellung wurde über Einstellungen-Optionen festgelegt)
  * month		     : Der gewaehlte Monat
  * previewdays	     : Die vorauszuschauenden Tage (Default wurde in Optionen festgelegt)
@@ -87,7 +87,7 @@ foreach ($pPreferences->config['Optionen']['vorschau_liste'] as $item)
 $getPreviewDays = admFuncVariableIsValid($_GET, 'previewdays', 'string', array('defaultValue' => 'X'.$pPreferences->config['Optionen']['vorschau_tage_default'].'X',  'validValues' => $validValues));
 unset($validValues);
 
-$getMode            = admFuncVariableIsValid($_GET, 'mode', 'string', array('defaultValue' => 'html', 'validValues' => array('csv-ms', 'csv-oo', 'html', 'print', 'pdf', 'pdfl' )));
+$getMode            = admFuncVariableIsValid($_GET, 'mode', 'string', array('defaultValue' => 'html', 'validValues' => array('csv-ms', 'csv-oo', 'html', 'print', 'pdf', 'pdfl', 'xlsx' )));
 $getMonth           = admFuncVariableIsValid($_GET, 'month', 'string', array('defaultValue' => '00', 'validValues' => array('00','01', '02', '03', '04', '05', '06','07','08','09','10','11','12' )));
 $getFilter          = admFuncVariableIsValid($_GET, 'filter', 'string');
 $getExportAndFilter = admFuncVariableIsValid($_GET, 'export_and_filter', 'bool', array('defaultValue' => false));
@@ -151,11 +151,17 @@ switch ($getMode)
     case 'print':
         $classTable  = 'table table-condensed table-striped';
         break;
+    case 'xlsx':
+	    include_once(__DIR__ . '/vendor/PHP_XLSXWriter/xlsxwriter.class.php');
+	    $getMode     = 'xlsx';
+	    break;
     default:
         break;
 }
 
 $csvStr = ''; 
+$header = array();              //'xlsx'
+$rows   = array();              //'xlsx'
 
 $numMembers = count($liste->listData);
 
@@ -167,7 +173,7 @@ if ($getMode === 'html' )
     $gNavigation->addStartUrl(CURRENT_URL, $headline);
 }
 
-if ($getMode != 'csv')
+if ($getMode != 'csv' && $getMode != 'xlsx' )
 {
     $datatable = false;
     $hoverRows = false;
@@ -304,7 +310,16 @@ if ($getMode != 'csv')
         
             // dropdown menu item with all export possibilities
             $page->addPageFunctionsMenuItem('menu_item_lists_export', $gL10n->get('SYS_EXPORT_TO'), '#', 'fa-file-download');
-            $page->addPageFunctionsMenuItem('menu_item_lists_csv_ms', $gL10n->get('SYS_MICROSOFT_EXCEL'),
+            $page->addPageFunctionsMenuItem('menu_item_lists_xlsx', $gL10n->get('SYS_MICROSOFT_EXCEL').' (XLSX)',
+                SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/geburtstagsliste.php', array(
+                    'previewdays'       => $getPreviewDays,
+                    'filter'            => $getFilter,
+                    'export_and_filter' => $getExportAndFilter,
+                    'month'             => $getMonth,
+                    'config'            => $getConfig,
+                    'mode'              => 'xlsx')),
+                'fa-file-excel', 'menu_item_lists_export');
+            $page->addPageFunctionsMenuItem('menu_item_lists_csv_ms', $gL10n->get('SYS_MICROSOFT_EXCEL').' (CSV)',
                 SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/geburtstagsliste.php', array(
                     'previewdays'       => $getPreviewDays,
                     'filter'            => $getFilter,
@@ -454,6 +469,14 @@ foreach ($liste->headerData as $columnHeader)
         }
         $table->addColumn($columnHeader['data'], array('style' => 'text-align: left;font-size:14;background-color:#C7C7C7;'), 'th');
     }
+    elseif ($getMode == 'xlsx')
+    {
+    	if ($columnNumber == 1)
+        {
+        	$header[$gL10n->get('SYS_ABR_NO')] = 'string';
+        }
+        $header[$columnHeader['data']] = 'string';
+    }
     elseif ($getMode == 'html' || $getMode == 'print')
     {
     	$columnValues[] = $columnHeader['data'];
@@ -470,6 +493,10 @@ elseif ($getMode == 'html' || $getMode == 'print')
     $table->setColumnAlignByArray($columnAlign);
     $table->addRowHeadingByArray($columnValues);
 }
+elseif ($getMode == 'xlsx')
+{
+    // nothing to do
+}
 else
 {
     $table->addTableBody();
@@ -485,23 +512,20 @@ foreach ($liste->listData as $memberdata)
 	
     // Felder zu Datensatz
     for ($i = 1; $i < count($memberdata); $i++)
-    {         
-    	if ($getMode == 'html' || $getMode == 'print' || $getMode == 'pdf')
-        {    
-        	if ($i == 1)
-            {
+    {
+        if ($i === 1)
+        {
+            if (in_array($getMode, array('html', 'print', 'pdf', 'xlsx'), true))
+            {    
             	// die Laufende Nummer noch davorsetzen
                 $columnValues[] = $listRowNumber;  
             }
         }
         else
         {
-            if ($i == 1)
-            {
-                // erste Spalte zeigt lfd. Nummer an
-            	$tmp_csv = $tmp_csv.$valueQuotes. $listRowNumber. $valueQuotes;
-            }
-        }
+            // erste Spalte zeigt lfd. Nummer an
+            $tmp_csv = $tmp_csv.$valueQuotes. $listRowNumber. $valueQuotes;
+        }         
         
         /*****************************************************************/
         // create output format
@@ -533,6 +557,10 @@ foreach ($liste->listData as $memberdata)
         if ($getMode == 'csv')
         {
         	$tmp_csv = $tmp_csv. $separator. $valueQuotes. $content. $valueQuotes;
+        }
+        elseif ($getMode == 'xlsx')
+        {
+            $columnValues[] = $content;
         }
         // create output in html layout
         else
@@ -582,6 +610,10 @@ foreach ($liste->listData as $memberdata)
    	 	{
     		$csvStr .= $tmp_csv. "\n";
     	}
+        elseif($getMode == 'xlsx')
+    	{
+        	$rows[] = $columnValues;
+    	}
    	 	else
     	{
         	$table->addRowByArray($columnValues, null, array('nobr' => 'true'));
@@ -591,7 +623,7 @@ foreach ($liste->listData as $memberdata)
 }  // End-For (jeder gefundene User)
 
 // Settings for export file
-if ($getMode == 'csv' || $getMode == 'pdf')
+if ($getMode == 'csv' || $getMode == 'pdf'|| $getMode == 'xlsx')
 {
 	$filename = FileSystemUtils::getSanitizedPathEntry($filename) . '.' . $getMode;
 
@@ -642,6 +674,24 @@ elseif ($getMode == 'pdf')
         $gLogger->error('Could not delete file!', array('filePath' => $file));
         // TODO
     }
+}
+elseif ($getMode == 'xlsx')
+{
+    header('Content-disposition: attachment; filename="'.XLSXWriter::sanitize_filename($filename).'"');
+    header("Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+    header('Content-Transfer-Encoding: binary');
+    header('Cache-Control: must-revalidate');
+    header('Pragma: public');
+    
+    $writer = new XLSXWriter();
+    $writer->setAuthor($gCurrentUser->getValue('FIRST_NAME').' '.$gCurrentUser->getValue('LAST_NAME'));
+    $writer->setTitle($filename);
+    $writer->setSubject($gL10n->get('PLG_GEBURTSTAGSLISTE_BIRTHDAY_LIST'));
+    $writer->setCompany($gCurrentOrganization->getValue('org_longname'));
+    $writer->setKeywords(array($gL10n->get('PLG_GEBURTSTAGSLISTE_BIRTHDAY_LIST'), $gL10n->get('PLG_GEBURTSTAGSLISTE_PATTERN')));
+    $writer->setDescription($gL10n->get('PLG_GEBURTSTAGSLISTE_CREATED_WITH'));
+    $writer->writeSheet($rows,'', $header);
+    $writer->writeToStdOut();
 }
 elseif ($getMode == 'html' && $getExportAndFilter)
 { 
