@@ -248,7 +248,7 @@ $javascriptCode .= '
         foreach ($gProfileFields->getProfileFields() as $field)
         {
         	// add profile fields to user field array
-        	if (($field->getValue('usf_hidden') == 0 || $gCurrentUser->editUsers()) && $field->getValue('cat_name') == $gL10n->get('SYS_MASTER_DATA'))
+        	if (($field->getValue('usf_hidden') == 0 || $gCurrentUser->editUsers()) && $field->getValue('cat_name') == $gL10n->get('SYS_BASIC_DATA'))
         	{
         		$javascriptCode .= '
                 user_fields['. $i. ']             = new Object();
