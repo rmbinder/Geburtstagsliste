@@ -369,10 +369,10 @@ if ($getMode != 'csv' && $getMode != 'xlsx' )
             $getFilter = '';
         }
         
-        if ($gCurrentUser->isAdministrator())
+        if (isUserAuthorizedForPreferences())
 		{
     		// show link to pluginpreferences 
-    		$page->addPageFunctionsMenuItem('admMenuItemPreferencesLists', $gL10n->get('PLG_GEBURTSTAGSLISTE_SETTINGS'), SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences.php'),  'fa-cog');
+    		$page->addPageFunctionsMenuItem('admMenuItemPreferencesLists', $gL10n->get('SYS_SETTINGS'), SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences.php'),  'fa-cog');
 		} 
         
 		$form = new HtmlForm('navbar_birthdaylist_form', SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/geburtstagsliste.php', array('headline' => $headline)), $page, array('type' => 'navbar', 'setFocus' => false));

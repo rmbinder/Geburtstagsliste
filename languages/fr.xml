@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
+    <string name="PLG_GEBURTSTAGSLISTE_ACCESS_PREFERENCES">Autorisation d'accès pour les paramétrages</string>
+    <string name="PLG_GEBURTSTAGSLISTE_ACCESS_PREFERENCES_DESC">Ici, en plus du rôle "Administrateur", vous pouvez autoriser d'autres rôles pour accéder au module "Paramétrages".</string>
     <string name="PLG_GEBURTSTAGSLISTE_ADD_ANOTHER_COLUMN">Ajouter une colonne supplémentaire</string>
     <string name="PLG_GEBURTSTAGSLISTE_ADD_ANOTHER_CONFIG">Ajouter une configuration supplémentaire</string>
     <string name="PLG_GEBURTSTAGSLISTE_AGE_OR_ANNIVERSARY_NOT_SHOW">Ne pas indiquer l\'année d\'âge ou de jubilé</string>    
@@ -85,7 +87,6 @@
     <string name="PLG_GEBURTSTAGSLISTE_SELECT_MONTH">Sélectionner le mois</string>
     <string name="PLG_GEBURTSTAGSLISTE_SELECT_NUMBER_OF_DAYS">Sélectionner les jours de prévisualisation</string>
     <string name="PLG_GEBURTSTAGSLISTE_SEPTEMBER">septembre</string>
-    <string name="PLG_GEBURTSTAGSLISTE_SETTINGS">Configurations</string>
     <string name="PLG_GEBURTSTAGSLISTE_SHOW_CALENDAR_YEAR">Année civile</string>
     <string name="PLG_GEBURTSTAGSLISTE_SHOW_CALENDAR_YEAR_DESC">La date par défaut est la date du jour. Si l\'affichage doit commencer le 1er janvier de l\'année en cours, la case doit être cochée.</string>
     <string name="PLG_GEBURTSTAGSLISTE_TEMPLATE">Modèle standard</string>

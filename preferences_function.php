@@ -23,14 +23,14 @@ require_once(__DIR__ . '/../../adm_program/system/common.php');
 require_once(__DIR__ . '/common_function.php');
 require_once(__DIR__ . '/classes/configtable.php');
 
+$pPreferences = new ConfigTablePGL();
+$pPreferences->read();
+
 // only authorized user are allowed to start this module
-if (!$gCurrentUser->isAdministrator())
+if (!isUserAuthorizedForPreferences())
 {
 	$gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
 }
-
-$pPreferences = new ConfigTablePGL();
-$pPreferences->read();
 
 // Initialize and check the parameters
 $getMode = admFuncVariableIsValid($_GET, 'mode', 'numeric', array('defaultValue' => 1));
@@ -119,7 +119,12 @@ case 1:
  	        	$pPreferences->config['Optionen']['config_default'] = $_POST['config_default'];	
  	        	$pPreferences->config['Optionen']['configuration_as_header'] = isset($_POST['configuration_as_header']) ? 1 : 0 ;
             	break; 
-            
+ 
+            case 'access_preferences':
+                unset($pPreferences->config['access']);
+                $pPreferences->config['access']['preferences'] = isset($_POST['access_preferences']) ? array_unique(array_merge($_POST['access_preferences'], $pPreferences->config_default['access']['preferences'])) : $pPreferences->config_default['access']['preferences'];
+                break;
+                       
         	default:
            		$gMessage->show($gL10n->get('SYS_INVALID_PAGE_VIEW'));
     	}

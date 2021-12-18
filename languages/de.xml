@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
+    <string name="PLG_GEBURTSTAGSLISTE_ACCESS_PREFERENCES">Zugriffsberechtigung für Einstellungen</string>
+    <string name="PLG_GEBURTSTAGSLISTE_ACCESS_PREFERENCES_DESC">Hier kann man, zusätzlich zur Rolle "Administrator", weitere Rollen für den Zugriff auf das Modul "Einstellungen" berechtigen.</string>
     <string name="PLG_GEBURTSTAGSLISTE_ADD_ANOTHER_COLUMN">Weitere Spalte hinzufügen</string>
     <string name="PLG_GEBURTSTAGSLISTE_ADD_ANOTHER_CONFIG">Weitere Konfiguration hinzufügen</string>
     <string name="PLG_GEBURTSTAGSLISTE_AGE_OR_ANNIVERSARY_NOT_SHOW">Lebensjahr oder Jubiläum nicht anzeigen</string>    
@@ -85,7 +87,6 @@
     <string name="PLG_GEBURTSTAGSLISTE_SELECT_MONTH">Monat wählen</string>
     <string name="PLG_GEBURTSTAGSLISTE_SELECT_NUMBER_OF_DAYS">Vorschautage wählen</string>
     <string name="PLG_GEBURTSTAGSLISTE_SEPTEMBER">September</string>
-    <string name="PLG_GEBURTSTAGSLISTE_SETTINGS">Einstellungen</string>
     <string name="PLG_GEBURTSTAGSLISTE_SHOW_CALENDAR_YEAR">Kalenderjahr</string>
     <string name="PLG_GEBURTSTAGSLISTE_SHOW_CALENDAR_YEAR_DESC">Standardmäßig wird ab dem aktuellen Datum angezeigt. Soll die Anzeige ab dem 1. Januar des aktuellen Jahres beginnen, so ist der Haken zu setzen.</string>
     <string name="PLG_GEBURTSTAGSLISTE_TEMPLATE">Template</string>

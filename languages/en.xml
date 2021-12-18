@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="PLG_GEBURTSTAGSLISTE_ACCESS_PREFERENCES">Access permission for preferences</string>
+    <string name="PLG_GEBURTSTAGSLISTE_ACCESS_PREFERENCES_DESC">Here, in addition to the role "Administrator", you can authorize additional roles for access to the "Preferences" module.</string>
     <string name="PLG_GEBURTSTAGSLISTE_ADD_ANOTHER_COLUMN">Add another column</string>
     <string name="PLG_GEBURTSTAGSLISTE_ADD_ANOTHER_CONFIG">Add further configuration</string>
     <string name="PLG_GEBURTSTAGSLISTE_AGE_OR_ANNIVERSARY_NOT_SHOW">Age or anniversary not show</string>    
@@ -85,7 +87,6 @@
     <string name="PLG_GEBURTSTAGSLISTE_SELECT_MONTH">Selecting month</string>
     <string name="PLG_GEBURTSTAGSLISTE_SELECT_NUMBER_OF_DAYS">Select preview days</string>
     <string name="PLG_GEBURTSTAGSLISTE_SEPTEMBER">September</string>
-    <string name="PLG_GEBURTSTAGSLISTE_SETTINGS">Settings</string>
     <string name="PLG_GEBURTSTAGSLISTE_SHOW_CALENDAR_YEAR">Calendar year</string>
     <string name="PLG_GEBURTSTAGSLISTE_SHOW_CALENDAR_YEAR_DESC">By default, the current date is used. If the database is supposed to start January 1st of the current year, the checkbox has to be selected.</string>
     <string name="PLG_GEBURTSTAGSLISTE_TEMPLATE">Template</string>

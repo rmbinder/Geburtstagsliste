@@ -77,6 +77,36 @@ function isUserAuthorized($scriptName)
 }
 
 /**
+ * Funktion prueft, ob der Nutzer berechtigt ist, das Modul Preferences aufzurufen.
+ * @param   none
+ * @return  bool    true, wenn der User berechtigt ist
+ */
+function isUserAuthorizedForPreferences()
+{
+    global $pPreferences;
+    
+    $userIsAuthorized = false;
+    
+    if ($GLOBALS['gCurrentUser']->isAdministrator())                   // Mitglieder der Rolle Administrator dürfen "Preferences" immer aufrufen
+    {
+        $userIsAuthorized = true;
+    }
+    else
+    {
+        foreach ($pPreferences->config['access']['preferences'] as $roleId)
+        {
+            if ($GLOBALS['gCurrentUser']->isMemberOfRole((int) $roleId))
+            {
+                $userIsAuthorized = true;
+                continue;
+            }
+        }
+    }
+    return $userIsAuthorized;
+}
+
+
+/**
  * Vergleichsfunktion für g_arr_dimsort (aus dem Web)
  * @param   mixed  $a
  * @param   mixed  $b
@@ -255,4 +285,36 @@ function jahre( $beginn, $ende )
   $differenz = $date1->diff($date2);
  
   return $differenz->format('%y');
+}
+
+/**
+ * Funktion liest die Role-ID einer Rolle aus
+ * @param   string  $role_name Name der zu pruefenden Rolle
+ * @return  int     rol_id  Rol_id der Rolle, 0, wenn nicht gefunden
+ */
+function getRoleId($role_name)
+{
+    $sql = 'SELECT rol_id
+              FROM '. TBL_ROLES. ', '. TBL_CATEGORIES. '
+             WHERE rol_name  = ? -- $role_name
+               AND rol_valid  = 1
+               AND rol_cat_id = cat_id
+               AND ( cat_org_id = ? -- $$GLOBALS[\'gCurrentOrgId\']
+                OR cat_org_id IS NULL ) ';
+
+    $queryParams = array(
+	   $role_name,
+       $GLOBALS['gCurrentOrgId']);
+       
+    $statement = $GLOBALS['gDb']->queryPrepared($sql, $queryParams);
+                    
+    $row = $statement->fetchObject();
+    if(isset($row->rol_id) && strlen($row->rol_id) > 0)
+    {
+        return $row->rol_id;
+    }
+    else
+    {
+        return 0;
+    }
 }
