@@ -59,7 +59,6 @@
     <string name="PLG_GEBURTSTAGSLISTE_JANUARY">January</string>
     <string name="PLG_GEBURTSTAGSLISTE_JULY">July</string>
     <string name="PLG_GEBURTSTAGSLISTE_JUNE">June</string>
-    <string name="PLG_GEBURTSTAGSLISTE_LINK_TO_DEINSTALLATION">Skip to uninstall</string>
     <string name="PLG_GEBURTSTAGSLISTE_MARCH">March</string>
     <string name="PLG_GEBURTSTAGSLISTE_MAY">May</string>
     <string name="PLG_GEBURTSTAGSLISTE_MENU_URL_ERROR">The authorization check of the plugin failed. There is more than one menu item with the same URL defined.\n\n=> #VAR1_BOLD#</string> 

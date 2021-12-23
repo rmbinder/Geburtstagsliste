@@ -59,7 +59,6 @@
     <string name="PLG_GEBURTSTAGSLISTE_JANUARY">Januar</string>
     <string name="PLG_GEBURTSTAGSLISTE_JULY">Juli</string>
     <string name="PLG_GEBURTSTAGSLISTE_JUNE">Juni</string>
-    <string name="PLG_GEBURTSTAGSLISTE_LINK_TO_DEINSTALLATION">Zur Deinstallation wechseln</string>
     <string name="PLG_GEBURTSTAGSLISTE_MARCH">März</string>
     <string name="PLG_GEBURTSTAGSLISTE_MAY">Mai</string>
     <string name="PLG_GEBURTSTAGSLISTE_MENU_URL_ERROR">Die Authorisierungsprüfung des Plugins ist fehlgeschlagen. Es ist mehr als ein Menüpunkt mit derselben URL definiert.\n\n=> #VAR1_BOLD#</string> 
