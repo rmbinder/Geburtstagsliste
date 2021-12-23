@@ -73,7 +73,7 @@ $user->readDataByUuid($getUserUuid);
 // error if no valid Email for given user ID
 if (!StringUtils::strValidCharacters($user->getValue('EMAIL'), 'email'))
 {
-	$gMessage->show($gL10n->get('SYS_USER_NO_EMAIL', $user->getValue('FIRST_NAME').' '.$user->getValue('LAST_NAME')));
+	$gMessage->show($gL10n->get('SYS_USER_NO_EMAIL', array($user->getValue('FIRST_NAME').' '.$user->getValue('LAST_NAME'))));
 }
                 
 // save page in navigation - to have a check for a navigation back.
@@ -82,7 +82,7 @@ $gNavigation->addUrl(CURRENT_URL);
 // check if name is given
 if (strlen($postName) == 0)
 {
-    $gMessage->show($gL10n->get('SYS_FIELD_EMPTY', $gL10n->get('SYS_NAME')));
+    $gMessage->show($gL10n->get('SYS_FIELD_EMPTY', array($gL10n->get('SYS_NAME'))));
 }
 
 // set sending address
@@ -150,13 +150,13 @@ if ($email->setSender($postFrom,$postName))
     }
     else
     {
-        $gMessage->show($gL10n->get('SYS_FIELD_EMPTY', $gL10n->get('SYS_SUBJECT')));
+        $gMessage->show($gL10n->get('SYS_FIELD_EMPTY', array($gL10n->get('SYS_SUBJECT'))));
         // => EXIT
     }
 }
 else
 {
-    $gMessage->show($gL10n->get('SYS_EMAIL_INVALID', $gL10n->get('SYS_EMAIL')));
+    $gMessage->show($gL10n->get('SYS_EMAIL_INVALID', array($gL10n->get('SYS_EMAIL'))));
     // => EXIT
 }
 

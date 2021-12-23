@@ -106,7 +106,7 @@ case 1:
     			
     				if ($allColumnsEmpty)
     				{
-    					$gMessage->show($gL10n->get('SYS_FIELD_EMPTY', $gL10n->get('PLG_GEBURTSTAGSLISTE_COLUMN')));
+    					$gMessage->show($gL10n->get('SYS_FIELD_EMPTY', array($gL10n->get('PLG_GEBURTSTAGSLISTE_COLUMN'))));
     				}
 
     				$pPreferences->config['Konfigurationen']['col_fields'][] = substr($fields,0,-1);	
