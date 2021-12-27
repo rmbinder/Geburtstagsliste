@@ -13,11 +13,12 @@
  *
  * Hinweis:  preferences.php ist eine modifizierte Kombination der Dateien
  *           .../modules/lists/mylist.php und .../modules/preferences/preferences.php
- *           
+ * 
  * Parameters:
  *
- * add_delete : -1 - Erzeugen einer Konfiguration
- * 				>0 - Löschen einer Konfiguration
+ * add     : add a configuration
+ * delete  : delete a configuration
+ * copy    : copy a configuration
  * 
  *****************************************************************************/
 
@@ -27,7 +28,9 @@ require_once(__DIR__ . '/common_function.php');
 require_once(__DIR__ . '/classes/configtable.php');
 
 // Initialize and check the parameters
-$getAddDelete = admFuncVariableIsValid($_GET, 'add_delete', 'numeric', array('defaultValue' => 0));
+$getAdd    = admFuncVariableIsValid($_GET, 'add', 'bool');
+$getDelete = admFuncVariableIsValid($_GET, 'delete', 'numeric', array('defaultValue' => 0));
+$getCopy   = admFuncVariableIsValid($_GET, 'copy', 'numeric', array('defaultValue' => 0));
 
 $pPreferences = new ConfigTablePGL();
 $pPreferences->read();
@@ -42,27 +45,35 @@ $configSelection = generate_configSelection();
 
 $headline = $gL10n->get('PLG_GEBURTSTAGSLISTE_BIRTHDAY_LIST');
 
-if ($getAddDelete === -1)
+if ($getAdd)
 {
 	foreach($pPreferences->config['Konfigurationen'] as $key => $dummy)
 	{
-		$pPreferences->config['Konfigurationen'][$key][] = $pPreferences->config_default['Konfigurationen'][$key][0];
+        if ($key == 'col_desc')
+		{
+            $pPreferences->config['Konfigurationen'][$key][] = '';
+		}
+		else
+		{
+            $pPreferences->config['Konfigurationen'][$key][] = $pPreferences->config_default['Konfigurationen'][$key][0];
+		}
 	}
 }
-elseif ($getAddDelete > 0)
+
+if ($getDelete > 0)
 {
 	$num_configs = count($pPreferences->config['Konfigurationen']['col_desc']);
 	foreach($pPreferences->config['Konfigurationen'] as $key => $dummy)
 	{
-		array_splice($pPreferences->config[Konfigurationen][$key], $getAddDelete-1, 1);
+	    array_splice($pPreferences->config['Konfigurationen'][$key], $getDelete-1, 1);
 	}
 	
 	$sql = 'DELETE FROM '.TBL_TEXTS.'
             	  WHERE txt_name = ?
             	    AND txt_org_id = ? ';
-	$gDb->queryPrepared($sql, array('PGLMAIL_NOTIFICATION'. ($getAddDelete-1), $gCurrentOrgId));
+	$gDb->queryPrepared($sql, array('PGLMAIL_NOTIFICATION'. ($getDelete-1), $gCurrentOrgId));
 	
-	for ($i = $getAddDelete;  $i < $num_configs; $i++)
+	for ($i = $getDelete;  $i < $num_configs; $i++)
 	{
 		$sql = 'UPDATE '.TBL_TEXTS.'
                    SET  txt_name = ?
@@ -74,10 +85,33 @@ elseif ($getAddDelete > 0)
 	// durch das Loeschen einer Konfiguration kann der Fall eintreten, dass es die eingestellte Standardkonfiguration nicht mehr gibt 
 	// daher die Standardkonfiguration auf die erste Konfiguration im Array setzen
 	$pPreferences->config['Optionen']['config_default'] = 0;
+    $pPreferences->save();
+}
+
+if ($getCopy > 0)
+{
+	foreach($pPreferences->config['Konfigurationen'] as $key => $dummy)
+	{
+        if ($key == 'col_desc')
+		{
+            $pPreferences->config['Konfigurationen'][$key][] = createDesc($pPreferences->config['Konfigurationen'][$key][$getCopy-1]);
+		}
+		else
+		{
+            $pPreferences->config['Konfigurationen'][$key][] = $pPreferences->config['Konfigurationen'][$key][$getCopy-1];
+		}
+	}
+    $pPreferences->save();
+    
+    $textCopy = new TableText($gDb);
+    $textCopy->readDataByColumns(array('txt_name' => 'PGLMAIL_NOTIFICATION'.$getCopy-1, 'txt_org_id' => $gCurrentOrgId));
+    $value = $textCopy->getValue('txt_text');
+    $textCopy->readDataByColumns(array('txt_name' => 'PGLMAIL_NOTIFICATION'.count($pPreferences->config['Konfigurationen']['col_desc'])-1, 'txt_org_id' => $gCurrentOrgId));
+    $textCopy->setValue('txt_text', $value);
+    $textCopy->save();
 }
 
 $num_configs = count($pPreferences->config['Konfigurationen']['col_desc']);
-$pPreferences->save();
 
 if ( !StringUtils::strContains($gNavigation->getUrl(), 'preferences.php'))
 {
@@ -87,8 +121,8 @@ if ( !StringUtils::strContains($gNavigation->getUrl(), 'preferences.php'))
 // create html page object
 $page = new HtmlPage('plg-geburtstagsliste-preferences', $headline);
 
-// open the module configurations if a configuration is added or deleted
-if ($getAddDelete)
+// open the module configurations if a configuration is added, deleted or copied
+if ($getAdd || $getDelete > 0 || $getCopy > 0)
 {
     $page->addJavascript('
         $("#tabs_nav_common").attr("class", "nav-link active");
@@ -380,14 +414,16 @@ for ($conf = 0; $conf < $num_configs; $conf++)
               FROM '.TBL_CATEGORIES.' , '.TBL_ROLES.' 
              WHERE cat_id = rol_cat_id
                AND ( cat_org_id = '.$gCurrentOrgId.'
-                OR cat_org_id IS NULL )';
+                OR cat_org_id IS NULL )
+          ORDER BY cat_sequence, rol_name';
     $formConfigurations->addSelectBoxFromSql('selection_role'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_ROLE_SELECTION'), $gDb, $sql, array('defaultValue' => explode(',',$pPreferences->config['Konfigurationen']['selection_role'][$conf]), 'helpTextIdLabel' => 'PLG_GEBURTSTAGSLISTE_ROLE_SELECTION_CONF_DESC', 'multiselect' => true));
                         	
 	$sql = 'SELECT cat_id, cat_name
               FROM '.TBL_CATEGORIES.' , '.TBL_ROLES.' 
              WHERE cat_id = rol_cat_id
                AND ( cat_org_id = '.$gCurrentOrgId.'
-                OR cat_org_id IS NULL )';
+                OR cat_org_id IS NULL )
+          ORDER BY cat_sequence, cat_name';
 	$formConfigurations->addSelectBoxFromSql('selection_cat'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_CAT_SELECTION'), $gDb, $sql, array('defaultValue' => explode(',',$pPreferences->config['Konfigurationen']['selection_cat'][$conf]), 'helpTextIdLabel' => 'PLG_GEBURTSTAGSLISTE_CAT_SELECTION_CONF_DESC', 'multiselect' => true));
                         	
 	$text[$conf] = new TableText($gDb);
@@ -416,18 +452,24 @@ for ($conf = 0; $conf < $num_configs; $conf++)
         $formConfigurations->addSelectBoxFromSql('relationtype_id'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_RELATION'), $gDb, $sql,
             array('defaultValue' => $pPreferences->config['Konfigurationen']['relation'][$conf],'showContextDependentFirstEntry' => true, 'helpTextIdLabel' => 'PLG_GEBURTSTAGSLISTE_RELATION_DESC', 'multiselect' => false));
     } 
-    if($num_configs != 1)
+    
+    $html = '<a id="copy_config" class="icon-text-link" href="'. SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences.php', array('copy' => $conf+1)).'">
+            <i class="fas fa-clone"></i> '.$gL10n->get('SYS_COPY_CONFIGURATION').'</a>';
+    if($num_configs > 1)
     {
-        $html = '<a id="delete_config" class="icon-text-link" href="'. SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences.php', array('add_delete' => $conf+1)).'">
-                <i class="fas fa-trash-alt"></i> '.$gL10n->get('PLG_GEBURTSTAGSLISTE_DELETE_CONFIG').'</a>';
-        $formConfigurations->addCustomContent('', $html);
+        $html .= '&nbsp;&nbsp;&nbsp;&nbsp;<a id="delete_config" class="icon-text-link" href="'. SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences.php', array('delete' => $conf+1)).'">
+            <i class="fas fa-trash-alt"></i> '.$gL10n->get('SYS_DELETE_CONFIGURATION').'</a>';
     }
+    if(!empty($pPreferences->config['Konfigurationen']['col_desc'][$conf]))
+    {
+        $formConfigurations->addCustomContent('', $html);
+    }    
     $formConfigurations->closeGroupBox();
 }
 $formConfigurations->addDescription('</div>');
 $formConfigurations->addLine();
-$html = '<a id="add_config" class="icon-text-link" href="'. SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences.php', array('add_delete' => -1)).'">
-            <i class="fas fa-clone"></i> '.$gL10n->get('PLG_GEBURTSTAGSLISTE_ADD_ANOTHER_CONFIG').'
+$html = '<a id="add_config" class="icon-text-link" href="'. SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences.php', array('add' => 1)).'">
+            <i class="fas fa-clone"></i> '.$gL10n->get('SYS_ADD_ANOTHER_CONFIG').'
         </a>';
 $htmlDesc = '<div class="alert alert-warning alert-small" role="alert">
                 <i class="fas fa-exclamation-triangle"></i>'.$gL10n->get('ORG_NOT_SAVED_SETTINGS_LOST').'

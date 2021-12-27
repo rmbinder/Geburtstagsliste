@@ -3,7 +3,6 @@
     <string name="PLG_GEBURTSTAGSLISTE_ACCESS_PREFERENCES">Access permission for preferences</string>
     <string name="PLG_GEBURTSTAGSLISTE_ACCESS_PREFERENCES_DESC">Here, in addition to the role "Administrator", you can authorize additional roles for access to the "Preferences" module.</string>
     <string name="PLG_GEBURTSTAGSLISTE_ADD_ANOTHER_COLUMN">Add another column</string>
-    <string name="PLG_GEBURTSTAGSLISTE_ADD_ANOTHER_CONFIG">Add further configuration</string>
     <string name="PLG_GEBURTSTAGSLISTE_AGE_OR_ANNIVERSARY_NOT_SHOW">Age or anniversary not show</string>    
     <string name="PLG_GEBURTSTAGSLISTE_AGE_OR_ANNIVERSARY_NOT_SHOW_DESC">By default, the age or the anniversary is displayed in front of the additional text always. If this display should be suppressed, the checkbox has to be selected.</string>        
     <string name="PLG_GEBURTSTAGSLISTE_ALL_MONTHS">- all months -</string>
@@ -46,8 +45,7 @@
     <string name="PLG_GEBURTSTAGSLISTE_DEINST_TABLE_DELETE_ERROR">- The table "adm_plugin_preferences" could not be deleted because it houses more data from other plugins.\n</string>
     <string name="PLG_GEBURTSTAGSLISTE_DEINST_TABLE_DELETE_SUCCESS">- The created table "adm_plugin_preferences" was deleted.\n</string>
     <string name="PLG_GEBURTSTAGSLISTE_DEINST_TEXTS_DELETE_ERROR">- When you delete the e-mail texts an error has occurred.\n</string>
-    <string name="PLG_GEBURTSTAGSLISTE_DEINST_TEXTS_DELETE_SUCCESS">- The e-mail texts created by the plugin have been deleted.\n</string>
-    <string name="PLG_GEBURTSTAGSLISTE_DELETE_CONFIG">Delete this configuration</string> 
+    <string name="PLG_GEBURTSTAGSLISTE_DEINST_TEXTS_DELETE_SUCCESS">- The e-mail texts created by the plugin have been deleted.\n</string> 
     <string name="PLG_GEBURTSTAGSLISTE_DOCUMENTATION">Documentation</string>
     <string name="PLG_GEBURTSTAGSLISTE_DOCUMENTATION_OPEN">Open documentation</string>
     <string name="PLG_GEBURTSTAGSLISTE_DOCUMENTATION_OPEN_DESC">Allows the documentation of the plugin can be opened (An existing Internet connection is required because the data is located on admidio.org).</string>

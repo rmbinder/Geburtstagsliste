@@ -3,7 +3,6 @@
     <string name="PLG_GEBURTSTAGSLISTE_ACCESS_PREFERENCES">Zugriffsberechtigung für Einstellungen</string>
     <string name="PLG_GEBURTSTAGSLISTE_ACCESS_PREFERENCES_DESC">Hier kann man, zusätzlich zur Rolle "Administrator", weitere Rollen für den Zugriff auf das Modul "Einstellungen" berechtigen.</string>
     <string name="PLG_GEBURTSTAGSLISTE_ADD_ANOTHER_COLUMN">Weitere Spalte hinzufügen</string>
-    <string name="PLG_GEBURTSTAGSLISTE_ADD_ANOTHER_CONFIG">Weitere Konfiguration hinzufügen</string>
     <string name="PLG_GEBURTSTAGSLISTE_AGE_OR_ANNIVERSARY_NOT_SHOW">Lebensjahr oder Jubiläum nicht anzeigen</string>    
     <string name="PLG_GEBURTSTAGSLISTE_AGE_OR_ANNIVERSARY_NOT_SHOW_DESC">Standardmäßig wird vor dem Ergänzungstext immer das Lebensjahr oder das Jubiläum angezeigt. Soll diese Anzeige unterdrückt werden, so ist der Haken zu setzen.</string>        
     <string name="PLG_GEBURTSTAGSLISTE_ALL_MONTHS">- alle Monate -</string>
@@ -47,7 +46,6 @@
     <string name="PLG_GEBURTSTAGSLISTE_DEINST_TABLE_DELETE_SUCCESS">- Die vom Plugin angelegte Tabelle "adm_plugin_preferences" wurde gelöscht.\n</string>
     <string name="PLG_GEBURTSTAGSLISTE_DEINST_TEXTS_DELETE_ERROR">- Beim Löschen der E-Mail-Texte ist ein Fehler aufgetreten.\n</string>
     <string name="PLG_GEBURTSTAGSLISTE_DEINST_TEXTS_DELETE_SUCCESS">- Die vom Plugin angelegten E-Mail-Texte wurden gelöscht.\n</string>
-    <string name="PLG_GEBURTSTAGSLISTE_DELETE_CONFIG">Diese Konfiguration löschen</string>
     <string name="PLG_GEBURTSTAGSLISTE_DOCUMENTATION">Dokumentation</string>
     <string name="PLG_GEBURTSTAGSLISTE_DOCUMENTATION_OPEN">Dokumentation öffnen</string>
     <string name="PLG_GEBURTSTAGSLISTE_DOCUMENTATION_OPEN_DESC">Hiermit kann die Dokumentation zum Plugin geöffnet werden (Eine bestehende Internetverbindung wird vorausgesetzt, da sich die Daten auf admidio.org befinden).</string>

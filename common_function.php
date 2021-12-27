@@ -318,3 +318,21 @@ function getRoleId($role_name)
         return 0;
     }
 }
+
+/**
+ * Funktion prüft, ob es eine Konfiguration mit dem übergebenen Namen bereits gibt
+ * wenn ja: wird "- Kopie" angehängt und rekursiv überprüft
+ * @param   string  $name
+ * @return  string
+ */
+function createDesc($name)
+{
+    global $pPreferences;
+   
+    while (in_array($name, $pPreferences->config['Konfigurationen']['col_desc']))
+    {
+        $name .= ' - '.$GLOBALS['gL10n']->get('SYS_CARBON_COPY');
+    }
+    
+    return $name;
+}

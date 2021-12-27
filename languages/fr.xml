@@ -3,7 +3,6 @@
     <string name="PLG_GEBURTSTAGSLISTE_ACCESS_PREFERENCES">Autorisation d'accès pour les paramétrages</string>
     <string name="PLG_GEBURTSTAGSLISTE_ACCESS_PREFERENCES_DESC">Ici, en plus du rôle "Administrateur", vous pouvez autoriser d'autres rôles pour accéder au module "Paramétrages".</string>
     <string name="PLG_GEBURTSTAGSLISTE_ADD_ANOTHER_COLUMN">Ajouter une colonne supplémentaire</string>
-    <string name="PLG_GEBURTSTAGSLISTE_ADD_ANOTHER_CONFIG">Ajouter une configuration supplémentaire</string>
     <string name="PLG_GEBURTSTAGSLISTE_AGE_OR_ANNIVERSARY_NOT_SHOW">Ne pas indiquer l\'année d\'âge ou de jubilé</string>    
     <string name="PLG_GEBURTSTAGSLISTE_AGE_OR_ANNIVERSARY_NOT_SHOW_DESC">Par défaut, l\'année de vie ou le jubilé est toujours affiché avant le texte supplémentaire. Si cet affichage doit être supprimé, la coche doit être activée.</string>    
     <string name="PLG_GEBURTSTAGSLISTE_ALL_MONTHS">- tous les mois -</string>
@@ -47,7 +46,6 @@
     <string name="PLG_GEBURTSTAGSLISTE_DEINST_TABLE_DELETE_SUCCESS">- La table "adm_plugin_preferences" créée par le plugin a été supprimée.\n</string>
     <string name="PLG_GEBURTSTAGSLISTE_DEINST_TEXTS_DELETE_ERROR">- Une erreur s\'est produite lors de la suppression des textes de courriel.\n</string>
     <string name="PLG_GEBURTSTAGSLISTE_DEINST_TEXTS_DELETE_SUCCESS">- Les textes des courriels créés par le plugin ont été supprimés.\n</string>
-    <string name="PLG_GEBURTSTAGSLISTE_DELETE_CONFIG">Supprimer cette configuration</string>
     <string name="PLG_GEBURTSTAGSLISTE_DOCUMENTATION">Documentation</string>
     <string name="PLG_GEBURTSTAGSLISTE_DOCUMENTATION_OPEN">Ouvrir la documentation</string>
     <string name="PLG_GEBURTSTAGSLISTE_DOCUMENTATION_OPEN_DESC">Cela ouvre la documentation pour le plugin (une connexion Internet existante est nécessaire, car les données se trouvent sur admidio.org).</string>
