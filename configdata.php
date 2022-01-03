@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  ***********************************************************************************************
  * Konfigurationsdaten fuer das Admidio-Plugin Geburtstagsliste
@@ -35,7 +35,7 @@ $config_default['Optionen']['configuration_as_header'] = 0;
 $config_default['Plugininformationen']['version'] = '';
 $config_default['Plugininformationen']['stand'] = '';
 
-//Zugriffsberechtigung fuer das Modul preferences
+//Zugriffsberechtigung für das Modul preferences
 $config_default['access']['preferences'] = array(getAdminRoleId());
 
 /*
