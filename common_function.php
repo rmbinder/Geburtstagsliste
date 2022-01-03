@@ -288,35 +288,22 @@ function jahre( $beginn, $ende )
 }
 
 /**
- * Funktion liest die Role-ID einer Rolle aus
- * @param   string  $role_name Name der zu pruefenden Rolle
- * @return  int     rol_id  Rol_id der Rolle, 0, wenn nicht gefunden
+ * Funktion liest die Rollen-ID der Administratorrolle aus
+ * @return  int     rol_id  Rollen-Id der Administratorrolle
  */
-function getRoleId($role_name)
+function getAdminRoleId()
 {
-    $sql = 'SELECT rol_id
-              FROM '. TBL_ROLES. ', '. TBL_CATEGORIES. '
-             WHERE rol_name  = ? -- $role_name
-               AND rol_valid  = 1
-               AND rol_cat_id = cat_id
-               AND ( cat_org_id = ? -- $$GLOBALS[\'gCurrentOrgId\']
-                OR cat_org_id IS NULL ) ';
-
-    $queryParams = array(
-	   $role_name,
-       $GLOBALS['gCurrentOrgId']);
-       
-    $statement = $GLOBALS['gDb']->queryPrepared($sql, $queryParams);
-                    
-    $row = $statement->fetchObject();
-    if(isset($row->rol_id) && strlen($row->rol_id) > 0)
-    {
-        return $row->rol_id;
-    }
-    else
-    {
-        return 0;
-    }
+    // read id of administrator role
+    $sql = 'SELECT MIN(rol_id) as rol_id
+          FROM '.TBL_ROLES.'
+    INNER JOIN '.TBL_CATEGORIES.'
+            ON cat_id = rol_cat_id
+         WHERE rol_administrator = true
+           AND (  cat_org_id = ? -- $$$GLOBALS[\'gCurrentOrgId\']
+               OR cat_org_id IS NULL )';
+    $pdoStatement = $GLOBALS['gDb']->queryPrepared($sql, array($GLOBALS['gCurrentOrgId']));
+    
+    return (int) $pdoStatement->fetchColumn();
 }
 
 /**

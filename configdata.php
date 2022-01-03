@@ -1,4 +1,4 @@
-<?php
+ï»¿<?php
 /**
  ***********************************************************************************************
  * Konfigurationsdaten fuer das Admidio-Plugin Geburtstagsliste
@@ -35,8 +35,8 @@ $config_default['Optionen']['configuration_as_header'] = 0;
 $config_default['Plugininformationen']['version'] = '';
 $config_default['Plugininformationen']['stand'] = '';
 
-//Zugriffsberechtigung für das Modul preferences
-$config_default['access']['preferences'] = array(getRoleId($GLOBALS['gL10n']->get('SYS_ADMINISTRATOR')));
+//Zugriffsberechtigung fuer das Modul preferences
+$config_default['access']['preferences'] = array(getAdminRoleId());
 
 /*
  *  Mittels dieser Zeichenkombination werden Konfigurationsdaten, die zur Laufzeit als Array verwaltet werden,
