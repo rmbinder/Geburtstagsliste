@@ -520,12 +520,12 @@ foreach ($liste->listData as $memberdata)
             	// die Laufende Nummer noch davorsetzen
                 $columnValues[] = $listRowNumber;  
             }
+            else
+            {
+                // erste Spalte zeigt lfd. Nummer an
+                $tmp_csv = $tmp_csv.$valueQuotes. $listRowNumber. $valueQuotes;
+            }
         }
-        else
-        {
-            // erste Spalte zeigt lfd. Nummer an
-            $tmp_csv = $tmp_csv.$valueQuotes. $listRowNumber. $valueQuotes;
-        }         
         
         /*****************************************************************/
         // create output format
@@ -544,7 +544,7 @@ foreach ($liste->listData as $memberdata)
     	}
         
         if ($usf_id  != 0 
-        	&& $getMode == 'csv'
+            && (in_array($getMode, array('xlsx', 'pdf', 'csv'), true))
          	&& $content > 0
          	&& ( $gProfileFields->getPropertyById($usf_id, 'usf_type') == 'DROPDOWN'
               || $gProfileFields->getPropertyById($usf_id, 'usf_type') == 'RADIO_BUTTON') )
@@ -558,7 +558,7 @@ foreach ($liste->listData as $memberdata)
         {
         	$tmp_csv = $tmp_csv. $separator. $valueQuotes. $content. $valueQuotes;
         }
-        elseif ($getMode == 'xlsx')
+        elseif (in_array($getMode, array('xlsx', 'pdf'), true))
         {
             $columnValues[] = $content;
         }
