@@ -5,11 +5,11 @@
  *
  * Version 3.2.0
  *
- * Dieses Plugin erzeugt fuer einen bestimmten Zeitraum eine Geburtstags- und Jubiläumsliste der Mitglieder.
+ * Dieses Plugin erzeugt eine Geburtstags- oder Jubiläumsliste der Mitglieder.
  *
  * Author: rmb
  *
- * Compatible with Admidio version 4
+ * Compatible with Admidio version 4.1
  *
  * @copyright 2004-2022 The Admidio Team
  * @see https://www.admidio.org/
