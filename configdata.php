@@ -36,7 +36,7 @@ $config_default['Plugininformationen']['version'] = '';
 $config_default['Plugininformationen']['stand'] = '';
 
 //Zugriffsberechtigung für das Modul preferences
-$config_default['access']['preferences'] = array(getAdminRoleId());
+$config_default['access']['preferences'] = array();
 
 /*
  *  Mittels dieser Zeichenkombination werden Konfigurationsdaten, die zur Laufzeit als Array verwaltet werden,

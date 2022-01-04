@@ -288,25 +288,6 @@ function jahre( $beginn, $ende )
 }
 
 /**
- * Funktion liest die Rollen-ID der Administratorrolle aus
- * @return  int     rol_id  Rollen-Id der Administratorrolle
- */
-function getAdminRoleId()
-{
-    // read id of administrator role
-    $sql = 'SELECT MIN(rol_id) as rol_id
-          FROM '.TBL_ROLES.'
-    INNER JOIN '.TBL_CATEGORIES.'
-            ON cat_id = rol_cat_id
-         WHERE rol_administrator = true
-           AND (  cat_org_id = ? -- $$$GLOBALS[\'gCurrentOrgId\']
-               OR cat_org_id IS NULL )';
-    $pdoStatement = $GLOBALS['gDb']->queryPrepared($sql, array($GLOBALS['gCurrentOrgId']));
-    
-    return (int) $pdoStatement->fetchColumn();
-}
-
-/**
  * Funktion prüft, ob es eine Konfiguration mit dem übergebenen Namen bereits gibt
  * wenn ja: wird "- Kopie" angehängt und rekursiv überprüft
  * @param   string  $name
