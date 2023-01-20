@@ -43,7 +43,7 @@ if (!isUserAuthorizedForPreferences())
 
 $configSelection = generate_configSelection();
 
-$headline = $gL10n->get('PLG_GEBURTSTAGSLISTE_BIRTHDAY_LIST');
+$headline = $gL10n->get('SYS_SETTINGS');
 
 if ($getAdd)
 {
@@ -115,7 +115,7 @@ $num_configs = count($pPreferences->config['Konfigurationen']['col_desc']);
 
 if ( !StringUtils::strContains($gNavigation->getUrl(), 'preferences.php'))
 {
-    $gNavigation->addUrl(CURRENT_URL);
+    $gNavigation->addUrl(CURRENT_URL, $headline);
 }
 
 // create html page object

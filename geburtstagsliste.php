@@ -170,7 +170,7 @@ $columnCount = count($liste->headerData);
 
 if ($getMode === 'html' )
 {
-    $gNavigation->addStartUrl(CURRENT_URL, $headline);
+    $gNavigation->addStartUrl(CURRENT_URL, $headline, 'fa-birthday-cake');
 }
 
 if ($getMode != 'csv' && $getMode != 'xlsx' )

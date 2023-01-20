@@ -107,8 +107,8 @@ else
 $mailBody = preg_replace ('/\r\n/', '<BR>', $mailBody);
 
 if ($mailSubject !== '')
-{
-    $headline = $gL10n->get('SYS_SUBJECT').': '.$mailSubject;
+{ 
+    $headline = $mailSubject;
 }
 else
 {
