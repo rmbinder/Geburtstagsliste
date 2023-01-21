@@ -327,6 +327,7 @@ $javascriptCode = '$(document).ready(function() { ';
 	for ($conf = 0; $conf < $num_configs; $conf++)
 	{
 		$javascriptCode .= '  
+        $("#btn_addColumn'. $conf. '").click(function() { addColumn'. $conf. '(); });
     	for(var counter = 0; counter < '. count(explode(',',$pPreferences->config['Konfigurationen']['col_fields'][$conf])). '; counter++) {
         	addColumn'. $conf. '();
     	}
@@ -380,12 +381,15 @@ $formConfigurations = new HtmlForm('configurations_preferences_form', SecurityUt
 $formConfigurations->addDescription($gL10n->get('PLG_GEBURTSTAGSLISTE_CONFIGURATIONS_HEADER'));
 $formConfigurations->addDescription('<small>'.$gL10n->get('PLG_GEBURTSTAGSLISTE_CONFIGURATIONS_DESC').'</small>');
 $formConfigurations->addLine();
+
 $formConfigurations->addDescription('<div style="width:100%; height:550px; overflow:auto; border:20px;">');
 for ($conf = 0; $conf < $num_configs; $conf++)
 {
 	$formConfigurations->openGroupBox('configurations_group',($conf+1).'. '.$gL10n->get('PLG_GEBURTSTAGSLISTE_CONFIGURATION'));
 	$formConfigurations->addInput('col_desc'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_COL_DESC'), $pPreferences->config['Konfigurationen']['col_desc'][$conf], array('helpTextIdLabel' => 'PLG_GEBURTSTAGSLISTE_COL_DESC_DESC', 'property' => HtmlForm::FIELD_REQUIRED));
-	$html = '
+    $formConfigurations->addDescription('<strong>'.$gL10n->get('PLG_GEBURTSTAGSLISTE_COLUMN_SELECTION').'</strong><small>  ('.$gL10n->get('PLG_GEBURTSTAGSLISTE_COLUMN_SELECTION_DESC').')</small>');
+
+    $formConfigurations->addHtml('
 		<div class="table-responsive">
     		<table class="table table-condensed" id="mylist_fields_table">
         		<thead>
@@ -395,16 +399,12 @@ for ($conf = 0; $conf < $num_configs; $conf++)
             		</tr>
         		</thead>
                 <tbody id="mylist_fields_tbody'.$conf.'">
-            		<tr id="table_row_button">
-                		<td colspan="2">
-                    		<a class="icon-text-link" href="javascript:addColumn'.$conf.'()"><i class="fas fa-plus-circle"></i>'.$gL10n->get('PLG_GEBURTSTAGSLISTE_ADD_ANOTHER_COLUMN').'</a>
-                		</td>
-            		</tr>
         		</tbody>
     		</table>
-    	</div>
-    ';
-	$formConfigurations->addCustomContent($gL10n->get('PLG_GEBURTSTAGSLISTE_COLUMN_SELECTION'), $html, array('helpTextIdLabel' => 'PLG_GEBURTSTAGSLISTE_COLUMN_SELECTION_DESC'));
+    	</div>');
+        
+    $formConfigurations->addButton('btn_addColumn'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_ADD_ANOTHER_COLUMN'), array('icon' => 'fa-plus-circle'));
+
 	$formConfigurations->addSelectBox('col_sel'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_COL_SEL'), $configSelection, array('defaultValue' => $pPreferences->config['Konfigurationen']['col_sel'][$conf], 'helpTextIdLabel' => 'PLG_GEBURTSTAGSLISTE_COL_SEL_DESC', 'showContextDependentFirstEntry' => false));
 	$formConfigurations->addInput('col_values'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_COL_VALUES'), $pPreferences->config['Konfigurationen']['col_values'][$conf], array('helpTextIdLabel' => 'PLG_GEBURTSTAGSLISTE_COL_VALUES_DESC'));
 	$formConfigurations->addInput('col_suffix'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_COL_SUFFIX'), $pPreferences->config['Konfigurationen']['col_suffix'][$conf], array('helpTextIdLabel' => 'PLG_GEBURTSTAGSLISTE_COL_SUFFIX_DESC'));
@@ -452,29 +452,43 @@ for ($conf = 0; $conf < $num_configs; $conf++)
         $formConfigurations->addSelectBoxFromSql('relationtype_id'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_RELATION'), $gDb, $sql,
             array('defaultValue' => $pPreferences->config['Konfigurationen']['relation'][$conf],'showContextDependentFirstEntry' => true, 'helpTextIdLabel' => 'PLG_GEBURTSTAGSLISTE_RELATION_DESC', 'multiselect' => false));
     } 
+    $formConfigurations->addButton('btn_copy_config', 
+        $gL10n->get('SYS_COPY_CONFIGURATION'), 
+        array(
+            'icon' => 'fa-clone',
+            'link' => SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences.php', array('copy' => $conf+1)))
+    );
     
-    $html = '<a id="copy_config" class="icon-text-link" href="'. SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences.php', array('copy' => $conf+1)).'">
-            <i class="fas fa-clone"></i> '.$gL10n->get('SYS_COPY_CONFIGURATION').'</a>';
     if($num_configs > 1)
     {
-        $html .= '&nbsp;&nbsp;&nbsp;&nbsp;<a id="delete_config" class="icon-text-link" href="'. SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences.php', array('delete' => $conf+1)).'">
-            <i class="fas fa-trash-alt"></i> '.$gL10n->get('SYS_DELETE_CONFIGURATION').'</a>';
-    }
-    if(!empty($pPreferences->config['Konfigurationen']['col_desc'][$conf]))
-    {
-        $formConfigurations->addCustomContent('', $html);
-    }    
+        $formConfigurations->addButton('btn_delete_config', 
+            $gL10n->get('SYS_DELETE_CONFIGURATION'),
+            array(
+                'icon' => 'fa-trash-alt',
+                'link' => SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences.php', array('delete' => $conf+1))
+                
+            )
+        );
+    }   
     $formConfigurations->closeGroupBox();
 }
 $formConfigurations->addDescription('</div>');
 $formConfigurations->addLine();
-$html = '<a id="add_config" class="icon-text-link" href="'. SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences.php', array('add' => 1)).'">
-            <i class="fas fa-clone"></i> '.$gL10n->get('SYS_ADD_ANOTHER_CONFIG').'
-        </a>';
-$htmlDesc = '<div class="alert alert-warning alert-small" role="alert">
-                <i class="fas fa-exclamation-triangle"></i>'.$gL10n->get('ORG_NOT_SAVED_SETTINGS_LOST').'
-            </div>';
-$formConfigurations->addCustomContent('', $html, array('helpTextIdInline' => $htmlDesc)); 
+
+$formConfigurations->openGroupBox('add_config_group');
+$formConfigurations->addButton('add_another_config',
+    $gL10n->get('SYS_ADD_ANOTHER_CONFIG'),
+    array(
+        'icon' => 'fa-clone', 
+        'class' => 'btn btn-secondary',
+        'link' => SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences.php', array('add' => 1))
+    )
+);
+$formConfigurations->addHtml('<div class="alert alert-warning alert-small" role="alert">
+                                <i class="fas fa-exclamation-triangle"></i>'.$gL10n->get('ORG_NOT_SAVED_SETTINGS_LOST').'
+                            </div>');
+$formConfigurations->closeGroupBox();
+
 $formConfigurations->addSubmitButton('btn_save_configurations', $gL10n->get('SYS_SAVE'), array('icon' => 'fa-check', 'class' => ' offset-sm-3'));
                         
 $page->addHtml(getPreferencePanel('common', 'configurations', $gL10n->get('PLG_GEBURTSTAGSLISTE_CONFIGURATIONS'), 'fas fa-cogs', $formConfigurations->show()));
@@ -520,7 +534,7 @@ $formPluginInformations->addStaticControl('plg_name', $gL10n->get('PLG_GEBURTSTA
 $formPluginInformations->addStaticControl('plg_version', $gL10n->get('PLG_GEBURTSTAGSLISTE_PLUGIN_VERSION'), $pPreferences->config['Plugininformationen']['version']);
 $formPluginInformations->addStaticControl('plg_date', $gL10n->get('PLG_GEBURTSTAGSLISTE_PLUGIN_DATE'), $pPreferences->config['Plugininformationen']['stand']);
                         
-$html = '<a class="icon-text-link" href="https://www.admidio.org/dokuwiki/doku.php?id=de:plugins:geburtstagsliste#geburtstagsliste" target="_blank">
+$html = '<a class="btn btn-secondary" id="open_doc" href="https://www.admidio.org/dokuwiki/doku.php?id=de:plugins:geburtstagsliste#geburtstagsliste" target="_blank">
         <i class="fas fa-external-link-square-alt"></i> '.$gL10n->get('PLG_GEBURTSTAGSLISTE_DOCUMENTATION_OPEN').'</a>';
 $formPluginInformations->addCustomContent($gL10n->get('PLG_GEBURTSTAGSLISTE_DOCUMENTATION'), $html, array('helpTextIdInline' => 'PLG_GEBURTSTAGSLISTE_DOCUMENTATION_OPEN_DESC'));
 $page->addHtml(getPreferencePanel('common', 'plugin_informations', $gL10n->get('PLG_GEBURTSTAGSLISTE_PLUGIN_INFORMATION'), 'fas fa-info-circle', $formPluginInformations->show()));
