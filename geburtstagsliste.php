@@ -119,7 +119,7 @@ $valueQuotes = '';
 $charset     = '';
 $classTable  = '';
 $orientation = '';
-$filename = $g_organization.'-'.$gL10n->get('PLG_GEBURTSTAGSLISTE_BIRTHDAY_LIST');
+$filename = $gCurrentOrganization->getValue('org_shortname').'-'.$gL10n->get('PLG_GEBURTSTAGSLISTE_BIRTHDAY_LIST');
 
 switch ($getMode)
 {
