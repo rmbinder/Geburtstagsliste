@@ -119,7 +119,7 @@ if ( !StringUtils::strContains($gNavigation->getUrl(), 'preferences.php'))
 }
 
 // create html page object
-$page = new HtmlPage('plg-geburtstagsliste-preferences', $headline);
+$page = new HtmlPage('plg-birthday_list-preferences', $headline);
 
 // open the module configurations if a configuration is added, deleted or copied
 if ($getAdd || $getDelete > 0 || $getCopy > 0)

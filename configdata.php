@@ -1,7 +1,7 @@
 <?php
 /**
  ***********************************************************************************************
- * Konfigurationsdaten fuer das Admidio-Plugin Geburtstagsliste
+ * Configuration data for the Admidio plugin birthday list
  *
  * @copyright 2004-2023 The Admidio Team
  * @see https://www.admidio.org/

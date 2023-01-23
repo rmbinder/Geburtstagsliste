@@ -24,7 +24,7 @@ require_once(__DIR__ . '/../../adm_program/system/classes/TableText.php');
 require_once(__DIR__ . '/common_function.php');
 require_once(__DIR__ . '/classes/configtable.php');
 
-if (!StringUtils::strContains($gNavigation->getUrl(), 'geburtstagsliste.php') && !StringUtils::strContains($gNavigation->getUrl(), 'message_send.php'))
+if (!StringUtils::strContains($gNavigation->getUrl(), 'birthday_list.php') && !StringUtils::strContains($gNavigation->getUrl(), 'message_send.php'))
 {
 	$gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
 }
@@ -150,7 +150,7 @@ else
 $gNavigation->addUrl(CURRENT_URL, $headline);
 
 // create html page object
-$page = new HtmlPage('plg-geburtstagsliste-message-write', $headline);
+$page = new HtmlPage('plg-birthday_list-message-write', $headline);
 
 // show form
 $form = new HtmlForm('mail_send_form', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/message_send.php', array('user_uuid' => $getUserUuid)), $page, array('enableFileUpload' => true));    
