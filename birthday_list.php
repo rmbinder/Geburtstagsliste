@@ -3,13 +3,13 @@
  ***********************************************************************************************
  * Geburtstagsliste / birthday_list
  *
- * Version 3.2.0
+ * Version 3.3.0
  *
  * This plugin creates a birthday or anniversary list of members.
  *
  * Author: rmb
  *
- * Compatible with Admidio version 4.1
+ * Compatible with Admidio version 4.2
  *
  * @copyright 2004-2023 The Admidio Team
  * @see https://www.admidio.org/

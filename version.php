@@ -1,7 +1,7 @@
 <?php
 /**
  ***********************************************************************************************
- * Versionsdatei fuer das Admidio-Plugin Geburtstagsliste
+ * Versionsdatei fuer das Admidio-Plugin birthday list
  *
  * @copyright 2004-2023 The Admidio Team
  * @see https://www.admidio.org/
@@ -9,5 +9,5 @@
  ***********************************************************************************************
  */
 
-$plugin_version = '3.3.0-Beta1';
-$plugin_stand 	= '20.01.2023';
+$plugin_version = '3.3.0';
+$plugin_stand 	= '18.02.2023';

@@ -1,7 +1,7 @@
 <?php
 /**
  ***********************************************************************************************
- * Gemeinsame Funktionen fuer das Admidio-Plugin Geburtstagsliste
+ * Gemeinsame Funktionen fuer das Admidio-Plugin birthday list
  *
  * @copyright 2004-2023 The Admidio Team
  * @see https://www.admidio.org/

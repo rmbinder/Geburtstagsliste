@@ -1,7 +1,7 @@
 <?php
 /**
  ***********************************************************************************************
- * Verarbeiten der Einstellungen des Admidio-Plugins Geburtstagsliste
+ * Verarbeiten der Einstellungen des Admidio-Plugins birthday list
  *
  * @copyright 2004-2023 The Admidio Team
  * @see https://www.admidio.org/
