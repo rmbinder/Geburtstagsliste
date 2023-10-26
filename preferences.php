@@ -443,7 +443,7 @@ for ($conf = 0; $conf < $num_configs; $conf++)
     $formConfigurations->addCheckbox('calendar_year'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_SHOW_CALENDAR_YEAR'), $pPreferences->config['Konfigurationen']['calendar_year'][$conf], array('helpTextIdLabel' => 'PLG_GEBURTSTAGSLISTE_SHOW_CALENDAR_YEAR_DESC'));
     $formConfigurations->addInput('years_offset'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_YEARS_OFFSET'), $pPreferences->config['Konfigurationen']['years_offset'][$conf], array('type' => 'number',  'step' => 1, 'minNumber' => -99, 'maxNumber' => 99, 'helpTextIdLabel' => 'PLG_GEBURTSTAGSLISTE_YEARS_OFFSET_DESC') );  
  
-    if ($gSettingsManager->getInt('members_enable_user_relations') == 1)
+    if ($gSettingsManager->getBool('contacts_user_relations_enabled'))
     {
         // select box showing all relation types
         $sql = 'SELECT urt_id, urt_name
