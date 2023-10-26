@@ -382,7 +382,7 @@ if ($getMode != 'csv' && $getMode != 'xlsx' )
         {
         	$selectBoxEntries['X'.$key.'X'] = $item;
         }
-        $form->addSelectBox('configList', null, $selectBoxEntries, array('showContextDependentFirstEntry' => false));
+        $form->addSelectBox('configList', '', $selectBoxEntries, array('showContextDependentFirstEntry' => false));
         
         $selectBoxEntries = array('' => $gL10n->get('PLG_GEBURTSTAGSLISTE_SELECT_NUMBER_OF_DAYS').' ...');
         foreach ($pPreferences->config['Optionen']['vorschau_liste'] as $item)
@@ -390,14 +390,14 @@ if ($getMode != 'csv' && $getMode != 'xlsx' )
         	// eine 0 in der Vorschauliste wird nicht korrekt dargestellt, deshalb alle Werte maskieren
         	$selectBoxEntries['X'.$item.'X'] =  $item;
         }
-        $form->addSelectBox('previewList', null, $selectBoxEntries, array('showContextDependentFirstEntry' => false));
+        $form->addSelectBox('previewList', '', $selectBoxEntries, array('showContextDependentFirstEntry' => false));
         
         $selectBoxEntries = array('' => $gL10n->get('PLG_GEBURTSTAGSLISTE_SELECT_MONTH').' ...');
         foreach ($monate as $key => $item)
         {
         	$selectBoxEntries[$key] =  $item;
         }
-        $form->addSelectBox('monthList', null, $selectBoxEntries, array('showContextDependentFirstEntry' => false));
+        $form->addSelectBox('monthList', '', $selectBoxEntries, array('showContextDependentFirstEntry' => false));
         
         if ($getExportAndFilter)
         {
