@@ -413,7 +413,12 @@ if ($getMode != 'csv' && $getMode != 'xlsx' )
         $page->addHtml($form->show());
         
         $table = new HtmlTable('adm_lists_table', $page, $hoverRows, $datatable, $classTable);
-        $table->setDatatablesRowsPerPage($gSettingsManager->getInt('groups_roles_members_per_page'));
+        if ($datatable)
+        {
+            // ab Admidio 4.3 verursacht setDatatablesRowsPerPage, wenn $datatable "false" ist, folgenden Fehler:
+            // "Fatal error: Uncaught Error: Call to a member function setDatatablesRowsPerPage() on null"
+            $table->setDatatablesRowsPerPage($gSettingsManager->getInt('groups_roles_members_per_page'));
+        }
     }
 	else
 	{
