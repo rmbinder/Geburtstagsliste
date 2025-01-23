@@ -180,7 +180,7 @@ function isMemberOfCategorie($cat_id, $user_id = 0)
                   AND mem_end    > ? -- DATE_NOW
                   AND mem_rol_id = rol_id
                   AND cat_id   = ? -- $cat_id
-                  AND rol_valid  = 1
+                  AND rol_valid  = true
                   AND rol_cat_id = cat_id
                   AND (  cat_org_id = ? -- $GLOBALS[\'gCurrentOrgId\']
                    OR cat_org_id IS NULL ) ';

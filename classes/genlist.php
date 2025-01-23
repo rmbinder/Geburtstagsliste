@@ -49,6 +49,7 @@ class GenList
 	public function generate_listData()
 	{
 		global $gProfileFields, $pPreferences;
+		$workarray = array();
 		
 		// die Werte fuer die runden Geburtstage, Jubilaeen usw einlesen
 		if (stristr($pPreferences->config['Konfigurationen']['col_values'][$this->conf],'-'))         // wenn das Zeichen '-' vorhanden ist, dann ist es ein Wertebereich (x-y;z)
@@ -98,7 +99,7 @@ class GenList
                                   WHERE mem_rol_id = rol_id
         					        AND mem_begin <= ? -- DATE_NOW
         						    AND mem_end    > ? -- DATE_NOW
-        						    AND rol_valid  = 1
+        						    AND rol_valid  = true
         						    AND rol_cat_id = cat_id
         						    AND (  cat_org_id = ? -- $GLOBALS[\'gCurrentOrgId\']
             					     OR cat_org_id IS NULL ) )';
@@ -108,11 +109,11 @@ class GenList
 							FROM '.TBL_MEMBERS.'
 					   LEFT JOIN '.TBL_USER_RELATIONS.'
 							  ON ure_usr_id1 = mem_usr_id
-						     AND ure_urt_id = ? -- $pPreferences->config[\'Konfigurationen\'][\'relation\'][$this->conf]
+						     AND ure_urt_id = ? -- (int) $pPreferences->config[\'Konfigurationen\'][\'relation\'][$this->conf]
 						   WHERE '. $orgCondition. '  ';
 
         $queryParams = array(
-            $pPreferences->config['Konfigurationen']['relation'][$this->conf],
+            (int) $pPreferences->config['Konfigurationen']['relation'][$this->conf],
 			DATE_NOW,
 			DATE_NOW,
 			$GLOBALS['gCurrentOrgId']

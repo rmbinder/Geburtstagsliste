@@ -187,7 +187,7 @@ if($possibleEmails > 1)
                              ON field.usf_id = email.usd_usf_id
                             AND field.usf_type = \'EMAIL\'
                           WHERE usr_id = ? -- $gCurrentUserId
-                            AND usr_valid = 1
+                            AND usr_valid = true
                        GROUP BY email.usd_value, email.usd_value';
     $sqlData['params'] = array($gCurrentUserId);
 
