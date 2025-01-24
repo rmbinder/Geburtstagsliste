@@ -644,9 +644,9 @@ if ($getMode == 'csv')
     // download CSV file
     header('Content-Type: text/comma-separated-values; charset='.$charset);
 
-    if ($charset === 'iso-8859-1')
+    if ($charset === 'iso-8859-1'&& function_exists('mb_convert_encoding'))
     {
-        echo utf8_decode($csvStr);
+        echo mb_convert_encoding($csvStr, 'ISO-8859-1', 'UTF-8');
     }
     else
     {
