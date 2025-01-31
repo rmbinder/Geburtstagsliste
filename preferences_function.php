@@ -79,7 +79,7 @@ case 1:
     				// 4.: wenn nicht leer oder nicht im Format "x-y;z" (für Wertebereich), dann kann es nur eine Zahlenliste sein "x1,x2,x3,..."
     				if (!($_POST['col_values'. $conf] === '' || preg_match('/^[1-9][0-9]{0,}[-][1-9][0-9]{0,}?[;][1-9][0-9]{0,}$/', $_POST['col_values'. $conf])))
     				{
-    				    $_POST['col_values'. $conf] = implode(',',preg_split('/[-;,]/', $_POST['col_values'. $conf], null, PREG_SPLIT_NO_EMPTY ));
+    				    $_POST['col_values'. $conf] = implode(',',preg_split('/[-;,]/', $_POST['col_values'. $conf], -1, PREG_SPLIT_NO_EMPTY ));
     				}
     				$pPreferences->config['Konfigurationen']['col_values'][] = $_POST['col_values'. $conf];    
     				
