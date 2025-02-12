@@ -78,8 +78,7 @@ class ConfigTablePGL
 		$pdoStatement = $GLOBALS['gDb']->queryPrepared($sql, array(), false);
 		
 		//if not, then create the table
-		//if ($pdoStatement === false)                         //If the DB does not exist, queryPrepared should return false. This does not work up to and including Admidio 4.3.13.
-		if ($pdoStatement->rowCount() === 0)                  // workaround
+		if ($pdoStatement === false)                                  
 		{
     		// Tabelle ist nicht vorhanden --> anlegen
         	$sql = 'CREATE TABLE '.$this->table_name.' (
@@ -329,8 +328,7 @@ class ConfigTablePGL
 	 	$pdoStatement = $GLOBALS['gDb']->queryPrepared($sql, array(), false);
 	 	
 	 	// if it is available, check whether the version is up to date
-	 	//if ($pdoStatement !== false)           //If the DB does not exist, queryPrepared should return false. This does not work up to and including Admidio 4.3.13.
-	 	if ($pdoStatement->rowCount() !== 0)     // workaround
+	 	if ($pdoStatement !== false)          
 	 	{
 			$plp_name = self::$shortcut.'__Plugininformationen__version';
           
