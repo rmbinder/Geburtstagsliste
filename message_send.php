@@ -39,7 +39,7 @@ $postTemplate              = admFuncVariableIsValid($_POST, 'msg_template', 'str
 $_SESSION['message_request'] = $_POST;
 
 // Stop if mail should be send and mail module is disabled
-if (!$gSettingsManager->getBool('enable_mail_module'))
+if (!$gSettingsManager->getBool('mail_module_enabled'))
 {
     $gMessage->show($gL10n->get('SYS_MODULE_DISABLED'));
     // => EXIT

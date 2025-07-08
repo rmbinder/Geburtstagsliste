@@ -583,7 +583,7 @@ foreach ($liste->listData as $memberdata)
             {
         		if ($gProfileFields->getPropertyById($usf_id, 'usf_type') == 'EMAIL')
         	 	{
-        			if ($gSettingsManager->getInt('enable_mail_module') != 1)
+        			if ($gSettingsManager->getInt('mail_module_enabled') !== 1)
 					{
 						$mail_link = 'mailto:'. $content;
 					}

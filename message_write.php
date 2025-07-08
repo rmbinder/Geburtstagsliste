@@ -42,7 +42,7 @@ $getConfigText = admFuncVariableIsValid($_GET, 'configtext', 'string');
 $getConfig     = admFuncVariableIsValid($_GET, 'config', 'numeric', array('defaultValue' => 0));
 
 // check if the call of the page was allowed by settings
-if (!$gSettingsManager->getBool('enable_mail_module'))
+if (!$gSettingsManager->getBool('mail_module_enabled'))
 {
     // message if the sending is not allowed
     $gMessage->show($gL10n->get('SYS_MODULE_DISABLED'));
