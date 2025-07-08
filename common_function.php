@@ -9,6 +9,10 @@
  ***********************************************************************************************
  */
 
+use Admidio\Components\Entity\Component;
+use Admidio\Infrastructure\Language;
+use Admidio\Roles\Entity\RolesRights;
+
 require_once(__DIR__ . '/../../system/common.php');
 
 if(!defined('PLUGIN_FOLDER'))

@@ -19,6 +19,8 @@
  *
  *****************************************************************************/
 
+use Admidio\Users\Entity\User;
+
 class GenList
 {
     public	$headerData = array();               ///< Array mit allen Spaltenueberschriften
