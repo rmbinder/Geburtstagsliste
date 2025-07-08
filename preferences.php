@@ -535,7 +535,7 @@ $page->addHtml(getPreferencePanel('common', 'access_preferences', $gL10n->get('P
 
 // PANEL: PLUGIN INFORMATIONS
 
-$formPluginInformations = new HtmlForm('plugin_informations_preferences_form', null,$page, array('class' => 'form-preferences'));
+$formPluginInformations = new HtmlForm('plugin_informations_preferences_form', '', $page, array('class' => 'form-preferences'));
 $formPluginInformations->addStaticControl('plg_name', $gL10n->get('PLG_GEBURTSTAGSLISTE_PLUGIN_NAME'), $gL10n->get('PLG_GEBURTSTAGSLISTE_BIRTHDAY_LIST'));
 $formPluginInformations->addStaticControl('plg_version', $gL10n->get('PLG_GEBURTSTAGSLISTE_PLUGIN_VERSION'), $pPreferences->config['Plugininformationen']['version']);
 $formPluginInformations->addStaticControl('plg_date', $gL10n->get('PLG_GEBURTSTAGSLISTE_PLUGIN_DATE'), $pPreferences->config['Plugininformationen']['stand']);
