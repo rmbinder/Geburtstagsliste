@@ -16,7 +16,7 @@
  *
  *****************************************************************************/
 
-require_once(__DIR__ . '/../../adm_program/system/common.php');
+require_once(__DIR__ . '/../../system/common.php');
 
 // Initialize and check the parameters
 $getUserUuid   = admFuncVariableIsValid($_GET, 'user_uuid', 'string', array('defaultValue' => $gCurrentUser->getValue('usr_uuid')));

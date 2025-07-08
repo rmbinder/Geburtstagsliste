@@ -19,8 +19,8 @@
  *****************************************************************************/
 
 //require_once(__DIR__ . '/../../system/common.php');
-require_once(__DIR__ . '/../../adm_program/system/common.php');
-require_once(__DIR__ . '/../../adm_program/system/classes/TableText.php');
+require_once(__DIR__ . '/../../system/common.php');
+require_once(__DIR__ . '/../../system/classes/TableText.php');
 require_once(__DIR__ . '/common_function.php');
 require_once(__DIR__ . '/classes/configtable.php');
 
