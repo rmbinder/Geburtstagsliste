@@ -355,11 +355,11 @@ function getPreferencePanel($group, $id, $title, $icon, $body)
     $html = '
         <div class="card" id="panel_' . $id . '">
             <div class="card-header">
-                <a type="button" data-toggle="collapse" data-target="#collapse_' . $id . '">
+                <a type="button" data-bs-toggle="collapse" data-bs-target="#collapse_' . $id . '">
                     <i class="' . $icon . ' fa-fw"></i>' . $title . '
                 </a>
             </div>
-            <div id="collapse_' . $id . '" class="collapse" aria-labelledby="headingOne" data-parent="#accordion_preferences">
+            <div id="collapse_' . $id . '" class="collapse" aria-labelledby="headingOne" data-bs-parent="#accordion_preferences">
                 <div class="card-body">
                     ' . $body . '
                 </div>
@@ -372,7 +372,7 @@ function getPreferencePanel($group, $id, $title, $icon, $body)
 $page->addHtml('
 <ul id="preferences_tabs" class="nav nav-tabs" role="tablist">
     <li class="nav-item">
-        <a id="tabs_nav_common" class="nav-link" href="#tabs-common" data-toggle="tab" role="tab">'.$gL10n->get('SYS_SETTINGS').'</a>
+        <a id="tabs_nav_common" class="nav-link" href="#tabs-common" data-bs-toggle="tab" role="tab">'.$gL10n->get('SYS_SETTINGS').'</a>
     </li>
 </ul>
 
