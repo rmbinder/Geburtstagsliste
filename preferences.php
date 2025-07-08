@@ -22,9 +22,11 @@
  * 
  *****************************************************************************/
 
+use Admidio\Infrastructure\Entity\Text;
 use Admidio\Infrastructure\Utils\SecurityUtils;
 use Admidio\Infrastructure\Utils\StringUtils;
 use Admidio\Users\Entity\User;
+use Admidio\Users\Entity\UserRelationType;
 
 require_once(__DIR__ . '/../../system/common.php');
 require_once(__DIR__ . '/../../system/login_valid.php');
@@ -107,7 +109,7 @@ if ($getCopy > 0)
 	}
     $pPreferences->save();
     
-    $textCopy = new TableText($gDb);
+    $textCopy = new Text($gDb);
     $textCopy->readDataByColumns(array('txt_name' => 'PGLMAIL_NOTIFICATION'.$getCopy-1, 'txt_org_id' => $gCurrentOrgId));
     $value = $textCopy->getValue('txt_text');
     $textCopy->readDataByColumns(array('txt_name' => 'PGLMAIL_NOTIFICATION'.count($pPreferences->config['Konfigurationen']['col_desc'])-1, 'txt_org_id' => $gCurrentOrgId));
@@ -183,7 +185,7 @@ for ($conf = 0; $conf < $num_configs; $conf++)
 {      
     if (!empty($pPreferences->config['Konfigurationen']['relation'][$conf]))
     {
-    	$relationtype = new TableUserRelationType($gDb, $pPreferences->config['Konfigurationen']['relation'][$conf]);
+    	$relationtype = new UserRelationType($gDb, $pPreferences->config['Konfigurationen']['relation'][$conf]);
     	$javascriptCode .= 'var arr_user_fields'.$conf.' = createProfileFieldsRelationArray("'.$relationtype->getValue('urt_name').'"); ';
     }
     else
@@ -430,7 +432,7 @@ for ($conf = 0; $conf < $num_configs; $conf++)
           ORDER BY cat_sequence, cat_name';
 	$formConfigurations->addSelectBoxFromSql('selection_cat'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_CAT_SELECTION'), $gDb, $sql, array('defaultValue' => explode(',',$pPreferences->config['Konfigurationen']['selection_cat'][$conf]), 'helpTextIdLabel' => 'PLG_GEBURTSTAGSLISTE_CAT_SELECTION_CONF_DESC', 'multiselect' => true));
                         	
-	$text[$conf] = new TableText($gDb);
+	$text[$conf] = new Text($gDb);
     $text[$conf]->readDataByColumns(array('txt_name' => 'PGLMAIL_NOTIFICATION'.$conf, 'txt_org_id' => $gCurrentOrgId));
 
     //wenn noch nichts drin steht, dann vorbelegen

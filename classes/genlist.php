@@ -19,6 +19,7 @@
  *
  *****************************************************************************/
 
+use Admidio\Infrastructure\Entity\Entity;
 use Admidio\Users\Entity\User;
 
 class GenList
@@ -181,7 +182,7 @@ class GenList
         		// eine Rolle wurde als Fokusfeld gewaehlt (-> $workDate ist der Beginn der Rollenzugehoerigkeit)
         		elseif (substr($pPreferences->config['Konfigurationen']['col_sel'][$this->conf],0,1) == 'r')
         		{
-        			$membership = new TableAccess($GLOBALS['gDb'], TBL_MEMBERS, 'rol');
+        			$membership = new Entity($GLOBALS['gDb'], TBL_MEMBERS, 'rol');
         			$membership->readDataByColumns(array('mem_rol_id' => substr($pPreferences->config['Konfigurationen']['col_sel'][$this->conf], 1), 'mem_usr_id' => $usr_id));
         			$workDate = $membership->getValue('mem_begin');
         		}

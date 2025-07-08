@@ -20,6 +20,7 @@
 
 //require_once(__DIR__ . '/../../system/common.php');
 use Admidio\Infrastructure\Email;
+use Admidio\Infrastructure\Entity\Text;
 use Admidio\Infrastructure\Utils\FileSystemUtils;
 use Admidio\Infrastructure\Utils\PhpIniUtils;
 use Admidio\Infrastructure\Utils\SecurityUtils;
@@ -27,7 +28,7 @@ use Admidio\Infrastructure\Utils\StringUtils;
 use Admidio\Users\Entity\User;
 
 require_once(__DIR__ . '/../../system/common.php');
-require_once(__DIR__ . '/../../system/classes/TableText.php');
+//require_once(__DIR__ . '/../../system/classes/TableText.php');
 require_once(__DIR__ . '/common_function.php');
 require_once(__DIR__ . '/classes/configtable.php');
 
@@ -80,7 +81,7 @@ if (!$user->hasEmail())
 }
 
 // Subject und Body erzeugen
-$text = new TableText($gDb);
+$text = new Text($gDb);
 
 $text->readDataByColumns(array('txt_name' => 'PGLMAIL_NOTIFICATION'.$getConfig, 'txt_org_id' => $gCurrentOrgId));
 

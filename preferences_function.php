@@ -19,6 +19,7 @@
  *
  *****************************************************************************/
 
+use Admidio\Infrastructure\Entity\Text;
 use Admidio\Infrastructure\Utils\SecurityUtils;
 
 require_once(__DIR__ . '/../../system/common.php');
@@ -57,7 +58,7 @@ case 1:
 				
     			for ($conf = 0; isset($_POST['col_desc'. $conf]); $conf++)
     			{
-    				$text = new TableText($gDb);
+    				$text = new Text($gDb);
     				$text->readDataByColumns(array('txt_name' => 'PGLMAIL_NOTIFICATION'.$conf, 'txt_org_id' => $gCurrentOrgId));
     				$text->setValue('txt_text', $_POST['col_mail'. $conf]);
             		$text->save();

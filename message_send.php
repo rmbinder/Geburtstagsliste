@@ -19,7 +19,9 @@
 use Admidio\Infrastructure\Email;
 use Admidio\Infrastructure\Utils\FileSystemUtils;
 use Admidio\Infrastructure\Utils\StringUtils;
+use Admidio\Messages\Entity\Message;
 use Admidio\Users\Entity\User;
+use PHPMailer\PHPMailer\PHPMailer;
 
 require_once(__DIR__ . '/../../system/common.php');
 
@@ -61,8 +63,8 @@ if (!($gCurrentUserId > 0 && $gSettingsManager->getInt('mail_delivery_confirmati
 }
       
 // object to handle the current message in the database
-$message = new TableMessage($gDb);
-$message->setValue('msg_type', TableMessage::MESSAGE_TYPE_EMAIL);
+$message = new Message($gDb);
+$message->setValue('msg_type', Message::MESSAGE_TYPE_EMAIL);
 $message->setValue('msg_subject', $postSubject);
 $message->setValue('msg_usr_id_sender', $gCurrentUserId);
 $message->addContent($postBody);        
@@ -145,7 +147,7 @@ if ($email->setSender($postFrom,$postName))
                         $email->AddAttachment($_FILES['userfile']['tmp_name'][$currentAttachmentNo], $_FILES['userfile']['name'][$currentAttachmentNo], $encoding = 'base64', $_FILES['userfile']['type'][$currentAttachmentNo]);
                         $message->addAttachment($_FILES['userfile']['tmp_name'][$currentAttachmentNo], $_FILES['userfile']['name'][$currentAttachmentNo]);
                     }
-                    catch (phpmailerException $e)
+                    catch (PHPMailer $e)
                     {
                         $gMessage->show($e->errorMessage());
                     }             
