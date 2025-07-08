@@ -67,7 +67,7 @@ $user = new User($gDb, $gProfileFields);
 $user->readDataByUuid($getUserUuid);
 
 // we need to check if the actual user is allowed to contact this user
-if (!$gCurrentUser->editUsers() && !isMember((int) $user->getValue('usr_id')))
+if (!$gCurrentUser->isAdministratorUsers() && !isMember((int) $user->getValue('usr_id')))
 {
     $gMessage->show($gL10n->get('SYS_USER_ID_NOT_FOUND'));
     // => EXIT

@@ -223,7 +223,7 @@ function generate_configSelection()
     $i 	= 0;
     foreach ($gProfileFields->getProfileFields() as $field)
     {             
-        if (($field->getValue('usf_hidden') == 0 || $GLOBALS['gCurrentUser']->editUsers()) && $field->getValue('usf_type') == 'DATE')
+        if (($field->getValue('usf_hidden') == 0 || $GLOBALS['gCurrentUser']->isAdministratorUsers()) && $field->getValue('usf_type') == 'DATE')
         {   
         	$configSelection[$i][0] = 'p'.$field->getValue('usf_id');
             $configSelection[$i][1] = addslashes($field->getValue('usf_name'));               
