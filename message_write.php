@@ -237,7 +237,7 @@ if (($gSettingsManager->getInt('max_email_attachment_size') > 0) && PhpIniUtils:
             'maxUploadSize'      => Email::getMaxAttachmentSize(),
             'multiUploadLabel'   => $gL10n->get('SYS_ADD_ATTACHMENT'),
             'hideUploadField'    => true,
-            'helpTextIdLabel'    => $gL10n->get('SYS_MAX_ATTACHMENT_SIZE', array(Email::getMaxAttachmentSize(Email::SIZE_UNIT_MEBIBYTE))),
+            'helpTextId'         => $gL10n->get('SYS_MAX_ATTACHMENT_SIZE', array(Email::getMaxAttachmentSize(Email::SIZE_UNIT_MEBIBYTE))),
             'icon'               => 'fa-paperclip'
         )
     );
@@ -253,7 +253,7 @@ if (is_array($templates))
     }
     unset($templateName);
     $form->addSelectBox('msg_template', $gL10n->get('PLG_GEBURTSTAGSLISTE_TEMPLATE'), $selectBoxEntries,
-        array('defaultValue' => $formValues['msg_template'], 'showContextDependentFirstEntry' => true, 'helpTextIdLabel' => 'PLG_GEBURTSTAGSLISTE_TEMPLATE_DESC')
+        array('defaultValue' => $formValues['msg_template'], 'showContextDependentFirstEntry' => true, 'helpTextId' => 'PLG_GEBURTSTAGSLISTE_TEMPLATE_DESC')
     );
 }
 
