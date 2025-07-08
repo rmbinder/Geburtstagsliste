@@ -244,7 +244,7 @@ if ($getMode != 'csv' && $getMode != 'xlsx' )
         }
         else
         {
-            $datatable = true;
+            //$datatable = true;
         }
         $hoverRows = true;
 
