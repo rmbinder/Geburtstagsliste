@@ -253,6 +253,7 @@ if ($getMode != 'csv' && $getMode != 'xlsx' )
         $page->setTitle($title);
         $page->setHeadline($headline);
         $page->addHtml('<h5>'.$subheadline.'</h5>');
+        $page->setContentFullWidth();
         
         $page->addJavascript('
             $("#previewList").change(function () {
