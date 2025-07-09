@@ -18,7 +18,6 @@
  *
  *****************************************************************************/
 
-//require_once(__DIR__ . '/../../system/common.php');
 use Admidio\Infrastructure\Email;
 use Admidio\Infrastructure\Entity\Text;
 use Admidio\Infrastructure\Utils\FileSystemUtils;
@@ -27,10 +26,9 @@ use Admidio\Infrastructure\Utils\SecurityUtils;
 use Admidio\Infrastructure\Utils\StringUtils;
 use Admidio\Users\Entity\User;
 
-require_once(__DIR__ . '/../../system/common.php');
-//require_once(__DIR__ . '/../../system/classes/TableText.php');
+require_once(__DIR__ . '/../../../system/common.php');
 require_once(__DIR__ . '/common_function.php');
-require_once(__DIR__ . '/classes/configtable.php');
+require_once(__DIR__ . '/../classes/configtable.php');
 
 if (!StringUtils::strContains($gNavigation->getUrl(), 'birthday_list.php') && !StringUtils::strContains($gNavigation->getUrl(), 'message_send.php'))
 {

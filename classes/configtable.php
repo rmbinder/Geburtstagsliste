@@ -43,8 +43,8 @@ class ConfigTablePGL
 	{
 		global $g_tbl_praefix;
 
-		require_once(__DIR__ . '/../version.php');
-		include(__DIR__ . '/../configdata.php');
+		require_once(__DIR__ . '/../system/version.php');
+		include(__DIR__ . '/../system/configdata.php');
 		
 		$this->table_name = $g_tbl_praefix.'_plugin_preferences';
 

@@ -1,15 +1,7 @@
 <?php
 /**
  ***********************************************************************************************
- * Geburtstagsliste / birthday_list
- *
- * Version 3.4.1
- *
- * This plugin creates a birthday or anniversary list of members.
- *
- * Author: rmb
- *
- * Compatible with Admidio version 4.3
+ * Creates the main view for the admidio plugin Geburtstagsliste / birthday_list
  *
  * @copyright 2004-2025 The Admidio Team
  * @see https://www.admidio.org/
@@ -35,30 +27,14 @@
 use Admidio\Infrastructure\Utils\FileSystemUtils;
 use Admidio\Infrastructure\Utils\SecurityUtils;
 
-require_once(__DIR__ . '/../../system/common.php');
+require_once(__DIR__ . '/../../../system/common.php');
 require_once(__DIR__ . '/common_function.php');
-require_once(__DIR__ . '/classes/configtable.php');
-require_once(__DIR__ . '/classes/genlist.php');
-
-//$scriptName ist der Name wie er im Menue eingetragen werden muss, also ohne evtl. vorgelagerte Ordner wie z.B. /playground/adm_plugins/birthday_list...
-$scriptName = substr($_SERVER['SCRIPT_NAME'], strpos($_SERVER['SCRIPT_NAME'], FOLDER_PLUGINS));
-
-// only authorized user are allowed to start this module
-if (!isUserAuthorized($scriptName))
-{
-	$gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
-}
+require_once(__DIR__ . '/../classes/configtable.php');
+require_once(__DIR__ . '/../classes/genlist.php');
 
 // Konfiguration einlesen          
 $pPreferences = new ConfigTablePGL();
-if ($pPreferences->checkforupdate())
-{
-	$pPreferences->init();
-}
-else
-{
-	$pPreferences->read();
-}
+$pPreferences->read();
 
 $monate = array('00' => $gL10n->get('PLG_GEBURTSTAGSLISTE_ALL_MONTHS'),
 				'01' => $gL10n->get('PLG_GEBURTSTAGSLISTE_JANUARY'),
@@ -155,7 +131,7 @@ switch ($getMode)
         $classTable  = 'table table-condensed table-striped';
         break;
     case 'xlsx':
-	    include_once(__DIR__ . '/libs/PHP_XLSXWriter/xlsxwriter.class.php');
+	    include_once(__DIR__ . '/../libs/PHP_XLSXWriter/xlsxwriter.class.php');
 	    $getMode     = 'xlsx';
 	    break;
     default:
@@ -258,7 +234,7 @@ if ($getMode != 'csv' && $getMode != 'xlsx' )
         $page->addJavascript('
             $("#previewList").change(function () {
                 if($(this).val().length > 1) {
-                    self.location.href = "'.SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/birthday_list.php', array(
+                    self.location.href = "'.SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/birthday_list.php', array(
                         'mode'              => 'html',
                         'month'             => $getMonth,
                         'filter'            => $getFilter,
@@ -269,7 +245,7 @@ if ($getMode != 'csv' && $getMode != 'xlsx' )
             });
             $("#monthList").change(function () {
                 if($(this).val().length > 0) {
-                    self.location.href = "'.SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/birthday_list.php', array(
+                    self.location.href = "'.SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/birthday_list.php', array(
                         'mode'              => 'html',
                         'previewdays'       => $getPreviewDays,
                         'filter'            => $getFilter,
@@ -280,7 +256,7 @@ if ($getMode != 'csv' && $getMode != 'xlsx' )
             });
             $("#configList").change(function () {
             	if($(this).val().length > 1) {
-                    self.location.href = "'.SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/birthday_list.php', array(
+                    self.location.href = "'.SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/birthday_list.php', array(
                         'mode'              => 'html',
                         'previewdays'       => $getPreviewDays,
                         'filter'            => $getFilter, 
@@ -290,7 +266,7 @@ if ($getMode != 'csv' && $getMode != 'xlsx' )
                 }
             });
             $("#menu_item_lists_print_view").click(function() {
-                window.open("'.SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/birthday_list.php', array(
+                window.open("'.SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/birthday_list.php', array(
                     'previewdays'       => $getPreviewDays, 
                     'filter'            => $getFilter, 
                     'export_and_filter' => $getExportAndFilter, 
@@ -315,7 +291,7 @@ if ($getMode != 'csv' && $getMode != 'xlsx' )
             // dropdown menu item with all export possibilities
             $page->addPageFunctionsMenuItem('menu_item_lists_export', $gL10n->get('SYS_EXPORT_TO'), '#', 'bi-download');
             $page->addPageFunctionsMenuItem('menu_item_lists_xlsx', $gL10n->get('SYS_MICROSOFT_EXCEL').' (XLSX)',
-                SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/birthday_list.php', array(
+                SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/birthday_list.php', array(
                     'previewdays'       => $getPreviewDays,
                     'filter'            => $getFilter,
                     'export_and_filter' => $getExportAndFilter,
@@ -324,7 +300,7 @@ if ($getMode != 'csv' && $getMode != 'xlsx' )
                     'mode'              => 'xlsx')),
                 'bi-file-earmark-excel', 'menu_item_lists_export');
             $page->addPageFunctionsMenuItem('menu_item_lists_csv_ms', $gL10n->get('SYS_MICROSOFT_EXCEL').' (CSV)',
-                SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/birthday_list.php', array(
+                SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/birthday_list.php', array(
                     'previewdays'       => $getPreviewDays,
                     'filter'            => $getFilter,
                     'export_and_filter' => $getExportAndFilter,
@@ -333,7 +309,7 @@ if ($getMode != 'csv' && $getMode != 'xlsx' )
                     'mode'              => 'csv-ms')),
                 'bi-filetype-csv', 'menu_item_lists_export');
             $page->addPageFunctionsMenuItem('menu_item_lists_pdf', $gL10n->get('SYS_PDF').' ('.$gL10n->get('SYS_PORTRAIT').')',
-                SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/birthday_list.php', array(
+                SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/birthday_list.php', array(
                     'previewdays'       => $getPreviewDays,
                     'filter'            => $getFilter,
                     'export_and_filter' => $getExportAndFilter,
@@ -342,7 +318,7 @@ if ($getMode != 'csv' && $getMode != 'xlsx' )
                     'mode'              => 'pdf')),
                 'bi-file-earmark-pdf', 'menu_item_lists_export');
             $page->addPageFunctionsMenuItem('menu_item_lists_pdfl', $gL10n->get('SYS_PDF').' ('.$gL10n->get('SYS_LANDSCAPE').')',
-                SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/birthday_list.php', array(
+                SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/birthday_list.php', array(
                     'previewdays'       => $getPreviewDays,
                     'filter'            => $getFilter,
                     'export_and_filter' => $getExportAndFilter,
@@ -351,7 +327,7 @@ if ($getMode != 'csv' && $getMode != 'xlsx' )
                     'mode'              => 'pdfl')),
                 'bi-file-earmark-pdf', 'menu_item_lists_export');
             $page->addPageFunctionsMenuItem('menu_item_lists_csv', $gL10n->get('SYS_CSV').' ('.$gL10n->get('SYS_UTF8').')',
-                SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/birthday_list.php', array(
+                SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/birthday_list.php', array(
                     'previewdays'       => $getPreviewDays,
                     'filter'            => $getFilter,
                     'export_and_filter' => $getExportAndFilter,
@@ -360,7 +336,7 @@ if ($getMode != 'csv' && $getMode != 'xlsx' )
                     'mode'              => 'csv-oo')),
                 'bi-filetype-csv', 'menu_item_lists_export');
             $page->addPageFunctionsMenuItem('menu_item_ical', $gL10n->get('PLG_GEBURTSTAGSLISTE_ICAL'),
-                SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/ical_export.php', array(
+                SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/ical_export.php', array(
                     'previewdays' => $getPreviewDays,
                     'config'      => $getConfig,
                     'month'       => $getMonth,
@@ -376,10 +352,10 @@ if ($getMode != 'csv' && $getMode != 'xlsx' )
         if (isUserAuthorizedForPreferences())
 		{
     		// show link to pluginpreferences 
-    		$page->addPageFunctionsMenuItem('admMenuItemPreferencesLists', $gL10n->get('SYS_SETTINGS'), SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences.php'),  'bi-gear-fill');
+    		$page->addPageFunctionsMenuItem('admMenuItemPreferencesLists', $gL10n->get('SYS_SETTINGS'), SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/preferences.php'),  'bi-gear-fill');
 		} 
         
-		$form = new HtmlForm('navbar_birthdaylist_form', SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/birthday_list.php', array('headline' => $headline)), $page, array('type' => 'navbar', 'setFocus' => false));
+		$form = new HtmlForm('navbar_birthdaylist_form', SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/birthday_list.php', array('headline' => $headline)), $page, array('type' => 'navbar', 'setFocus' => false));
         
         $selectBoxEntries = array(' ' => $gL10n->get('PLG_GEBURTSTAGSLISTE_SELECT_CONFIGURATION').' ...');
         foreach ($pPreferences->config['Konfigurationen']['col_desc'] as $key => $item)
@@ -590,7 +566,7 @@ foreach ($liste->listData as $memberdata)
 					}
 					else
 					{
-					    $mail_link = SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS.PLUGIN_FOLDER.'/message_write.php', array('user_uuid' => $memberdata[0]['usr_uuid'], 'config' => trim($getConfig,'X'), 'configtext' => end($memberdata)));
+					    $mail_link = SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS.PLUGIN_FOLDER.'/system/message_write.php', array('user_uuid' => $memberdata[0]['usr_uuid'], 'config' => trim($getConfig,'X'), 'configtext' => end($memberdata)));
 					}
 					$columnValues[] = '<a href="'.$mail_link.'">'.$content.'</a><br />';
         		}

@@ -13,11 +13,11 @@ use Admidio\Components\Entity\Component;
 use Admidio\Infrastructure\Language;
 use Admidio\Roles\Entity\RolesRights;
 
-require_once(__DIR__ . '/../../system/common.php');
+require_once(__DIR__ . '/../../../system/common.php');
 
 if(!defined('PLUGIN_FOLDER'))
 {
-	define('PLUGIN_FOLDER', '/'.substr(__DIR__,strrpos(__DIR__,DIRECTORY_SEPARATOR)+1));
+    define('PLUGIN_FOLDER', '/'.substr(dirname(__DIR__),strrpos(dirname(__DIR__),DIRECTORY_SEPARATOR)+1));
 }
 
 /**
@@ -29,56 +29,41 @@ if(!defined('PLUGIN_FOLDER'))
  */
 function isUserAuthorized($scriptName)
 {
-	global $gMessage;
-	
-	$userIsAuthorized = false;
-	$menId = 0;
-	
-	$sql = 'SELECT men_id
+    global $gDb, $gMessage, $gLogger, $gL10n, $gCurrentUser;
+    
+    $userIsAuthorized = false;
+    $menId = 0;
+    
+    $sql = 'SELECT men_id
               FROM '.TBL_MENU.'
              WHERE men_url = ? -- $scriptName ';
-	
-	$menuStatement = $GLOBALS['gDb']->queryPrepared($sql, array($scriptName));
-	
-	if ( $menuStatement->rowCount() === 0 || $menuStatement->rowCount() > 1)
-	{
-		$GLOBALS['gLogger']->notice('BirthdayList: Error with menu entry: Found rows: '. $menuStatement->rowCount() );
-		$GLOBALS['gLogger']->notice('BirthdayList: Error with menu entry: ScriptName: '. $scriptName);
-		$gMessage->show($GLOBALS['gL10n']->get('PLG_GEBURTSTAGSLISTE_MENU_URL_ERROR', array($scriptName)), $GLOBALS['gL10n']->get('SYS_ERROR'));
-	}
-	else
-	{
-		while ($row = $menuStatement->fetch())
-		{
-			$menId = (int) $row['men_id'];
-		}
-	}
-	
-	$sql = 'SELECT men_id, men_com_id, com_name_intern
-              FROM '.TBL_MENU.'
-         LEFT JOIN '.TBL_COMPONENTS.'
-                ON com_id = men_com_id
-             WHERE men_id = ? -- $menId
-          ORDER BY men_men_id_parent DESC, men_order';
-	
-	$menuStatement = $GLOBALS['gDb']->queryPrepared($sql, array($menId));
-	while ($row = $menuStatement->fetch())
-	{
-		if ((int) $row['men_com_id'] === 0 || Component::isVisible($row['com_name_intern']))
-		{
-			// Read current roles rights of the menu
-			$displayMenu = new RolesRights($GLOBALS['gDb'], 'menu_view', $row['men_id']);
-			$rolesDisplayRight = $displayMenu->getRolesIds();
-			
-			// check for right to show the menu
-			if (count($rolesDisplayRight) === 0 || $displayMenu->hasRight($GLOBALS['gCurrentUser']->getRoleMemberships()))
-			{
-				$userIsAuthorized = true;
-			}
-		}
-	}
+    
+    $menuStatement = $gDb->queryPrepared($sql, array($scriptName));
+    
+    if ( $menuStatement->rowCount() === 0 || $menuStatement->rowCount() > 1)
+    {
+        $gLogger->notice('BirthdayList: Error with menu entry: Found rows: '. $menuStatement->rowCount() );
+        $gLogger->notice('BirthdayList: Error with menu entry: ScriptName: '. $scriptName);
+        $gMessage->show($gL10n->get('PLG_GEBURTSTAGSLISTE_MENU_URL_ERROR', array($scriptName)), $gL10n->get('SYS_ERROR'));
+    }
+    else
+    {
+        while ($row = $menuStatement->fetch())
+        {
+            $menId = (int) $row['men_id'];
+        }
+    }
+    
+    // read current roles rights of the menu
+    $displayMenu = new RolesRights($gDb, 'menu_view', $menId);
+    
+    // check for right to show the menu
+    if (count($displayMenu->getRolesIds()) === 0 || $displayMenu->hasRight($gCurrentUser->getRoleMemberships()))
+    {
+        $userIsAuthorized = true;
+    }
 	return $userIsAuthorized;
-}
+}  
 
 /**
  * Funktion prueft, ob der Nutzer berechtigt ist, das Modul Preferences aufzurufen.

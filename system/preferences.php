@@ -28,10 +28,10 @@ use Admidio\Infrastructure\Utils\StringUtils;
 use Admidio\Users\Entity\User;
 use Admidio\Users\Entity\UserRelationType;
 
-require_once(__DIR__ . '/../../system/common.php');
-require_once(__DIR__ . '/../../system/login_valid.php');
+require_once(__DIR__ . '/../../../system/common.php');
+require_once(__DIR__ . '/../../../system/login_valid.php');
 require_once(__DIR__ . '/common_function.php');
-require_once(__DIR__ . '/classes/configtable.php');
+require_once(__DIR__ . '/../classes/configtable.php');
 
 // Initialize and check the parameters
 $getAdd    = admFuncVariableIsValid($_GET, 'add', 'bool');
@@ -382,7 +382,7 @@ $page->addHtml('
 
  // PANEL: CONFIGURATIONS
 
-$formConfigurations = new HtmlForm('configurations_preferences_form', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences_function.php', array('form' => 'configurations')), $page, array('class' => 'form-preferences'));
+$formConfigurations = new HtmlForm('configurations_preferences_form', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/preferences_function.php', array('form' => 'configurations')), $page, array('class' => 'form-preferences'));
   
 $formConfigurations->addDescription($gL10n->get('PLG_GEBURTSTAGSLISTE_CONFIGURATIONS_HEADER'));
 $formConfigurations->addDescription('<small>'.$gL10n->get('PLG_GEBURTSTAGSLISTE_CONFIGURATIONS_DESC').'</small>');
@@ -501,7 +501,7 @@ $page->addHtml(getPreferencePanel('common', 'configurations', $gL10n->get('PLG_G
 
 // PANEL: OPTIONS                        
                         
-$formOptions = new HtmlForm('options_preferences_form', SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences_function.php', array('form' => 'options')),$page, array('class' => 'form-preferences'));                         
+$formOptions = new HtmlForm('options_preferences_form', SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/preferences_function.php', array('form' => 'options')),$page, array('class' => 'form-preferences'));                         
 $formOptions->addInput('vorschau_tage_default', $gL10n->get('PLG_GEBURTSTAGSLISTE_PREVIEW_DAYS'), $pPreferences->config['Optionen']['vorschau_tage_default'], array('type' => 'number',  'step' => 1,'helpTextId' => 'PLG_GEBURTSTAGSLISTE_PREVIEW_DAYS_DESC') );  
 $formOptions->addInput('vorschau_liste', $gL10n->get('PLG_GEBURTSTAGSLISTE_PREVIEW_LIST'), implode(',',$pPreferences->config['Optionen']['vorschau_liste']), array('helpTextId' => 'PLG_GEBURTSTAGSLISTE_PREVIEW_LIST_DESC'));     
 $formOptions->addSelectBox('config_default', $gL10n->get('PLG_GEBURTSTAGSLISTE_CONFIGURATION'),$pPreferences->config['Konfigurationen']['col_desc'], array('defaultValue' => $pPreferences->config['Optionen']['config_default'], 'showContextDependentFirstEntry' => false, 'helpTextId' => 'PLG_GEBURTSTAGSLISTE_CONFIGURATION_DEFAULT_DESC'));
@@ -512,7 +512,7 @@ $page->addHtml(getPreferencePanel('common', 'options', $gL10n->get('PLG_GEBURTST
 
 // PANEL: DEINSTALLATION
                              
-$formDeinstallation = new HtmlForm('deinstallation_form', SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences_function.php', array('mode' => 2)), $page);                     
+$formDeinstallation = new HtmlForm('deinstallation_form', SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/preferences_function.php', array('mode' => 2)), $page);                     
 $formDeinstallation->addSubmitButton('btn_save_deinstallation', $gL10n->get('PLG_GEBURTSTAGSLISTE_DEINSTALLATION'), array('icon' => 'bi-trash', 'class' => 'offset-sm-3'));
 $formDeinstallation->addCustomContent('', ''.$gL10n->get('PLG_GEBURTSTAGSLISTE_DEINSTALLATION_DESC'));
                    
@@ -520,7 +520,7 @@ $page->addHtml(getPreferencePanel('common', 'deinstallation', $gL10n->get('PLG_G
 
 // PANEL: ACCESS_PREFERENCES
                     
-$formAccessPreferences = new HtmlForm('access_preferences_form', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences_function.php', array('form' => 'access_preferences')), $page, array('class' => 'form-preferences'));
+$formAccessPreferences = new HtmlForm('access_preferences_form', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/preferences_function.php', array('form' => 'access_preferences')), $page, array('class' => 'form-preferences'));
 
 $sql = 'SELECT rol.rol_id, rol.rol_name, cat.cat_name
           FROM '.TBL_CATEGORIES.' AS cat, '.TBL_ROLES.' AS rol
