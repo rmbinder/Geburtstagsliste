@@ -150,11 +150,10 @@ case 1:
 case 2:
 	
 	$headline = $gL10n->get('PLG_GEBURTSTAGSLISTE_DEINSTALLATION');
-	 
+	$gNavigation->addUrl(CURRENT_URL, $headline);
+	
 	// create html page object
     $page = new HtmlPage('plg-birthday_list-deinstallation', $headline);
-    
-    $gNavigation->addUrl(CURRENT_URL, $headline);
 
     $page->addHtml('<p class="lead">'.$gL10n->get('PLG_GEBURTSTAGSLISTE_DEINSTALLATION_FORM_DESC').'</p>');
 

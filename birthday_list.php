@@ -173,7 +173,7 @@ $columnCount = count($liste->headerData);
 
 if ($getMode === 'html' )
 {
-    $gNavigation->addStartUrl(CURRENT_URL, $headline, 'bi-cake2');
+    $gNavigation->addStartUrl(CURRENT_URL, $title, 'bi-cake2');
 }
 
 if ($getMode != 'csv' && $getMode != 'xlsx' )
