@@ -163,14 +163,14 @@ $page->addJavascript('
                 if (data === "success") {
 
                     formAlert.attr("class", "alert alert-success form-alert");
-                    formAlert.html("<i class=\"fas fa-check\"></i><strong>'.$gL10n->get('SYS_SAVE_DATA').'</strong>");
+                    formAlert.html("<i class=\"bi bi-check-lg\"></i><strong>'.$gL10n->get('SYS_SAVE_DATA').'</strong>");
                     formAlert.fadeIn("slow");
                     formAlert.animate({opacity: 1.0}, 2500);
                     formAlert.fadeOut("slow");
                 } else {
                     formAlert.attr("class", "alert alert-danger form-alert");
                     formAlert.fadeIn();
-                    formAlert.html("<i class=\"fas fa-exclamation-circle\"></i>" + data);
+                    formAlert.html("<i class=\"bi bi-exclamation-circle\"></i>" + data);
                 }
             }
         });
@@ -356,7 +356,7 @@ function getPreferencePanel($group, $id, $title, $icon, $body)
         <div class="card" id="panel_' . $id . '">
             <div class="card-header">
                 <a type="button" data-bs-toggle="collapse" data-bs-target="#collapse_' . $id . '">
-                    <i class="' . $icon . ' fa-fw"></i>' . $title . '
+                    <i class="' . $icon . ' bi-fw"></i>' . $title . '
                 </a>
             </div>
             <div id="collapse_' . $id . '" class="collapse" aria-labelledby="headingOne" data-bs-parent="#accordion_preferences">
@@ -409,7 +409,7 @@ for ($conf = 0; $conf < $num_configs; $conf++)
     		</table>
     	</div>');
         
-    $formConfigurations->addButton('btn_addColumn'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_ADD_ANOTHER_COLUMN'), array('icon' => 'fa-plus-circle'));
+    $formConfigurations->addButton('btn_addColumn'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_ADD_ANOTHER_COLUMN'), array('icon' => 'bi-plus-circle-fill'));
 
 	$formConfigurations->addSelectBox('col_sel'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_COL_SEL'), $configSelection, array('defaultValue' => $pPreferences->config['Konfigurationen']['col_sel'][$conf], 'helpTextId' => 'PLG_GEBURTSTAGSLISTE_COL_SEL_DESC', 'showContextDependentFirstEntry' => false));
 	$formConfigurations->addInput('col_values'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_COL_VALUES'), $pPreferences->config['Konfigurationen']['col_values'][$conf], array('helpTextId' => 'PLG_GEBURTSTAGSLISTE_COL_VALUES_DESC'));
@@ -461,7 +461,7 @@ for ($conf = 0; $conf < $num_configs; $conf++)
     $formConfigurations->addButton('btn_copy_config', 
         $gL10n->get('SYS_COPY_CONFIGURATION'), 
         array(
-            'icon' => 'fa-clone',
+            'icon' => 'bi-copy',
             'link' => SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences.php', array('copy' => $conf+1)))
     );
     
@@ -470,7 +470,7 @@ for ($conf = 0; $conf < $num_configs; $conf++)
         $formConfigurations->addButton('btn_delete_config', 
             $gL10n->get('SYS_DELETE_CONFIGURATION'),
             array(
-                'icon' => 'fa-trash-alt',
+                'icon' => 'bi-trash',
                 'link' => SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences.php', array('delete' => $conf+1))
                 
             )
@@ -485,19 +485,19 @@ $formConfigurations->openGroupBox('add_config_group');
 $formConfigurations->addButton('add_another_config',
     $gL10n->get('SYS_ADD_ANOTHER_CONFIG'),
     array(
-        'icon' => 'fa-clone', 
+        'icon' => 'bi-copy', 
         'class' => 'btn btn-secondary',
         'link' => SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences.php', array('add' => 1))
     )
 );
 $formConfigurations->addHtml('<div class="alert alert-warning alert-small" role="alert">
-                                <i class="fas fa-exclamation-triangle"></i>'.$gL10n->get('ORG_NOT_SAVED_SETTINGS_LOST').'
+                                <i class="bi bi-exclamation-triangle"></i>'.$gL10n->get('ORG_NOT_SAVED_SETTINGS_LOST').'
                             </div>');
 $formConfigurations->closeGroupBox();
 
-$formConfigurations->addSubmitButton('btn_save_configurations', $gL10n->get('SYS_SAVE'), array('icon' => 'fa-check', 'class' => ' offset-sm-3'));
+$formConfigurations->addSubmitButton('btn_save_configurations', $gL10n->get('SYS_SAVE'), array('icon' => 'bi-check-lg', 'class' => ' offset-sm-3'));
                         
-$page->addHtml(getPreferencePanel('common', 'configurations', $gL10n->get('PLG_GEBURTSTAGSLISTE_CONFIGURATIONS'), 'fas fa-cogs', $formConfigurations->show()));
+$page->addHtml(getPreferencePanel('common', 'configurations', $gL10n->get('PLG_GEBURTSTAGSLISTE_CONFIGURATIONS'), 'bi bi-sliders2', $formConfigurations->show()));
 
 // PANEL: OPTIONS                        
                         
@@ -506,17 +506,17 @@ $formOptions->addInput('vorschau_tage_default', $gL10n->get('PLG_GEBURTSTAGSLIST
 $formOptions->addInput('vorschau_liste', $gL10n->get('PLG_GEBURTSTAGSLISTE_PREVIEW_LIST'), implode(',',$pPreferences->config['Optionen']['vorschau_liste']), array('helpTextId' => 'PLG_GEBURTSTAGSLISTE_PREVIEW_LIST_DESC'));     
 $formOptions->addSelectBox('config_default', $gL10n->get('PLG_GEBURTSTAGSLISTE_CONFIGURATION'),$pPreferences->config['Konfigurationen']['col_desc'], array('defaultValue' => $pPreferences->config['Optionen']['config_default'], 'showContextDependentFirstEntry' => false, 'helpTextId' => 'PLG_GEBURTSTAGSLISTE_CONFIGURATION_DEFAULT_DESC'));
 $formOptions->addCheckbox('configuration_as_header', $gL10n->get('PLG_GEBURTSTAGSLISTE_CONFIGURATION_AS_HEADER'), $pPreferences->config['Optionen']['configuration_as_header'], array('helpTextId' => 'PLG_GEBURTSTAGSLISTE_CONFIGURATION_AS_HEADER_DESC'));
-$formOptions->addSubmitButton('btn_save_options', $gL10n->get('SYS_SAVE'), array('icon' => 'fa-check', 'class' => ' offset-sm-3'));
+$formOptions->addSubmitButton('btn_save_options', $gL10n->get('SYS_SAVE'), array('icon' => 'bi-check-lg', 'class' => ' offset-sm-3'));
 
-$page->addHtml(getPreferencePanel('common', 'options', $gL10n->get('PLG_GEBURTSTAGSLISTE_OPTIONS'), 'fas fa-cog', $formOptions->show()));
+$page->addHtml(getPreferencePanel('common', 'options', $gL10n->get('PLG_GEBURTSTAGSLISTE_OPTIONS'), 'bi bi-gear', $formOptions->show()));
 
 // PANEL: DEINSTALLATION
                              
 $formDeinstallation = new HtmlForm('deinstallation_form', SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences_function.php', array('mode' => 2)), $page);                     
-$formDeinstallation->addSubmitButton('btn_save_deinstallation', $gL10n->get('PLG_GEBURTSTAGSLISTE_DEINSTALLATION'), array('icon' => 'fa-trash-alt', 'class' => 'offset-sm-3'));
+$formDeinstallation->addSubmitButton('btn_save_deinstallation', $gL10n->get('PLG_GEBURTSTAGSLISTE_DEINSTALLATION'), array('icon' => 'bi-trash', 'class' => 'offset-sm-3'));
 $formDeinstallation->addCustomContent('', ''.$gL10n->get('PLG_GEBURTSTAGSLISTE_DEINSTALLATION_DESC'));
                    
-$page->addHtml(getPreferencePanel('common', 'deinstallation', $gL10n->get('PLG_GEBURTSTAGSLISTE_DEINSTALLATION'), 'fas fa-trash-alt', $formDeinstallation->show()));
+$page->addHtml(getPreferencePanel('common', 'deinstallation', $gL10n->get('PLG_GEBURTSTAGSLISTE_DEINSTALLATION'), 'bi bi-trash', $formDeinstallation->show()));
 
 // PANEL: ACCESS_PREFERENCES
                     
@@ -529,9 +529,9 @@ $sql = 'SELECT rol.rol_id, rol.rol_name, cat.cat_name
             OR cat.cat_org_id IS NULL )
       ORDER BY cat_sequence, rol.rol_name ASC';
 $formAccessPreferences->addSelectBoxFromSql('access_preferences', '', $gDb, $sql, array('defaultValue' => $pPreferences->config['access']['preferences'], 'helpTextId' => 'PLG_GEBURTSTAGSLISTE_ACCESS_PREFERENCES_DESC', 'multiselect' => true));
-$formAccessPreferences->addSubmitButton('btn_save_configurations', $gL10n->get('SYS_SAVE'), array('icon' => 'fa-check', 'class' => ' offset-sm-3'));
+$formAccessPreferences->addSubmitButton('btn_save_configurations', $gL10n->get('SYS_SAVE'), array('icon' => 'bi-check-lg', 'class' => ' offset-sm-3'));
 
-$page->addHtml(getPreferencePanel('common', 'access_preferences', $gL10n->get('PLG_GEBURTSTAGSLISTE_ACCESS_PREFERENCES'), 'fas fa-key', $formAccessPreferences->show()));
+$page->addHtml(getPreferencePanel('common', 'access_preferences', $gL10n->get('PLG_GEBURTSTAGSLISTE_ACCESS_PREFERENCES'), 'bi bi-key', $formAccessPreferences->show()));
 
 // PANEL: PLUGIN INFORMATIONS
 
@@ -541,9 +541,9 @@ $formPluginInformations->addStaticControl('plg_version', $gL10n->get('PLG_GEBURT
 $formPluginInformations->addStaticControl('plg_date', $gL10n->get('PLG_GEBURTSTAGSLISTE_PLUGIN_DATE'), $pPreferences->config['Plugininformationen']['stand']);
                         
 $html = '<a class="btn btn-secondary" id="open_doc" href="https://www.admidio.org/dokuwiki/doku.php?id=de:plugins:geburtstagsliste#geburtstagsliste" target="_blank">
-        <i class="fas fa-external-link-square-alt"></i> '.$gL10n->get('PLG_GEBURTSTAGSLISTE_DOCUMENTATION_OPEN').'</a>';
+        <i class="bi bi-journal"></i> '.$gL10n->get('PLG_GEBURTSTAGSLISTE_DOCUMENTATION_OPEN').'</a>';
 $formPluginInformations->addCustomContent($gL10n->get('PLG_GEBURTSTAGSLISTE_DOCUMENTATION'), $html, array('helpTextId' => 'PLG_GEBURTSTAGSLISTE_DOCUMENTATION_OPEN_DESC'));
-$page->addHtml(getPreferencePanel('common', 'plugin_informations', $gL10n->get('PLG_GEBURTSTAGSLISTE_PLUGIN_INFORMATION'), 'fas fa-info-circle', $formPluginInformations->show()));
+$page->addHtml(getPreferencePanel('common', 'plugin_informations', $gL10n->get('PLG_GEBURTSTAGSLISTE_PLUGIN_INFORMATION'), 'bi bi-info-circle', $formPluginInformations->show()));
 
 $page->addHtml('
         </div>
