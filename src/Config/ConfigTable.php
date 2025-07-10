@@ -3,7 +3,7 @@
  ***********************************************************************************************
  * Class manages the configuration table
  *
- * @copyright 2004-2025 The Admidio Team
+ * @copyright The Admidio Team
  * @see https://www.admidio.org/
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
  ***********************************************************************************************
@@ -24,7 +24,9 @@
  *
  *****************************************************************************/
 
-class ConfigTablePGL
+namespace Birthdaylist\Config;
+ 
+class ConfigTable
 {
 	public $config = array();     ///< Array mit allen Konfigurationsdaten
 	
@@ -43,8 +45,8 @@ class ConfigTablePGL
 	{
 		global $g_tbl_praefix;
 
-		require_once(__DIR__ . '/../system/version.php');
-		include(__DIR__ . '/../system/configdata.php');
+		require_once(__DIR__ . '/../../system/version.php');
+		include(__DIR__ . '/../../system/configdata.php');
 		
 		$this->table_name = $g_tbl_praefix.'_plugin_preferences';
 

@@ -3,7 +3,7 @@
  ***********************************************************************************************
  * E-Mails versenden aus dem Plugin Geburtstagsliste
  *
- * @copyright 2004-2025 The Admidio Team
+ * @copyright The Admidio Team
  * @see https://www.admidio.org/
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
  ***********************************************************************************************
@@ -25,10 +25,10 @@ use Admidio\Infrastructure\Utils\PhpIniUtils;
 use Admidio\Infrastructure\Utils\SecurityUtils;
 use Admidio\Infrastructure\Utils\StringUtils;
 use Admidio\Users\Entity\User;
+use Birthdaylist\Config\ConfigTable;
 
 require_once(__DIR__ . '/../../../system/common.php');
 require_once(__DIR__ . '/common_function.php');
-require_once(__DIR__ . '/../classes/configtable.php');
 
 if (!StringUtils::strContains($gNavigation->getUrl(), 'birthday_list.php') && !StringUtils::strContains($gNavigation->getUrl(), 'message_send.php'))
 {
@@ -58,7 +58,7 @@ $mailSubject = '';
 $mailBody    = '';
 
 // Konfiguration einlesen
-$pPreferences = new ConfigTablePGL();
+$pPreferences = new ConfigTable();
 $pPreferences->read();
 
 $user = new User($gDb, $gProfileFields);

@@ -3,7 +3,7 @@
  ***********************************************************************************************
  * Class manages the data for the birthday list
  *
- * @copyright 2004-2025 The Admidio Team
+ * @copyright The Admidio Team
  * @see https://www.admidio.org/
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
  ***********************************************************************************************
@@ -18,6 +18,8 @@
  * generate_dateMinMax		- erzeugt die Min- und Max-Datumsangaben zur Filterung
  *
  *****************************************************************************/
+
+namespace Birthdaylist\Service;
 
 use Admidio\Infrastructure\Entity\Entity;
 use Admidio\Users\Entity\User;

@@ -3,7 +3,7 @@
  ***********************************************************************************************
  * Creates the main view for the admidio plugin Geburtstagsliste / birthday_list
  *
- * @copyright 2004-2025 The Admidio Team
+ * @copyright The Admidio Team
  * @see https://www.admidio.org/
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
  ***********************************************************************************************
@@ -26,14 +26,14 @@
 
 use Admidio\Infrastructure\Utils\FileSystemUtils;
 use Admidio\Infrastructure\Utils\SecurityUtils;
+use Birthdaylist\Config\ConfigTable;
+use Birthdaylist\Service\GenList;
 
 require_once(__DIR__ . '/../../../system/common.php');
 require_once(__DIR__ . '/common_function.php');
-require_once(__DIR__ . '/../classes/configtable.php');
-require_once(__DIR__ . '/../classes/genlist.php');
 
 // Konfiguration einlesen          
-$pPreferences = new ConfigTablePGL();
+$pPreferences = new ConfigTable();
 $pPreferences->read();
 
 $monate = array('00' => $gL10n->get('PLG_GEBURTSTAGSLISTE_ALL_MONTHS'),
@@ -131,7 +131,7 @@ switch ($getMode)
         $classTable  = 'table table-condensed table-striped';
         break;
     case 'xlsx':
-	    include_once(__DIR__ . '/../libs/PHP_XLSXWriter/xlsxwriter.class.php');
+	    include_once(__DIR__ . '/../libs/PHP_XLSXWriter/xlsxwriter.class.php');  
 	    $getMode     = 'xlsx';
 	    break;
     default:

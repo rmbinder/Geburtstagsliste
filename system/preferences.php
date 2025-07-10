@@ -3,7 +3,7 @@
  ***********************************************************************************************
  * Modul Preferences (Einstellungen) fuer das Admidio-Plugin birthday list
  *
- * @copyright 2004-2025 The Admidio Team
+ * @copyright The Admidio Team
  * @see https://www.admidio.org/
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
  ***********************************************************************************************
@@ -27,18 +27,18 @@ use Admidio\Infrastructure\Utils\SecurityUtils;
 use Admidio\Infrastructure\Utils\StringUtils;
 use Admidio\Users\Entity\User;
 use Admidio\Users\Entity\UserRelationType;
+use Birthdaylist\Config\ConfigTable;
 
 require_once(__DIR__ . '/../../../system/common.php');
 require_once(__DIR__ . '/../../../system/login_valid.php');
 require_once(__DIR__ . '/common_function.php');
-require_once(__DIR__ . '/../classes/configtable.php');
 
 // Initialize and check the parameters
 $getAdd    = admFuncVariableIsValid($_GET, 'add', 'bool');
 $getDelete = admFuncVariableIsValid($_GET, 'delete', 'numeric', array('defaultValue' => 0));
 $getCopy   = admFuncVariableIsValid($_GET, 'copy', 'numeric', array('defaultValue' => 0));
 
-$pPreferences = new ConfigTablePGL();
+$pPreferences = new ConfigTable();
 $pPreferences->read();
 
 // only authorized user are allowed to start this module

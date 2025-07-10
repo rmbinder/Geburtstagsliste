@@ -11,11 +11,13 @@
  *
  * Compatible with Admidio version 5
  *
- * @copyright 2004-2025 The Admidio Team
+ * @copyright The Admidio Team
  * @see https://www.admidio.org/
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2.0 only
  ***********************************************************************************************
  */
+
+use Birthdaylist\Config\ConfigTable;
 
 //Fehlermeldungen anzeigen
 error_reporting(E_ALL);
@@ -23,8 +25,6 @@ error_reporting(E_ALL);
 try {
     require_once(__DIR__ . '/../../system/common.php');
     require_once(__DIR__ . '/system/common_function.php');
-    require_once(__DIR__ . '/classes/configtable.php');
-    require_once(__DIR__ . '/classes/genlist.php');
 
     //$scriptName muss derselbe Name sein, wie er im Menue unter URL eingetragen ist
     $scriptName = substr($_SERVER['SCRIPT_NAME'], strpos($_SERVER['SCRIPT_NAME'], FOLDER_PLUGINS));
@@ -38,7 +38,7 @@ try {
     else
     {
         // Konfiguration einlesen bzw. initialisieren       
-        $pPreferences = new ConfigTablePGL();
+        $pPreferences = new ConfigTable();
         if ($pPreferences->checkforupdate())
         {
 	       $pPreferences->init();
