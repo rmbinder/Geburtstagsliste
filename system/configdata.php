@@ -12,7 +12,7 @@
 global $gProfileFields;
 
 //Standardwerte einer Neuinstallation oder beim Anfuegen einer zusaetzlichen Konfiguration       		
-$config_default['Konfigurationen'] = array('col_desc' 	=> array($GLOBALS['gL10n']->get('PLG_GEBURTSTAGSLISTE_PATTERN')),
+$config_default['Konfigurationen'] = array('col_desc' 	=> array($GLOBALS['gL10n']->get('PLG_BIRTHDAYLIST_PATTERN')),
 										'col_sel' 		=> array('p'.$gProfileFields->getProperty('BIRTHDAY', 'usf_id')),
 										'col_values' 	=> array('50,60,70,80'),
 										'col_suffix' 	=> array('. Geburtstag am #Day#.#Month#.#Year#'),

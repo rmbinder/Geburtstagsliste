@@ -250,8 +250,8 @@ if (is_array($templates))
         $selectBoxEntries[$templateName] = str_replace('.html', '', $templateName);
     }
     unset($templateName);
-    $form->addSelectBox('msg_template', $gL10n->get('PLG_GEBURTSTAGSLISTE_TEMPLATE'), $selectBoxEntries,
-        array('defaultValue' => $formValues['msg_template'], 'showContextDependentFirstEntry' => true, 'helpTextId' => 'PLG_GEBURTSTAGSLISTE_TEMPLATE_DESC')
+    $form->addSelectBox('msg_template', $gL10n->get('PLG_BIRTHDAYLIST_TEMPLATE'), $selectBoxEntries,
+        array('defaultValue' => $formValues['msg_template'], 'showContextDependentFirstEntry' => true, 'helpTextId' => 'PLG_BIRTHDAYLIST_TEMPLATE_DESC')
     );
 }
 

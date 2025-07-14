@@ -80,7 +80,7 @@ function isUserAuthorized($scriptName)
     {
         $gLogger->notice('BirthdayList: Error with menu entry: Found rows: '. $menuStatement->rowCount() );
         $gLogger->notice('BirthdayList: Error with menu entry: ScriptName: '. $scriptName);
-        $gMessage->show($gL10n->get('PLG_GEBURTSTAGSLISTE_MENU_URL_ERROR', array($scriptName)), $gL10n->get('SYS_ERROR'));
+        $gMessage->show($gL10n->get('PLG_BIRTHDAYLIST_MENU_URL_ERROR', array($scriptName)), $gL10n->get('SYS_ERROR'));
     }
     else
     {

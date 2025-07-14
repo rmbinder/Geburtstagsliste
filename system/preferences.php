@@ -384,16 +384,16 @@ $page->addHtml('
 
 $formConfigurations = new HtmlForm('configurations_preferences_form', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/preferences_function.php', array('form' => 'configurations')), $page, array('class' => 'form-preferences'));
   
-$formConfigurations->addDescription($gL10n->get('PLG_GEBURTSTAGSLISTE_CONFIGURATIONS_HEADER'));
-$formConfigurations->addDescription('<small>'.$gL10n->get('PLG_GEBURTSTAGSLISTE_CONFIGURATIONS_DESC').'</small>');
+$formConfigurations->addDescription($gL10n->get('PLG_BIRTHDAYLIST_CONFIGURATIONS_HEADER'));
+$formConfigurations->addDescription('<small>'.$gL10n->get('PLG_BIRTHDAYLIST_CONFIGURATIONS_DESC').'</small>');
 $formConfigurations->addLine();
 
 $formConfigurations->addDescription('<div style="width:100%; height:550px; overflow:auto; border:20px;">');
 for ($conf = 0; $conf < $num_configs; $conf++)
 {
-	$formConfigurations->openGroupBox('configurations_group',($conf+1).'. '.$gL10n->get('PLG_GEBURTSTAGSLISTE_CONFIGURATION'));
-	$formConfigurations->addInput('col_desc'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_COL_DESC'), $pPreferences->config['Konfigurationen']['col_desc'][$conf], array('helpTextId' => 'PLG_GEBURTSTAGSLISTE_COL_DESC_DESC', 'property' => HtmlForm::FIELD_REQUIRED));
-    $formConfigurations->addDescription('<strong>'.$gL10n->get('PLG_GEBURTSTAGSLISTE_COLUMN_SELECTION').'</strong><small>  ('.$gL10n->get('PLG_GEBURTSTAGSLISTE_COLUMN_SELECTION_DESC').')</small>');
+	$formConfigurations->openGroupBox('configurations_group',($conf+1).'. '.$gL10n->get('PLG_BIRTHDAYLIST_CONFIGURATION'));
+	$formConfigurations->addInput('col_desc'.$conf, $gL10n->get('PLG_BIRTHDAYLIST_COL_DESC'), $pPreferences->config['Konfigurationen']['col_desc'][$conf], array('helpTextId' => 'PLG_BIRTHDAYLIST_COL_DESC_DESC', 'property' => HtmlForm::FIELD_REQUIRED));
+    $formConfigurations->addDescription('<strong>'.$gL10n->get('PLG_BIRTHDAYLIST_COLUMN_SELECTION').'</strong><small>  ('.$gL10n->get('PLG_BIRTHDAYLIST_COLUMN_SELECTION_DESC').')</small>');
 
     $formConfigurations->addHtml('
 		<div class="table-responsive">
@@ -409,12 +409,12 @@ for ($conf = 0; $conf < $num_configs; $conf++)
     		</table>
     	</div>');
         
-    $formConfigurations->addButton('btn_addColumn'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_ADD_ANOTHER_COLUMN'), array('icon' => 'bi-plus-circle-fill'));
+    $formConfigurations->addButton('btn_addColumn'.$conf, $gL10n->get('PLG_BIRTHDAYLIST_ADD_ANOTHER_COLUMN'), array('icon' => 'bi-plus-circle-fill'));
 
-	$formConfigurations->addSelectBox('col_sel'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_COL_SEL'), $configSelection, array('defaultValue' => $pPreferences->config['Konfigurationen']['col_sel'][$conf], 'helpTextId' => 'PLG_GEBURTSTAGSLISTE_COL_SEL_DESC', 'showContextDependentFirstEntry' => false));
-	$formConfigurations->addInput('col_values'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_COL_VALUES'), $pPreferences->config['Konfigurationen']['col_values'][$conf], array('helpTextId' => 'PLG_GEBURTSTAGSLISTE_COL_VALUES_DESC'));
-	$formConfigurations->addInput('col_suffix'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_COL_SUFFIX'), $pPreferences->config['Konfigurationen']['col_suffix'][$conf], array('helpTextId' => 'PLG_GEBURTSTAGSLISTE_COL_SUFFIX_DESC'));
-	$formConfigurations->addCheckbox('suppress_age'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_AGE_OR_ANNIVERSARY_NOT_SHOW'), $pPreferences->config['Konfigurationen']['suppress_age'][$conf], array('helpTextId' => 'PLG_GEBURTSTAGSLISTE_AGE_OR_ANNIVERSARY_NOT_SHOW_DESC'));
+	$formConfigurations->addSelectBox('col_sel'.$conf, $gL10n->get('PLG_BIRTHDAYLIST_COL_SEL'), $configSelection, array('defaultValue' => $pPreferences->config['Konfigurationen']['col_sel'][$conf], 'helpTextId' => 'PLG_BIRTHDAYLIST_COL_SEL_DESC', 'showContextDependentFirstEntry' => false));
+	$formConfigurations->addInput('col_values'.$conf, $gL10n->get('PLG_BIRTHDAYLIST_COL_VALUES'), $pPreferences->config['Konfigurationen']['col_values'][$conf], array('helpTextId' => 'PLG_BIRTHDAYLIST_COL_VALUES_DESC'));
+	$formConfigurations->addInput('col_suffix'.$conf, $gL10n->get('PLG_BIRTHDAYLIST_COL_SUFFIX'), $pPreferences->config['Konfigurationen']['col_suffix'][$conf], array('helpTextId' => 'PLG_BIRTHDAYLIST_COL_SUFFIX_DESC'));
+	$formConfigurations->addCheckbox('suppress_age'.$conf, $gL10n->get('PLG_BIRTHDAYLIST_AGE_OR_ANNIVERSARY_NOT_SHOW'), $pPreferences->config['Konfigurationen']['suppress_age'][$conf], array('helpTextId' => 'PLG_BIRTHDAYLIST_AGE_OR_ANNIVERSARY_NOT_SHOW_DESC'));
 
     $sql = 'SELECT rol_id, rol_name, cat_name
               FROM '.TBL_CATEGORIES.' , '.TBL_ROLES.' 
@@ -422,7 +422,7 @@ for ($conf = 0; $conf < $num_configs; $conf++)
                AND ( cat_org_id = '.$gCurrentOrgId.'
                 OR cat_org_id IS NULL )
           ORDER BY cat_sequence, rol_name';
-    $formConfigurations->addSelectBoxFromSql('selection_role'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_ROLE_SELECTION'), $gDb, $sql, array('defaultValue' => explode(',',$pPreferences->config['Konfigurationen']['selection_role'][$conf]), 'helpTextId' => 'PLG_GEBURTSTAGSLISTE_ROLE_SELECTION_CONF_DESC', 'multiselect' => true));
+    $formConfigurations->addSelectBoxFromSql('selection_role'.$conf, $gL10n->get('PLG_BIRTHDAYLIST_ROLE_SELECTION'), $gDb, $sql, array('defaultValue' => explode(',',$pPreferences->config['Konfigurationen']['selection_role'][$conf]), 'helpTextId' => 'PLG_BIRTHDAYLIST_ROLE_SELECTION_CONF_DESC', 'multiselect' => true));
                         	
 	$sql = 'SELECT cat_id, cat_name
               FROM '.TBL_CATEGORIES.' , '.TBL_ROLES.' 
@@ -430,7 +430,7 @@ for ($conf = 0; $conf < $num_configs; $conf++)
                AND ( cat_org_id = '.$gCurrentOrgId.'
                 OR cat_org_id IS NULL )
           ORDER BY cat_sequence, cat_name';
-	$formConfigurations->addSelectBoxFromSql('selection_cat'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_CAT_SELECTION'), $gDb, $sql, array('defaultValue' => explode(',',$pPreferences->config['Konfigurationen']['selection_cat'][$conf]), 'helpTextId' => 'PLG_GEBURTSTAGSLISTE_CAT_SELECTION_CONF_DESC', 'multiselect' => true));
+	$formConfigurations->addSelectBoxFromSql('selection_cat'.$conf, $gL10n->get('PLG_BIRTHDAYLIST_CAT_SELECTION'), $gDb, $sql, array('defaultValue' => explode(',',$pPreferences->config['Konfigurationen']['selection_cat'][$conf]), 'helpTextId' => 'PLG_BIRTHDAYLIST_CAT_SELECTION_CONF_DESC', 'multiselect' => true));
                         	
 	$text[$conf] = new Text($gDb);
     $text[$conf]->readDataByColumns(array('txt_name' => 'PGLMAIL_NOTIFICATION'.$conf, 'txt_org_id' => $gCurrentOrgId));
@@ -439,15 +439,15 @@ for ($conf = 0; $conf < $num_configs; $conf++)
     if ($text[$conf]->getValue('txt_text') == '')
     {
         // convert <br /> to a normal line feed
-        $value = preg_replace('/<br[[:space:]]*\/?[[:space:]]*>/',chr(13).chr(10),$gL10n->get('PLG_GEBURTSTAGSLISTE_PGLMAIL_NOTIFICATION'));
+        $value = preg_replace('/<br[[:space:]]*\/?[[:space:]]*>/',chr(13).chr(10),$gL10n->get('PLG_BIRTHDAYLIST_PGLMAIL_NOTIFICATION'));
                     			
         $text[$conf]->setValue('txt_text', $value);
         $text[$conf]->save();
         $text[$conf]->readDataByColumns(array('txt_name' => 'PGLMAIL_NOTIFICATION'.$conf, 'txt_org_id' => $gCurrentOrgId));
     }
-    $formConfigurations->addMultilineTextInput('col_mail'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_NOTIFICATION_MAIL_TEXT'), $text[$conf]->getValue('txt_text'), 7, array('helpTextId' => 'PLG_GEBURTSTAGSLISTE_NOTIFICATION_MAIL_TEXT_DESC'));	
-    $formConfigurations->addCheckbox('calendar_year'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_SHOW_CALENDAR_YEAR'), $pPreferences->config['Konfigurationen']['calendar_year'][$conf], array('helpTextId' => 'PLG_GEBURTSTAGSLISTE_SHOW_CALENDAR_YEAR_DESC'));
-    $formConfigurations->addInput('years_offset'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_YEARS_OFFSET'), $pPreferences->config['Konfigurationen']['years_offset'][$conf], array('type' => 'number',  'step' => 1, 'minNumber' => -99, 'maxNumber' => 99, 'helpTextId' => 'PLG_GEBURTSTAGSLISTE_YEARS_OFFSET_DESC') );  
+    $formConfigurations->addMultilineTextInput('col_mail'.$conf, $gL10n->get('PLG_BIRTHDAYLIST_NOTIFICATION_MAIL_TEXT'), $text[$conf]->getValue('txt_text'), 7, array('helpTextId' => 'PLG_BIRTHDAYLIST_NOTIFICATION_MAIL_TEXT_DESC'));	
+    $formConfigurations->addCheckbox('calendar_year'.$conf, $gL10n->get('PLG_BIRTHDAYLIST_SHOW_CALENDAR_YEAR'), $pPreferences->config['Konfigurationen']['calendar_year'][$conf], array('helpTextId' => 'PLG_BIRTHDAYLIST_SHOW_CALENDAR_YEAR_DESC'));
+    $formConfigurations->addInput('years_offset'.$conf, $gL10n->get('PLG_BIRTHDAYLIST_YEARS_OFFSET'), $pPreferences->config['Konfigurationen']['years_offset'][$conf], array('type' => 'number',  'step' => 1, 'minNumber' => -99, 'maxNumber' => 99, 'helpTextId' => 'PLG_BIRTHDAYLIST_YEARS_OFFSET_DESC') );  
  
     if ($gSettingsManager->getBool('contacts_user_relations_enabled'))
     {
@@ -455,8 +455,8 @@ for ($conf = 0; $conf < $num_configs; $conf++)
         $sql = 'SELECT urt_id, urt_name
                   FROM '.TBL_USER_RELATION_TYPES.'
           		 ORDER BY urt_name';
-        $formConfigurations->addSelectBoxFromSql('relationtype_id'.$conf, $gL10n->get('PLG_GEBURTSTAGSLISTE_RELATION'), $gDb, $sql,
-            array('defaultValue' => $pPreferences->config['Konfigurationen']['relation'][$conf],'showContextDependentFirstEntry' => true, 'helpTextId' => 'PLG_GEBURTSTAGSLISTE_RELATION_DESC', 'multiselect' => false));
+        $formConfigurations->addSelectBoxFromSql('relationtype_id'.$conf, $gL10n->get('PLG_BIRTHDAYLIST_RELATION'), $gDb, $sql,
+            array('defaultValue' => $pPreferences->config['Konfigurationen']['relation'][$conf],'showContextDependentFirstEntry' => true, 'helpTextId' => 'PLG_BIRTHDAYLIST_RELATION_DESC', 'multiselect' => false));
     } 
     $formConfigurations->addButton('btn_copy_config', 
         $gL10n->get('SYS_COPY_CONFIGURATION'), 
@@ -497,26 +497,26 @@ $formConfigurations->closeGroupBox();
 
 $formConfigurations->addSubmitButton('btn_save_configurations', $gL10n->get('SYS_SAVE'), array('icon' => 'bi-check-lg', 'class' => ' offset-sm-3'));
                         
-$page->addHtml(getPreferencePanel('common', 'configurations', $gL10n->get('PLG_GEBURTSTAGSLISTE_CONFIGURATIONS'), 'bi bi-sliders2', $formConfigurations->show()));
+$page->addHtml(getPreferencePanel('common', 'configurations', $gL10n->get('PLG_BIRTHDAYLIST_CONFIGURATIONS'), 'bi bi-sliders2', $formConfigurations->show()));
 
 // PANEL: OPTIONS                        
                         
 $formOptions = new HtmlForm('options_preferences_form', SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/preferences_function.php', array('form' => 'options')),$page, array('class' => 'form-preferences'));                         
-$formOptions->addInput('vorschau_tage_default', $gL10n->get('PLG_GEBURTSTAGSLISTE_PREVIEW_DAYS'), $pPreferences->config['Optionen']['vorschau_tage_default'], array('type' => 'number',  'step' => 1,'helpTextId' => 'PLG_GEBURTSTAGSLISTE_PREVIEW_DAYS_DESC') );  
-$formOptions->addInput('vorschau_liste', $gL10n->get('PLG_GEBURTSTAGSLISTE_PREVIEW_LIST'), implode(',',$pPreferences->config['Optionen']['vorschau_liste']), array('helpTextId' => 'PLG_GEBURTSTAGSLISTE_PREVIEW_LIST_DESC'));     
-$formOptions->addSelectBox('config_default', $gL10n->get('PLG_GEBURTSTAGSLISTE_CONFIGURATION'),$pPreferences->config['Konfigurationen']['col_desc'], array('defaultValue' => $pPreferences->config['Optionen']['config_default'], 'showContextDependentFirstEntry' => false, 'helpTextId' => 'PLG_GEBURTSTAGSLISTE_CONFIGURATION_DEFAULT_DESC'));
-$formOptions->addCheckbox('configuration_as_header', $gL10n->get('PLG_GEBURTSTAGSLISTE_CONFIGURATION_AS_HEADER'), $pPreferences->config['Optionen']['configuration_as_header'], array('helpTextId' => 'PLG_GEBURTSTAGSLISTE_CONFIGURATION_AS_HEADER_DESC'));
+$formOptions->addInput('vorschau_tage_default', $gL10n->get('PLG_BIRTHDAYLIST_PREVIEW_DAYS'), $pPreferences->config['Optionen']['vorschau_tage_default'], array('type' => 'number',  'step' => 1,'helpTextId' => 'PLG_BIRTHDAYLIST_PREVIEW_DAYS_DESC') );  
+$formOptions->addInput('vorschau_liste', $gL10n->get('PLG_BIRTHDAYLIST_PREVIEW_LIST'), implode(',',$pPreferences->config['Optionen']['vorschau_liste']), array('helpTextId' => 'PLG_BIRTHDAYLIST_PREVIEW_LIST_DESC'));     
+$formOptions->addSelectBox('config_default', $gL10n->get('PLG_BIRTHDAYLIST_CONFIGURATION'),$pPreferences->config['Konfigurationen']['col_desc'], array('defaultValue' => $pPreferences->config['Optionen']['config_default'], 'showContextDependentFirstEntry' => false, 'helpTextId' => 'PLG_BIRTHDAYLIST_CONFIGURATION_DEFAULT_DESC'));
+$formOptions->addCheckbox('configuration_as_header', $gL10n->get('PLG_BIRTHDAYLIST_CONFIGURATION_AS_HEADER'), $pPreferences->config['Optionen']['configuration_as_header'], array('helpTextId' => 'PLG_BIRTHDAYLIST_CONFIGURATION_AS_HEADER_DESC'));
 $formOptions->addSubmitButton('btn_save_options', $gL10n->get('SYS_SAVE'), array('icon' => 'bi-check-lg', 'class' => ' offset-sm-3'));
 
-$page->addHtml(getPreferencePanel('common', 'options', $gL10n->get('PLG_GEBURTSTAGSLISTE_OPTIONS'), 'bi bi-gear', $formOptions->show()));
+$page->addHtml(getPreferencePanel('common', 'options', $gL10n->get('PLG_BIRTHDAYLIST_OPTIONS'), 'bi bi-gear', $formOptions->show()));
 
 // PANEL: DEINSTALLATION
                              
 $formDeinstallation = new HtmlForm('deinstallation_form', SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/preferences_function.php', array('mode' => 2)), $page);                     
-$formDeinstallation->addSubmitButton('btn_save_deinstallation', $gL10n->get('PLG_GEBURTSTAGSLISTE_DEINSTALLATION'), array('icon' => 'bi-trash', 'class' => 'offset-sm-3'));
-$formDeinstallation->addCustomContent('', ''.$gL10n->get('PLG_GEBURTSTAGSLISTE_DEINSTALLATION_DESC'));
+$formDeinstallation->addSubmitButton('btn_save_deinstallation', $gL10n->get('PLG_BIRTHDAYLIST_DEINSTALLATION'), array('icon' => 'bi-trash', 'class' => 'offset-sm-3'));
+$formDeinstallation->addCustomContent('', ''.$gL10n->get('PLG_BIRTHDAYLIST_DEINSTALLATION_DESC'));
                    
-$page->addHtml(getPreferencePanel('common', 'deinstallation', $gL10n->get('PLG_GEBURTSTAGSLISTE_DEINSTALLATION'), 'bi bi-trash', $formDeinstallation->show()));
+$page->addHtml(getPreferencePanel('common', 'deinstallation', $gL10n->get('PLG_BIRTHDAYLIST_DEINSTALLATION'), 'bi bi-trash', $formDeinstallation->show()));
 
 // PANEL: ACCESS_PREFERENCES
                     
@@ -528,22 +528,22 @@ $sql = 'SELECT rol.rol_id, rol.rol_name, cat.cat_name
            AND ( cat.cat_org_id = '.$gCurrentOrgId.'
             OR cat.cat_org_id IS NULL )
       ORDER BY cat_sequence, rol.rol_name ASC';
-$formAccessPreferences->addSelectBoxFromSql('access_preferences', '', $gDb, $sql, array('defaultValue' => $pPreferences->config['access']['preferences'], 'helpTextId' => 'PLG_GEBURTSTAGSLISTE_ACCESS_PREFERENCES_DESC', 'multiselect' => true));
+$formAccessPreferences->addSelectBoxFromSql('access_preferences', '', $gDb, $sql, array('defaultValue' => $pPreferences->config['access']['preferences'], 'helpTextId' => 'PLG_BIRTHDAYLIST_ACCESS_PREFERENCES_DESC', 'multiselect' => true));
 $formAccessPreferences->addSubmitButton('btn_save_configurations', $gL10n->get('SYS_SAVE'), array('icon' => 'bi-check-lg', 'class' => ' offset-sm-3'));
 
-$page->addHtml(getPreferencePanel('common', 'access_preferences', $gL10n->get('PLG_GEBURTSTAGSLISTE_ACCESS_PREFERENCES'), 'bi bi-key', $formAccessPreferences->show()));
+$page->addHtml(getPreferencePanel('common', 'access_preferences', $gL10n->get('PLG_BIRTHDAYLIST_ACCESS_PREFERENCES'), 'bi bi-key', $formAccessPreferences->show()));
 
 // PANEL: PLUGIN INFORMATIONS
 
 $formPluginInformations = new HtmlForm('plugin_informations_preferences_form', '', $page, array('class' => 'form-preferences'));
-$formPluginInformations->addStaticControl('plg_name', $gL10n->get('PLG_GEBURTSTAGSLISTE_PLUGIN_NAME'), $gL10n->get('PLG_GEBURTSTAGSLISTE_BIRTHDAY_LIST'));
-$formPluginInformations->addStaticControl('plg_version', $gL10n->get('PLG_GEBURTSTAGSLISTE_PLUGIN_VERSION'), $pPreferences->config['Plugininformationen']['version']);
-$formPluginInformations->addStaticControl('plg_date', $gL10n->get('PLG_GEBURTSTAGSLISTE_PLUGIN_DATE'), $pPreferences->config['Plugininformationen']['stand']);
+$formPluginInformations->addStaticControl('plg_name', $gL10n->get('PLG_BIRTHDAYLIST_PLUGIN_NAME'), $gL10n->get('PLG_BIRTHDAYLIST_BIRTHDAY_LIST'));
+$formPluginInformations->addStaticControl('plg_version', $gL10n->get('PLG_BIRTHDAYLIST_PLUGIN_VERSION'), $pPreferences->config['Plugininformationen']['version']);
+$formPluginInformations->addStaticControl('plg_date', $gL10n->get('PLG_BIRTHDAYLIST_PLUGIN_DATE'), $pPreferences->config['Plugininformationen']['stand']);
                         
 $html = '<a class="btn btn-secondary" id="open_doc" href="https://www.admidio.org/dokuwiki/doku.php?id=de:plugins:geburtstagsliste#geburtstagsliste" target="_blank">
-        <i class="bi bi-journal"></i> '.$gL10n->get('PLG_GEBURTSTAGSLISTE_DOCUMENTATION_OPEN').'</a>';
-$formPluginInformations->addCustomContent($gL10n->get('PLG_GEBURTSTAGSLISTE_DOCUMENTATION'), $html, array('helpTextId' => 'PLG_GEBURTSTAGSLISTE_DOCUMENTATION_OPEN_DESC'));
-$page->addHtml(getPreferencePanel('common', 'plugin_informations', $gL10n->get('PLG_GEBURTSTAGSLISTE_PLUGIN_INFORMATION'), 'bi bi-info-circle', $formPluginInformations->show()));
+        <i class="bi bi-journal"></i> '.$gL10n->get('PLG_BIRTHDAYLIST_DOCUMENTATION_OPEN').'</a>';
+$formPluginInformations->addCustomContent($gL10n->get('PLG_BIRTHDAYLIST_DOCUMENTATION'), $html, array('helpTextId' => 'PLG_BIRTHDAYLIST_DOCUMENTATION_OPEN_DESC'));
+$page->addHtml(getPreferencePanel('common', 'plugin_informations', $gL10n->get('PLG_BIRTHDAYLIST_PLUGIN_INFORMATION'), 'bi bi-info-circle', $formPluginInformations->show()));
 
 $page->addHtml('
         </div>

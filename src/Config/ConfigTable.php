@@ -416,10 +416,10 @@ class ConfigTable
         	$result_db = $GLOBALS['gDb']->queryPrepared($sql);
     	}
     	
-    	$result  = ($result_data ? $GLOBALS['gL10n']->get('PLG_GEBURTSTAGSLISTE_DEINST_DATA_DELETE_SUCCESS') : $GLOBALS['gL10n']->get('PLG_GEBURTSTAGSLISTE_DEINST_DATA_DELETE_ERROR') );
-    	$result .= ($result_texts ? $GLOBALS['gL10n']->get('PLG_GEBURTSTAGSLISTE_DEINST_TEXTS_DELETE_SUCCESS') : $GLOBALS['gL10n']->get('PLG_GEBURTSTAGSLISTE_DEINST_TEXTS_DELETE_ERROR') );
-		$result .= ($result_db ? $GLOBALS['gL10n']->get('PLG_GEBURTSTAGSLISTE_DEINST_TABLE_DELETE_SUCCESS') : $GLOBALS['gL10n']->get('PLG_GEBURTSTAGSLISTE_DEINST_TABLE_DELETE_ERROR') );
-    	$result .= ($result_data ? $GLOBALS['gL10n']->get('PLG_GEBURTSTAGSLISTE_DEINST_ENDMESSAGE') : '' );
+    	$result  = ($result_data ? $GLOBALS['gL10n']->get('PLG_BIRTHDAYLIST_DEINST_DATA_DELETE_SUCCESS') : $GLOBALS['gL10n']->get('PLG_BIRTHDAYLIST_DEINST_DATA_DELETE_ERROR') );
+    	$result .= ($result_texts ? $GLOBALS['gL10n']->get('PLG_BIRTHDAYLIST_DEINST_TEXTS_DELETE_SUCCESS') : $GLOBALS['gL10n']->get('PLG_BIRTHDAYLIST_DEINST_TEXTS_DELETE_ERROR') );
+		$result .= ($result_db ? $GLOBALS['gL10n']->get('PLG_BIRTHDAYLIST_DEINST_TABLE_DELETE_SUCCESS') : $GLOBALS['gL10n']->get('PLG_BIRTHDAYLIST_DEINST_TABLE_DELETE_ERROR') );
+    	$result .= ($result_data ? $GLOBALS['gL10n']->get('PLG_BIRTHDAYLIST_DEINST_ENDMESSAGE') : '' );
 		
 		return $result;
 	}

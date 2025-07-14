@@ -36,19 +36,19 @@ require_once(__DIR__ . '/common_function.php');
 $pPreferences = new ConfigTable();
 $pPreferences->read();
 
-$monate = array('00' => $gL10n->get('PLG_GEBURTSTAGSLISTE_ALL_MONTHS'),
-				'01' => $gL10n->get('PLG_GEBURTSTAGSLISTE_JANUARY'),
-        		'02' => $gL10n->get('PLG_GEBURTSTAGSLISTE_FEBRUARY'),
-        		'03' => $gL10n->get('PLG_GEBURTSTAGSLISTE_MARCH'),
-                '04' => $gL10n->get('PLG_GEBURTSTAGSLISTE_APRIL'),
-                '05' => $gL10n->get('PLG_GEBURTSTAGSLISTE_MAY'),
-                '06' => $gL10n->get('PLG_GEBURTSTAGSLISTE_JUNE'),
-                '07' => $gL10n->get('PLG_GEBURTSTAGSLISTE_JULY'),
-                '08' => $gL10n->get('PLG_GEBURTSTAGSLISTE_AUGUST'),
-                '09' => $gL10n->get('PLG_GEBURTSTAGSLISTE_SEPTEMBER'),
-                '10' => $gL10n->get('PLG_GEBURTSTAGSLISTE_OCTOBER'),
-                '11' => $gL10n->get('PLG_GEBURTSTAGSLISTE_NOVEMBER'),
-                '12' => $gL10n->get('PLG_GEBURTSTAGSLISTE_DECEMBER')   );
+$monate = array('00' => $gL10n->get('PLG_BIRTHDAYLIST_ALL_MONTHS'),
+				'01' => $gL10n->get('PLG_BIRTHDAYLIST_JANUARY'),
+        		'02' => $gL10n->get('PLG_BIRTHDAYLIST_FEBRUARY'),
+        		'03' => $gL10n->get('PLG_BIRTHDAYLIST_MARCH'),
+                '04' => $gL10n->get('PLG_BIRTHDAYLIST_APRIL'),
+                '05' => $gL10n->get('PLG_BIRTHDAYLIST_MAY'),
+                '06' => $gL10n->get('PLG_BIRTHDAYLIST_JUNE'),
+                '07' => $gL10n->get('PLG_BIRTHDAYLIST_JULY'),
+                '08' => $gL10n->get('PLG_BIRTHDAYLIST_AUGUST'),
+                '09' => $gL10n->get('PLG_BIRTHDAYLIST_SEPTEMBER'),
+                '10' => $gL10n->get('PLG_BIRTHDAYLIST_OCTOBER'),
+                '11' => $gL10n->get('PLG_BIRTHDAYLIST_NOVEMBER'),
+                '12' => $gL10n->get('PLG_BIRTHDAYLIST_DECEMBER')   );
 
 // Initialize and check the parameters
 $validValues = array();
@@ -75,9 +75,9 @@ $liste = new GenList($getConfig, $getPreviewDays, $getMonth);
 $liste->generate_listData();
 
 // define title (html) and headline
-$title = $gL10n->get('PLG_GEBURTSTAGSLISTE_BIRTHDAY_LIST');
+$title = $gL10n->get('PLG_BIRTHDAYLIST_BIRTHDAY_LIST');
 
-$subheadline = $gL10n->get('PLG_GEBURTSTAGSLISTE_FOR_THE_PERIOD', array(date("d.m.Y",strtotime('1 day', $liste->date_min)),
+$subheadline = $gL10n->get('PLG_BIRTHDAYLIST_FOR_THE_PERIOD', array(date("d.m.Y",strtotime('1 day', $liste->date_min)),
 																		date("d.m.Y", $liste->date_max),
 																		(trim($getPreviewDays,'X')<0 ? trim($getPreviewDays,'X') : '+'.trim($getPreviewDays,'X'))) );
 $subheadline .= ($getMonth>0 ? ' - '.$monate[$getMonth] : '');
@@ -88,8 +88,8 @@ if ($pPreferences->config['Optionen']['configuration_as_header'])
 }
 else 
 {
-	$headline = $gL10n->get('PLG_GEBURTSTAGSLISTE_BIRTHDAY_LIST');
-	$subheadline .= ' - '.$gL10n->get('PLG_GEBURTSTAGSLISTE_CONFIGURATION').': '.$pPreferences->config['Konfigurationen']['col_desc'][trim($getConfig,'X')];     	
+	$headline = $gL10n->get('PLG_BIRTHDAYLIST_BIRTHDAY_LIST');
+	$subheadline .= ' - '.$gL10n->get('PLG_BIRTHDAYLIST_CONFIGURATION').': '.$pPreferences->config['Konfigurationen']['col_desc'][trim($getConfig,'X')];     	
 }
         
 // initialize some special mode parameters
@@ -98,7 +98,7 @@ $valueQuotes = '';
 $charset     = '';
 $classTable  = '';
 $orientation = '';
-$filename = $gCurrentOrganization->getValue('org_shortname').'-'.$gL10n->get('PLG_GEBURTSTAGSLISTE_BIRTHDAY_LIST');
+$filename = $gCurrentOrganization->getValue('org_shortname').'-'.$gL10n->get('PLG_BIRTHDAYLIST_BIRTHDAY_LIST');
 
 switch ($getMode)
 {
@@ -335,7 +335,7 @@ if ($getMode != 'csv' && $getMode != 'xlsx' )
                     'config'            => $getConfig,
                     'mode'              => 'csv-oo')),
                 'bi-filetype-csv', 'menu_item_lists_export');
-            $page->addPageFunctionsMenuItem('menu_item_ical', $gL10n->get('PLG_GEBURTSTAGSLISTE_ICAL'),
+            $page->addPageFunctionsMenuItem('menu_item_ical', $gL10n->get('PLG_BIRTHDAYLIST_ICAL'),
                 SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/ical_export.php', array(
                     'previewdays' => $getPreviewDays,
                     'config'      => $getConfig,
@@ -357,14 +357,14 @@ if ($getMode != 'csv' && $getMode != 'xlsx' )
         
 		$form = new HtmlForm('navbar_birthdaylist_form', SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/birthday_list.php', array('headline' => $headline)), $page, array('type' => 'navbar', 'setFocus' => false));
         
-        $selectBoxEntries = array(' ' => $gL10n->get('PLG_GEBURTSTAGSLISTE_SELECT_CONFIGURATION').' ...');
+        $selectBoxEntries = array(' ' => $gL10n->get('PLG_BIRTHDAYLIST_SELECT_CONFIGURATION').' ...');
         foreach ($pPreferences->config['Konfigurationen']['col_desc'] as $key => $item)
         {
         	$selectBoxEntries['X'.$key.'X'] = $item;
         }
         $form->addSelectBox('configList', '', $selectBoxEntries, array('showContextDependentFirstEntry' => false));
         
-        $selectBoxEntries = array('' => $gL10n->get('PLG_GEBURTSTAGSLISTE_SELECT_NUMBER_OF_DAYS').' ...');
+        $selectBoxEntries = array('' => $gL10n->get('PLG_BIRTHDAYLIST_SELECT_NUMBER_OF_DAYS').' ...');
         foreach ($pPreferences->config['Optionen']['vorschau_liste'] as $item)
         {
         	// eine 0 in der Vorschauliste wird nicht korrekt dargestellt, deshalb alle Werte maskieren
@@ -372,7 +372,7 @@ if ($getMode != 'csv' && $getMode != 'xlsx' )
         }
         $form->addSelectBox('previewList', '', $selectBoxEntries, array('showContextDependentFirstEntry' => false));
         
-        $selectBoxEntries = array('' => $gL10n->get('PLG_GEBURTSTAGSLISTE_SELECT_MONTH').' ...');
+        $selectBoxEntries = array('' => $gL10n->get('PLG_BIRTHDAYLIST_SELECT_MONTH').' ...');
         foreach ($monate as $key => $item)
         {
         	$selectBoxEntries[$key] =  $item;
@@ -383,7 +383,7 @@ if ($getMode != 'csv' && $getMode != 'xlsx' )
         {
             $form->addInput('filter', $gL10n->get('SYS_FILTER'), $getFilter);
         }
-        $form->addCheckbox('export_and_filter', $gL10n->get('PLG_GEBURTSTAGSLISTE_EXPORT_AND_FILTER'), $getExportAndFilter);
+        $form->addCheckbox('export_and_filter', $gL10n->get('PLG_BIRTHDAYLIST_EXPORT_AND_FILTER'), $getExportAndFilter);
         
         //hidden fields
         $form->addInput('previewdays', '', $getPreviewDays, array('property' => HtmlForm::FIELD_HIDDEN));
@@ -671,10 +671,10 @@ elseif ($getMode == 'xlsx')
     $writer = new XLSXWriter();
     $writer->setAuthor($gCurrentUser->getValue('FIRST_NAME').' '.$gCurrentUser->getValue('LAST_NAME'));
     $writer->setTitle($filename);
-    $writer->setSubject($gL10n->get('PLG_GEBURTSTAGSLISTE_BIRTHDAY_LIST'));
+    $writer->setSubject($gL10n->get('PLG_BIRTHDAYLIST_BIRTHDAY_LIST'));
     $writer->setCompany($gCurrentOrganization->getValue('org_longname'));
-    $writer->setKeywords(array($gL10n->get('PLG_GEBURTSTAGSLISTE_BIRTHDAY_LIST'), $gL10n->get('PLG_GEBURTSTAGSLISTE_PATTERN')));
-    $writer->setDescription($gL10n->get('PLG_GEBURTSTAGSLISTE_CREATED_WITH'));
+    $writer->setKeywords(array($gL10n->get('PLG_BIRTHDAYLIST_BIRTHDAY_LIST'), $gL10n->get('PLG_BIRTHDAYLIST_PATTERN')));
+    $writer->setDescription($gL10n->get('PLG_BIRTHDAYLIST_CREATED_WITH'));
     $writer->writeSheet($rows,'', $header);
     $writer->writeToStdOut();
 }

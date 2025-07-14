@@ -109,7 +109,7 @@ case 1:
     			
     				if ($allColumnsEmpty)
     				{
-    					$gMessage->show($gL10n->get('SYS_FIELD_EMPTY', array($gL10n->get('PLG_GEBURTSTAGSLISTE_COLUMN'))));
+    					$gMessage->show($gL10n->get('SYS_FIELD_EMPTY', array($gL10n->get('PLG_BIRTHDAYLIST_COLUMN'))));
     				}
 
     				$pPreferences->config['Konfigurationen']['col_fields'][] = substr($fields,0,-1);	
@@ -149,19 +149,19 @@ case 1:
 
 case 2:
 	
-	$headline = $gL10n->get('PLG_GEBURTSTAGSLISTE_DEINSTALLATION');
+	$headline = $gL10n->get('PLG_BIRTHDAYLIST_DEINSTALLATION');
 	$gNavigation->addUrl(CURRENT_URL, $headline);
 	
 	// create html page object
     $page = new HtmlPage('plg-birthday_list-deinstallation', $headline);
 
-    $page->addHtml('<p class="lead">'.$gL10n->get('PLG_GEBURTSTAGSLISTE_DEINSTALLATION_FORM_DESC').'</p>');
+    $page->addHtml('<p class="lead">'.$gL10n->get('PLG_BIRTHDAYLIST_DEINSTALLATION_FORM_DESC').'</p>');
 
     // show form
     $form = new HtmlForm('deinstallation_form', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/preferences_function.php', array('mode' => 3)), $page);
-    $radioButtonEntries = array('0' => $gL10n->get('PLG_GEBURTSTAGSLISTE_DEINST_ACTORGONLY'), '1' => $gL10n->get('PLG_GEBURTSTAGSLISTE_DEINST_ALLORG') );
-    $form->addRadioButton('deinst_org_select',$gL10n->get('PLG_GEBURTSTAGSLISTE_ORG_CHOICE'),$radioButtonEntries, array('defaultValue' => '0'));    
-    $form->addSubmitButton('btn_deinstall', $gL10n->get('PLG_GEBURTSTAGSLISTE_DEINSTALLATION'), array('icon' => 'bi-trash', 'class' => ' col-sm-offset-3'));
+    $radioButtonEntries = array('0' => $gL10n->get('PLG_BIRTHDAYLIST_DEINST_ACTORGONLY'), '1' => $gL10n->get('PLG_BIRTHDAYLIST_DEINST_ALLORG') );
+    $form->addRadioButton('deinst_org_select',$gL10n->get('PLG_BIRTHDAYLIST_ORG_CHOICE'),$radioButtonEntries, array('defaultValue' => '0'));    
+    $form->addSubmitButton('btn_deinstall', $gL10n->get('PLG_BIRTHDAYLIST_DEINSTALLATION'), array('icon' => 'bi-trash', 'class' => ' col-sm-offset-3'));
     
     // add form to html page and show page
     $page->addHtml($form->show(false));
@@ -173,6 +173,6 @@ case 3:
 	$gNavigation->clear();
 	$gMessage->setForwardUrl($gHomepage);		
 
-	$gMessage->show($gL10n->get('PLG_GEBURTSTAGSLISTE_DEINST_STARTMESSAGE').$pPreferences->delete($_POST['deinst_org_select']) );
+	$gMessage->show($gL10n->get('PLG_BIRTHDAYLIST_DEINST_STARTMESSAGE').$pPreferences->delete($_POST['deinst_org_select']) );
    	break;
 }
