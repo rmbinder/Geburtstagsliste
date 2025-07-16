@@ -38,6 +38,10 @@ $config_default['Plugininformationen']['stand'] = '';
 //Zugriffsberechtigung für das Modul preferences
 $config_default['access']['preferences'] = array();
 
+//Infos für Uninstall
+$config_default['install']['access_role_id'] = 0;
+$config_default['install']['menu_item_id'] = 0;
+
 /*
  *  Mittels dieser Zeichenkombination werden Konfigurationsdaten, die zur Laufzeit als Array verwaltet werden,
  *  zu einem String zusammengefasst und in der Admidiodatenbank gespeichert. 

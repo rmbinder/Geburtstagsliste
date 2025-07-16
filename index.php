@@ -37,15 +37,11 @@ try {
     }
     else
     {
-        // Konfiguration einlesen bzw. initialisieren       
+        // Konfiguration initialisieren       
         $pPreferences = new ConfigTable();
         if ($pPreferences->checkforupdate())
         {
 	       $pPreferences->init();
-        }
-        else
-        {
-	       $pPreferences->read();
         }
         
         admRedirect(ADMIDIO_URL . FOLDER_PLUGINS. PLUGIN_FOLDER . '/system/birthday_list.php');

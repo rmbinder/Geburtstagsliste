@@ -2,6 +2,8 @@
 <resources>
     <string name="PLG_BIRTHDAYLIST_ACCESS_PREFERENCES">Access permission for preferences</string>
     <string name="PLG_BIRTHDAYLIST_ACCESS_PREFERENCES_DESC">Here, in addition to the role "Administrator", you can authorize additional roles for access to the "Preferences" module.</string>
+    <string name="PLG_BIRTHDAYLIST_ACCESS_TO_PLUGIN">Access to the Birthday List plugin</string>
+    <string name="PLG_BIRTHDAYLIST_ACCESS_TO_PLUGIN_DESC">Members of this role have access to the Birthday List plugin</string>    
     <string name="PLG_BIRTHDAYLIST_ADD_ANOTHER_COLUMN">Add another column</string>
     <string name="PLG_BIRTHDAYLIST_AGE_OR_ANNIVERSARY_NOT_SHOW">Age or anniversary not show</string>    
     <string name="PLG_BIRTHDAYLIST_AGE_OR_ANNIVERSARY_NOT_SHOW_DESC">By default, the age or the anniversary is displayed in front of the additional text always. If this display should be suppressed, the checkbox has to be selected.</string>        
@@ -59,7 +61,9 @@
     <string name="PLG_BIRTHDAYLIST_JUNE">June</string>
     <string name="PLG_BIRTHDAYLIST_MARCH">March</string>
     <string name="PLG_BIRTHDAYLIST_MAY">May</string>
-    <string name="PLG_BIRTHDAYLIST_MENU_URL_ERROR">The authorization check of the plugin failed. There is more than one menu item with the same URL defined.\n\n=> #VAR1_BOLD#</string> 
+    <string name="PLG_BIRTHDAYLIST_MENU_URL_ERROR">The authorization check of the plugin failed. There is more than one menu item with the same URL defined.\n\n=> #VAR1_BOLD#</string>
+    <string name="PLG_BIRTHDAYLIST_NAME">Birthday list</string>
+    <string name="PLG_BIRTHDAYLIST_NAME_DESC">The Birthday List plugin</string>     
     <string name="PLG_BIRTHDAYLIST_NOTIFICATION_MAIL_TEXT">E-mail Template</string>
     <string name="PLG_BIRTHDAYLIST_NOTIFICATION_MAIL_TEXT_DESC">Here, the text can be customized and added to an e-mail. Texts have two paragraphs (subject &amp; content) which are identified by titles like #subject# and #content#. Content parts follow after this titles. Each message can have free space for current messages.\n\nIMPORTANT: To send an e-mail, the the profile field Email has to be displayed in a column.\n\nPlaceholder:\n#user_first_name# = First name of the member\n#user_last_name# = Last name of the member\n#organization_long_name# = Name of the organization\n#config# = Text of the last column (configurations-column)</string>
     <string name="PLG_BIRTHDAYLIST_NOVEMBER">November</string>

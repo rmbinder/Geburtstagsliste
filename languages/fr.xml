@@ -2,6 +2,8 @@
 <resources>
     <string name="PLG_BIRTHDAYLIST_ACCESS_PREFERENCES">Autorisation d'accès pour les paramétrages</string>
     <string name="PLG_BIRTHDAYLIST_ACCESS_PREFERENCES_DESC">Ici, en plus du rôle "Administrateur", vous pouvez autoriser d'autres rôles pour accéder au module "Paramétrages".</string>
+    <string name="PLG_BIRTHDAYLIST_ACCESS_TO_PLUGIN">Accès au plugin Liste d'anniversaire</string>
+    <string name="PLG_BIRTHDAYLIST_ACCESS_TO_PLUGIN_DESC">Les membres de ce rôle ont accès au plugin Liste d'anniversaire</string>    
     <string name="PLG_BIRTHDAYLIST_ADD_ANOTHER_COLUMN">Ajouter une colonne supplémentaire</string>
     <string name="PLG_BIRTHDAYLIST_AGE_OR_ANNIVERSARY_NOT_SHOW">Ne pas indiquer l\'année d\'âge ou de jubilé</string>    
     <string name="PLG_BIRTHDAYLIST_AGE_OR_ANNIVERSARY_NOT_SHOW_DESC">Par défaut, l\'année de vie ou le jubilé est toujours affiché avant le texte supplémentaire. Si cet affichage doit être supprimé, la coche doit être activée.</string>    
@@ -60,6 +62,8 @@
     <string name="PLG_BIRTHDAYLIST_MARCH">mars</string>
     <string name="PLG_BIRTHDAYLIST_MAY">mai</string>
     <string name="PLG_BIRTHDAYLIST_MENU_URL_ERROR">Le contrôle d\'autorisation du plugin a échoué. Plus d\'un élément de menu est défini avec la même URL.\n\n=> #VAR1_BOLD#</string> 
+    <string name="PLG_BIRTHDAYLIST_NAME">Liste d'anniversaire</string>
+    <string name="PLG_BIRTHDAYLIST_NAME_DESC">Le plugin Liste d'anniversaire</string>    
     <string name="PLG_BIRTHDAYLIST_NOTIFICATION_MAIL_TEXT">Modèle de courriel</string>
     <string name="PLG_BIRTHDAYLIST_NOTIFICATION_MAIL_TEXT_DESC">Ici, le texte d\'un courriel peut être adapté et complété. Le texte est divisé en 2 zones (sujet &amp; contenu) et est identifié par les chaînes de caractères #subject# et #content# suivi le contenu de la zone. Dans chaque courriel, des caractères génériques peuvent être utilisés, qui sont ensuite remplacés par le contenu correspondant au moment de l\'exécution.\n\nIMPORTANT: Pour envoyer des courriels, le champ de profil Courriel doit être affiché dans une colonne :\n\nCaractères génériques:\n#user_first_name# = Prénom du membre\n#user_last_name# = nom de famille du membre \n#organization_long_name# = nom de l\'organisation\n#config# = texte de la dernière colonne (colonne de configuration)</string>
     <string name="PLG_BIRTHDAYLIST_NOVEMBER">novembre</string>

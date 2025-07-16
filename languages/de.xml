@@ -2,6 +2,8 @@
 <resources>
     <string name="PLG_BIRTHDAYLIST_ACCESS_PREFERENCES">Zugriffsberechtigung für Einstellungen</string>
     <string name="PLG_BIRTHDAYLIST_ACCESS_PREFERENCES_DESC">Hier kann man, zusätzlich zur Rolle "Administrator", weitere Rollen für den Zugriff auf das Modul "Einstellungen" berechtigen.</string>
+    <string name="PLG_BIRTHDAYLIST_ACCESS_TO_PLUGIN">Zugriff auf das Plugin Geburtstagsliste</string>
+    <string name="PLG_BIRTHDAYLIST_ACCESS_TO_PLUGIN_DESC">Mitglieder dieser Rolle haben Zugriff auf das Plugin Geburtstagsliste</string>
     <string name="PLG_BIRTHDAYLIST_ADD_ANOTHER_COLUMN">Weitere Spalte hinzufügen</string>
     <string name="PLG_BIRTHDAYLIST_AGE_OR_ANNIVERSARY_NOT_SHOW">Lebensjahr oder Jubiläum nicht anzeigen</string>    
     <string name="PLG_BIRTHDAYLIST_AGE_OR_ANNIVERSARY_NOT_SHOW_DESC">Standardmäßig wird vor dem Ergänzungstext immer das Lebensjahr oder das Jubiläum angezeigt. Soll diese Anzeige unterdrückt werden, so ist der Haken zu setzen.</string>    
@@ -60,6 +62,8 @@
     <string name="PLG_BIRTHDAYLIST_MARCH">März</string>
     <string name="PLG_BIRTHDAYLIST_MAY">Mai</string>
     <string name="PLG_BIRTHDAYLIST_MENU_URL_ERROR">Die Authorisierungsprüfung des Plugins ist fehlgeschlagen. Es ist mehr als ein Menüpunkt mit derselben URL definiert.\n\n=> #VAR1_BOLD#</string> 
+    <string name="PLG_BIRTHDAYLIST_NAME">Geburtstagsliste</string>
+    <string name="PLG_BIRTHDAYLIST_NAME_DESC">Das Plugin Geburtstagsliste</string>
     <string name="PLG_BIRTHDAYLIST_NOTIFICATION_MAIL_TEXT">E-Mail-Vorlage</string>
     <string name="PLG_BIRTHDAYLIST_NOTIFICATION_MAIL_TEXT_DESC">Hier kann der Text für eine E-Mail angepasst und ergänzt werden. Der Text ist in 2 Bereiche (Betreff &amp; Inhalt) unterteilt und wird durch die Zeichenfolge #subject# und #content# identifiziert. Danach folgt dann der Inhalt für den Bereich. In jeder Mail können Platzhalter benutzt werden, welche dann zur Laufzeit durch die entsprechenden Inhalte ersetzt werden.\n\nWICHTIG: Zum Versenden von Mails muss das Profilfeld E-Mail in einer Spalte angezeigt werden.\n\nPlatzhalter:\n#user_first_name# = Vorname des Mitglieds\n#user_last_name# = Nachname des Mitglieds\n#organization_long_name# = Name der Organisation\n#config# = Text der letzten Spalte (Konfigurationsspalte)</string>
     <string name="PLG_BIRTHDAYLIST_NOVEMBER">November</string>
