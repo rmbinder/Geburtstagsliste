@@ -39,7 +39,7 @@ class ConfigTable
 	public $config_default = array();	
 	
     /**
-     * ConfigTablePGL constructor
+     * ConfigTable constructor
      */
 	public function __construct()
 	{
@@ -97,92 +97,6 @@ class ConfigTable
     	} 
     
 		$this->read();
-	
-		// Update/Konvertierungsroutine 1.3.5 -> 2.0.0
-		if (isset($this->config['Spaltenkonfiguration']['col_desc']))
-    	{
-    		$this->config['Konfigurationen']['col_desc'] = $this->config['Spaltenkonfiguration']['col_desc'];
-    	}	
-    
-		if (isset($this->config['Spaltenkonfiguration']['col_values']))
-    	{
-    		$this->config['Konfigurationen']['col_values'] = $this->config['Spaltenkonfiguration']['col_values'];
-    	}  
-
-		if (isset($this->config['Spaltenkonfiguration']['col_suffix']))
-    	{
-    		$this->config['Konfigurationen']['col_suffix'] = $this->config['Spaltenkonfiguration']['col_suffix'];
-    	}  
-    
-		if (isset($this->config['Spaltenkonfiguration']['calendar_year']))
-    	{
-    		$this->config['Konfigurationen']['calendar_year'] = $this->config['Spaltenkonfiguration']['calendar_year'];
-    	} 
-    
-		if (isset($this->config['Spaltenkonfiguration']['selection_role']) )
-    	{
-    		foreach ($this->config['Spaltenkonfiguration']['selection_role'] as $role_field)
-    		{
-    			if ($role_field <> '')
-    			{
-    				$this->config['Konfigurationen']['selection_role'][] = $role_field;
-    			}
-    			else 
-    			{
-    				$this->config['Konfigurationen']['selection_role'][] = ' ';
-    			}
-    		}
-    	}
-
-		if (isset($this->config['Spaltenkonfiguration']['selection_cat']))
-    	{
-    		foreach ($this->config['Spaltenkonfiguration']['selection_cat'] as $cat_field)
-    		{
-    			if ($cat_field <> '')
-    			{
-    				$this->config['Konfigurationen']['selection_cat'][] = $cat_field;
-    			}
-    			else 
-    			{
-    				$this->config['Konfigurationen']['selection_cat'][] = ' ';
-    			}
-    		}
-    	} 		
-			
-		if (isset($this->config['Optionen']['focus_default']) && isset($this->config['Spaltenkonfiguration']['col_desc']))
-    	{      
-			$i_arr = array_keys($this->config['Spaltenkonfiguration']['col_desc'], $this->config['Optionen']['focus_default']);
-			$this->config['Optionen']['config_default'] = $i_arr[0];
-    	}  
-    
-   	 	if (isset($this->config['Spaltenkonfiguration']['col_sel']))
-    	{
-    		foreach ($this->config['Spaltenkonfiguration']['col_sel'] as $col_sel_field )
-    		{
-    			foreach ($gProfileFields->getProfileFields() as $field)
-    			{  
-    				if ($col_sel_field == trim($GLOBALS['gL10n']->get($field->getValue('usf_name')),'#'))
-    				{
-    					$this->config['Konfigurationen']['col_sel'][] = 'p'.$field->getValue('usf_id');
-    				}  		
-    			}
-    			$this->config['Konfigurationen']['col_fields'][] = $this->config_default['Konfigurationen']['col_fields'][0];
-    		}
-   		} 
-		// Ende Update/Konvertierungsroutine 1.3.5 -> 2.0.0
-		
-   		// Update/Konvertierungsroutine 2.0.0/2.0.1 -> 2.0.2
-   		if (isset($this->config['Konfigurationen']['col_desc']))
-    	{
-			foreach ($this->config['Konfigurationen']['col_desc'] as $key => $dummy)
-			{
-				if (!isset($this->config['Konfigurationen']['years_offset'][$key]))
-    			{
-					$this->config['Konfigurationen']['years_offset'][$key] = '0';
-    			}
-			}
-		} 
-		// Ende Update/Konvertierungsroutine 2.0.0/2.0.1 -> 2.0.2
 		
 		$this->config['Plugininformationen']['version'] = self::$version;
 		$this->config['Plugininformationen']['stand'] = self::$stand;
