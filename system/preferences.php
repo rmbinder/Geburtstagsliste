@@ -462,7 +462,7 @@ for ($conf = 0; $conf < $num_configs; $conf++)
         $gL10n->get('SYS_COPY_CONFIGURATION'), 
         array(
             'icon' => 'bi-copy',
-            'link' => SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences.php', array('copy' => $conf+1)))
+            'link' => SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/preferences.php', array('copy' => $conf+1)))
     );
     
     if($num_configs > 1)
@@ -471,7 +471,7 @@ for ($conf = 0; $conf < $num_configs; $conf++)
             $gL10n->get('SYS_DELETE_CONFIGURATION'),
             array(
                 'icon' => 'bi-trash',
-                'link' => SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences.php', array('delete' => $conf+1))
+                'link' => SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/preferences.php', array('delete' => $conf+1))
                 
             )
         );
@@ -487,7 +487,7 @@ $formConfigurations->addButton('add_another_config',
     array(
         'icon' => 'bi-copy', 
         'class' => 'btn btn-secondary',
-        'link' => SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/preferences.php', array('add' => 1))
+        'link' => SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/preferences.php', array('add' => 1))
     )
 );
 $formConfigurations->addHtml('<div class="alert alert-warning alert-small" role="alert">
