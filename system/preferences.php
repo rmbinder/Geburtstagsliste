@@ -510,13 +510,13 @@ $formOptions->addSubmitButton('btn_save_options', $gL10n->get('SYS_SAVE'), array
 
 $page->addHtml(getPreferencePanel('common', 'options', $gL10n->get('PLG_BIRTHDAYLIST_OPTIONS'), 'bi bi-gear', $formOptions->show()));
 
-// PANEL: DEINSTALLATION
+// PANEL: UNINSTALLATION
                              
-$formDeinstallation = new HtmlForm('deinstallation_form', SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/preferences_function.php', array('mode' => 2)), $page);                     
-$formDeinstallation->addSubmitButton('btn_save_deinstallation', $gL10n->get('PLG_BIRTHDAYLIST_DEINSTALLATION'), array('icon' => 'bi-trash', 'class' => 'offset-sm-3'));
-$formDeinstallation->addCustomContent('', ''.$gL10n->get('PLG_BIRTHDAYLIST_DEINSTALLATION_DESC'));
+$formUninstallation = new HtmlForm('uninstallation_form', SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/uninstallation.php'), $page);                     
+$formUninstallation->addSubmitButton('btn_save_uninstallation', $gL10n->get('PLG_BIRTHDAYLIST_UNINSTALLATION'), array('icon' => 'bi-trash', 'class' => 'offset-sm-3'));
+$formUninstallation->addCustomContent('', ''.$gL10n->get('PLG_BIRTHDAYLIST_UNINSTALLATION_DESC'));
                    
-$page->addHtml(getPreferencePanel('common', 'deinstallation', $gL10n->get('PLG_BIRTHDAYLIST_DEINSTALLATION'), 'bi bi-trash', $formDeinstallation->show()));
+$page->addHtml(getPreferencePanel('common', 'uninstallation', $gL10n->get('PLG_BIRTHDAYLIST_UNINSTALLATION'), 'bi bi-trash', $formUninstallation->show()));
 
 // PANEL: ACCESS_PREFERENCES
                     

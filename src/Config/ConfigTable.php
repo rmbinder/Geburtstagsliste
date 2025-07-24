@@ -186,7 +186,9 @@ class ConfigTable
 		
 		$this->config['Plugininformationen']['version'] = self::$version;
 		$this->config['Plugininformationen']['stand'] = self::$stand;
-	
+		$this->config['Plugininformationen']['table_name'] = $this->table_name;
+		$this->config['Plugininformationen']['shortcut'] = self::$shortcut;
+		
 		// die eingelesenen Konfigurationsdaten in ein Arbeitsarray kopieren
 		$config_ist = $this->config;
 	
@@ -371,56 +373,26 @@ class ConfigTable
     	return $ret;
 	}
 	
-    /**
-     * Loescht die Konfigurationsdaten in der Datenbank
-     * @param   int     $deinst_org_select  0 = Daten nur in aktueller Org loeschen, 1 = Daten in allen Org loeschen
-     * @return  string  $result             Meldung
-     */
-	public function delete($deinst_org_select)
+	/**
+	 * Liest alle Zugriffsrollen ein, die in der Konfigurationstabelle gespeichert sind
+	 * @return  array $data
+	 */
+	public function getAllAccessRoles()
 	{
-    	$result = '';
-		$result_data = false;
-		$result_db = false;
-        $result_texts = false;
-		
-		if ($deinst_org_select == 0)                    //0 = Daten nur in aktueller Org loeschen 
-		{
-			$sql = 'DELETE FROM '.$this->table_name.'
-        			      WHERE plp_name LIKE ?
-        			        AND plp_org_id = ? ';
-			$result_data = $GLOBALS['gDb']->queryPrepared($sql, array(self::$shortcut.'__%', $GLOBALS['gCurrentOrgId']));	
-
-			$sql = 'DELETE FROM '.TBL_TEXTS.'
-					      WHERE txt_name LIKE ?
-            		        AND txt_org_id = ? ';
-			$result_texts = $GLOBALS['gDb']->queryPrepared($sql, array(self::$shortcut.'MAIL_NOTIFICATION%', $GLOBALS['gCurrentOrgId']));	
-		}
-		elseif ($deinst_org_select == 1)              //1 = Daten in allen Orgs loeschen 
-		{
-			$sql = 'DELETE FROM '.$this->table_name.'
-        			      WHERE plp_name LIKE ? ';
-			$result_data = $GLOBALS['gDb']->queryPrepared($sql, array(self::$shortcut.'__%'));	
-
-			$sql = 'DELETE FROM '.TBL_TEXTS.'
-        			      WHERE txt_name LIKE ? ';
-			$result_texts = $GLOBALS['gDb']->queryPrepared($sql, array(self::$shortcut.'MAIL_NOTIFICATION%'));	
-		}
-
-		// wenn die Tabelle nur Eintraege dieses Plugins hatte, sollte sie jetzt leer sein und kann geloescht werden
-		$sql = 'SELECT * FROM '.$this->table_name.' ';
-		$statement = $GLOBALS['gDb']->queryPrepared($sql);
-
-    	if ($statement->rowCount() == 0)
-    	{
-        	$sql = 'DROP TABLE '.$this->table_name.' ';
-        	$result_db = $GLOBALS['gDb']->queryPrepared($sql);
-    	}
-    	
-    	$result  = ($result_data ? $GLOBALS['gL10n']->get('PLG_BIRTHDAYLIST_DEINST_DATA_DELETE_SUCCESS') : $GLOBALS['gL10n']->get('PLG_BIRTHDAYLIST_DEINST_DATA_DELETE_ERROR') );
-    	$result .= ($result_texts ? $GLOBALS['gL10n']->get('PLG_BIRTHDAYLIST_DEINST_TEXTS_DELETE_SUCCESS') : $GLOBALS['gL10n']->get('PLG_BIRTHDAYLIST_DEINST_TEXTS_DELETE_ERROR') );
-		$result .= ($result_db ? $GLOBALS['gL10n']->get('PLG_BIRTHDAYLIST_DEINST_TABLE_DELETE_SUCCESS') : $GLOBALS['gL10n']->get('PLG_BIRTHDAYLIST_DEINST_TABLE_DELETE_ERROR') );
-    	$result .= ($result_data ? $GLOBALS['gL10n']->get('PLG_BIRTHDAYLIST_DEINST_ENDMESSAGE') : '' );
-		
-		return $result;
+	    global $gDb;
+	    
+	    $data = array();
+	    
+	    $sql = 'SELECT plp_id, plp_name, plp_value, plp_org_id
+                  FROM '.$this->table_name.'
+                 WHERE plp_name = ? ';
+	    $statement = $gDb->queryPrepared($sql, array(self::$shortcut.'__install__access_role_id'));
+	    
+	    while ($row = $statement->fetch())
+	    {
+	        $data[] = $row['plp_value'];
+	    }
+	    
+	    return $data;
 	}
 }

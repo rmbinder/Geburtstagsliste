@@ -2,12 +2,16 @@
 <resources>
     <string name="PLG_BIRTHDAYLIST_ACCESS_PREFERENCES">Autorisation d'accès pour les paramétrages</string>
     <string name="PLG_BIRTHDAYLIST_ACCESS_PREFERENCES_DESC">Ici, en plus du rôle "Administrateur", vous pouvez autoriser d'autres rôles pour accéder au module "Paramétrages".</string>
+    <string name="PLG_BIRTHDAYLIST_ACCESS_ROLE">Rôle d'accès</string>
+    <string name="PLG_BIRTHDAYLIST_ACCESS_ROLES_STILL_PRESENT">- L'élément de menu ne peut pas être supprimé car les rôles d'accès existent toujours.\n</string> 
     <string name="PLG_BIRTHDAYLIST_ACCESS_TO_PLUGIN">Accès au plugin Liste d'anniversaire</string>
-    <string name="PLG_BIRTHDAYLIST_ACCESS_TO_PLUGIN_DESC">Les membres de ce rôle ont accès au plugin Liste d'anniversaire</string>    
+    <string name="PLG_BIRTHDAYLIST_ACCESS_TO_PLUGIN_DESC">Les membres de ce rôle ont accès au plugin Liste d'anniversaire</string>  
+    <string name="PLG_BIRTHDAYLIST_ACTORGONLY">seulement dans l'organisation actuelle</string>  
     <string name="PLG_BIRTHDAYLIST_ADD_ANOTHER_COLUMN">Ajouter une colonne supplémentaire</string>
     <string name="PLG_BIRTHDAYLIST_AGE_OR_ANNIVERSARY_NOT_SHOW">Ne pas indiquer l\'année d\'âge ou de jubilé</string>    
     <string name="PLG_BIRTHDAYLIST_AGE_OR_ANNIVERSARY_NOT_SHOW_DESC">Par défaut, l\'année de vie ou le jubilé est toujours affiché avant le texte supplémentaire. Si cet affichage doit être supprimé, la coche doit être activée.</string>    
     <string name="PLG_BIRTHDAYLIST_ALL_MONTHS">- tous les mois -</string>
+    <string name="PLG_BIRTHDAYLIST_ALLORG">dans toutes les organisations</string>
     <string name="PLG_BIRTHDAYLIST_APRIL">avril</string>
     <string name="PLG_BIRTHDAYLIST_AUGUST">août</string>
     <string name="PLG_BIRTHDAYLIST_BIRTHDAY_LIST">Liste des anniversaires et jubilés</string>
@@ -26,6 +30,7 @@
     <string name="PLG_BIRTHDAYLIST_COL_SUFFIX_DESC">Le texte spécifié est annexé à l\'année de vie ou jubilé.\n\n ième anniversaire le #Day#.#Month#" pourrait être affiché comme "30ième anniversaire le 10.02.".\n\nTexte de substitution:\n#Day# = jour\n#Month# = mois\n#Year# = année</string>
     <string name="PLG_BIRTHDAYLIST_COL_VALUES">Valeurs</string>
     <string name="PLG_BIRTHDAYLIST_COL_VALUES_DESC">Les valeurs peuvent être utilisées pour filtrer l\'affichage à des valeurs spécifiques. 30,40,50 signifie, par exemple, que seuls 30, 40 ou 50 anniversaires ou jubilés sont affichés. Les valeurs individuelles peuvent également être définies comme une spécification de plage «de-à;taille de pas» (exemple : 30-50;10 résultats dans 30,40,50). Si vous ne voulez pas filtrer, laissez ce champ vide.</string>
+    <string name="PLG_BIRTHDAYLIST_CONFIG_DATA">Données de configuration</string>
     <string name="PLG_BIRTHDAYLIST_CONFIGURATION">Configuration</string>
     <string name="PLG_BIRTHDAYLIST_CONFIGURATIONS">Configurations</string>
     <string name="PLG_BIRTHDAYLIST_CONFIGURATIONS_DESC">Exemple:\nDésignation: Anniversaire à chiffre rond\nDate de contrôle: Anniversaire\nValeurs: 30,40,50,60,70,80 ou 30-80;10 (Si aucun filtrage n\'est souhaité, laisse le champ vide)\nTexte complémentaire : . anniversaire le #Day#.#Month#.</string>
@@ -35,19 +40,6 @@
     <string name="PLG_BIRTHDAYLIST_CONFIGURATION_DEFAULT_DESC">Paramètres de configuration par défaut</string>
     <string name="PLG_BIRTHDAYLIST_CREATED_WITH">créé avec le plugin liste d'anniversaire de la gestion des membres en ligne Admidio</string>
     <string name="PLG_BIRTHDAYLIST_DECEMBER">décembre</string>
-    <string name="PLG_BIRTHDAYLIST_DEINSTALLATION">Désinstallation</string>
-    <string name="PLG_BIRTHDAYLIST_DEINSTALLATION_DESC">En désinstallant le plugin, les entrées créées par le plugin peuvent être supprimées de la base de données.</string>
-    <string name="PLG_BIRTHDAYLIST_DEINSTALLATION_FORM_DESC">Sélectionne l\'étendue de l\'installation:\n\n***Attention: Cette routine ne supprime que les entrées de la base de données Admidio. Les fichiers de programme et le lien dans le menu ne sont pas effacés !  ***</string>
-    <string name="PLG_BIRTHDAYLIST_DEINST_ACTORGONLY">Supprimer uniquement les données de l\'organisation actuelle.</string>
-    <string name="PLG_BIRTHDAYLIST_DEINST_ALLORG">DSupprimer les données dans toutes les organisations.</string>
-    <string name="PLG_BIRTHDAYLIST_DEINST_DATA_DELETE_ERROR">- Une erreur s\'est produite lors de la suppression des données.\n</string>
-    <string name="PLG_BIRTHDAYLIST_DEINST_DATA_DELETE_SUCCESS">- Les données créées par le plugin ont été supprimées.\n</string>
-    <string name="PLG_BIRTHDAYLIST_DEINST_ENDMESSAGE">\nPour supprimer complètement le plugin, les fichiers du programme et l\'entrée de menu doivent encore être supprimés.</string>
-    <string name="PLG_BIRTHDAYLIST_DEINST_STARTMESSAGE">Les suppressions suivantes ont été effectuées:\n\n</string>
-    <string name="PLG_BIRTHDAYLIST_DEINST_TABLE_DELETE_ERROR">- La table "adm_plugin_preferences" n\'a pas pu être supprimée car elle contient encore des données d\'un autre plugin.\n</string>
-    <string name="PLG_BIRTHDAYLIST_DEINST_TABLE_DELETE_SUCCESS">- La table "adm_plugin_preferences" créée par le plugin a été supprimée.\n</string>
-    <string name="PLG_BIRTHDAYLIST_DEINST_TEXTS_DELETE_ERROR">- Une erreur s\'est produite lors de la suppression des textes de courriel.\n</string>
-    <string name="PLG_BIRTHDAYLIST_DEINST_TEXTS_DELETE_SUCCESS">- Les textes des courriels créés par le plugin ont été supprimés.\n</string>
     <string name="PLG_BIRTHDAYLIST_DOCUMENTATION">Documentation</string>
     <string name="PLG_BIRTHDAYLIST_DOCUMENTATION_OPEN">Ouvrir la documentation</string>
     <string name="PLG_BIRTHDAYLIST_DOCUMENTATION_OPEN_DESC">Cela ouvre la documentation pour le plugin (une connexion Internet existante est nécessaire, car les données se trouvent sur admidio.org).</string>
@@ -61,6 +53,7 @@
     <string name="PLG_BIRTHDAYLIST_JUNE">juin</string>
     <string name="PLG_BIRTHDAYLIST_MARCH">mars</string>
     <string name="PLG_BIRTHDAYLIST_MAY">mai</string>
+    <string name="PLG_BIRTHDAYLIST_MENU_ITEM">Élément de menu</string>
     <string name="PLG_BIRTHDAYLIST_MENU_URL_ERROR">Le contrôle d\'autorisation du plugin a échoué. Plus d\'un élément de menu est défini avec la même URL.\n\n=> #VAR1_BOLD#</string> 
     <string name="PLG_BIRTHDAYLIST_NAME">Liste d'anniversaire</string>
     <string name="PLG_BIRTHDAYLIST_NAME_DESC">Le plugin Liste d'anniversaire</string>    
@@ -82,6 +75,9 @@
     <string name="PLG_BIRTHDAYLIST_PREVIEW_LIST_DESC">Les valeurs de la liste de prévisualisation (sépare plusieurs entrées par des virgules, par ex : -10,-1,0,1,2,10,20,30,365,1000)</string>
     <string name="PLG_BIRTHDAYLIST_RELATION">Relation</string>  
     <string name="PLG_BIRTHDAYLIST_RELATION_DESC">Pour afficher les données sur un conjoint, tu peux sélectionner ici la relation "Conjoint". Après avoir sauvegardé et mis à jour la page, il existe des options supplémentaires pour cette relation dans la sélection de colonne. </string>     
+    <string name="PLG_BIRTHDAYLIST_REMOVE_ACCESS_ROLE">Supprimer le rôle d'accès</string>
+    <string name="PLG_BIRTHDAYLIST_REMOVE_CONFIG_DATA">Supprimer les données de configuration</string>
+    <string name="PLG_BIRTHDAYLIST_REMOVE_MENU_ITEM">Supprimer l'élément de menu</string> 
     <string name="PLG_BIRTHDAYLIST_ROLE_SELECTION">Sélection des rôles</string>
     <string name="PLG_BIRTHDAYLIST_ROLE_SELECTION_CONF_DESC">Une configuration peut être limitée aux membres des rôles sélectionnés via la sélection de rôle.\n\n Si aucune restriction ne doit être faite, les deux champs (sélection de rôle et sélection de catégorie) doivent être laissées vides.</string>
     <string name="PLG_BIRTHDAYLIST_SELECT_CONFIGURATION">Sélectionner configuration</string>
@@ -92,6 +88,19 @@
     <string name="PLG_BIRTHDAYLIST_SHOW_CALENDAR_YEAR_DESC">La date par défaut est la date du jour. Si l\'affichage doit commencer le 1er janvier de l\'année en cours, la case doit être cochée.</string>
     <string name="PLG_BIRTHDAYLIST_TEMPLATE">Modèle standard</string>
     <string name="PLG_BIRTHDAYLIST_TEMPLATE_DESC">Ici, vous pouvez sélectionner un modèle dans le dossier adm_my_files/mail_templates admidio.</string>
+    <string name="PLG_BIRTHDAYLIST_UNINST_ACCESS_ROLE_ALERT">Seuls les rôles (= rôles d'accès) qui ont été créés par le plugin lors de l'installation seront supprimés.</string>
+    <string name="PLG_BIRTHDAYLIST_UNINST_ACCESS_ROLE_ERROR">- Une erreur s'est produite lors de la suppression des rôles d'accès. Tous les rôles d'accès n'ont pas pu être supprimés.\n</string>
+    <string name="PLG_BIRTHDAYLIST_UNINST_ACCESS_ROLE_SUCCESS">- Les rôles d'accès créés par le plugin ont été supprimés.\n</string>   
+    <string name="PLG_BIRTHDAYLIST_UNINST_DATA_DELETE_ERROR">- Une erreur s'est produite lors de la suppression des données de configuration.\n</string>
+    <string name="PLG_BIRTHDAYLIST_UNINST_DATA_DELETE_SUCCESS">- Les données de configuration créées par le plugin ont été supprimées.\n</string>
+    <string name="PLG_BIRTHDAYLIST_UNINST_MENU_ITEM_ALERT">L'élément de menu ne sera supprimé que si tous les rôles d'accès créés par le plugin (y compris dans d'autres organisations) ont été supprimés au préalable.</string>
+    <string name="PLG_BIRTHDAYLIST_UNINST_MENU_ITEM_ERROR">- Une erreur s'est produite lors de la suppression de l'élément de menu.\n</string>
+    <string name="PLG_BIRTHDAYLIST_UNINST_MENU_ITEM_SUCCESS">- L'élément de menu créé par le plugin a été supprimé.\n</string> 
+    <string name="PLG_BIRTHDAYLIST_UNINST_STARTMESSAGE">Les suppressions suivantes ont été effectuées:\n\n</string>
+    <string name="PLG_BIRTHDAYLIST_UNINST_TABLE_DELETE_ERROR">- La table "adm_plugin_preferences" n\'a pas pu être supprimée car elle contient encore des données d\'un autre plugin.\n</string>
+    <string name="PLG_BIRTHDAYLIST_UNINST_TABLE_DELETE_SUCCESS">- La table "adm_plugin_preferences" créée par le plugin a été supprimée.\n</string>
+    <string name="PLG_BIRTHDAYLIST_UNINSTALLATION">Désinstallation</string>
+    <string name="PLG_BIRTHDAYLIST_UNINSTALLATION_DESC">Les entrées créées par le plugin peuvent être supprimées via la désinstallation.</string>    
     <string name="PLG_BIRTHDAYLIST_YEARS_OFFSET">Décalage annuelle</string>
     <string name="PLG_BIRTHDAYLIST_YEARS_OFFSET_DESC">Ceci permet d\'avancer ou de reculer l\'affichage de x années (0 ne correspond à aucun décalage).</string>
 </resources>
