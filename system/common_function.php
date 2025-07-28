@@ -34,7 +34,7 @@ function myAutoloader($className) {
     $prefix = 'Birthdaylist\\';
     
     // Base-Directory für den Namespace-Prefix.
-    $baseDir = __DIR__ . '/../src/';
+    $baseDir = __DIR__ . '/../classes/';
     
     // Check, ob die Klasse den Namespace-Prefix verwendet.
     $len = strlen($prefix);
