@@ -21,7 +21,7 @@ use Admidio\Roles\Entity\Role;
 use Admidio\Roles\Entity\RolesRights;
 use Admidio\UI\Presenter\FormPresenter;
 use Admidio\UI\Presenter\PagePresenter;
-use Birthdaylist\Config\ConfigTable;
+use Plugins\BirthdayList\classes\Config\ConfigTable;
 
 try
 {

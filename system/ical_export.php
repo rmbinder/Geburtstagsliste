@@ -21,8 +21,8 @@
 
 use Admidio\Infrastructure\Utils\FileSystemUtils;
 use Admidio\Infrastructure\Utils\StringUtils;
-use Birthdaylist\Config\ConfigTable;
-use Birthdaylist\Service\GenList;
+use Plugins\BirthdayList\classes\Config\ConfigTable;
+use Plugins\BirthdayList\classes\Service\GenList;
 
 require_once(__DIR__ . '/../../../system/common.php');
 require_once(__DIR__ . '/common_function.php');

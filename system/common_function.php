@@ -31,10 +31,10 @@ spl_autoload_register('myAutoloader');
  */
 function myAutoloader($className) {
     // Projekt spezifischer Namespace-Prefix.
-    $prefix = 'Birthdaylist\\';
+    $prefix = 'Plugins\\';
     
     // Base-Directory für den Namespace-Prefix.
-    $baseDir = __DIR__ . '/../classes/';
+    $baseDir = __DIR__ . '/../../';
     
     // Check, ob die Klasse den Namespace-Prefix verwendet.
     $len = strlen($prefix);

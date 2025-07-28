@@ -27,7 +27,7 @@ use Admidio\Infrastructure\Utils\SecurityUtils;
 use Admidio\Infrastructure\Utils\StringUtils;
 use Admidio\Users\Entity\User;
 use Admidio\Users\Entity\UserRelationType;
-use Birthdaylist\Config\ConfigTable;
+use Plugins\BirthdayList\classes\Config\ConfigTable;
 
 require_once(__DIR__ . '/../../../system/common.php');
 require_once(__DIR__ . '/../../../system/login_valid.php');

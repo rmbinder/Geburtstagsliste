@@ -17,7 +17,7 @@
  ***********************************************************************************************
  */
 
-use Birthdaylist\Config\ConfigTable;
+use Plugins\BirthdayList\classes\Config\ConfigTable;
 
 //Fehlermeldungen anzeigen
 error_reporting(E_ALL);

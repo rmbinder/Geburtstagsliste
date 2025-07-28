@@ -24,7 +24,7 @@
  *
  *****************************************************************************/
 
-namespace Birthdaylist\Config;
+namespace Plugins\BirthdayList\classes\Config;
  
 class ConfigTable
 {

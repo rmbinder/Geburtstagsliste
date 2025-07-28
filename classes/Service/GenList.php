@@ -19,7 +19,7 @@
  *
  *****************************************************************************/
 
-namespace Birthdaylist\Service;
+namespace Plugins\BirthdayList\classes\Service;
 
 use Admidio\Infrastructure\Entity\Entity;
 use Admidio\Users\Entity\User;
