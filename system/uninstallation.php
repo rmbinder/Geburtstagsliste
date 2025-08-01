@@ -63,7 +63,7 @@ try
 			
 			$formUninstallation = new FormPresenter(
 				'adm_preferences_form_uninstallation',
-				'../templates/uninstallation.tpl',
+				'../templates/uninstallation.plugin.birthdaylist.tpl',
 			    SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER . '/system/uninstallation.php', array('mode' => 'uninst')),
 				$page,
 				array('class' => 'form-preferences')

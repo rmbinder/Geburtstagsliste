@@ -26,6 +26,8 @@
 
 use Admidio\Infrastructure\Utils\FileSystemUtils;
 use Admidio\Infrastructure\Utils\SecurityUtils;
+use Admidio\UI\Presenter\FormPresenter;
+use Admidio\UI\Presenter\PagePresenter;
 use Plugins\BirthdayList\classes\Config\ConfigTable;
 use Plugins\BirthdayList\classes\Service\GenList;
 
@@ -75,7 +77,7 @@ $liste = new GenList($getConfig, $getPreviewDays, $getMonth);
 $liste->generate_listData();
 
 // define title (html) and headline
-$title = $gL10n->get('PLG_BIRTHDAYLIST_BIRTHDAY_LIST');
+$title = $gL10n->get('PLG_BIRTHDAYLIST_NAME');
 
 $subheadline = $gL10n->get('PLG_BIRTHDAYLIST_FOR_THE_PERIOD', array(date("d.m.Y",strtotime('1 day', $liste->date_min)),
 																		date("d.m.Y", $liste->date_max),
@@ -88,7 +90,7 @@ if ($pPreferences->config['Optionen']['configuration_as_header'])
 }
 else 
 {
-	$headline = $gL10n->get('PLG_BIRTHDAYLIST_BIRTHDAY_LIST');
+	$headline = $gL10n->get('PLG_BIRTHDAYLIST_NAME');
 	$subheadline .= ' - '.$gL10n->get('PLG_BIRTHDAYLIST_CONFIGURATION').': '.$pPreferences->config['Konfigurationen']['col_desc'][trim($getConfig,'X')];     	
 }
         
@@ -98,7 +100,7 @@ $valueQuotes = '';
 $charset     = '';
 $classTable  = '';
 $orientation = '';
-$filename = $gCurrentOrganization->getValue('org_shortname').'-'.$gL10n->get('PLG_BIRTHDAYLIST_BIRTHDAY_LIST');
+$filename = $gCurrentOrganization->getValue('org_shortname').'-'.$gL10n->get('PLG_BIRTHDAYLIST_NAME');
 
 switch ($getMode)
 {
@@ -159,12 +161,12 @@ if ($getMode != 'csv' && $getMode != 'xlsx' )
 
     if ($getMode == 'print')
     {
-        $page = new HtmlPage('plg-birthday_list-main-print', $headline);
+        $page = PagePresenter::withHtmlIDAndHeadline('plg-birthday_list-main-print');
+        $page->setContentFullWidth();
         $page->setPrintMode();
-                
         $page->setTitle($title);
-        $page->addHtml('<h3>'.$subheadline.'</h3>');
-        
+        $page->setHeadline($headline);
+        $page->addHtml('<h5 class="admidio-content-subheader">' . $subheadline . '</h5>');
         $table = new HtmlTable('adm_lists_table', $page, $hoverRows, $datatable, $classTable);
     }
     elseif ($getMode == 'pdf')
@@ -225,7 +227,7 @@ if ($getMode != 'csv' && $getMode != 'xlsx' )
         $hoverRows = true;
 
         // create html page object
-        $page = new HtmlPage('plg-birthday_list-main-html');
+        $page = PagePresenter::withHtmlIDAndHeadline('plg-birthday_list-main-html');
         $page->setTitle($title);
         $page->setHeadline($headline);
         $page->addHtml('<h5>'.$subheadline.'</h5>');
@@ -355,7 +357,13 @@ if ($getMode != 'csv' && $getMode != 'xlsx' )
     		$page->addPageFunctionsMenuItem('admMenuItemPreferencesLists', $gL10n->get('SYS_SETTINGS'), SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/preferences.php'),  'bi-gear-fill');
 		} 
         
-		$form = new HtmlForm('navbar_birthdaylist_form', SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/birthday_list.php', array('headline' => $headline)), $page, array('type' => 'navbar', 'setFocus' => false));
+		$form = new FormPresenter(
+		    'navbar_birthdaylist_form', 
+		    '../templates/form.filter.without.text.filter.plugin.birthdaylist.tpl',
+		    SecurityUtils::encodeUrl(ADMIDIO_URL.FOLDER_PLUGINS . PLUGIN_FOLDER .'/system/birthday_list.php', 
+		        array('headline' => $headline)), 
+		    $page, 
+		    array('type' => 'navbar', 'setFocus' => false));
         
         $selectBoxEntries = array(' ' => $gL10n->get('PLG_BIRTHDAYLIST_SELECT_CONFIGURATION').' ...');
         foreach ($pPreferences->config['Konfigurationen']['col_desc'] as $key => $item)
@@ -390,7 +398,9 @@ if ($getMode != 'csv' && $getMode != 'xlsx' )
         $form->addInput('month', '', $getMonth, array('property' => HtmlForm::FIELD_HIDDEN));
         $form->addInput('config', '', $getConfig, array('property' => HtmlForm::FIELD_HIDDEN));
         
-        $page->addHtml($form->show());
+        
+        $form->addToHtmlPage();
+    //    $page->addHtml($form->show());
         
         $table = new HtmlTable('adm_lists_table', $page, $hoverRows, $datatable, $classTable);
         if ($datatable)
@@ -671,9 +681,9 @@ elseif ($getMode == 'xlsx')
     $writer = new XLSXWriter();
     $writer->setAuthor($gCurrentUser->getValue('FIRST_NAME').' '.$gCurrentUser->getValue('LAST_NAME'));
     $writer->setTitle($filename);
-    $writer->setSubject($gL10n->get('PLG_BIRTHDAYLIST_BIRTHDAY_LIST'));
+    $writer->setSubject($gL10n->get('PLG_BIRTHDAYLIST_NAME'));
     $writer->setCompany($gCurrentOrganization->getValue('org_longname'));
-    $writer->setKeywords(array($gL10n->get('PLG_BIRTHDAYLIST_BIRTHDAY_LIST'), $gL10n->get('PLG_BIRTHDAYLIST_PATTERN')));
+    $writer->setKeywords(array($gL10n->get('PLG_BIRTHDAYLIST_NAME'), $gL10n->get('PLG_BIRTHDAYLIST_PATTERN')));
     $writer->setDescription($gL10n->get('PLG_BIRTHDAYLIST_CREATED_WITH'));
     $writer->writeSheet($rows,'', $header);
     $writer->writeToStdOut();

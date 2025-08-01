@@ -14,35 +14,34 @@
     <string name="PLG_BIRTHDAYLIST_ALLORG">in allen Organisationen</string>    
     <string name="PLG_BIRTHDAYLIST_APRIL">April</string>
     <string name="PLG_BIRTHDAYLIST_AUGUST">August</string>
-    <string name="PLG_BIRTHDAYLIST_BIRTHDAY_LIST">Geburtstagsliste</string>
-    <string name="PLG_BIRTHDAYLIST_CAT_SELECTION">Kategoriewahl</string>
-    <string name="PLG_BIRTHDAYLIST_CAT_SELECTION_CONF_DESC">Über Kategoriewahl kann eine Konfiguration auf die Angehörigen von Rollen der gewählten Kategorien eingeschränkt werden.\n\n Soll keine Einschränkung erfolgen, so sind beide Felder (Rollenwahl und Kategoriewahl) leer zu lassen.</string>
     <string name="PLG_BIRTHDAYLIST_COL">Spalte</string>
+    <string name="PLG_BIRTHDAYLIST_COL_DESC">Bezeichnung</string>
+    <string name="PLG_BIRTHDAYLIST_COL_DESC_DESC">Die hier eingetragende Bezeichnung erscheint in der Bildschirmanzeige im Auswahlmenü \"Konfiguration wählen...\".</string>
+    <string name="PLG_BIRTHDAYLIST_COL_SEL">Prüfdatum</string>
+    <string name="PLG_BIRTHDAYLIST_COL_SEL_DESC">Prüfdatum ist das für die Berechnungen verwendete Datumsfeld (Entweder ein Profilfeld vom Typ 'Datum' oder bei Wahl einer Rolle, der Beginn der Rollenmitgliedschaft)</string>
+    <string name="PLG_BIRTHDAYLIST_COL_SUFFIX">Ergänzungstext</string>
+    <string name="PLG_BIRTHDAYLIST_COL_SUFFIX_DESC">Der angegebene Text wird an das Lebensjahr oder Jubiläum angehängt.\n\n \"ster Geburtstag am #Day#.#Month#\" könnte z.B. angezeigt werden als \"30ster Geburtstag am 10.02.\".\n\nPlatzhalter:\n#Day# = Tag\n#Month# = Monat\n#Year# = Jahr</string>
+    <string name="PLG_BIRTHDAYLIST_COL_VALUES">Werte</string>
+    <string name="PLG_BIRTHDAYLIST_COL_VALUES_DESC">Über Werte kann die Anzeige auf bestimmte Werte gefiltert werden. 30,40,50 bedeutet z.B., dass nur 30., 40. oder 50. Geburtstage oder Jubiläen angezeigt werden. Einzelne Werte können auch als Bereichsangabe \"Von-Bis;Schrittweite\" definiert werden (Bsp: 30-50;10 ergibt 30,40,50). Soll nicht gefiltert werden, so ist das Feld leer zu lassen.</string>
     <string name="PLG_BIRTHDAYLIST_COLUMN">Spalte</string>
-    <string name="PLG_BIRTHDAYLIST_COLUMNS">Spalten</string>
     <string name="PLG_BIRTHDAYLIST_COLUMN_SELECTION">Spaltenauswahl</string>
     <string name="PLG_BIRTHDAYLIST_COLUMN_SELECTION_DESC">Hier werden die Spalten ausgewählt, die in der Liste angezeigt werden sollen.</string>
-    <string name="PLG_BIRTHDAYLIST_COL_DESC">Bezeichnung</string>
-    <string name="PLG_BIRTHDAYLIST_COL_DESC_DESC">Die hier eingetragende Bezeichnung erscheint in der Bildschirmanzeige im Auswahlmenü "Konfiguration wählen...".</string>
-    <string name="PLG_BIRTHDAYLIST_COL_SEL">Prüfdatum</string>
-    <string name="PLG_BIRTHDAYLIST_COL_SEL_DESC">Prüfdatum ist das für die Berechnungen verwendete Datumsfeld (Entweder ein Profilfeld vom Typ "Datum" oder bei Wahl einer Rolle, der Beginn der Rollenmitgliedschaft)</string>
-    <string name="PLG_BIRTHDAYLIST_COL_SUFFIX">Ergänzungstext</string>
-    <string name="PLG_BIRTHDAYLIST_COL_SUFFIX_DESC">Der angegebene Text wird an das Lebensjahr oder Jubiläum angehängt.\n\n "ster Geburtstag am #Day#.#Month#" könnte z.B. angezeigt werden als "30ster Geburtstag am 10.02.".\n\nPlatzhalter:\n#Day# = Tag\n#Month# = Monat\n#Year# = Jahr</string>
-    <string name="PLG_BIRTHDAYLIST_COL_VALUES">Werte</string>
-    <string name="PLG_BIRTHDAYLIST_COL_VALUES_DESC">Über Werte kann die Anzeige auf bestimmte Werte gefiltert werden. 30,40,50 bedeutet z.B., dass nur 30., 40. oder 50. Geburtstage oder Jubiläen angezeigt werden. Einzelne Werte können auch als Bereichsangabe "Von-Bis;Schrittweite" definiert werden (Bsp: 30-50;10 ergibt 30,40,50). Soll nicht gefiltert werden, so ist das Feld leer zu lassen.</string>
+    <string name="PLG_BIRTHDAYLIST_COLUMNS">Spalten</string>
     <string name="PLG_BIRTHDAYLIST_CONFIG_DATA">Konfigurationsdaten</string>
     <string name="PLG_BIRTHDAYLIST_CONFIGURATION">Konfiguration</string>
-    <string name="PLG_BIRTHDAYLIST_CONFIGURATIONS">Konfigurationen</string>
-    <string name="PLG_BIRTHDAYLIST_CONFIGURATIONS_DESC">Beispiel:\nBezeichnung: Runder Geburtstag\nPrüfdatum: Geburtstag\nWerte: 30,40,50,60,70,80 oder 30-80;10 (Wird keine Filterung gewünscht, so ist das Feld leer zu lassen)\nErgänzungstext: . Geburtstag am #Day#.#Month#.</string>
-    <string name="PLG_BIRTHDAYLIST_CONFIGURATIONS_HEADER">Hier können beliebig viele Konfigurationen für die Geburtstags- und Jubiläumsliste erstellt werden. In der Bildschirmanzeige wird jeweils eine dieser Konfigurationen über "Konfiguration wählen..." als Grundlage für Berechnungen und für die Anzeige verwendet.</string>
     <string name="PLG_BIRTHDAYLIST_CONFIGURATION_AS_HEADER">Konfigurationsname als Überschrift</string>
     <string name="PLG_BIRTHDAYLIST_CONFIGURATION_AS_HEADER_DESC">Soll der Konfigurationsname als Überschrift verwendet werden, so ist der Haken zu setzen.</string>
     <string name="PLG_BIRTHDAYLIST_CONFIGURATION_DEFAULT_DESC">Standardeinstellung der Konfigurationen</string>
+    <string name="PLG_BIRTHDAYLIST_CONFIGURATIONS">Konfigurationen</string>
+    <string name="PLG_BIRTHDAYLIST_CONFIGURATIONS_DESC">Beispiel:\nBezeichnung: Runder Geburtstag\nPrüfdatum: Geburtstag\nWerte: 30,40,50,60,70,80 oder 30-80;10 (Wird keine Filterung gewünscht, so ist das Feld leer zu lassen)\nErgänzungstext: . Geburtstag am #Day#.#Month#.</string>
+    <string name="PLG_BIRTHDAYLIST_CONFIGURATIONS_EDIT">Konfigurationen erstellen und editieren.</string>
+    <string name="PLG_BIRTHDAYLIST_CONFIGURATIONS_HEADER">Hier können beliebig viele Konfigurationen für die Geburtstags- und Jubiläumsliste erstellt werden. In der Bildschirmanzeige wird jeweils eine dieser Konfigurationen über "Konfiguration wählen..." als Grundlage für Berechnungen und für die Anzeige verwendet.</string>
     <string name="PLG_BIRTHDAYLIST_CREATED_WITH">erstellt mit dem Plugin Geburtstagsliste der Online-Mitgliederverwaltung Admidio</string>
     <string name="PLG_BIRTHDAYLIST_DECEMBER">Dezember</string>
     <string name="PLG_BIRTHDAYLIST_DOCUMENTATION">Dokumentation</string>
     <string name="PLG_BIRTHDAYLIST_DOCUMENTATION_OPEN">Dokumentation öffnen</string>
     <string name="PLG_BIRTHDAYLIST_DOCUMENTATION_OPEN_DESC">Hiermit kann die Dokumentation zum Plugin geöffnet werden (Eine bestehende Internetverbindung wird vorausgesetzt, da sich die Daten auf admidio.org befinden).</string>
+    <string name="PLG_BIRTHDAYLIST_EDIT">Editieren</string>
     <string name="PLG_BIRTHDAYLIST_EXPORT_AND_FILTER">Export und Filter</string>
     <string name="PLG_BIRTHDAYLIST_FEBRUARY">Februar</string>
     <string name="PLG_BIRTHDAYLIST_FOR_THE_PERIOD">Für den Zeitraum #VAR1# bis #VAR2# (#VAR3# Tage)</string>
@@ -58,7 +57,7 @@
     <string name="PLG_BIRTHDAYLIST_NAME">Geburtstagsliste</string>
     <string name="PLG_BIRTHDAYLIST_NAME_DESC">Das Plugin Geburtstagsliste</string>    
     <string name="PLG_BIRTHDAYLIST_NOTIFICATION_MAIL_TEXT">E-Mail-Vorlage</string>
-    <string name="PLG_BIRTHDAYLIST_NOTIFICATION_MAIL_TEXT_DESC">Hier kann der Text für eine E-Mail angepasst und ergänzt werden. Der Text ist in 2 Bereiche (Betreff &amp; Inhalt) unterteilt und wird durch die Zeichenfolge #subject# und #content# identifiziert. Danach folgt dann der Inhalt für den Bereich. In jeder Mail können Platzhalter benutzt werden, welche dann zur Laufzeit durch die entsprechenden Inhalte ersetzt werden.\n\nWICHTIG: Zum Versenden von Mails muss das Profilfeld E-Mail in einer Spalte angezeigt werden.\n\nPlatzhalter:\n#user_first_name# = Vorname des Mitglieds\n#user_last_name# = Nachname des Mitglieds\n#organization_long_name# = Name der Organisation\n#config# = Text der letzten Spalte Konfigurationsspalte)</string>
+    <string name="PLG_BIRTHDAYLIST_NOTIFICATION_MAIL_TEXT_DESC">Hier kann der Text für eine E-Mail angepasst und ergänzt werden. Der Text ist in 2 Bereiche (Betreff &amp; Inhalt) unterteilt und wird durch die Zeichenfolge #subject# und #content# identifiziert. Danach folgt dann der Inhalt für den Bereich. In jeder Mail können Platzhalter benutzt werden, welche dann zur Laufzeit durch die entsprechenden Inhalte ersetzt werden.\n\nWICHTIG: Zum Versenden von Mails muss das Profilfeld E-Mail in einer Spalte angezeigt werden.\n\nPlatzhalter:\n#user_first_name# = Vorname des Mitglieds\n#user_last_name# = Nachname des Mitglieds\n#organization_long_name# = Name der Organisation\n#config# = Text der letzten Spalte (Konfigurationsspalte)</string>
     <string name="PLG_BIRTHDAYLIST_NOVEMBER">November</string>
     <string name="PLG_BIRTHDAYLIST_OCTOBER">Oktober</string>
     <string name="PLG_BIRTHDAYLIST_OPTIONS">Optionen</string>
@@ -78,8 +77,6 @@
     <string name="PLG_BIRTHDAYLIST_REMOVE_ACCESS_ROLE">Entferne Zugriffsrolle</string>
     <string name="PLG_BIRTHDAYLIST_REMOVE_CONFIG_DATA">Entferne Konfigurationsdaten</string>
     <string name="PLG_BIRTHDAYLIST_REMOVE_MENU_ITEM">Entferne Menüpunkt</string>
-    <string name="PLG_BIRTHDAYLIST_ROLE_SELECTION">Rollenwahl</string>
-    <string name="PLG_BIRTHDAYLIST_ROLE_SELECTION_CONF_DESC">Über Rollenwahl kann eine Konfiguration auf die Angehörigen der gewählten Rollen eingeschränkt werden.\n\n Soll keine Einschränkung erfolgen, so sind beide Felder (Rollenwahl und Kategoriewahl) leer zu lassen.</string>
     <string name="PLG_BIRTHDAYLIST_SELECT_CONFIGURATION">Konfiguration wählen</string>
     <string name="PLG_BIRTHDAYLIST_SELECT_MONTH">Monat wählen</string>
     <string name="PLG_BIRTHDAYLIST_SELECT_NUMBER_OF_DAYS">Vorschautage wählen</string>
