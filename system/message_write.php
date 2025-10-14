@@ -19,6 +19,7 @@
  *****************************************************************************/
 
 use Admidio\Infrastructure\Email;
+use Admidio\Infrastructure\Exception;
 use Admidio\Infrastructure\Entity\Text;
 use Admidio\Infrastructure\Utils\FileSystemUtils;
 use Admidio\Infrastructure\Utils\PhpIniUtils;
@@ -32,7 +33,7 @@ require_once(__DIR__ . '/common_function.php');
 
 if (!StringUtils::strContains($gNavigation->getUrl(), 'birthday_list.php') && !StringUtils::strContains($gNavigation->getUrl(), 'message_send.php'))
 {
-	$gMessage->show($gL10n->get('SYS_NO_RIGHTS'));
+    throw new Exception('SYS_NO_RIGHTS'); 
 }
 
 // Initialize and check the parameters
@@ -44,7 +45,7 @@ $getConfig     = admFuncVariableIsValid($_GET, 'config', 'numeric', array('defau
 if (!$gSettingsManager->getBool('mail_module_enabled'))
 {
     // message if the sending is not allowed
-    $gMessage->show($gL10n->get('SYS_MODULE_DISABLED'));
+    throw new Exception('SYS_MODULE_DISABLED'); 
 }
 
 // check if the current user has email address for sending an email
@@ -67,7 +68,7 @@ $user->readDataByUuid($getUserUuid);
 // we need to check if the actual user is allowed to contact this user
 if (!$gCurrentUser->isAdministratorUsers() && !isMember((int) $user->getValue('usr_id')))
 {
-    $gMessage->show($gL10n->get('SYS_USER_ID_NOT_FOUND'));
+    throw new Exception('SYS_USER_ID_NOT_FOUND'); 
     // => EXIT
 }
 

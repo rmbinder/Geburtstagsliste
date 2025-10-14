@@ -14,6 +14,7 @@
  ***********************************************************************************************
  */
 use Admidio\Infrastructure\Entity\Text;
+use Admidio\Infrastructure\Exception;
 use Plugins\BirthdayList\classes\Config\ConfigTable;
 
 try {

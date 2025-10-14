@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
     <string name="PLG_BIRTHDAYLIST_ACCESS_PREFERENCES">Zugriffsberechtigung für Einstellungen</string>
-    <string name="PLG_BIRTHDAYLIST_ACCESS_PREFERENCES_DESC">Hier kann man, zusätzlich zur Rolle "Administrator", weitere Rollen für den Zugriff auf das Modul "Einstellungen" berechtigen.</string>
+    <string name="PLG_BIRTHDAYLIST_ACCESS_PREFERENCES_DESC">Hier können, zusätzlich zur Rolle "Administrator", weitere Rollen für den Zugriff auf das Modul "Einstellungen" berechtigt werden.</string>
     <string name="PLG_BIRTHDAYLIST_ACCESS_ROLE">Zugriffsrolle</string>
     <string name="PLG_BIRTHDAYLIST_ACCESS_ROLES_STILL_PRESENT">- Der Menüpunkt kann nicht gelöscht werden, da noch Zugriffsrollen vorhanden sind.\n</string>
     <string name="PLG_BIRTHDAYLIST_ACCESS_TO_PLUGIN">Zugriff auf das Plugin Geburtstagsliste</string>
@@ -53,7 +53,6 @@
     <string name="PLG_BIRTHDAYLIST_MARCH">März</string>
     <string name="PLG_BIRTHDAYLIST_MAY">Mai</string>
     <string name="PLG_BIRTHDAYLIST_MENU_ITEM">Menüpunkt</string>
-    <string name="PLG_BIRTHDAYLIST_MENU_URL_ERROR">Die Authorisierungsprüfung des Plugins ist fehlgeschlagen. Es ist mehr als ein Menüpunkt mit derselben URL definiert.\n\n=> #VAR1_BOLD#</string> 
     <string name="PLG_BIRTHDAYLIST_NAME">Geburtstagsliste</string>
     <string name="PLG_BIRTHDAYLIST_NAME_DESC">Das Plugin Geburtstagsliste</string>
     <string name="PLG_BIRTHDAYLIST_NOTIFICATION_MAIL_TEXT">E-Mail-Vorlage</string>

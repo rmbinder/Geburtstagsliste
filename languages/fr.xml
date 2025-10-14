@@ -53,7 +53,6 @@
     <string name="PLG_BIRTHDAYLIST_MARCH">mars</string>
     <string name="PLG_BIRTHDAYLIST_MAY">mai</string>
     <string name="PLG_BIRTHDAYLIST_MENU_ITEM">Élément de menu</string>
-    <string name="PLG_BIRTHDAYLIST_MENU_URL_ERROR">Le contrôle d\'autorisation du plugin a échoué. Plus d\'un élément de menu est défini avec la même URL.\n\n=> #VAR1_BOLD#</string> 
     <string name="PLG_BIRTHDAYLIST_NAME">Liste des anniversaires et jubilés</string>
     <string name="PLG_BIRTHDAYLIST_NAME_DESC">Le plugin Liste d'anniversaire</string>    
     <string name="PLG_BIRTHDAYLIST_NOTIFICATION_MAIL_TEXT">Modèle de courriel</string>

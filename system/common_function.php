@@ -12,6 +12,11 @@
 use Admidio\Components\Entity\Component;
 use Admidio\Infrastructure\Language;
 use Admidio\Roles\Entity\RolesRights;
+use Plugins\BirthdayList\classes\Config\ConfigTable;
+
+if (basename($_SERVER['SCRIPT_FILENAME']) === 'common_function.php') {
+    exit('This page may not be called directly!');
+}
 
 require_once(__DIR__ . '/../../../system/common.php');
 
@@ -57,49 +62,66 @@ function myAutoloader($className) {
 }
 
 /**
- * Funktion prueft, ob der Nutzer berechtigt ist das Plugin aufzurufen.
- * Zur Prüfung wird die Einstellung von 'Sichtbar für' verwendet,
- * die im Modul Menü für dieses Plugin gesetzt wurde.
- * @param   string  $scriptName   Der Scriptname des Plugins
+ * Funktion prueft, ob der Nutzer berechtigt ist das Plugin auszuführen.
+ * 
+ * In Admidio im Modul Menü kann über 'Sichtbar für' die Sichtbarkeit eines Menüpunkts eingeschränkt werden.
+ * Der Zugriff auf die darunter liegende Seite ist von dieser Berechtigung jedoch nicht betroffen.
+ * 
+ * Mit Admidio 5 werden alle Startcripte meiner Plugins umbenannt zu index.php
+ * Um die index.php auszuführen, kann die bei einem Menüpunkt angegebene URL wie folgt angegeben sein:
+ * /adm_plugins/<Installationsordner des Plugins>
+ *   oder
+ * /adm_plugins/<Installationsordner des Plugins>/
+ *   oder
+ * /adm_plugins/<Installationsordner des Plugins>/<Dateiname.php>
+ * 
+ * Das Installationsscript des Plugins erstellt automatisch einen Menüpunkt in der Form: /adm_plugins/<Installationsordner des Plugins>/index.php
+ * Standardmäßig wird deshalb für die Prüfung index.php als <Dateiname.php> verwendet, alternativ die übergebene Datei ($scriptname).
+ * 
+ * Diese Funktion ermittelt nur die Menüpunkte, die einen Dateinamen am Ende (index.php oder $scriptname) aufweisen, liest bei diesen Menüpunkten
+ * die unter 'Sichtbar für' eingetragenen Rollen ein und prüft, ob der angemeldete Benutzer Mitglied mindestens einer dieser Rollen ist.
+ * Wenn ja, ist der Benutzer berechtigt, das Plugin auszuführen (auch, wenn es weitere Menüpunkte ohne Dateinamen am Ende gibt).
+ * Wichtiger Hinweis: Sind unter 'Sichtbar für' keine Rollen angegeben, so darf jeder Benutzer das Plugin ausführen
+ * 
+ * @param   string  $scriptName   Der Scriptname des Plugins (default: 'index.php')
  * @return  bool    true, wenn der User berechtigt ist
  */
-function isUserAuthorized($scriptName)
+function isUserAuthorized( string $scriptname = '')
 {
-    global $gDb, $gMessage, $gLogger, $gL10n, $gCurrentUser;
+    global $gDb, $gCurrentUser;
     
     $userIsAuthorized = false;
-    $menId = 0;
+    $menIds = array();
+    
+    $menuItemURL = FOLDER_PLUGINS. PLUGIN_FOLDER. '/'. ((strlen($scriptname) === 0) ? 'index.php' : $scriptname);
     
     $sql = 'SELECT men_id
               FROM '.TBL_MENU.'
-             WHERE men_url = ? -- $scriptName ';
+             WHERE men_url = ? -- $menuItemURL';
     
-    $menuStatement = $gDb->queryPrepared($sql, array($scriptName));
+    $menuStatement = $gDb->queryPrepared($sql, array($menuItemURL));
     
-    if ( $menuStatement->rowCount() === 0 || $menuStatement->rowCount() > 1)
-    {
-        $gLogger->notice('BirthdayList: Error with menu entry: Found rows: '. $menuStatement->rowCount() );
-        $gLogger->notice('BirthdayList: Error with menu entry: ScriptName: '. $scriptName);
-        $gMessage->show($gL10n->get('PLG_BIRTHDAYLIST_MENU_URL_ERROR', array($scriptName)), $gL10n->get('SYS_ERROR'));
-    }
-    else
+    if ( $menuStatement->rowCount() !== 0 )
     {
         while ($row = $menuStatement->fetch())
         {
-            $menId = (int) $row['men_id'];
+            $menIds[] = (int) $row['men_id'];
+        }
+        
+        foreach ($menIds as $menId)
+        {
+            // read current roles rights of the menu
+            $displayMenu = new RolesRights($gDb, 'menu_view', $menId);
+            
+            // check for right to show the menu
+            if (count($displayMenu->getRolesIds()) === 0 || $displayMenu->hasRight($gCurrentUser->getRoleMemberships()))
+            {
+                $userIsAuthorized = true;
+            }
         }
     }
-    
-    // read current roles rights of the menu
-    $displayMenu = new RolesRights($gDb, 'menu_view', $menId);
-    
-    // check for right to show the menu
-    if (count($displayMenu->getRolesIds()) === 0 || $displayMenu->hasRight($gCurrentUser->getRoleMemberships()))
-    {
-        $userIsAuthorized = true;
-    }
-	return $userIsAuthorized;
-}  
+    return $userIsAuthorized;
+}
 
 /**
  * Funktion prueft, ob der Nutzer berechtigt ist, das Modul Preferences aufzurufen.
@@ -108,7 +130,9 @@ function isUserAuthorized($scriptName)
  */
 function isUserAuthorizedForPreferences()
 {
-    global $pPreferences;
+    // Konfiguration einlesen
+    $pPreferences = new ConfigTable();
+    $pPreferences->read();
     
     $userIsAuthorized = false;
     

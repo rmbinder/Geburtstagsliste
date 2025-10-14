@@ -50,8 +50,8 @@
                 {include '../templates/form.input.popover.plugin.birthdaylist.tpl' data=$elements[$configuration.col_values] popover="{$l10n->get('PLG_BIRTHDAYLIST_COL_VALUES_DESC')}"}
                 {include '../templates/form.input.popover.plugin.birthdaylist.tpl' data=$elements[$configuration.col_suffix] popover="{$l10n->get('PLG_BIRTHDAYLIST_COL_SUFFIX_DESC')}"}
                 {include '../templates/form.checkbox.popover.plugin.birthdaylist.tpl' data=$elements[$configuration.suppress_age] popover="{$l10n->get('PLG_BIRTHDAYLIST_AGE_OR_ANNIVERSARY_NOT_SHOW_DESC')}"}           
-                {include '../templates/form.select.popover.plugin.birthdaylist.tpl' data=$elements[$configuration.selection_role] popover="{$l10n->get('PLG_BIRTHDAYLIST_ROLE_SELECTION_CONF_DESC')}"}
-                {include '../templates/form.select.popover.plugin.birthdaylist.tpl' data=$elements[$configuration.selection_cat] popover="{$l10n->get('PLG_BIRTHDAYLIST_CAT_SELECTION_CONF_DESC')}"}
+                {include '../templates/form.select.popover.plugin.birthdaylist.tpl' data=$elements[$configuration.selection_role] popover="{$l10n->get('SYS_ROLE_SELECTION_CONF_DESC')}"}
+                {include '../templates/form.select.popover.plugin.birthdaylist.tpl' data=$elements[$configuration.selection_cat] popover="{$l10n->get('SYS_CAT_SELECTION_CONF_DESC')}"}
                 {include '../templates/form.multiline.popover.plugin.birthdaylist.tpl' data=$elements[$configuration.col_mail] popover="{$l10n->get('PLG_BIRTHDAYLIST_NOTIFICATION_MAIL_TEXT_DESC')}"}
                 {include '../templates/form.checkbox.popover.plugin.birthdaylist.tpl' data=$elements[$configuration.calendar_year] popover="{$l10n->get('PLG_BIRTHDAYLIST_SHOW_CALENDAR_YEAR_DESC')}"}      
                 {include '../templates/form.input.popover.plugin.birthdaylist.tpl' data=$elements[$configuration.years_offset] popover="{$l10n->get('PLG_BIRTHDAYLIST_YEARS_OFFSET_DESC')}"}          

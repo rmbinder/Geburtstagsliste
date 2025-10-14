@@ -16,6 +16,7 @@
  */
 
 use Admidio\Infrastructure\Utils\SecurityUtils;
+use Admidio\Infrastructure\Exception;
 use Admidio\Menu\Entity\MenuEntry;
 use Admidio\Roles\Entity\Role;
 use Admidio\Roles\Entity\RolesRights;
@@ -28,14 +29,14 @@ try
 	require_once(__DIR__ . '/../../../system/common.php');
 	require_once(__DIR__ . '/common_function.php');
 
-	$pPreferences = new ConfigTable();
-	$pPreferences->read();
-
 	// only authorized user are allowed to start this module
 	if (!isUserAuthorizedForPreferences())
 	{
-		throw new Exception('SYS_NO_RIGHTS');
+	    throw new Exception('SYS_NO_RIGHTS');
 	}
+	
+	$pPreferences = new ConfigTable();
+	$pPreferences->read();
 
 	// Initialize and check the parameters
 	$getMode                       = admFuncVariableIsValid($_GET, 'mode', 'string', array('defaultValue' => 'html', 'validValues' => array('html', 'uninst')));	

@@ -19,6 +19,7 @@
 use Admidio\Infrastructure\Email;
 use Admidio\Infrastructure\Utils\FileSystemUtils;
 use Admidio\Infrastructure\Utils\StringUtils;
+use Admidio\Infrastructure\Exception;
 use Admidio\Messages\Entity\Message;
 use Admidio\Users\Entity\User;
 use PHPMailer\PHPMailer\PHPMailer;
@@ -43,14 +44,14 @@ $_SESSION['message_request'] = $_POST;
 // Stop if mail should be send and mail module is disabled
 if (!$gSettingsManager->getBool('mail_module_enabled'))
 {
-    $gMessage->show($gL10n->get('SYS_MODULE_DISABLED'));
+    throw new Exception('SYS_MODULE_DISABLED');
     // => EXIT
 }
 
 // if Attachmentsize is higher than max_post_size from php.ini, then $_POST is empty.
 if (empty($_POST))
 {
-    $gMessage->show($gL10n->get('SYS_INVALID_PAGE_VIEW'));
+    throw new Exception('SYS_INVALID_PAGE_VIEW');
     // => EXIT
 }
 
