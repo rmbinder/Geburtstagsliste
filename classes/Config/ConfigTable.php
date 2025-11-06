@@ -100,8 +100,6 @@ class ConfigTable
 		
 		$this->config['Plugininformationen']['version'] = self::$version;
 		$this->config['Plugininformationen']['stand'] = self::$stand;
-		$this->config['Plugininformationen']['table_name'] = $this->table_name;
-		$this->config['Plugininformationen']['shortcut'] = self::$shortcut;
 		
 		// die eingelesenen Konfigurationsdaten in ein Arbeitsarray kopieren
 		$config_ist = $this->config;
@@ -309,4 +307,23 @@ class ConfigTable
 	    
 	    return $data;
 	}
+	
+	/**
+	 * Returns the shortcut of the plugin.
+	 * @return string $shortcut.
+	 */
+	public function getShortcut()
+	{
+	    return self::$shortcut;
+	}
+	
+	/**
+	 * Returns the table name of the plugin.
+	 * @return string $table_name.
+	 */
+	public function getTableName()
+	{
+	    return $this->table_name;
+	}
+	
 }

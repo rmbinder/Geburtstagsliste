@@ -48,8 +48,8 @@ try {
         'rol_description' => $gL10n->get('PLG_BIRTHDAYLIST_ACCESS_TO_PLUGIN_DESC')
     ));
 
-    if ($role->getValue('rol_id') === 0) // nur wenn es keine Rolle gibt, neue Daten eingeben (mehr als eine Rolle wird nicht betrachtet)
-    {
+    // nur wenn es keine Rolle gibt, neue Daten eingeben (mehr als eine Rolle wird nicht betrachtet)
+    if ($role->getValue('rol_id') === 0) {
         // Daten für diese Rolle eingeben (entweder vorhandene Daten aktualisieren oder neue Daten eingeben)
         $role->saveChangesWithoutRights(); // toDo: ggf. erweiterte Berechtigungen für die Rolle vergeben
         $role->setValue('rol_cat_id', $categoryCommonId, false);
@@ -107,8 +107,7 @@ try {
     }
 
     $pPreferences->config['install']['access_role_id'] = $role->getValue('rol_id'); // für die Uninstall-Routine: die ID der Zugriffsrolle in der Konfigurationstabelle speichern
-    $pPreferences->config['install']['menu_item_id'] = $menu->getValue('men_id');
-    ; // für die Uninstall-Routine: die ID des Menüpunktes in der Konfigurationstabelle speichern
+    $pPreferences->config['install']['menu_item_id'] = $menu->getValue('men_id'); // für die Uninstall-Routine: die ID des Menüpunktes in der Konfigurationstabelle speichern
     $pPreferences->save();
 
     admRedirect(ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER . '/system/birthday_list.php');

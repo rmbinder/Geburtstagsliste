@@ -6,7 +6,7 @@
     </label>
     <div class="col-sm-9">
         <div>
-            <a class="btn btn-primary" id="open_uninstallation" href="{$open_uninst}">
+            <a class="btn btn-primary" id="open_uninstallation" href="{$open_uninstall}">
                 <i class="bi bi-trash"></i>{$l10n->get('PLG_BIRTHDAYLIST_UNINSTALLATION')}</a>
            
         </div>

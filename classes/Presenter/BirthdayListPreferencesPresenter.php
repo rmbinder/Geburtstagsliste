@@ -184,9 +184,9 @@ class BirthdayListPreferencesPresenter extends PagePresenter
      */
     public function createUninstallationForm(): string
     {
-        $this->assignSmartyVariable('open_uninst', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . '/BirthdayList/system/uninstallation.php'));
+        $this->assignSmartyVariable('open_uninstall', SecurityUtils::encodeUrl(ADMIDIO_URL . FOLDER_PLUGINS . '/BirthdayList/system/uninstall.php'));
         $smarty = $this->getSmartyTemplate();
-        return $smarty->fetch('../templates/preferences.uninstallation.plugin.birthdaylist.tpl');
+        return $smarty->fetch('../templates/preferences.uninstall.plugin.birthdaylist.tpl');
     }
     
     /**
