@@ -41,7 +41,7 @@ try {
     if ($pPreferences->config['install']['access_role_id'] == 0 || $pPreferences->config['install']['menu_item_id'] == 0) {
         
         $urlInst = ADMIDIO_URL . FOLDER_PLUGINS . PLUGIN_FOLDER . '/system/install.php';
-        $gMessage->show($gL10n->get('PLG_BIRTHDAYLIST_UPDATE_REQUIRED', array(
+        $gMessage->show($gL10n->get('PLG_BIRTHDAYLIST_INSTALL_UPDATE_REQUIRED', array(
             '<a href="' . $urlInst . '">' . $urlInst . '</a>'
         )));
     }

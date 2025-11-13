@@ -91,7 +91,7 @@ try {
             // Zugriffsrolle und Menüpunkt löschen
             if ($pPreferences->config['install']['access_role_id'] == 0 || $pPreferences->config['install']['menu_item_id'] == 0) {
                 // nur zur Sicherheit; dass 'access_role_id' und/oder 'menu_item_id' Null ist, dürfte eigentlich nicht vorkommen
-                $result .= $gL10n->get('PLG_BIRTHDAYLIST_NO_INST_IDS_FOUND');
+                $result .= $gL10n->get('PLG_BIRTHDAYLIST_UNINST_NO_INST_IDS_FOUND');
             } else {
                 $result_role = true;
 
