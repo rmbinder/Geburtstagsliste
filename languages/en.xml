@@ -42,6 +42,7 @@
     <string name="PLG_BIRTHDAYLIST_FOR_THE_PERIOD">Time frame: #VAR1# to #VAR2# (#VAR3# days)</string>
     <string name="PLG_BIRTHDAYLIST_ICAL">iCal</string>
     <string name="PLG_BIRTHDAYLIST_ICAL_MISSING_DATA">For iCal export at least the following profile fields must be available in the list:\n\n- Date of birth and\n- First name or last name\n\nand\n\n"Age or anniversary not show" must not be set in the configuration.</string>
+    <string name="PLG_BIRTHDAYLIST_INSTALL_UPDATE_REQUIRED">The existing installation is incomplete. It is necessary to run the installation routine again..\n\nTo install, run the following script: #VAR1#</string>
     <string name="PLG_BIRTHDAYLIST_JANUARY">January</string>
     <string name="PLG_BIRTHDAYLIST_JULY">July</string>
     <string name="PLG_BIRTHDAYLIST_JUNE">June</string>
@@ -49,7 +50,6 @@
     <string name="PLG_BIRTHDAYLIST_MAY">May</string>
     <string name="PLG_BIRTHDAYLIST_NAME">Birthday list</string>
     <string name="PLG_BIRTHDAYLIST_NAME_DESC">The Birthday List plugin</string>     
-    <string name="PLG_BIRTHDAYLIST_NO_INST_IDS_FOUND">- No menu item and/or access role could be found. You must delete the menu item and access role manually..\n</string> 
     <string name="PLG_BIRTHDAYLIST_NOTIFICATION_MAIL_TEXT">E-mail Template</string>
     <string name="PLG_BIRTHDAYLIST_NOTIFICATION_MAIL_TEXT_DESC">Here, the text can be customized and added to an e-mail. Texts have two paragraphs (subject &amp; content) which are identified by titles like #subject# and #content#. Content parts follow after this titles. Each message can have free space for current messages.\n\nIMPORTANT: To send an e-mail, the the profile field Email has to be displayed in a column.\n\nPlaceholder:\n#user_first_name# = First name of the member\n#user_last_name# = Last name of the member\n#organization_long_name# = Name of the organization\n#config# = Text of the last column (configurations-column)</string>
     <string name="PLG_BIRTHDAYLIST_NOVEMBER">November</string>
@@ -83,13 +83,13 @@
     <string name="PLG_BIRTHDAYLIST_UNINST_MENU_ITEM_ERROR">- An error occurred while deleting the menu item.\n</string>
     <string name="PLG_BIRTHDAYLIST_UNINST_MENU_ITEM_NOT_DELETED">- The menu item created by the plugin could not be deleted because it is still in use in another organization..\n</string>
     <string name="PLG_BIRTHDAYLIST_UNINST_MENU_ITEM_SUCCESS">- The menu item created by the plugin has been deleted.\n</string> 
+    <string name="PLG_BIRTHDAYLIST_UNINST_NO_INST_IDS_FOUND">- No menu item and/or access role could be found. You must delete the menu item and access role manually..\n</string> 
     <string name="PLG_BIRTHDAYLIST_UNINST_SECURITY_CHECK">Are you sure you want to uninstall the plugin?</string> 
     <string name="PLG_BIRTHDAYLIST_UNINST_STARTMESSAGE">The following deletions were performed:\n\n</string>
     <string name="PLG_BIRTHDAYLIST_UNINST_TABLE_DELETE_ERROR">- The table "adm_plugin_preferences" could not be deleted because it houses more data from other plugins.\n</string>
     <string name="PLG_BIRTHDAYLIST_UNINST_TABLE_DELETE_SUCCESS">- The created table "adm_plugin_preferences" was deleted.\n</string>
     <string name="PLG_BIRTHDAYLIST_UNINSTALLATION">Uninstall</string>
     <string name="PLG_BIRTHDAYLIST_UNINSTALLATION_DESC">Entries created by the plugin can be deleted via uninstallation.</string>    
-    <string name="PLG_BIRTHDAYLIST_UPDATE_REQUIRED">The existing installation is incomplete. It is necessary to run the installation routine again..\n\nTo install, run the following script: #VAR1#</string>
     <string name="PLG_BIRTHDAYLIST_YEARS_OFFSET">Years offset</string>
     <string name="PLG_BIRTHDAYLIST_YEARS_OFFSET_DESC">This display can be shifted forward or backward for x years (0 corresponds to no offset).</string>
 </resources>

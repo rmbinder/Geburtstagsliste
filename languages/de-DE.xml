@@ -42,6 +42,7 @@
     <string name="PLG_BIRTHDAYLIST_FOR_THE_PERIOD">Für den Zeitraum #VAR1# bis #VAR2# (#VAR3# Tage)</string>
     <string name="PLG_BIRTHDAYLIST_ICAL">iCal</string>
     <string name="PLG_BIRTHDAYLIST_ICAL_MISSING_DATA">Für iCal-Export müssen mindestens folgende Profilfelder in der Liste vorhanden sein:\n\n- Geburtsdatum und\n- Vorname oder Nachname\n\nund\n\nin der Konfiguration darf "Lebensjahr oder Jubiläum nicht anzeigen" nicht gesetzt sein.</string>
+    <string name="PLG_BIRTHDAYLIST_INSTALL_UPDATE_REQUIRED">Die vorhandene Installation ist unvollständig. Es ist notwendig, die Installationsroutine erneut zu durchlaufen.\n\nZur Installation folgendes Script ausführen: #VAR1#</string>
     <string name="PLG_BIRTHDAYLIST_JANUARY">Januar</string>
     <string name="PLG_BIRTHDAYLIST_JULY">Juli</string>
     <string name="PLG_BIRTHDAYLIST_JUNE">Juni</string>
@@ -49,7 +50,6 @@
     <string name="PLG_BIRTHDAYLIST_MAY">Mai</string>
     <string name="PLG_BIRTHDAYLIST_NAME">Geburtstagsliste</string>
     <string name="PLG_BIRTHDAYLIST_NAME_DESC">Das Plugin Geburtstagsliste</string>    
-    <string name="PLG_BIRTHDAYLIST_NO_INST_IDS_FOUND">- Es konnte kein Menüpunkt und/oder keine Zugriffsrolle ermittelt werden. Sie müssen Menüpunkt und Zugriffsrolle von Hand löschen.\n</string> 
     <string name="PLG_BIRTHDAYLIST_NOTIFICATION_MAIL_TEXT">E-Mail-Vorlage</string>
     <string name="PLG_BIRTHDAYLIST_NOTIFICATION_MAIL_TEXT_DESC">Hier kann der Text für eine E-Mail angepasst und ergänzt werden. Der Text ist in 2 Bereiche (Betreff &amp; Inhalt) unterteilt und wird durch die Zeichenfolge #subject# und #content# identifiziert. Danach folgt dann der Inhalt für den Bereich. In jeder Mail können Platzhalter benutzt werden, welche dann zur Laufzeit durch die entsprechenden Inhalte ersetzt werden.\n\nWICHTIG: Zum Versenden von Mails muss das Profilfeld E-Mail in einer Spalte angezeigt werden.\n\nPlatzhalter:\n#user_first_name# = Vorname des Mitglieds\n#user_last_name# = Nachname des Mitglieds\n#organization_long_name# = Name der Organisation\n#config# = Text der letzten Spalte (Konfigurationsspalte)</string>
     <string name="PLG_BIRTHDAYLIST_NOVEMBER">November</string>
@@ -83,13 +83,13 @@
     <string name="PLG_BIRTHDAYLIST_UNINST_MENU_ITEM_ERROR">- Beim Löschen des Menüpunktes ist ein Fehler aufgetreten.\n</string>
     <string name="PLG_BIRTHDAYLIST_UNINST_MENU_ITEM_NOT_DELETED">- Der vom Plugin angelegte Menüpunkt konnte nicht gelöscht werden, da er noch in einer anderen Organisation verwendet wird.\n</string>
     <string name="PLG_BIRTHDAYLIST_UNINST_MENU_ITEM_SUCCESS">- Der vom Plugin angelegte Menüpunkt wurde gelöscht.\n</string>               
+    <string name="PLG_BIRTHDAYLIST_UNINST_NO_INST_IDS_FOUND">- Es konnte kein Menüpunkt und/oder keine Zugriffsrolle ermittelt werden. Sie müssen Menüpunkt und Zugriffsrolle von Hand löschen.\n</string> 
     <string name="PLG_BIRTHDAYLIST_UNINST_SECURITY_CHECK">Möchten Sie wirklich das Plugin deinstallieren?</string> 
     <string name="PLG_BIRTHDAYLIST_UNINST_STARTMESSAGE">Folgende Löschvorgänge wurden durchgeführt:\n\n</string>
     <string name="PLG_BIRTHDAYLIST_UNINST_TABLE_DELETE_ERROR">- Die Tabelle "adm_plugin_preferences" konnte nicht gelöscht werden, da sich darin noch Daten eines anderen Plugins befinden.\n</string>
     <string name="PLG_BIRTHDAYLIST_UNINST_TABLE_DELETE_SUCCESS">- Die vom Plugin angelegte Tabelle "adm_plugin_preferences" wurde gelöscht.\n</string>
     <string name="PLG_BIRTHDAYLIST_UNINSTALLATION">Deinstallation</string>
     <string name="PLG_BIRTHDAYLIST_UNINSTALLATION_DESC">Über die Deinstallation können vom Plugin erzeugte Einträge gelöscht werden.</string>     
-    <string name="PLG_BIRTHDAYLIST_UPDATE_REQUIRED">Die vorhandene Installation ist unvollständig. Es ist notwendig, die Installationsroutine erneut zu durchlaufen.\n\nZur Installation folgendes Script ausführen: #VAR1#</string>
     <string name="PLG_BIRTHDAYLIST_YEARS_OFFSET">Jahresversatz</string>
     <string name="PLG_BIRTHDAYLIST_YEARS_OFFSET_DESC">Hiermit kann die Anzeige um x Jahre vor- oder zurückversetzt werden (0 entspricht keinem Versatz).</string>
 </resources>

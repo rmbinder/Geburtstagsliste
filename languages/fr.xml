@@ -42,6 +42,7 @@
     <string name="PLG_BIRTHDAYLIST_FOR_THE_PERIOD">Pour la période #VAR1# à #VAR2# (#VAR3# jours)</string>
     <string name="PLG_BIRTHDAYLIST_ICAL">iCal</string>
     <string name="PLG_BIRTHDAYLIST_ICAL_MISSING_DATA">Pour l'exportation iCal, au moins les champs de profil suivants doivent être disponibles dans la liste:\n\n- Date de naissance et\n- Prénom ou nom\n\net\n\n"Ne pas indiquer l\'année d\'âge ou de jubilé" ne doit pas être défini dans la configuration.</string>
+    <string name="PLG_BIRTHDAYLIST_INSTALL_UPDATE_REQUIRED">L'installation existante est incomplète. Il est nécessaire de relancer la procédure d'installation.\n\nPour l'installer, exécutez le script suivant : #VAR1#</string>
     <string name="PLG_BIRTHDAYLIST_JANUARY">janvier</string>
     <string name="PLG_BIRTHDAYLIST_JULY">juillet</string>
     <string name="PLG_BIRTHDAYLIST_JUNE">juin</string>
@@ -49,7 +50,6 @@
     <string name="PLG_BIRTHDAYLIST_MAY">mai</string>
     <string name="PLG_BIRTHDAYLIST_NAME">Liste des anniversaires et jubilés</string>
     <string name="PLG_BIRTHDAYLIST_NAME_DESC">Le plugin Liste d'anniversaire</string>    
-    <string name="PLG_BIRTHDAYLIST_NO_INST_IDS_FOUND">- Aucun élément de menu ni rôle d'accès n'a été trouvé. Vous devez supprimer manuellement l'élément de menu et le rôle d'accès..\n</string> 
     <string name="PLG_BIRTHDAYLIST_NOTIFICATION_MAIL_TEXT">Modèle de courriel</string>
     <string name="PLG_BIRTHDAYLIST_NOTIFICATION_MAIL_TEXT_DESC">Ici, le texte d\'un courriel peut être adapté et complété. Le texte est divisé en 2 zones (sujet &amp; contenu) et est identifié par les chaînes de caractères #subject# et #content# suivi le contenu de la zone. Dans chaque courriel, des caractères génériques peuvent être utilisés, qui sont ensuite remplacés par le contenu correspondant au moment de l\'exécution.\n\nIMPORTANT: Pour envoyer des courriels, le champ de profil Courriel doit être affiché dans une colonne :\n\nCaractères génériques:\n#user_first_name# = Prénom du membre\n#user_last_name# = nom de famille du membre \n#organization_long_name# = nom de l\'organisation\n#config# = texte de la dernière colonne (colonne de configuration)</string>
     <string name="PLG_BIRTHDAYLIST_NOVEMBER">novembre</string>
@@ -83,13 +83,13 @@
     <string name="PLG_BIRTHDAYLIST_UNINST_MENU_ITEM_ERROR">- Une erreur s'est produite lors de la suppression de l'élément de menu.\n</string>
     <string name="PLG_BIRTHDAYLIST_UNINST_MENU_ITEM_NOT_DELETED">- L'élément de menu créé par l'extension n'a pas pu être supprimé car il est encore utilisé dans une autre organisation.\n</string>
     <string name="PLG_BIRTHDAYLIST_UNINST_MENU_ITEM_SUCCESS">- L'élément de menu créé par le plugin a été supprimé.\n</string> 
+    <string name="PLG_BIRTHDAYLIST_UNINST_NO_INST_IDS_FOUND">- Aucun élément de menu ni rôle d'accès n'a été trouvé. Vous devez supprimer manuellement l'élément de menu et le rôle d'accès..\n</string> 
     <string name="PLG_BIRTHDAYLIST_UNINST_SECURITY_CHECK">Êtes-vous sûr de vouloir désinstaller le plugin ?</string> 
     <string name="PLG_BIRTHDAYLIST_UNINST_STARTMESSAGE">Les suppressions suivantes ont été effectuées:\n\n</string>
     <string name="PLG_BIRTHDAYLIST_UNINST_TABLE_DELETE_ERROR">- La table "adm_plugin_preferences" n\'a pas pu être supprimée car elle contient encore des données d\'un autre plugin.\n</string>
     <string name="PLG_BIRTHDAYLIST_UNINST_TABLE_DELETE_SUCCESS">- La table "adm_plugin_preferences" créée par le plugin a été supprimée.\n</string>
     <string name="PLG_BIRTHDAYLIST_UNINSTALLATION">Désinstallation</string>
     <string name="PLG_BIRTHDAYLIST_UNINSTALLATION_DESC">Les entrées créées par le plugin peuvent être supprimées via la désinstallation.</string>    
-    <string name="PLG_BIRTHDAYLIST_UPDATE_REQUIRED">L'installation existante est incomplète. Il est nécessaire de relancer la procédure d'installation.\n\nPour l'installer, exécutez le script suivant : #VAR1#</string>
     <string name="PLG_BIRTHDAYLIST_YEARS_OFFSET">Décalage annuelle</string>
     <string name="PLG_BIRTHDAYLIST_YEARS_OFFSET_DESC">Ceci permet d\'avancer ou de reculer l\'affichage de x années (0 ne correspond à aucun décalage).</string>
 </resources>
