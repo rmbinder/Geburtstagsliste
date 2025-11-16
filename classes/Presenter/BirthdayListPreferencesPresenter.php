@@ -227,14 +227,6 @@ class BirthdayListPreferencesPresenter extends PagePresenter
             array('defaultValue' => $pPreferences->config['access']['preferences'], 'helpTextId' => 'PLG_BIRTHDAYLIST_ACCESS_PREFERENCES_DESC', 'multiselect' => true)
         );
 
-        //Warning: Undefined array key "inventory_profile_view"
-        $formAccess->addInput(
-            'inventory_profile_view',
-            '',
-            '',
-            array( 'property' => FormPresenter::FIELD_HIDDEN)
-        );
-
         $formAccess->addSubmitButton(
             'adm_button_save_access',
             $gL10n->get('SYS_SAVE'),
@@ -348,36 +340,6 @@ class BirthdayListPreferencesPresenter extends PagePresenter
             // === 2) Innerhalb eines Panels die Klick-Handler anmelden ===
             function initializePanelInteractions(panelId) {
                 var panelContainer = $("[data-preferences-panel=\"" + panelId + "\"]");
-            
-                // Captcha-Refresh
-                panelContainer.off("click", "#adm_captcha_refresh").on("click", "#adm_captcha_refresh", function(event) {
-                    event.preventDefault();
-                    var captchaImg = panelContainer.find("#adm_captcha");
-                    if (captchaImg.length) {
-                        captchaImg.attr("src", "' . ADMIDIO_URL . FOLDER_LIBS . '/securimage/securimage_show.php" + "?" + Math.random());
-                    }
-                });
-            
-                // Update-Check
-                panelContainer.off("click", "#adm_link_check_update").on("click", "#adm_link_check_update", function(event) {
-                    event.preventDefault();
-                    var versionInfoContainer = panelContainer.find("#adm_version_content");
-                    versionInfoContainer.html("<i class=\"spinner-border spinner-border-sm\"></i>").show();
-                    $.get("' . ADMIDIO_URL . FOLDER_PLUGINS . '/BirthdayList/system/preferences.php", { mode: "update_check" }, function(htmlVersion) {
-                        versionInfoContainer.html(htmlVersion);
-                    });
-                });
-            
-                // Verzeichnis-Schutz prüfen
-                panelContainer.off("click", "#link_directory_protection").on("click", "#link_directory_protection", function(event) {
-                    event.preventDefault();
-                    var statusContainer = panelContainer.find("#directory_protection_status");
-                    statusContainer.html("<i class=\"spinner-border spinner-border-sm\"></i>").show();
-                    $.get("' . ADMIDIO_URL . FOLDER_PLUGINS . '/BirthdayList/system/preferences.php", { mode: "htaccess" }, function(statusText) {
-                        var directoryProtection = panelContainer.find("#directoryProtection");
-                        directoryProtection.html("<span class=\"text-success\"><strong>" + statusText + "</strong></span>");
-                    });
-                });
                
                 // Module Settings visibility
                 // Universal handling for module enabled toggle within the current panel container
@@ -386,43 +348,6 @@ class BirthdayListPreferencesPresenter extends PagePresenter
                 var additionalIds = [\'#system_notifications_enabled\'];
                 // Look for any input whose id ends with "_module_enabled"
                 var selectors = ["[id$=\'_module_enabled\']"].concat(additionalIds);
-
-                var moduleEnabledField = panelContainer.find(selectors.join(", ")).filter(":visible");
-                if (moduleEnabledField.length > 0) {
-                    // Get all row elements inside the form, excluding the row containing the module enabled field
-                    var formElementGroups = panelContainer.find("form div.row")
-                        .not(moduleEnabledField.closest("div.row"));
-                    
-                    // Function to update visibility based on the fields type and state
-                    var updateVisibility = function(initialCall) {
-                        var isEnabled;
-                        if (moduleEnabledField.attr("type") === "checkbox") {
-                            isEnabled = moduleEnabledField.is(":checked");
-                        } else {
-                            isEnabled = moduleEnabledField.val() != 0;
-                        }
-                        
-                        if (initialCall === true) {
-                            if (isEnabled) {
-                                formElementGroups.show();
-                            } else {
-                                formElementGroups.hide();
-                            }
-                        } else {
-                            if (isEnabled) {
-                                formElementGroups.slideDown("slow");
-                            } else {
-                                formElementGroups.slideUp("slow");
-                            }
-                        }
-                    };
-                    
-                    // Set initial state without animation
-                    updateVisibility(true);
-                    
-                    // Update visibility on change
-                    moduleEnabledField.on("change", updateVisibility);
-                }
             }
         
             // === 3) Hooks für Desktop-Tabs ===
@@ -460,9 +385,6 @@ class BirthdayListPreferencesPresenter extends PagePresenter
             // === 5) Formular-Submit per AJAX ===
             $(document).on("submit", "form[id^=\"adm_preferences_form_\"]", formSubmit);
       ', true);
-      
-
-        ChangelogService::displayHistoryButton($this, 'preferences', 'preferences,texts');
 
         // Load the select2 in case any of the form uses a select box. Unfortunately, each section
         // is loaded on-demand, when there is no HTML page anymore to insert the css/JS file loading,

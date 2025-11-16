@@ -130,13 +130,15 @@ function isUserAuthorized( string $scriptname = '')
  */
 function isUserAuthorizedForPreferences()
 {
+    global $gCurrentUser;
+
     // Konfiguration einlesen
     $pPreferences = new ConfigTable();
     $pPreferences->read();
     
     $userIsAuthorized = false;
     
-    if ($GLOBALS['gCurrentUser']->isAdministrator())                   // Mitglieder der Rolle Administrator dürfen "Preferences" immer aufrufen
+    if ($gCurrentUser->isAdministrator())                   // Mitglieder der Rolle Administrator dürfen "Preferences" immer aufrufen
     {
         $userIsAuthorized = true;
     }
@@ -144,7 +146,7 @@ function isUserAuthorizedForPreferences()
     {
         foreach ($pPreferences->config['access']['preferences'] as $roleId)
         {
-            if ($GLOBALS['gCurrentUser']->isMemberOfRole((int) $roleId))
+            if ($gCurrentUser->isMemberOfRole((int) $roleId))
             {
                 $userIsAuthorized = true;
                 continue;

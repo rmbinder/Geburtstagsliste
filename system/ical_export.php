@@ -13,10 +13,10 @@
  * ****************************************************************************
  * Parameters:
  *
- * config : Die gewaehlte Konfiguration
- * month : Der gewaehlte Monat
- * previewdays : Die vorauszuschauenden Tage
- * filter : Filterstring
+ * config       : Die gewaehlte Konfiguration
+ * month        : Der gewaehlte Monat
+ * previewdays  : Die vorauszuschauenden Tage
+ * filter       : Filterstring
  *
  * ***************************************************************************
  */

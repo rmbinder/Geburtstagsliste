@@ -20,7 +20,7 @@ use Plugins\BirthdayList\classes\Config\ConfigTable;
 use Admidio\Infrastructure\Exception;
 
 // Fehlermeldungen anzeigen
-error_reporting(E_ALL);
+//error_reporting(E_ALL);
 
 try {
     require_once (__DIR__ . '/../../system/common.php');

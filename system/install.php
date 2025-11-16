@@ -1,7 +1,7 @@
 <?php
 /**
  ***********************************************************************************************
- * Installation routine for the Admidio plugin birthday_list
+ * Installation routine for the Admidio plugin BirthdayList
  *
  * @copyright The Admidio Team
  * @see https://www.admidio.org/

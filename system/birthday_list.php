@@ -13,15 +13,15 @@
  * ****************************************************************************
  * Parameters:
  *
- * mode : Output (html, print, csv-ms, csv-oo, pdf, pdfl, xlsx)
- * config : Die gewaehlte Konfiguration (Alte Bezeichnung Fokus; die Standardeinstellung wurde über Einstellungen-Optionen festgelegt)
- * month : Der gewaehlte Monat
- * previewdays : Die vorauszuschauenden Tage (Default wurde in Optionen festgelegt)
- * previewmode : days - (Default) Die Anzeige einer bestimmten Anzahl von Tagen wurde gewaehlt
- * months - Die Anzeige für einen Monat wurde gewaehlt
- * export_and_filter : 0 - (Default) No filter and export menu
- * 1 - Filter and export menu is enabled
- * filter : Filter string
+ * mode                 : Output (html, print, csv-ms, csv-oo, pdf, pdfl, xlsx)
+ * config               : Die gewaehlte Konfiguration (Alte Bezeichnung Fokus; die Standardeinstellung wurde über Einstellungen-Optionen festgelegt)
+ * month                : Der gewaehlte Monat
+ * previewdays          : Die vorauszuschauenden Tage (Default wurde in Optionen festgelegt)
+ * previewmode          : days - (Default) Die Anzeige einer bestimmten Anzahl von Tagen wurde gewaehlt
+ *                        months - Die Anzeige für einen Monat wurde gewaehlt
+ * export_and_filter    : 0 - (Default) No filter and export menu
+ *                        1 - Filter and export menu is enabled
+ * filter               : Filter string
  *
  * ***************************************************************************
  */
@@ -265,7 +265,7 @@ try {
             if ($getExportAndFilter) {
                 $datatable = false;
             } else {
-                // $datatable = true;
+                $datatable = true;
             }
             $hoverRows = true;
 

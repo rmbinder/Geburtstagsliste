@@ -1,7 +1,7 @@
 <?php
 /**
  ***********************************************************************************************
- * Versionsdatei fuer das Admidio-Plugin birthday list
+ * Version file for the Admidio plugin BirthdayList
  *
  * @copyright The Admidio Team
  * @see https://www.admidio.org/
@@ -13,5 +13,5 @@ if (basename($_SERVER['SCRIPT_FILENAME']) === 'version.php') {
     exit('This page may not be called directly!');
 }
 
-$plugin_version = '4.0.0 Beta 1';
-$plugin_stand 	= '06.11.2025';
+$plugin_version = '4.0.0';
+$plugin_stand 	= '16.11.2025';

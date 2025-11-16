@@ -20,7 +20,9 @@
  * read()						-	liest die Konfigurationsdaten aus der Datenbank
  * checkforupdate()				-	vergleicht die Angaben in der Datei version.php
  * 									mit den Daten in der DB
- * delete($deinst_org_select)	-	loescht die Konfigurationsdaten in der Datenbank
+ * getAllAccessRoles()          -   reads all access roles stored in the configuration table
+ * getShortcut()                -   returns the shortcut of the plugin
+ * getTableName()               -   returns the table name of the plugin
  *
  *****************************************************************************/
 
@@ -286,7 +288,7 @@ class ConfigTable
 	}
 	
 	/**
-	 * Liest alle Zugriffsrollen ein, die in der Konfigurationstabelle gespeichert sind
+	 * Reads all access roles stored in the configuration table.
 	 * @return  array $data
 	 */
 	public function getAllAccessRoles()

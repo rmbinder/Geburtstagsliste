@@ -56,7 +56,6 @@ class BirthdayListPreferencesService
                     $pPreferences->config['access']['preferences'] = array();
                 }
                 break;
-
         }
         $pPreferences->save();
         return $result;
@@ -64,5 +63,4 @@ class BirthdayListPreferencesService
         // clean up
         $gCurrentSession->reloadAllSessions();
     }
-
 }
