@@ -148,7 +148,7 @@ foreach ($liste->listData as $memberdata) {
 
         if ($usf_id != 0 && $content > 0 && ($gProfileFields->getPropertyById($usf_id, 'usf_type') == 'DROPDOWN' || $gProfileFields->getPropertyById($usf_id, 'usf_type') == 'RADIO_BUTTON')) {
             // show selected text of optionfield or combobox
-            $arrListValues = $gProfileFields->getPropertyById($usf_id, 'usf_value_list', 'text');
+            $arrListValues = $gProfileFields->getPropertyById($usf_id, 'ufo_usf_options', 'text');
             $content = $arrListValues[$content];
         }
         if (($usf_id != 0) && (substr($liste->headerData[$i]['id'], 0, 1) != 'r')) // ohne Beziehungen
