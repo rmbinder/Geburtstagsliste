@@ -78,6 +78,7 @@ try {
     foreach ($pPreferences->config['Optionen']['vorschau_liste'] as $item) {
         $validValues[] = 'X' . $item . 'X';
     }
+    $validValues[] = 'XTHIS_YEARX';
     $getPreviewDays = admFuncVariableIsValid($_GET, 'previewdays', 'string', array(
         'defaultValue' => 'X' . $pPreferences->config['Optionen']['vorschau_tage_default'] . 'X',
         'validValues' => $validValues
@@ -125,10 +126,18 @@ try {
     // define title (html) and headline
     $title = $gL10n->get('PLG_BIRTHDAYLIST_NAME');
 
+    $previewDaysValue = trim($getPreviewDays, 'X');
+    if (strcasecmp($previewDaysValue, 'THIS_YEAR') === 0) {
+        $previewDaysText = $gL10n->get('PLG_BIRTHDAYLIST_THIS_YEAR');
+    } else {
+        $previewDaysNumber = (int) $previewDaysValue;
+        $previewDaysText = ($previewDaysNumber < 0 ? (string) $previewDaysNumber : '+' . (string) $previewDaysNumber) . ' ' . $gL10n->get('SYS_DAYS');
+    }
+
     $subheadline = $gL10n->get('PLG_BIRTHDAYLIST_FOR_THE_PERIOD', array(
         date("d.m.Y", strtotime('1 day', $liste->date_min)),
         date("d.m.Y", $liste->date_max),
-        (trim($getPreviewDays, 'X') < 0 ? trim($getPreviewDays, 'X') : '+' . trim($getPreviewDays, 'X'))
+        $previewDaysText
     ));
     $subheadline .= ($getMonth > 0 ? ' - ' . $monate[$getMonth] : '');
 
@@ -404,7 +413,8 @@ try {
                 $selectBoxEntries['X' . $key . 'X'] = $item;
             }
             $form->addSelectBox('configList', '', $selectBoxEntries, array(
-                'showContextDependentFirstEntry' => false
+                'showContextDependentFirstEntry' => false,
+                'defaultValue' => $getConfig
             ));
 
             $selectBoxEntries = array(
@@ -414,8 +424,10 @@ try {
                 // eine 0 in der Vorschauliste wird nicht korrekt dargestellt, deshalb alle Werte maskieren
                 $selectBoxEntries['X' . $item . 'X'] = $item;
             }
+            $selectBoxEntries['XTHIS_YEARX'] = $gL10n->get('PLG_BIRTHDAYLIST_THIS_YEAR');
             $form->addSelectBox('previewList', '', $selectBoxEntries, array(
-                'showContextDependentFirstEntry' => false
+                'showContextDependentFirstEntry' => false,
+                'defaultValue' => $getPreviewDays
             ));
 
             $selectBoxEntries = array(
@@ -425,7 +437,8 @@ try {
                 $selectBoxEntries[$key] = $item;
             }
             $form->addSelectBox('monthList', '', $selectBoxEntries, array(
-                'showContextDependentFirstEntry' => false
+                'showContextDependentFirstEntry' => false,
+                'defaultValue' => $getMonth
             ));
 
             if ($getExportAndFilter) {
@@ -568,7 +581,7 @@ try {
                 'csv'
             ), true)) && $content > 0 && ($gProfileFields->getPropertyById($usf_id, 'usf_type') == 'DROPDOWN' || $gProfileFields->getPropertyById($usf_id, 'usf_type') == 'RADIO_BUTTON')) {
                 // show selected text of optionfield or combobox
-                $arrListValues = $gProfileFields->getPropertyById($usf_id, 'ufo_usf_options', 'text');
+                $arrListValues = $gProfileFields->getPropertyById($usf_id, 'usf_value_list', 'text');
                 $content = $arrListValues[$content];
             }
 

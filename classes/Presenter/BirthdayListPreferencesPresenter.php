@@ -255,7 +255,7 @@ class BirthdayListPreferencesPresenter extends PagePresenter
         $this->assignSmartyVariable('plg_name', $gL10n->get('PLG_BIRTHDAYLIST_NAME'));
         $this->assignSmartyVariable('plg_version', $pPreferences->config['Plugininformationen']['version']);
         $this->assignSmartyVariable('plg_date', $pPreferences->config['Plugininformationen']['stand']);
-        $this->assignSmartyVariable('open_doc', SecurityUtils::encodeUrl('https://www.admidio.org/dokuwiki/doku.php', array('id' => 'de:plugins:geburtstagsliste')));
+        $this->assignSmartyVariable('open_doc', SecurityUtils::encodeUrl('https://www.admidio.org/dokuwiki/doku.php', array('id' => 'de:plugins:geburtstagsliste#geburtstagsliste')));
         
         $smarty = $this->getSmartyTemplate();
         return $smarty->fetch('../templates/preferences.informations.plugin.birthdaylist.tpl');
