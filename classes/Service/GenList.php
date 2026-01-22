@@ -285,10 +285,21 @@ class GenList
 	private function generate_dateMinMax()
 	{
 		global $pPreferences;
+
+		// allow special preview option for the current calendar year
+		$previewDaysValue = strtoupper((string) $this->previewDays);
+		$yearsOffset = (int) $pPreferences->config['Konfigurationen']['years_offset'][$this->conf];
+		if ($previewDaysValue === 'THIS_YEAR')
+		{
+			$year = (int) date('Y') + $yearsOffset;
+			$this->date_min = strtotime($year . '-01-01 -1 day');
+			$this->date_max = strtotime($year . '-12-31');
+			return;
+		}
 		
 		// aufgrund eines Wunsches von "red" im Forum wurde der Parameter Jahresversatz eingefuehrt
 		// dadurch ist es moeglich, Geburtstage in naechsten oder vergangenen Jahren anzuzeigen
-		$yearsOffset = $pPreferences->config['Konfigurationen']['years_offset'][$this->conf];
+		$this->previewDays = (int) $this->previewDays;
 		
 		// standardmaessig wird die Geburtstagsliste immer ab dem aktuellen Datum angezeigt
 		// aufgrund eines Wunsches im Forum kann der Beginn der Anzeige auf den 1. Januar gesetzt werden (Kalenderjahr)
