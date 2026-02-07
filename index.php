@@ -3,7 +3,7 @@
  ***********************************************************************************************
  * Geburtstagsliste / BirthdayList
  *
- * Version 4.0.0
+ * Version 4.0.1
  *
  * This plugin creates a birthday or anniversary list of members.
  *
