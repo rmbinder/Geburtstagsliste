@@ -247,17 +247,25 @@ class BirthdayListPreferencesPresenter extends PagePresenter
      */
     public function createInformationsForm(): string
     {
-        global $gL10n;
+        global $gL10n, $gCurrentSession;
         
         $pPreferences = new ConfigTable();
         $pPreferences->read();
         
-        $this->assignSmartyVariable('plg_name', $gL10n->get('PLG_BIRTHDAYLIST_NAME'));
-        $this->assignSmartyVariable('plg_version', $pPreferences->config['Plugininformationen']['version']);
-        $this->assignSmartyVariable('plg_date', $pPreferences->config['Plugininformationen']['stand']);
-        $this->assignSmartyVariable('open_doc', SecurityUtils::encodeUrl('https://www.admidio.org/dokuwiki/doku.php', array('id' => 'de:plugins:geburtstagsliste')));
+        $formInformations = new FormPresenter('adm_preferences_form_options', '../templates/preferences.informations.plugin.birthdaylist.tpl', '', null, array(
+            'class' => 'form-preferences'
+        ));
         
+        $formInformations->addCustomContent('plg_name', $gL10n->get('PLG_BIRTHDAYLIST_PLUGIN_NAME'), $gL10n->get('PLG_BIRTHDAYLIST_NAME'));
+        $formInformations->addCustomContent('plg_version', $gL10n->get('PLG_BIRTHDAYLIST_PLUGIN_VERSION'), $pPreferences->config['Plugininformationen']['version']);
+        $formInformations->addCustomContent('plg_date', $gL10n->get('PLG_BIRTHDAYLIST_PLUGIN_DATE'), $pPreferences->config['Plugininformationen']['stand']);
+        
+        $html = '<a class="btn btn-secondary" id="open_documentation" href="' . SecurityUtils::encodeUrl('https://www.admidio.org/dokuwiki/doku.php', array('id' => 'de:plugins:geburtstagsliste')) . '" target="_blank"><i class="bi bi-file-earmark-pdf"></i> ' . $gL10n->get('PLG_DECLARATION_OF_MEMBERSHIP_DOCUMENTATION_OPEN') . '</a>';
+        $formInformations->addCustomContent('plg_doc', $gL10n->get('PLG_BIRTHDAYLIST_DOCUMENTATION'), $html, array('helpTextId' => $gL10n->get('PLG_BIRTHDAYLIST_DOCUMENTATION_OPEN_DESC')));
+
         $smarty = $this->getSmartyTemplate();
+        $formInformations->addToSmarty($smarty);
+        $gCurrentSession->addFormObject($formInformations);
         return $smarty->fetch('../templates/preferences.informations.plugin.birthdaylist.tpl');
     }
 
