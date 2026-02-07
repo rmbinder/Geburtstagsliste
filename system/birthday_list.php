@@ -435,13 +435,13 @@ try {
 
             // hidden fields
             $form->addInput('previewdays', '', $getPreviewDays, array(
-                'property' => HtmlForm::FIELD_HIDDEN
+                'property' => FormPresenter::FIELD_HIDDEN
             ));
             $form->addInput('month', '', $getMonth, array(
-                'property' => HtmlForm::FIELD_HIDDEN
+                'property' => FormPresenter::FIELD_HIDDEN
             ));
             $form->addInput('config', '', $getConfig, array(
-                'property' => HtmlForm::FIELD_HIDDEN
+                'property' => FormPresenter::FIELD_HIDDEN
             ));
 
             $form->addToHtmlPage();

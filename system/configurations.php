@@ -305,7 +305,7 @@ try {
         );
 
         $formConfigurations->addInput('col_desc' . $conf, $gL10n->get('PLG_BIRTHDAYLIST_COL_DESC'), $pPreferences->config['Konfigurationen']['col_desc'][$conf], array(
-            'property' => HtmlForm::FIELD_REQUIRED
+            'property' => FormPresenter::FIELD_REQUIRED
         ));
         $formConfigurations->addSelectBox('col_sel' . $conf, $gL10n->get('PLG_BIRTHDAYLIST_COL_SEL'), $configSelection, array(
             'defaultValue' => $pPreferences->config['Konfigurationen']['col_sel'][$conf],
