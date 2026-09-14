@@ -22,6 +22,9 @@ try {
     require_once (__DIR__ . '/../../../system/common.php');
     require_once (__DIR__ . '/common_function.php');
 
+    // Ab und zu werden die Sprachausdrücke während der Installation nicht übersetzt. Durch Einbinden des Pfades über addLanguageFolderPath sollte dieser Fehler behoben sein.
+    $gL10n->addLanguageFolderPath(ADMIDIO_PATH . FOLDER_PLUGINS . '/BirthdayList/languages');
+
     // only administrators are allowed to start this module
     if (! $gCurrentUser->isAdministrator()) {
         throw new Exception('SYS_NO_RIGHTS');
